@@ -13,7 +13,7 @@ tog_druidism = {
 		reformed_icon = custom_faith_fp1_yggdrasil
 	}
 
-	# One eminent site per main branch; five sites in all, like most faiths.
+	# One eminent site per main branch; six sites in all (five like most faiths, plus Alesia as a symbol).
 	eminent_holy_sites = {
 		tog_tara
 		tog_ynys_mon
@@ -23,6 +23,7 @@ tog_druidism = {
 	# iona is the vanilla holy site, shared with the Christians.
 	holy_sites = {
 		iona
+		tog_alesia
 		tog_penalba
 	}
 

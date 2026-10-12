@@ -3,8 +3,11 @@
 # Iona is a vanilla holy site, shared with the Christians (see tog_faith_types.txt).
 
 # Tara: seat of the High King of Ireland, the Lia Fail. Eminent (Gaelic).
+# The hill of Tara lies between Trim and Navan: county of Dublin, barony of Trim.
+# (c_tara is a Siberian county, not the Irish Tara.) Norse-held in 867.
 tog_tara = {
-	county = c_tara
+	county = c_dublin
+	barony = b_trim
 
 	county_holder_character_modifier = {
 		monthly_prestige_gain_mult = 0.1
@@ -40,6 +43,17 @@ tog_carnutes = {
 
 	faith_character_modifier = {
 		monthly_county_control_growth_factor = 0.1
+	}
+}
+
+# Alesia (Alise-Sainte-Reine, Auxois): last stand of Vercingetorix, 52 BC. Regular (Gaulish), kept as a symbol.
+# Nearest barony in game: Montbard, county of Tonnerrois.
+tog_alesia = {
+	county = c_tonnerrois
+	barony = b_montbard
+
+	county_holder_character_modifier = {
+		monthly_prestige_gain_mult = 0.05
 	}
 }
 

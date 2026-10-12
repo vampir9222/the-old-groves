@@ -50,8 +50,17 @@ tog_celtic_religion = {
 	doctrine = doctrine_sacraments_central
 
 	traits = {
-		virtues = { brave generous just }
-		sins = { craven greedy arbitrary }
+		# Weighted so they win the 7-slot cap over tenet-granted virtues and sins (MAX_VIRTUES_SINS)
+		virtues = {
+			brave = { weight = 30 scale = 1 }
+			generous = { weight = 30 scale = 1 }
+			just = { weight = 30 scale = 1 }
+		}
+		sins = {
+			craven = { weight = 30 scale = 1 }
+			greedy = { weight = 30 scale = 1 }
+			arbitrary = { weight = 30 scale = 1 }
+		}
 	}
 
 	custom_faith_icons = {
