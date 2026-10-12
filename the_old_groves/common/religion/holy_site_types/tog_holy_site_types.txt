@@ -1,0 +1,53 @@
+# The Old Groves - holy sites of Druidism
+# Three eminent sites, one per main branch, and two regular ones spread across the Celtic world.
+# Iona is a vanilla holy site, shared with the Christians (see tog_faith_types.txt).
+
+# Tara: seat of the High King of Ireland, the Lia Fail. Eminent (Gaelic).
+tog_tara = {
+	county = c_tara
+
+	county_holder_character_modifier = {
+		monthly_prestige_gain_mult = 0.1
+	}
+
+	faith_character_modifier = {
+		monthly_prestige_gain_mult = 0.05
+		vassal_opinion = 3
+	}
+}
+
+# Ynys Mon (Anglesey): last stronghold of the druids, stormed by Rome in AD 60 (Tacitus). Eminent (Brythonic).
+tog_ynys_mon = {
+	county = c_anglesey
+
+	county_holder_character_modifier = {
+		learning = 1
+	}
+
+	faith_character_modifier = {
+		monthly_piety_gain_mult = 0.05
+		clergy_opinion = 5
+	}
+}
+
+# Land of the Carnutes (Chartres): yearly assembly where the druids of all Gaul sit in judgement (Caesar, BG VI.13). Eminent (Gaulish).
+tog_carnutes = {
+	county = c_chartres
+
+	county_holder_character_modifier = {
+		diplomacy = 1
+	}
+
+	faith_character_modifier = {
+		monthly_county_control_growth_factor = 0.1
+	}
+}
+
+# Penalba de Villastar: open-air rock sanctuary with Celtiberian inscriptions to Lugus (LVGVEI). Regular (Celtiberian).
+tog_penalba = {
+	county = c_teruel
+
+	county_holder_character_modifier = {
+		monthly_piety_gain_mult = 0.05
+	}
+}

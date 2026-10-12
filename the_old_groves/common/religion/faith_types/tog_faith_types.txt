@@ -13,14 +13,17 @@ tog_druidism = {
 		reformed_icon = custom_faith_tree_03
 	}
 
-	# PLACEHOLDER holy sites so the faith is valid (one eminent site minimum).
-	# The real pool (Tara, Ynys Mon, Carnutes + six regular sites) comes with module step 3.
+	# One eminent site per main branch; five sites in all, like most faiths.
 	eminent_holy_sites = {
-		iona
+		tog_tara
+		tog_ynys_mon
+		tog_carnutes
 	}
 
+	# iona is the vanilla holy site, shared with the Christians.
 	holy_sites = {
-		lyon
+		iona
+		tog_penalba
 	}
 
 	doctrines = {
