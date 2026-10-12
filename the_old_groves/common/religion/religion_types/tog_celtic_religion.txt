@@ -56,7 +56,8 @@ tog_celtic_religion = {
 
 	custom_faith_icons = {
 		custom_faith_tree_01 custom_faith_tree_02 custom_faith_tree_03 custom_faith_tree_04 custom_faith_tree_05
-		pagan pagan_01 pagan_02 pagan_03 pagan_04 pagan_05
+		custom_faith_fp1_yggdrasil christianity_celtic_knot_01 christianity_celtic_knot_02 christianity_celtic_knot_03 christianity_celtic_knot_04 christianity_celtic_knot_05
+		custom_faith_horse_01 custom_faith_horse_02 custom_faith_horse_03 custom_faith_horse_04 custom_faith_horse_05 shamanism shamanism_01 finno_ugric finno_ugric_01
 	}
 
 	# Fallback vocabulary for every rite. Each rite redefines its own pantheon.

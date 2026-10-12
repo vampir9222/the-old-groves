@@ -14,7 +14,7 @@
  tog_druidism_desc: "Una fe nueva que reclama a los druidas como propios. Reconstruida a partir de sagas conservadas por monjes, de ruinas mal comprendidas y de lo que sus fieles saben del paganismo nórdico, reivindica un pasado que en realidad no restaura."
 
  # Rites
- tog_gaelic_rite: "Rito gaélico"
+ tog_gaelic_rite: "Druídecht"
  tog_gaelic_rite_adj: "gaélico"
  tog_gaelic_rite_adherent: "gaélico"
  tog_gaelic_rite_adherent_plural: "gaélicos"
@@ -104,17 +104,17 @@
  tog_otherworld_3: "$tog_otherworld$" #Optional translation alt
 
  # Other rites
- tog_brythonic_rite: "Rito britónico"
+ tog_brythonic_rite: "Plant Dôn"
  tog_brythonic_rite_adj: "britónico"
  tog_brythonic_rite_adherent: "britón"
  tog_brythonic_rite_adherent_plural: "britones"
  tog_brythonic_rite_desc: "La tradición de los britones de la isla y de sus primos de Armórica: Gales, Cornualles, Cumbria y Pictavia. Honra a Lleu y a los Hijos de Dôn, venera las piedras erguidas y los bosques sagrados, y abre su sacerdocio y sus tronos a mujeres y hombres por igual."
- tog_gaulish_rite: "Rito galo"
+ tog_gaulish_rite: "Gutuatrismo"
  tog_gaulish_rite_adj: "galo"
  tog_gaulish_rite_adherent: "galo"
  tog_gaulish_rite_adherent_plural: "galos"
  tog_gaulish_rite_desc: "La tradición del continente, reconstruida a partir de inscripciones y de los relatos de griegos y romanos. Honra a Lugus y a Sucellos, lee las estrellas como los druidas de César, quema a sus muertos y conserva las cabezas de sus enemigos."
- tog_celtiberian_rite: "Rito celtíbero"
+ tog_celtiberian_rite: "Lugovismo"
  tog_celtiberian_rite_adj: "celtíbero"
  tog_celtiberian_rite_adherent: "celtíbero"
  tog_celtiberian_rite_adherent_plural: "celtíberos"

@@ -8,7 +8,7 @@ tog_gaelic_rite = {
 	faith = tog_druidism
 
 	color = { 0.08 0.12 0.4 }
-	icon = custom_faith_tree_02
+	icon = christianity_celtic_knot_01
 
 	tenets = {
 		tenet_reincarnation
@@ -30,7 +30,7 @@ tog_brythonic_rite = {
 	faith = tog_druidism
 
 	color = { 0.25 0.15 0.5 }
-	icon = custom_faith_tree_03
+	icon = custom_faith_horse_01
 
 	tenets = {
 		tenet_reincarnation
@@ -137,7 +137,7 @@ tog_gaulish_rite = {
 	faith = tog_druidism
 
 	color = { 0.3 0.45 0.65 }
-	icon = custom_faith_tree_04
+	icon = shamanism_01
 
 	tenets = {
 		tenet_reincarnation
@@ -246,7 +246,7 @@ tog_celtiberian_rite = {
 	faith = tog_druidism
 
 	color = { 0.35 0.4 0.5 }
-	icon = custom_faith_tree_05
+	icon = finno_ugric_01
 
 	tenets = {
 		tenet_reincarnation

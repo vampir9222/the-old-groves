@@ -10,7 +10,7 @@ tog_druidism = {
 		religion = tog_celtic_religion
 		color = { 0.15 0.25 0.6 }
 		icon = custom_faith_tree_01
-		reformed_icon = custom_faith_tree_03
+		reformed_icon = custom_faith_fp1_yggdrasil
 	}
 
 	# One eminent site per main branch; five sites in all, like most faiths.
