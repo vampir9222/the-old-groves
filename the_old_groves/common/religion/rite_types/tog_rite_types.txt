@@ -1,5 +1,5 @@
 # The Old Groves - rites of Druidism
-# Step 1: the Gaelic rite only. Brythonic, Gaulish and Celtiberian rites come next.
+# Four rites of one faith. The Gaelic rite is the scripted main rite and uses the religion-level pantheon.
 # Doctrines listed here override the religion-level defaults in the same group.
 
 tog_gaelic_rite = {
@@ -20,5 +20,328 @@ tog_gaelic_rite = {
 		unreformed_faith_doctrine
 		doctrine_gender_male_dominated
 		doctrine_funeral_bewailment
+	}
+}
+
+# Brythonic: Wales, Cornwall, Cumbria, Pictland, Armorica. Gender equality from the founding (Boudicca, Cartimandua).
+tog_brythonic_rite = {
+	name = tog_brythonic_rite
+	desc = tog_brythonic_rite_desc
+	faith = tog_druidism
+
+	color = { 0.25 0.15 0.5 }
+	icon = custom_faith_tree_03
+
+	tenets = {
+		tenet_reincarnation
+		tenet_megaliths
+		tenet_sanctity_of_nature
+	}
+
+	doctrines = {
+		unreformed_faith_doctrine
+		doctrine_gender_equal
+		doctrine_funeral_bewailment
+	}
+
+	localization = {
+		HighGodName = tog_god_lleu
+		HighGodName2 = tog_god_lleu_2
+		HighGodNamePossessive = tog_god_lleu_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HIMSELF
+		HighGodHerHis = CHARACTER_HERHIS_HIS
+		HighGodNameAlternate = tog_god_llaw_gyffes
+		HighGodNameAlternatePossessive = tog_god_llaw_gyffes_possessive
+		CreatorName = tog_god_beli_mawr
+		CreatorNamePossessive = tog_god_beli_mawr_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+		HealthGodName = tog_god_nudd
+		HealthGodNamePossessive = tog_god_nudd_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+		FertilityGodName = tog_god_modron
+		FertilityGodNamePossessive = tog_god_modron_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_SHE
+		FertilityGodHerHis = CHARACTER_HERHIS_HER
+		FertilityGodHerHim = CHARACTER_HERHIM_HER
+		WealthGodName = tog_god_lleu
+		WealthGodNamePossessive = tog_god_lleu_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_HE
+		WealthGodHerHis = CHARACTER_HERHIS_HIS
+		WealthGodHerHim = CHARACTER_HERHIM_HIM
+		HouseholdGodName = tog_god_modron
+		HouseholdGodNamePossessive = tog_god_modron_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_SHE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HER
+		HouseholdGodHerHim = CHARACTER_HERHIM_HER
+		FateGodName = tog_god_arianrhod
+		FateGodNamePossessive = tog_god_arianrhod_possessive
+		FateGodSheHe = CHARACTER_SHEHE_SHE
+		FateGodHerHis = CHARACTER_HERHIS_HER
+		FateGodHerHim = CHARACTER_HERHIM_HER
+		KnowledgeGodName = tog_god_gwydion
+		KnowledgeGodNamePossessive = tog_god_gwydion_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+		WarGodName = tog_god_belatucadros
+		WarGodNamePossessive = tog_god_belatucadros_possessive
+		WarGodSheHe = CHARACTER_SHEHE_HE
+		WarGodHerHis = CHARACTER_HERHIS_HIS
+		WarGodHerHim = CHARACTER_HERHIM_HIM
+		TricksterGodName = tog_god_gwydion
+		TricksterGodNamePossessive = tog_god_gwydion_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+		NightGodName = tog_god_gwyn_ap_nudd
+		NightGodNamePossessive = tog_god_gwyn_ap_nudd_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+		WaterGodName = tog_god_manawydan
+		WaterGodNamePossessive = tog_god_manawydan_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_HE
+		WaterGodHerHis = CHARACTER_HERHIS_HIS
+		WaterGodHerHim = CHARACTER_HERHIM_HIM
+		DeathDeityName = tog_god_arawn
+		DeathDeityNamePossessive = tog_god_arawn_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_HE
+		DeathDeityHerHis = CHARACTER_HERHIS_HIS
+		DeathDeityHerHim = CHARACTER_HERHIM_HIM
+		WitchGodName = tog_god_ceridwen
+		WitchGodNamePossessive = tog_god_ceridwen_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HER
+		WitchGodSheHe = CHARACTER_SHEHE_SHE
+		WitchGodHerHim = CHARACTER_HERHIM_HER
+		WitchGodMistressMaster = mistress
+		WitchGodMotherFather = mother
+		DevilName = tog_god_ysbaddaden
+		DevilNamePossessive = tog_god_ysbaddaden_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = CHARACTER_HIMSELF
+		GoodGodNames = { tog_god_lleu tog_god_beli_mawr tog_god_modron tog_god_gwydion tog_god_manawydan tog_god_nudd tog_god_gofannon tog_god_mabon }
+		EvilGodNames = { tog_god_ysbaddaden tog_god_twrch_trwyth }
+	}
+}
+
+# Gaulish: the continent. Divorce needs approval (Caesar's patriarchal household), male relations accepted (Aristotle, Diodorus), cremation (Caesar).
+tog_gaulish_rite = {
+	name = tog_gaulish_rite
+	desc = tog_gaulish_rite_desc
+	faith = tog_druidism
+
+	color = { 0.3 0.45 0.65 }
+	icon = custom_faith_tree_04
+
+	tenets = {
+		tenet_reincarnation
+		tenet_cranial_trophies
+		tenet_astrology
+	}
+
+	doctrines = {
+		unreformed_faith_doctrine
+		doctrine_gender_male_dominated
+		doctrine_divorce_approval
+		doctrine_homosexuality_accepted
+		doctrine_funeral_cremation
+	}
+
+	localization = {
+		HighGodName = tog_god_lugus
+		HighGodName2 = tog_god_lugus_2
+		HighGodNamePossessive = tog_god_lugus_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HIMSELF
+		HighGodHerHis = CHARACTER_HERHIS_HIS
+		HighGodNameAlternate = tog_god_lugus
+		HighGodNameAlternatePossessive = tog_god_lugus_possessive
+		CreatorName = tog_god_sucellos
+		CreatorNamePossessive = tog_god_sucellos_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+		HealthGodName = tog_god_belenos
+		HealthGodNamePossessive = tog_god_belenos_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+		FertilityGodName = tog_god_rosmerta
+		FertilityGodNamePossessive = tog_god_rosmerta_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_SHE
+		FertilityGodHerHis = CHARACTER_HERHIS_HER
+		FertilityGodHerHim = CHARACTER_HERHIM_HER
+		WealthGodName = tog_god_cernunnos
+		WealthGodNamePossessive = tog_god_cernunnos_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_HE
+		WealthGodHerHis = CHARACTER_HERHIS_HIS
+		WealthGodHerHim = CHARACTER_HERHIM_HIM
+		HouseholdGodName = tog_god_nantosuelta
+		HouseholdGodNamePossessive = tog_god_nantosuelta_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_SHE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HER
+		HouseholdGodHerHim = CHARACTER_HERHIM_HER
+		FateGodName = tog_god_matrona
+		FateGodNamePossessive = tog_god_matrona_possessive
+		FateGodSheHe = CHARACTER_SHEHE_SHE
+		FateGodHerHis = CHARACTER_HERHIS_HER
+		FateGodHerHim = CHARACTER_HERHIM_HER
+		KnowledgeGodName = tog_god_ogmios
+		KnowledgeGodNamePossessive = tog_god_ogmios_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+		WarGodName = tog_god_toutatis
+		WarGodNamePossessive = tog_god_toutatis_possessive
+		WarGodSheHe = CHARACTER_SHEHE_HE
+		WarGodHerHis = CHARACTER_HERHIS_HIS
+		WarGodHerHim = CHARACTER_HERHIM_HIM
+		TricksterGodName = tog_god_lugus
+		TricksterGodNamePossessive = tog_god_lugus_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+		NightGodName = tog_god_sucellos
+		NightGodNamePossessive = tog_god_sucellos_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+		WaterGodName = tog_god_sequana
+		WaterGodNamePossessive = tog_god_sequana_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_SHE
+		WaterGodHerHis = CHARACTER_HERHIS_HER
+		WaterGodHerHim = CHARACTER_HERHIM_HER
+		DeathDeityName = tog_god_taranis
+		DeathDeityNamePossessive = tog_god_taranis_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_HE
+		DeathDeityHerHis = CHARACTER_HERHIS_HIS
+		DeathDeityHerHim = CHARACTER_HERHIM_HIM
+		WitchGodName = tog_god_adsagsona
+		WitchGodNamePossessive = tog_god_adsagsona_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HER
+		WitchGodSheHe = CHARACTER_SHEHE_SHE
+		WitchGodHerHim = CHARACTER_HERHIM_HER
+		WitchGodMistressMaster = mistress
+		WitchGodMotherFather = mother
+		DevilName = tog_god_balor
+		DevilNamePossessive = tog_god_balor_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = CHARACTER_HIMSELF
+		GoodGodNames = { tog_god_lugus tog_god_sucellos tog_god_rosmerta tog_god_ogmios tog_god_belenos tog_god_cernunnos tog_god_epona tog_god_esus }
+		EvilGodNames = { tog_god_balor }
+	}
+}
+
+# Celtiberian: Gallaecia and the meseta. Warriors exposed to vultures (Silius Italicus, Aelian).
+tog_celtiberian_rite = {
+	name = tog_celtiberian_rite
+	desc = tog_celtiberian_rite_desc
+	faith = tog_druidism
+
+	color = { 0.35 0.4 0.5 }
+	icon = custom_faith_tree_05
+
+	tenets = {
+		tenet_reincarnation
+		tenet_ritual_hospitality
+		tenet_cranial_trophies
+	}
+
+	doctrines = {
+		unreformed_faith_doctrine
+		doctrine_gender_male_dominated
+		doctrine_funeral_sky_burial
+	}
+
+	localization = {
+		HighGodName = tog_god_lugus
+		HighGodName2 = tog_god_lugus_2
+		HighGodNamePossessive = tog_god_lugus_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HIMSELF
+		HighGodHerHis = CHARACTER_HERHIS_HIS
+		HighGodNameAlternate = tog_god_lugus
+		HighGodNameAlternatePossessive = tog_god_lugus_possessive
+		CreatorName = tog_god_lugus
+		CreatorNamePossessive = tog_god_lugus_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+		HealthGodName = tog_god_lugus
+		HealthGodNamePossessive = tog_god_lugus_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+		FertilityGodName = tog_god_epona
+		FertilityGodNamePossessive = tog_god_epona_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_SHE
+		FertilityGodHerHis = CHARACTER_HERHIS_HER
+		FertilityGodHerHim = CHARACTER_HERHIM_HER
+		WealthGodName = tog_god_lugus
+		WealthGodNamePossessive = tog_god_lugus_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_HE
+		WealthGodHerHis = CHARACTER_HERHIS_HIS
+		WealthGodHerHim = CHARACTER_HERHIM_HIM
+		HouseholdGodName = tog_god_epona
+		HouseholdGodNamePossessive = tog_god_epona_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_SHE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HER
+		HouseholdGodHerHim = CHARACTER_HERHIM_HER
+		FateGodName = tog_god_lugus
+		FateGodNamePossessive = tog_god_lugus_possessive
+		FateGodSheHe = CHARACTER_SHEHE_HE
+		FateGodHerHis = CHARACTER_HERHIS_HIS
+		FateGodHerHim = CHARACTER_HERHIM_HIM
+		KnowledgeGodName = tog_god_lugus
+		KnowledgeGodNamePossessive = tog_god_lugus_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+		WarGodName = tog_god_cosus
+		WarGodNamePossessive = tog_god_cosus_possessive
+		WarGodSheHe = CHARACTER_SHEHE_HE
+		WarGodHerHis = CHARACTER_HERHIS_HIS
+		WarGodHerHim = CHARACTER_HERHIM_HIM
+		TricksterGodName = tog_god_lugus
+		TricksterGodNamePossessive = tog_god_lugus_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+		NightGodName = tog_god_lugus
+		NightGodNamePossessive = tog_god_lugus_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+		WaterGodName = tog_god_navia
+		WaterGodNamePossessive = tog_god_navia_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_SHE
+		WaterGodHerHis = CHARACTER_HERHIS_HER
+		WaterGodHerHim = CHARACTER_HERHIM_HER
+		DeathDeityName = tog_god_ataecina
+		DeathDeityNamePossessive = tog_god_ataecina_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_SHE
+		DeathDeityHerHis = CHARACTER_HERHIS_HER
+		DeathDeityHerHim = CHARACTER_HERHIM_HER
+		WitchGodName = tog_god_ataecina
+		WitchGodNamePossessive = tog_god_ataecina_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HER
+		WitchGodSheHe = CHARACTER_SHEHE_SHE
+		WitchGodHerHim = CHARACTER_HERHIM_HER
+		WitchGodMistressMaster = mistress
+		WitchGodMotherFather = mother
+		DevilName = tog_god_balor
+		DevilNamePossessive = tog_god_balor_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = CHARACTER_HIMSELF
+		GoodGodNames = { tog_god_lugus tog_god_epona tog_god_navia tog_god_cosus }
+		EvilGodNames = { tog_god_balor }
 	}
 }
