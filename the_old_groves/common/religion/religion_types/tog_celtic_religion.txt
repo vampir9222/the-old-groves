@@ -1,4 +1,4 @@
-# The Old Groves - Celtic religion
+﻿# The Old Groves - Celtic religion
 # Doctrines here are the founding state shared by all four rites.
 # Rite-specific choices (gender, divorce, homosexuality, funerals) override them in tog_rite_types.txt.
 # See DECISIONS.md for the sources behind every choice.

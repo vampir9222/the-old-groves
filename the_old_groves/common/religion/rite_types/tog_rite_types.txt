@@ -1,4 +1,4 @@
-# The Old Groves - rites of Druidism
+﻿# The Old Groves - rites of Druidism
 # Four rites of one faith. The Gaelic rite is the scripted main rite and uses the religion-level pantheon.
 # Doctrines listed here override the religion-level defaults in the same group.
 

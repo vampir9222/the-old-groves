@@ -1,4 +1,4 @@
-# The Old Groves - holy sites of Druidism
+﻿# The Old Groves - holy sites of Druidism
 # Three eminent sites, one per main branch, and two regular ones spread across the Celtic world.
 # Iona is a vanilla holy site, shared with the Christians (see tog_faith_types.txt).
 

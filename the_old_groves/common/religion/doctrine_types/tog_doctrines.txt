@@ -1,4 +1,4 @@
-# The Old Groves - custom doctrines
+﻿# The Old Groves - custom doctrines
 # Added to vanilla doctrine groups from this file; no vanilla file is overwritten.
 
 # Judges and arbiters: druids judge crimes, murders, inheritances and boundaries,

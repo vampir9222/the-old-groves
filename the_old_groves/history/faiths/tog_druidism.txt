@@ -1,4 +1,4 @@
-# The Old Groves - history of Druidism
+﻿# The Old Groves - history of Druidism
 # No "created = yes": the faith stays dead until the player awakens it.
 #
 # Tenets of the non-main rites are declared permitted, so they cost 5 divergence instead of 15

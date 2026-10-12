@@ -1,4 +1,4 @@
-# The Old Groves - Druidism
+﻿# The Old Groves - Druidism
 # Dead at game start (historical = yes): no county, no character. The player awakens it.
 # Scripted main Rite: tog_gaelic_rite. Core tenets and rite-specific doctrines live on the rites.
 
