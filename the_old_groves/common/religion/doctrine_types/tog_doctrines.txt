@@ -1,0 +1,23 @@
+# The Old Groves - custom doctrines
+# Added to vanilla doctrine groups from this file; no vanilla file is overwritten.
+
+# Judges and arbiters: druids judge crimes, murders, inheritances and boundaries,
+# and set the penalties (Caesar, BG VI.13); they step between armies (Diodorus V.31).
+# A punishment backed by a druidic sentence is not the ruler's arbitrary act.
+tog_doctrine_clerical_function_judges = {
+	doctrine_group_type = doctrine_clerical_function
+	index = 3
+	divergence = 1.5
+
+	piety_cost = {
+		value = faith_doctrine_cost_mid
+	}
+
+	is_shown = {
+		religion = religion:tog_celtic_religion
+	}
+
+	character_modifier = {
+		tyranny_gain_mult = -0.25
+	}
+}

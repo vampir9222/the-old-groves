@@ -1,0 +1,104 @@
+﻿l_german:
+ # Religion
+ tog_celtic_religion: "Keltisch"
+ tog_celtic_religion_adj: "keltisch"
+ tog_celtic_religion_adherent: "Kelte"
+ tog_celtic_religion_adherent_plural: "Kelten"
+ tog_celtic_religion_desc: "Der alte Glaube der keltischen Völker, von Irland bis Gallien und bis nach Hispanien. Er überlebt nur noch in den Erzählungen der Mönche und in den stehenden Steinen und wartet darauf, dass jemand ihn erweckt."
+
+ # Faith
+ tog_druidism: "Druidentum"
+ tog_druidism_adj: "druidisch"
+ tog_druidism_adherent: "Druidist"
+ tog_druidism_adherent_plural: "Druidisten"
+ tog_druidism_desc: "Ein neuer Glaube, der sich auf die Druiden beruft. Neu errichtet aus von Mönchen bewahrten Sagas, aus halb verstandenen Ruinen und aus dem, was seine Anhänger vom nordischen Heidentum wissen, beansprucht er eine Vergangenheit, die er nicht wirklich wiederherstellt."
+
+ # Rites
+ tog_gaelic_rite: "Gälischer Ritus"
+ tog_gaelic_rite_adj: "gälisch"
+ tog_gaelic_rite_adherent: "Gäle"
+ tog_gaelic_rite_adherent_plural: "Gälen"
+ tog_gaelic_rite_desc: "Die Tradition der Gälen Irlands, Dál Riatas und Mans. Sie ehrt Lug und die Tuatha Dé, feiert Samain und Beltaine und bewahrt das Andenken der Ahnen in den Genealogien der Dichter."
+
+ # Custom doctrine
+ tog_doctrine_clerical_function_judges_name: "Richter und Schlichter"
+ tog_doctrine_clerical_function_judges_descriptive_name: "Richterlicher Klerus"
+ tog_doctrine_clerical_function_judges_desc: "Unsere [ROOT.Faith.PriestNeuterPlural] richten über Verbrechen, Erbschaften und Grenzstreitigkeiten und treten zwischen Heere, die aufeinander losgehen wollen. Eine von ihnen verhängte Strafe ist nicht die Willkür eines einzelnen Mannes."
+
+ # Gaelic pantheon (also the religion-level fallback)
+ tog_gaelic_high_god_name: "Lug"
+ tog_gaelic_high_god_name_2: "$tog_gaelic_high_god_name$" #Optional translation alt
+ tog_gaelic_high_god_name_possessive: "Lugs"
+ tog_gaelic_high_god_name_alternate: "Lámfhota"
+ tog_gaelic_high_god_name_alternate_possessive: "Lámfhotas"
+ tog_gaelic_creator_god_name: "Dagda"
+ tog_gaelic_creator_god_name_possessive: "Dagdas"
+ tog_gaelic_health_god_name: "Dian Cécht"
+ tog_gaelic_health_god_name_possessive: "Dian Céchts"
+ tog_gaelic_fertility_god_name: "Brigit"
+ tog_gaelic_fertility_god_name_possessive: "Brigits"
+ tog_gaelic_wealth_god_name: "Boand"
+ tog_gaelic_wealth_god_name_possessive: "Boands"
+ tog_gaelic_household_god_name: "Brigit"
+ tog_gaelic_household_god_name_possessive: "Brigits"
+ tog_gaelic_fate_god_name: "Badb"
+ tog_gaelic_fate_god_name_possessive: "Badbs"
+ tog_gaelic_knowledge_god_name: "Ogma"
+ tog_gaelic_knowledge_god_name_possessive: "Ogmas"
+ tog_gaelic_war_god_name: "Morrígan"
+ tog_gaelic_war_god_name_possessive: "Morrígans"
+ tog_gaelic_trickster_god_name: "Manannán"
+ tog_gaelic_trickster_god_name_possessive: "Manannáns"
+ tog_gaelic_night_god_name: "Donn"
+ tog_gaelic_night_god_name_possessive: "Donns"
+ tog_gaelic_water_god_name: "Manannán mac Lir"
+ tog_gaelic_water_god_name_possessive: "Manannán mac Lirs"
+ tog_gaelic_death_deity_name: "Donn"
+ tog_gaelic_death_deity_name_possessive: "Donns"
+ tog_gaelic_witch_god_name: "Morrígan"
+ tog_gaelic_witch_god_name_possessive: "Morrígans"
+ tog_gaelic_devil_name: "Balor"
+ tog_gaelic_devil_name_possessive: "Balors"
+
+ tog_good_god_lug: "Lug"
+ tog_good_god_dagda: "Dagda"
+ tog_good_god_brigit: "Brigit"
+ tog_good_god_ogma: "Ogma"
+ tog_good_god_manannan: "Manannán"
+ tog_good_god_dian_cecht: "Dian Cécht"
+ tog_good_god_nuadu: "Nuadu"
+ tog_good_god_goibniu: "Goibniu"
+ tog_good_god_oengus: "Óengus"
+ tog_evil_god_balor: "Balor"
+ tog_evil_god_bres: "Bres"
+ tog_evil_god_tethra: "Tethra"
+ tog_evil_god_cethlenn: "Cethlenn"
+
+ # Vocabulary
+ tog_house_of_worship: "Nemeton"
+ tog_house_of_worship_2: "$tog_house_of_worship$" #Optional translation alt
+ tog_house_of_worship_3: "$tog_house_of_worship$" #Optional translation alt
+ tog_house_of_worship_plural: "Nemeta"
+ tog_religious_symbol: "Triskele"
+ tog_religious_symbol_2: "$tog_religious_symbol$" #Optional translation alt
+ tog_religious_symbol_3: "$tog_religious_symbol$" #Optional translation alt
+ tog_religious_text: "Heilige Verse"
+ tog_religious_text_2: "$tog_religious_text$" #Optional translation alt
+ tog_religious_text_3: "$tog_religious_text$" #Optional translation alt
+ tog_religious_head_title: "Erzdruide"
+ tog_religious_head_title_female: "Erzdruidin"
+ tog_religious_head_title_name: "Erzdruidentum"
+ tog_devotee: "Vate"
+ tog_devotee_plural: "Vaten"
+ tog_priest_male: "Druide"
+ tog_priest_male_plural: "Druiden"
+ tog_priest_female: "Druidin"
+ tog_priest_female_plural: "Druidinnen"
+ tog_priest_alternate_plural: "Weisen"
+ tog_bishop_male: "Hochdruide"
+ tog_bishop_male_plural: "Hochdruiden"
+ tog_bishop_female: "Hochdruidin"
+ tog_bishop_female_plural: "Hochdruidinnen"
+ tog_otherworld: "Anderswelt"
+ tog_otherworld_2: "$tog_otherworld$" #Optional translation alt
+ tog_otherworld_3: "$tog_otherworld$" #Optional translation alt

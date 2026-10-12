@@ -1,0 +1,29 @@
+# The Old Groves - Druidism
+# Dead at game start (historical = yes): no county, no character. The player awakens it.
+# Scripted main Rite: tog_gaelic_rite. Core tenets and rite-specific doctrines live on the rites.
+
+tog_druidism = {
+	main_rite = tog_gaelic_rite
+	historical = yes
+
+	faith_details = {
+		religion = tog_celtic_religion
+		color = { 0.15 0.25 0.6 }
+		icon = custom_faith_tree_01
+		reformed_icon = custom_faith_tree_03
+	}
+
+	# PLACEHOLDER holy sites so the faith is valid (one eminent site minimum).
+	# The real pool (Tara, Ynys Mon, Carnutes + six regular sites) comes with module step 3.
+	eminent_holy_sites = {
+		iona
+	}
+
+	holy_sites = {
+		lyon
+	}
+
+	doctrines = {
+		unreformed_faith_doctrine
+	}
+}

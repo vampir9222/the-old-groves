@@ -1,0 +1,247 @@
+# The Old Groves - Celtic religion
+# Doctrines here are the founding state shared by all four rites.
+# Rite-specific choices (gender, divorce, homosexuality, funerals) override them in tog_rite_types.txt.
+# See DECISIONS.md for the sources behind every choice.
+
+tog_celtic_religion = {
+	religion_details = {
+		family = rf_pagan
+		graphical_faith = pagan_gfx
+	}
+
+	pagan_roots = yes
+
+	doctrine = pagan_hostility_doctrine
+
+	# Main group
+	doctrine = doctrine_polytheist
+	doctrine = doctrine_no_head
+	doctrine = doctrine_gender_male_dominated
+	doctrine = doctrine_pluralism_pluralistic
+	doctrine = doctrine_theocracy_temporal
+	doctrine = doctrine_pilgrimage_encouraged
+
+	# Marriage
+	doctrine = doctrine_concubines
+	doctrine = doctrine_divorce_allowed
+	doctrine = doctrine_bastardry_legitimization
+	doctrine = doctrine_consanguinity_cousins
+
+	# Crimes
+	doctrine = doctrine_homosexuality_shunned
+	doctrine = doctrine_deviancy_shunned
+	doctrine = doctrine_adultery_men_accepted
+	doctrine = doctrine_adultery_women_shunned
+	doctrine = doctrine_kinslaying_extended_family_crime
+	doctrine = doctrine_witchcraft_accepted
+
+	# Clergy
+	doctrine = tog_doctrine_clerical_function_judges
+	doctrine = doctrine_clerical_gender_either
+	doctrine = doctrine_clerical_marriage_allowed
+	doctrine = doctrine_clerical_succession_spiritual_fixed_appointment
+	doctrine = doctrine_funeral_bewailment
+	doctrine = doctrine_no_anointment
+	doctrine = doctrine_monasticism_absent
+	doctrine = doctrine_sacraments_central
+
+	traits = {
+		virtues = { brave generous just }
+		sins = { craven greedy arbitrary }
+	}
+
+	custom_faith_icons = {
+		custom_faith_tree_01 custom_faith_tree_02 custom_faith_tree_03 custom_faith_tree_04 custom_faith_tree_05
+		pagan pagan_01 pagan_02 pagan_03 pagan_04 pagan_05
+	}
+
+	# Fallback vocabulary for every rite. Each rite redefines its own pantheon.
+	# Gods default to the Gaelic set; pronouns follow each god's gender.
+	localization = {
+		# High god: Lug
+		HighGodName = tog_gaelic_high_god_name
+		HighGodName2 = tog_gaelic_high_god_name_2
+		HighGodNamePossessive = tog_gaelic_high_god_name_possessive
+		HighGodNameSheHe = CHARACTER_SHEHE_HE
+		HighGodHerselfHimself = CHARACTER_HIMSELF
+		HighGodHerHis = CHARACTER_HERHIS_HIS
+		HighGodNameAlternate = tog_gaelic_high_god_name_alternate
+		HighGodNameAlternatePossessive = tog_gaelic_high_god_name_alternate_possessive
+
+		# Creator: Dagda
+		CreatorName = tog_gaelic_creator_god_name
+		CreatorNamePossessive = tog_gaelic_creator_god_name_possessive
+		CreatorSheHe = CHARACTER_SHEHE_HE
+		CreatorHerHis = CHARACTER_HERHIS_HIS
+		CreatorHerHim = CHARACTER_HERHIM_HIM
+
+		# Health: Dian Cecht
+		HealthGodName = tog_gaelic_health_god_name
+		HealthGodNamePossessive = tog_gaelic_health_god_name_possessive
+		HealthGodSheHe = CHARACTER_SHEHE_HE
+		HealthGodHerHis = CHARACTER_HERHIS_HIS
+		HealthGodHerHim = CHARACTER_HERHIM_HIM
+
+		# Fertility: Brigit
+		FertilityGodName = tog_gaelic_fertility_god_name
+		FertilityGodNamePossessive = tog_gaelic_fertility_god_name_possessive
+		FertilityGodSheHe = CHARACTER_SHEHE_SHE
+		FertilityGodHerHis = CHARACTER_HERHIS_HER
+		FertilityGodHerHim = CHARACTER_HERHIM_HER
+
+		# Wealth: Boand
+		WealthGodName = tog_gaelic_wealth_god_name
+		WealthGodNamePossessive = tog_gaelic_wealth_god_name_possessive
+		WealthGodSheHe = CHARACTER_SHEHE_SHE
+		WealthGodHerHis = CHARACTER_HERHIS_HER
+		WealthGodHerHim = CHARACTER_HERHIM_HER
+
+		# Household: Brigit
+		HouseholdGodName = tog_gaelic_household_god_name
+		HouseholdGodNamePossessive = tog_gaelic_household_god_name_possessive
+		HouseholdGodSheHe = CHARACTER_SHEHE_SHE
+		HouseholdGodHerHis = CHARACTER_HERHIS_HER
+		HouseholdGodHerHim = CHARACTER_HERHIM_HER
+
+		# Fate: Badb
+		FateGodName = tog_gaelic_fate_god_name
+		FateGodNamePossessive = tog_gaelic_fate_god_name_possessive
+		FateGodSheHe = CHARACTER_SHEHE_SHE
+		FateGodHerHis = CHARACTER_HERHIS_HER
+		FateGodHerHim = CHARACTER_HERHIM_HER
+
+		# Knowledge: Ogma
+		KnowledgeGodName = tog_gaelic_knowledge_god_name
+		KnowledgeGodNamePossessive = tog_gaelic_knowledge_god_name_possessive
+		KnowledgeGodSheHe = CHARACTER_SHEHE_HE
+		KnowledgeGodHerHis = CHARACTER_HERHIS_HIS
+		KnowledgeGodHerHim = CHARACTER_HERHIM_HIM
+
+		# War: Morrigan
+		WarGodName = tog_gaelic_war_god_name
+		WarGodNamePossessive = tog_gaelic_war_god_name_possessive
+		WarGodSheHe = CHARACTER_SHEHE_SHE
+		WarGodHerHis = CHARACTER_HERHIS_HER
+		WarGodHerHim = CHARACTER_HERHIM_HER
+
+		# Trickster: Manannan
+		TricksterGodName = tog_gaelic_trickster_god_name
+		TricksterGodNamePossessive = tog_gaelic_trickster_god_name_possessive
+		TricksterGodSheHe = CHARACTER_SHEHE_HE
+		TricksterGodHerHis = CHARACTER_HERHIS_HIS
+		TricksterGodHerHim = CHARACTER_HERHIM_HIM
+
+		# Night: Donn
+		NightGodName = tog_gaelic_night_god_name
+		NightGodNamePossessive = tog_gaelic_night_god_name_possessive
+		NightGodSheHe = CHARACTER_SHEHE_HE
+		NightGodHerHis = CHARACTER_HERHIS_HIS
+		NightGodHerHim = CHARACTER_HERHIM_HIM
+
+		# Water: Manannan mac Lir
+		WaterGodName = tog_gaelic_water_god_name
+		WaterGodNamePossessive = tog_gaelic_water_god_name_possessive
+		WaterGodSheHe = CHARACTER_SHEHE_HE
+		WaterGodHerHis = CHARACTER_HERHIS_HIS
+		WaterGodHerHim = CHARACTER_HERHIM_HIM
+
+		# Death: Donn
+		DeathDeityName = tog_gaelic_death_deity_name
+		DeathDeityNamePossessive = tog_gaelic_death_deity_name_possessive
+		DeathDeitySheHe = CHARACTER_SHEHE_HE
+		DeathDeityHerHis = CHARACTER_HERHIS_HIS
+		DeathDeityHerHim = CHARACTER_HERHIM_HIM
+
+		# Witchcraft: Morrigan
+		WitchGodName = tog_gaelic_witch_god_name
+		WitchGodNamePossessive = tog_gaelic_witch_god_name_possessive
+		WitchGodHerHis = CHARACTER_HERHIS_HER
+		WitchGodSheHe = CHARACTER_SHEHE_SHE
+		WitchGodHerHim = CHARACTER_HERHIM_HER
+		WitchGodMistressMaster = mistress
+		WitchGodMotherFather = mother
+
+		# Evil: Balor
+		DevilName = tog_gaelic_devil_name
+		DevilNamePossessive = tog_gaelic_devil_name_possessive
+		DevilSheHe = CHARACTER_SHEHE_HE
+		DevilHerHis = CHARACTER_HERHIS_HIS
+		DevilHerselfHimself = CHARACTER_HIMSELF
+
+		GoodGodNames = {
+			tog_good_god_lug
+			tog_good_god_dagda
+			tog_good_god_brigit
+			tog_good_god_ogma
+			tog_good_god_manannan
+			tog_good_god_dian_cecht
+			tog_good_god_nuadu
+			tog_good_god_goibniu
+			tog_good_god_oengus
+		}
+		EvilGodNames = {
+			tog_evil_god_balor
+			tog_evil_god_bres
+			tog_evil_god_tethra
+			tog_evil_god_cethlenn
+		}
+
+		# Vocabulary, shared by the four rites
+		PantheonTerm = religion_the_gods
+		PantheonTerm2 = religion_the_gods_2
+		PantheonTerm3 = religion_the_gods_3
+		PantheonTermHasHave = pantheon_term_have
+
+		HouseOfWorship = tog_house_of_worship
+		HouseOfWorship2 = tog_house_of_worship_2
+		HouseOfWorship3 = tog_house_of_worship_3
+		HouseOfWorshipPlural = tog_house_of_worship_plural
+
+		ReligiousSymbol = tog_religious_symbol
+		ReligiousSymbol2 = tog_religious_symbol_2
+		ReligiousSymbol3 = tog_religious_symbol_3
+
+		ReligiousText = tog_religious_text
+		ReligiousText2 = tog_religious_text_2
+		ReligiousText3 = tog_religious_text_3
+
+		ReligiousHeadName = tog_religious_head_title
+		ReligiousHeadNameFemale = tog_religious_head_title_female
+		ReligiousHeadTitleName = tog_religious_head_title_name
+
+		DevoteeMale = tog_devotee
+		DevoteeMalePlural = tog_devotee_plural
+		DevoteeFemale = tog_devotee
+		DevoteeFemalePlural = tog_devotee_plural
+		DevoteeNeuter = tog_devotee
+		DevoteeNeuterPlural = tog_devotee_plural
+
+		PriestMale = tog_priest_male
+		PriestMalePlural = tog_priest_male_plural
+		PriestFemale = tog_priest_female
+		PriestFemalePlural = tog_priest_female_plural
+		PriestNeuter = tog_priest_male
+		PriestNeuterPlural = tog_priest_male_plural
+		AltPriestTermPlural = tog_priest_alternate_plural
+
+		BishopMale = tog_bishop_male
+		BishopMalePlural = tog_bishop_male_plural
+		BishopFemale = tog_bishop_female
+		BishopFemalePlural = tog_bishop_female_plural
+		BishopNeuter = tog_bishop_male
+		BishopNeuterPlural = tog_bishop_male_plural
+
+		DivineRealm = tog_otherworld
+		DivineRealm2 = tog_otherworld_2
+		DivineRealm3 = tog_otherworld_3
+		PositiveAfterLife = tog_otherworld
+		PositiveAfterLife2 = tog_otherworld_2
+		PositiveAfterLife3 = tog_otherworld_3
+		NegativeAfterLife = tog_otherworld
+		NegativeAfterLife2 = tog_otherworld_2
+		NegativeAfterLife3 = tog_otherworld_3
+
+		GHWName = ghw_great_holy_war
+		GHWNamePlural = ghw_great_holy_wars
+	}
+}

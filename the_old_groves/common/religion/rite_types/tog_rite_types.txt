@@ -1,0 +1,24 @@
+# The Old Groves - rites of Druidism
+# Step 1: the Gaelic rite only. Brythonic, Gaulish and Celtiberian rites come next.
+# Doctrines listed here override the religion-level defaults in the same group.
+
+tog_gaelic_rite = {
+	name = tog_gaelic_rite
+	desc = tog_gaelic_rite_desc
+	faith = tog_druidism
+
+	color = { 0.08 0.12 0.4 }
+	icon = custom_faith_tree_02
+
+	tenets = {
+		tenet_reincarnation
+		tenet_ritual_celebrations
+		tenet_ancestor_worship
+	}
+
+	doctrines = {
+		unreformed_faith_doctrine
+		doctrine_gender_male_dominated
+		doctrine_funeral_bewailment
+	}
+}
