@@ -1,0 +1,19 @@
+# The Old Groves - history of Druidism
+# No "created = yes": the faith stays dead until the player awakens it.
+#
+# Tenets of the non-main rites are declared permitted, so they cost 5 divergence instead of 15
+# (NRite TENET_STATUS_DIVERGENCE). Without this, cranial trophies (x5 multiplier) and megaliths (x3)
+# pushed the Gaulish, Celtiberian and Brythonic rites over the heresy threshold (65) at game start.
+# Core tenets of the Gaelic main rite are automatically permitted for the other rites.
+
+tog_druidism = {
+	867.1.1 = {
+		permitted = {
+			tenet_megaliths
+			tenet_sanctity_of_nature
+			tenet_cranial_trophies
+			tenet_astrology
+			tenet_ritual_hospitality
+		}
+	}
+}
