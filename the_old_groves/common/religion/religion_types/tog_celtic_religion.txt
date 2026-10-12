@@ -13,9 +13,9 @@ tog_celtic_religion = {
 
 	doctrine = pagan_hostility_doctrine
 
-	# Preservation: oral. The druids refused to write their teaching (Caesar, BG VI.14).
-	# Not creatable: reform cannot change it.
-	doctrine = doctrine_oral_storytelling
+	# Preservation: mythic literary. The faith is rebuilt from sagas written down by monks,
+	# like vanilla Norse and Hellenic faiths. Not creatable: reform cannot change it.
+	doctrine = doctrine_mythic_literary
 
 	# Main group
 	doctrine = doctrine_polytheist
