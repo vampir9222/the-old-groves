@@ -38,6 +38,7 @@ Achievements are disabled while a mod is active.
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
 - An 867 bookmark with a landless start: **Dubgall the Apostate** (see below)
+- New camp buildings for the quest
 - Other characters in the same bookmark: **Rhodri Mawr**, **Dumnarth** and **Salomon**
 - The **Archdruid**: a head of faith for the reformed religion
 - Coats of arms for the Archdruid and for the new dynasties
