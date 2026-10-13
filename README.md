@@ -37,7 +37,7 @@ Achievements are disabled while a mod is active.
 
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
-- An 867 bookmark with a landless start: **Dubgall the Apostate**, a former monk of Iona who renounced his baptism and stayed among the Norse of the Hebrides. He can read, and he means to use it to bring back the old gods.
+- An 867 bookmark with a landless start: **Dubgall the Apostate** (see below)
 - Other characters in the same bookmark: **Rhodri Mawr**, **Dumnarth** and **Salomon**
 - The **Archdruid**: a head of faith for the reformed religion
 - Coats of arms for the Archdruid and for the new dynasties
@@ -53,6 +53,14 @@ Achievements are disabled while a mod is active.
 - Name lists
 - More events
 - More scenarios
+
+## Coming next: Dubgall the Apostate
+
+**867. The Hebrides.** Máel Brigte was a monk of Iona, one of the few brothers who stayed on the island when the community withdrew to Kells. Then the Norse took the Hebrides, and he stopped praying. Today, at thirty, he is **Dubgall the Apostate**: he has renounced his baptism and sails with the heathens, offering to their gods without believing in them.
+
+But Dubgall can read. The monks wrote down the old tales of the Gaels: the Tuatha Dé, Lug and the Dagda, the kings of Tara. Somewhere between what the monks wrote and what the stones still show lies a faith older than both Christ and Odin.
+
+Seek out the remains of that faith, find those who still remember, and found it again. Not as it was (no one knows what it was) but as it can be.
 
 ## Compatibility
 
