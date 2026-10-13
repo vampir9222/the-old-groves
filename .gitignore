@@ -2,3 +2,6 @@
 Thumbs.db
 desktop.ini
 .vscode/
+
+# Design notes stay private
+*.md

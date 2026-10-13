@@ -3,6 +3,7 @@
   "packages": {
     ".": {
       "release-type": "simple",
+      "skip-changelog": true,
       "package-name": "the-old-groves",
       "include-component-in-tag": false,
       "bump-minor-pre-major": true,
