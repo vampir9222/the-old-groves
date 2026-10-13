@@ -25,7 +25,7 @@ Achievements are disabled while a mod is active.
 
 **A real pantheon.** Every god slot is filled with a god from the sources, rite by rite: Lug, Dagda, Brigit and the Morrígan for the Gaels; Lleu, Gwydion, Arianrhod and Ceridwen for the Britons; Lugus, Sucellos, Toutatis and Cernunnos for the Gauls. Lug, under his three names (Lug, Lleu, Lugus), is the high god of every rite: he is the only god attested in all four branches.
 
-**Six holy sites**, each with its own effect: **Tara**, **Ynys Môn** and the **land of the Carnutes** (the three eminent sites), **Iona** (shared with the Christians), **Peñalba de Villastar** and **Alesia**.
+**Six holy sites**, each with its own effect: **Tara**, **Ynys Môn** and the **Forest of the Carnutes** (the three eminent sites), **Iona** (shared with the Christians), **Peñalba de Villastar** and **Alesia**.
 
 **Doctrines drawn from the sources**, including a new one: **Judges and Arbiters**. Caesar writes that the druids judged crimes, inheritances and boundary disputes; with this doctrine, punishment comes from a druidic sentence and rulers gain less tyranny.
 
