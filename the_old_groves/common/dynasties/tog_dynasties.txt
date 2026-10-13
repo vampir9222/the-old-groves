@@ -1,0 +1,6 @@
+﻿# The Old Groves - dynasties
+# Manach ("the monk"): Dubgall's line. Renamed to a legendary name at the founding (set_house_name).
+tog_manach = {
+	name = "dynn_tog_manach"
+	culture = "gaelic"
+}
