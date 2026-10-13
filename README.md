@@ -40,10 +40,10 @@ Achievements are disabled while a mod is active.
 **Planned later**
 - A Gaulish culture
 - Celtic titles and empires
+- Celtic buildings and holy orders
 
 **Ideas, no promise**
 - A Celtiberian culture
-- Celtic buildings and holy orders
 
 ## Compatibility
 
