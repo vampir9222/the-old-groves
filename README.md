@@ -35,7 +35,7 @@ Achievements are disabled while a mod is active.
 
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
-- An 867 bookmark with a landless start, with its own storyline
+- An 867 bookmark with a landless start: **Dubgall the Apostate**, a former monk of Iona who renounced his baptism and stayed among the Norse of the Hebrides. He can read, and he means to use it to bring back the old gods.
 
 **Planned later**
 - A Gaulish culture
@@ -44,6 +44,10 @@ Achievements are disabled while a mod is active.
 
 **Ideas, no promise**
 - A Celtiberian culture
+- Portraits
+- Name lists
+- More events
+- More scenarios
 
 ## Compatibility
 
