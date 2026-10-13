@@ -55,6 +55,7 @@ Achievements are disabled while a mod is active.
 - More scenarios
 - Music
 - A Celtic interface
+- Loading screen artwork
 
 ## Coming next: Dubgall the Apostate
 
