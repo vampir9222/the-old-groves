@@ -40,7 +40,6 @@ Achievements are disabled while a mod is active.
 - An 867 bookmark with a landless start: **Dubgall the Apostate**, a former monk of Iona who renounced his baptism and stayed among the Norse of the Hebrides. He can read, and he means to use it to bring back the old gods.
 - Other characters in the same bookmark: **Rhodri Mawr**, **Dumnarth** and **Salomon**
 - The **Archdruid**: a head of faith for the reformed religion
-- Accession events: the king's marriage to the sovereignty of the land, and the Stone of Fál that cries out under the true king
 - Coats of arms for the Archdruid and for the new dynasties
 
 **Planned later**
