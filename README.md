@@ -8,7 +8,7 @@ This is alternate history: no one revived the Celtic faith in the ninth century.
 
 ## How to play it
 
-The faith starts **dead**: in 867 nobody follows it. In this version, you play it by creating a character in the **Ruler Designer** and choosing Druidism as the faith.
+The faith starts **dead**: in 867 nobody follows it. In this version, you play it by creating a character in the **Ruler Designer** and choosing Druidism as the faith. A landed character works with the base game; a landless adventurer needs *Roads to Power*.
 
 Achievements are disabled while a mod is active.
 
@@ -37,7 +37,7 @@ Achievements are disabled while a mod is active.
 
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
-- An 867 bookmark with a landless start: **Dubgall the Apostate** (see below)
+- An 867 bookmark with a landless start: **Dubgall the Apostate** (see below; requires *Roads to Power*)
 - New camp buildings for the quest
 - Other characters in the same bookmark: **Rhodri Mawr**, **Dumnarth** and **Salomon**
 - The **Archdruid**: a head of faith for the reformed religion
@@ -57,6 +57,13 @@ Achievements are disabled while a mod is active.
 - Music
 - A Celtic interface
 - Loading screen artwork
+
+## Requirements
+
+No DLC is required to play the faith. Optional:
+
+- *Roads to Power* to play a landless adventurer
+- *All Under Heaven* for the Cranial Trophies tenet (Gaulish and Celtiberian rites)
 
 ## Coming next: Dubgall the Apostate
 
