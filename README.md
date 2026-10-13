@@ -53,6 +53,8 @@ Achievements are disabled while a mod is active.
 - Name lists
 - More events
 - More scenarios
+- Music
+- A Celtic interface
 
 ## Coming next: Dubgall the Apostate
 
