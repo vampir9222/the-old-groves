@@ -60,7 +60,7 @@ The mod only adds new files and overwrites no vanilla file. It should work with 
 
 ## Credits
 
-Inspired by **Celtic Religion** by LordTerracotta.
+Inspired by **Celtic Religion** by LordTerracotta and by **Celtic Paganism**.
 
 ## License
 
