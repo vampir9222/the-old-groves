@@ -35,12 +35,15 @@ Achievements are disabled while a mod is active.
 
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
-- An 867 bookmark with a landless start
+- An 867 bookmark with a landless start, with its own storyline
+
+**Planned later**
+- A Gaulish culture
+- Celtic titles and empires
 
 **Ideas, no promise**
-- Gaulish and Celtiberian cultures
+- A Celtiberian culture
 - Celtic buildings and holy orders
-- Titles and empires
 
 ## Compatibility
 
