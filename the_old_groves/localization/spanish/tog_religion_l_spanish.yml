@@ -15,9 +15,9 @@
 
  # Rites
  tog_gaelic_rite: "Druídecht"
- tog_gaelic_rite_adj: "gaélico"
- tog_gaelic_rite_adherent: "gaélico"
- tog_gaelic_rite_adherent_plural: "gaélicos"
+ tog_gaelic_rite_adj: "druídico gaélico"
+ tog_gaelic_rite_adherent: "druidista gaélico"
+ tog_gaelic_rite_adherent_plural: "druidistas gaélicos"
  tog_gaelic_rite_desc: "La tradición de los gaélicos de Irlanda, Dál Riata y Man. Honra a Lug y a los Tuatha Dé, celebra Samain y Beltaine y guarda la memoria de los antepasados en las genealogías de los poetas."
 
  # Custom doctrine
@@ -105,19 +105,19 @@
 
  # Other rites
  tog_brythonic_rite: "Plant Dôn"
- tog_brythonic_rite_adj: "britónico"
- tog_brythonic_rite_adherent: "britón"
- tog_brythonic_rite_adherent_plural: "britones"
+ tog_brythonic_rite_adj: "druídico britónico"
+ tog_brythonic_rite_adherent: "druidista britónico"
+ tog_brythonic_rite_adherent_plural: "druidistas britónicos"
  tog_brythonic_rite_desc: "La tradición de los britones de la isla y de sus primos de Armórica: Gales, Cornualles, Cumbria y Pictavia. Honra a Lleu y a los Hijos de Dôn, venera las piedras erguidas y los bosques sagrados, y abre su sacerdocio y sus tronos a mujeres y hombres por igual."
  tog_gaulish_rite: "Gutuatrismo"
- tog_gaulish_rite_adj: "galo"
- tog_gaulish_rite_adherent: "galo"
- tog_gaulish_rite_adherent_plural: "galos"
+ tog_gaulish_rite_adj: "druídico galo"
+ tog_gaulish_rite_adherent: "druidista galo"
+ tog_gaulish_rite_adherent_plural: "druidistas galos"
  tog_gaulish_rite_desc: "La tradición del continente, reconstruida a partir de inscripciones y de los relatos de griegos y romanos. Honra a Lugus y a Sucellos, lee las estrellas como los druidas de César, quema a sus muertos y conserva las cabezas de sus enemigos."
  tog_celtiberian_rite: "Lugovismo"
- tog_celtiberian_rite_adj: "celtíbero"
- tog_celtiberian_rite_adherent: "celtíbero"
- tog_celtiberian_rite_adherent_plural: "celtíberos"
+ tog_celtiberian_rite_adj: "druídico celtíbero"
+ tog_celtiberian_rite_adherent: "druidista celtíbero"
+ tog_celtiberian_rite_adherent_plural: "druidistas celtíberos"
  tog_celtiberian_rite_desc: "La tradición de los celtas de Hispania, de la Meseta a Gallaecia. Honra a Lugus, sella la hospitalidad con pactos grabados en bronce y entrega a sus guerreros caídos a los buitres que se llevan sus almas."
 
  # Pantheons of the Brythonic, Gaulish and Celtiberian rites
@@ -195,6 +195,6 @@
  # Holy sites
  holy_site_tog_tara_name: "Tara"
  holy_site_tog_ynys_mon_name: "Ynys Môn"
- holy_site_tog_carnutes_name: "Tierra de los carnutos"
+ holy_site_tog_carnutes_name: "Bosque de los carnutos"
  holy_site_tog_alesia_name: "Alesia"
  holy_site_tog_penalba_name: "Peñalba de Villastar"

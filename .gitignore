@@ -5,3 +5,4 @@ desktop.ini
 
 # Design notes stay private
 *.md
+!README.md

@@ -55,6 +55,7 @@ tog_celtic_religion = {
 			brave = { weight = 30 scale = 1 }
 			generous = { weight = 30 scale = 1 }
 			just = { weight = 30 scale = 1 }
+			lifestyle_poet = { weight = 30 scale = 1 }
 		}
 		sins = {
 			craven = { weight = 30 scale = 1 }
