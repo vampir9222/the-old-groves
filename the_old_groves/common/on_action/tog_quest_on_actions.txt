@@ -1,0 +1,23 @@
+﻿# The Old Groves - restoration quest on_actions
+
+on_game_start_after_lobby = {
+	on_actions = { tog_on_game_start_quest }
+}
+
+# Dubgall, played by a human, receives the opening event a few days in.
+tog_on_game_start_quest = {
+	effect = {
+		character:tog_dubgall ?= {
+			if = {
+				limit = {
+					is_alive = yes
+					is_ai = no
+				}
+				trigger_event = {
+					id = tog_quest.0001
+					days = 3
+				}
+			}
+		}
+	}
+}

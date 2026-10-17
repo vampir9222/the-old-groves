@@ -1,0 +1,114 @@
+﻿# The Old Groves - restoration quest decisions
+
+# Any Goidelic or Brythonic character with enough learning can start the quest.
+# Dubgall gets an opening event instead, but can use this if he turned it down.
+tog_quest_start_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_quest_start_decision_desc
+	selection_tooltip = tog_quest_start_decision_tooltip
+	confirm_text = tog_quest_start_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+		NOT = { faith = faith:tog_druidism }
+		NOT = {
+			any_owned_story = { type = tog_story_old_groves }
+		}
+	}
+
+	is_valid = {
+		learning >= 10
+	}
+
+	effect = {
+		custom_tooltip = tog_quest_start_decision_effect_tt
+		hidden_effect = {
+			tog_start_quest_effect = yes
+			trigger_event = tog_quest.0002
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Opens the travel planner towards the current quest destination (safety net:
+# the quest events already start each journey).
+tog_quest_travel_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_quest_travel_decision_desc
+	selection_tooltip = tog_quest_travel_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		any_owned_story = {
+			type = tog_story_old_groves
+			exists = var:tog_destination
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_travelling = no
+		custom_description = {
+			text = tog_quest_travel_decision_not_there
+			NOT = {
+				any_owned_story = {
+					type = tog_story_old_groves
+					var:tog_destination.title_province = root.location
+					NOT = { exists = var:tog_left_camp }
+				}
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_quest_travel_decision_effect_tt
+		hidden_effect = {
+			# Coming back to the bandits' camp after leaving it.
+			random_owned_story = {
+				limit = {
+					type = tog_story_old_groves
+					exists = var:tog_left_camp
+				}
+				set_variable = {
+					name = tog_returning
+					value = yes
+				}
+			}
+			if = {
+				limit = { location = province:1701 }
+				trigger_event = tog_quest.0060
+			}
+			else = {
+				tog_travel_to_destination_effect = yes
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

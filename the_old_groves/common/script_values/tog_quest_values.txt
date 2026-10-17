@@ -1,0 +1,19 @@
+﻿# The Old Groves - restoration quest values
+
+# Weight of the good outcome in quest events, against a fixed 60 for the bad one.
+# Skill 10 gives an even chance; skill 20, about 62 %; skill 5, about 40 %.
+tog_good_weight_learning_value = {
+	value = learning
+	multiply = 4
+	add = 20
+}
+tog_good_weight_diplomacy_value = {
+	value = diplomacy
+	multiply = 4
+	add = 20
+}
+tog_good_weight_martial_value = {
+	value = martial
+	multiply = 4
+	add = 20
+}

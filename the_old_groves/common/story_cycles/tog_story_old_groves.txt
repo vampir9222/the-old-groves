@@ -1,0 +1,78 @@
+﻿# The Old Groves - restoration quest, shown in the Situations window.
+# Step 1 (stages):
+# 1 go to the stone on Skye, copy it, meet Peredur
+# 2 Peredur leads you to the wrong old man (Gairloch)
+# 3 the right old man's house is empty (Ardnamurchan)
+# 4 rescue him from the bandits' camp (Glencoe)
+# 5 step 1 done (step 2 to come)
+
+tog_story_old_groves = {
+	visible = yes
+
+	icon = {
+		reference = "gfx/interface/icons/artifact/artifact_chronicle.dds"
+	}
+
+	background = {
+		reference = "gfx/interface/illustrations/event_scenes/fp1_runestone_circle.dds"
+	}
+
+	visualization = {
+		custom_string_key = "tog_story_old_groves_info"
+		title = {
+			variable_name = "tog_destination"
+			label = "tog_story_old_groves_destination"
+		}
+		decisions = { tog_quest_travel_decision }
+		character_list = {
+			variable_name = "tog_companions"
+			label = "tog_story_old_groves_companions"
+		}
+	}
+
+	on_setup = {
+		set_variable = {
+			name = tog_stage
+			value = 1
+		}
+		set_variable = {
+			name = tog_destination
+			value = title:b_skye
+		}
+		set_global_variable = {
+			name = tog_poi_stone_active
+			value = yes
+		}
+		province:1692 = { add_travel_point_of_interest = tog_poi_stone }
+	}
+
+	on_end = {
+		if = {
+			limit = { exists = global_var:tog_poi_stone_active }
+			remove_global_variable = tog_poi_stone_active
+			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+		}
+	}
+
+	# Passing the quest to the heir comes later; for now the quest ends with its owner.
+	on_owner_death = {
+		end_story = yes
+	}
+
+	# Fallback: if the owner stands at the current destination (camp moved, travel
+	# arrival missed...), run the arrival event. It never fires a scene twice.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_destination
+			story_owner.location = var:tog_destination.title_province
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = { trigger_event = tog_quest.0060 }
+			}
+		}
+	}
+}

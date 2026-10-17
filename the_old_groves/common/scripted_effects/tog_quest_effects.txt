@@ -1,0 +1,132 @@
+﻿# The Old Groves - restoration quest effects
+
+# Starts the quest for the current character.
+tog_start_quest_effect = {
+	create_story = tog_story_old_groves
+}
+
+# Moves the quest to a new stage: STAGE and DESTINATION (a barony).
+tog_next_stage_effect = {
+	random_owned_story = {
+		limit = { type = tog_story_old_groves }
+		set_variable = {
+			name = tog_stage
+			value = $STAGE$
+		}
+		set_variable = {
+			name = tog_destination
+			value = title:$DESTINATION$
+		}
+	}
+}
+
+# Sets out for the current quest destination, one way.
+# Adventurers move their camp; rulers travel and stay until the next leg or the way home.
+tog_travel_to_destination_effect = {
+	random_owned_story = {
+		limit = { type = tog_story_old_groves }
+		var:tog_destination ?= {
+			title_province = { save_scope_as = tog_travel_target }
+		}
+	}
+	if = {
+		limit = {
+			is_travelling = no
+			exists = scope:tog_travel_target
+			NOT = { location = scope:tog_travel_target }
+		}
+		if = {
+			limit = { is_landless_adventurer = yes }
+			start_travel_plan = {
+				destination = scope:tog_travel_target
+				on_arrival_event = tog_quest.0060
+				on_arrival_destinations = last
+				return_trip = no
+				travel_with_domicile = yes
+			}
+		}
+		else = {
+			start_travel_plan = {
+				destination = scope:tog_travel_target
+				on_arrival_event = tog_quest.0060
+				on_arrival_destinations = last
+				return_trip = no
+			}
+		}
+	}
+}
+
+# Rulers only: the way home at the end of the step.
+tog_travel_home_effect = {
+	if = {
+		limit = {
+			is_landless_adventurer = no
+			is_travelling = no
+			exists = capital_province
+			NOT = { location = capital_province }
+		}
+		start_travel_plan = {
+			destination = capital_province
+			return_trip = no
+		}
+	}
+}
+
+# Bandits' camp: attacking (martial). Success frees the old man and yields the loot;
+# failure wounds you and you come back a few days later.
+tog_camp_attack_effect = {
+	random_list = {
+		0 = {
+			modifier = { add = tog_good_weight_martial_value }
+			custom_tooltip = tog_quest.0023.a.good
+			add_gold = medium_gold_value
+			add_martial_lifestyle_xp = minor_lifestyle_xp
+			add_prestige = minor_prestige_gain
+			hidden_effect = {
+				trigger_event = {
+					id = tog_quest.0050
+					days = 1
+				}
+			}
+		}
+		60 = {
+			custom_tooltip = tog_quest.0023.a.bad
+			increase_wounds_no_death_effect = { REASON = fight }
+			add_prestige = minor_prestige_loss
+			hidden_effect = {
+				trigger_event = {
+					id = tog_quest.0024
+					days = 1
+				}
+			}
+		}
+	}
+}
+
+# Bandits' camp: paying the ransom (certain).
+tog_camp_pay_effect = {
+	remove_short_term_gold = medium_gold_value
+	custom_tooltip = tog_quest.0023.c.tt
+	hidden_effect = {
+		trigger_event = {
+			id = tog_quest.0050
+			days = 1
+		}
+	}
+}
+
+# Bandits' camp: leaving, to come back once there is enough gold or martial skill.
+# Rulers head home; the camp can be faced again through the travel decision.
+tog_camp_leave_effect = {
+	custom_tooltip = tog_quest.0025.c.tt
+	hidden_effect = {
+		random_owned_story = {
+			limit = { type = tog_story_old_groves }
+			set_variable = {
+				name = tog_left_camp
+				value = yes
+			}
+		}
+		tog_travel_home_effect = yes
+	}
+}

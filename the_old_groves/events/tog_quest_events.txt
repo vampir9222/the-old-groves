@@ -1,0 +1,580 @@
+﻿namespace = tog_quest
+
+# The Old Groves - restoration quest, step 1: the stone and the old man.
+# 0001 Dubgall's opening | 0002 start by decision | 0003 copying the stone
+# 0020 Peredur at the stone | 0021 the wrong old man | 0022 the empty house
+# 0023 the bandits' camp | 0024 a failed attempt | 0050 the old man rescued
+# 0010-0012 events on the road | 0060 arrival dispatcher (hidden)
+
+# Dubgall: who he is, and the stone on the moor.
+tog_quest.0001 = {
+	type = character_event
+	title = tog_quest.0001.t
+	desc = tog_quest.0001.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0001.a
+		custom_tooltip = tog_quest.0001.a.tt
+		tog_start_quest_effect = yes
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0060
+				days = 1
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0001.b
+		custom_tooltip = tog_quest.0001.b.tt
+	}
+}
+
+# Any other character: word of a strange stone on Skye.
+tog_quest.0002 = {
+	type = character_event
+	title = tog_quest.0002.t
+	desc = tog_quest.0002.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0002.a
+		custom_tooltip = tog_quest.0002.a.tt
+		hidden_effect = { tog_travel_to_destination_effect = yes }
+	}
+}
+
+# At the stone: the character copies the signs onto a wax tablet.
+tog_quest.0003 = {
+	type = character_event
+	title = tog_quest.0003.t
+	desc = tog_quest.0003.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0003.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0020
+				days = 1
+			}
+		}
+	}
+}
+
+# Peredur, looking for his goat, finds you at the stone and offers to take you to the old man.
+tog_quest.0020 = {
+	type = character_event
+	title = tog_quest.0020.t
+	desc = tog_quest.0020.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = {
+		create_character = {
+			name = "Peredur"
+			age = 20
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = strong
+			trait = trusting
+			diplomacy = 6
+			martial = 9
+			stewardship = 14
+			intrigue = 2
+			learning = 3
+			prowess = 14
+			save_scope_as = tog_peredur
+		}
+	}
+
+	option = {
+		name = tog_quest.0020.a
+		custom_tooltip = tog_quest.0020.a.tt
+		hidden_effect = {
+			add_courtier = scope:tog_peredur
+			random_owned_story = {
+				limit = { type = tog_story_old_groves }
+				set_variable = {
+					name = tog_peredur
+					value = scope:tog_peredur
+				}
+				add_to_variable_list = {
+					name = tog_companions
+					target = scope:tog_peredur
+				}
+			}
+			tog_next_stage_effect = {
+				STAGE = 2
+				DESTINATION = b_gairloch
+			}
+			tog_travel_to_destination_effect = yes
+			trigger_event = {
+				id = tog_quest.0010
+				days = { 4 8 }
+			}
+		}
+	}
+}
+
+# The wrong old man: Peredur went left.
+tog_quest.0021 = {
+	type = character_event
+	title = tog_quest.0021.t
+	desc = tog_quest.0021.desc
+	theme = learning
+	override_background = { reference = fp1_ocean_norse }
+	left_portrait = {
+		character = root
+		animation = disapproval
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = shame
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { type = tog_story_old_groves }
+			var:tog_peredur ?= { save_scope_as = tog_peredur }
+		}
+	}
+
+	option = {
+		name = tog_quest.0021.a
+		custom_tooltip = tog_quest.0021.a.tt
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 3
+				DESTINATION = b_ardnamurchon
+			}
+			tog_travel_to_destination_effect = yes
+			trigger_event = {
+				id = tog_quest.0011
+				days = { 4 8 }
+			}
+		}
+	}
+}
+
+# The right old man's house: broken door, and he is gone, taken by bandits.
+tog_quest.0022 = {
+	type = character_event
+	title = tog_quest.0022.t
+	desc = tog_quest.0022.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = {
+		name = tog_quest.0022.a
+		custom_tooltip = tog_quest.0022.a.tt
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 4
+				DESTINATION = b_glencoe
+			}
+			tog_travel_to_destination_effect = yes
+			trigger_event = {
+				id = tog_quest.0012
+				days = { 4 8 }
+			}
+		}
+	}
+}
+
+# The bandits' camp: attack (martial), talk (diplomacy) or pay (gold, certain).
+# A failed attack wounds you; you come back a few days later and may attack again.
+# A failed talk opens tog_quest.0025 at once: attack, pay, or leave and come back later.
+tog_quest.0023 = {
+	type = character_event
+	title = tog_quest.0023.t
+	desc = tog_quest.0023.desc
+	theme = martial
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	option = { # Attack the camp
+		name = tog_quest.0023.a
+		trigger = { martial >= 8 }
+		show_as_unavailable = { always = yes }
+		tog_camp_attack_effect = yes
+	}
+
+	option = { # Talk them round
+		name = tog_quest.0023.b
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				NOT = { exists = var:tog_tried_talk }
+			}
+		}
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0023.b.good
+				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+				hidden_effect = {
+					trigger_event = {
+						id = tog_quest.0050
+						days = 1
+					}
+				}
+			}
+			60 = {
+				custom_tooltip = tog_quest.0023.b.bad
+				add_prestige = minor_prestige_loss
+				hidden_effect = {
+					random_owned_story = {
+						limit = { type = tog_story_old_groves }
+						set_variable = {
+							name = tog_tried_talk
+							value = yes
+						}
+					}
+					trigger_event = tog_quest.0025
+				}
+			}
+		}
+	}
+
+	option = { # Pay the ransom
+		name = tog_quest.0023.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		tog_camp_pay_effect = yes
+	}
+
+	option = { # Leave, and come back when ready
+		name = tog_quest.0025.c
+		tog_camp_leave_effect = yes
+	}
+}
+
+# The attack failed: you escaped by a hair, wounded. Back to the camp a few days later.
+tog_quest.0024 = {
+	type = character_event
+	title = tog_quest.0024.t
+	desc = tog_quest.0024.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	option = {
+		name = tog_quest.0024.a
+		custom_tooltip = tog_quest.0024.a.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0023
+				days = { 5 10 }
+			}
+		}
+	}
+}
+
+# The talk failed: the bandits laughed you out of the camp.
+# Attack, pay, or leave and come back later.
+tog_quest.0025 = {
+	type = character_event
+	title = tog_quest.0025.t
+	desc = tog_quest.0025.desc
+	theme = martial
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = shame
+	}
+
+	option = { # Attack the camp
+		name = tog_quest.0023.a
+		trigger = { martial >= 8 }
+		show_as_unavailable = { always = yes }
+		tog_camp_attack_effect = yes
+	}
+
+	option = { # Pay the ransom
+		name = tog_quest.0023.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		tog_camp_pay_effect = yes
+	}
+
+	option = { # Leave, and come back when ready
+		name = tog_quest.0025.c
+		tog_camp_leave_effect = yes
+	}
+}
+
+# The old man is free: he joins you, explains the stone, and sends you to the monks' books.
+tog_quest.0050 = {
+	type = character_event
+	title = tog_quest.0050.t
+	desc = tog_quest.0050.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = {
+		create_character = {
+			name = "Lailoken"
+			age = 68
+			gender = male
+			culture = root.location.county.culture
+			faith = root.location.county.faith
+			dynasty = none
+			location = root.location
+			trait = eccentric
+			diplomacy = 6
+			martial = 2
+			stewardship = 5
+			intrigue = 4
+			learning = 13
+			save_scope_as = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0050.a
+		custom_tooltip = tog_quest.0050.a.tt
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		hidden_effect = {
+			add_courtier = scope:tog_lailoken
+			random_owned_story = {
+				limit = { type = tog_story_old_groves }
+				set_variable = {
+					name = tog_lailoken
+					value = scope:tog_lailoken
+				}
+				add_to_variable_list = {
+					name = tog_companions
+					target = scope:tog_lailoken
+				}
+				set_variable = {
+					name = tog_stage
+					value = 5
+				}
+				remove_variable = tog_destination
+			}
+			remove_global_variable = tog_poi_stone_active
+			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+			tog_travel_home_effect = yes
+		}
+	}
+}
+
+# On the road (to the wrong old man): the wax tablet has melted near the fire.
+tog_quest.0010 = {
+	type = character_event
+	title = tog_quest.0010.t
+	desc = tog_quest.0010.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Redraw the signs from memory (learning)
+		name = tog_quest.0010.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0010.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0010.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Let Peredur carry the tablet from now on
+		name = tog_quest.0010.b
+		custom_tooltip = tog_quest.0010.b.tt
+		add_stress = minor_stress_loss
+	}
+}
+
+# On the road (to the old man's house): a trader has seen similar stones to the east.
+tog_quest.0011 = {
+	type = character_event
+	title = tog_quest.0011.t
+	desc = tog_quest.0011.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = { # Question him at length (diplomacy)
+		name = tog_quest.0011.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0011.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0011.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Buy his drawing (gold, certain)
+		name = tog_quest.0011.b
+		remove_short_term_gold = minor_gold_value
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+	}
+}
+
+# On the road (to the bandits' camp): the crescent haunts your dreams.
+tog_quest.0012 = {
+	type = character_event
+	title = tog_quest.0012.t
+	desc = tog_quest.0012.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Write the dream down (learning)
+		name = tog_quest.0012.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0012.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0012.a.bad
+				add_stress = medium_stress_gain
+			}
+		}
+	}
+
+	option = { # It is only a dream
+		name = tog_quest.0012.b
+		add_stress = minor_stress_loss
+	}
+}
+
+# Arrival at a quest destination (travel, point of interest, or the monthly check).
+tog_quest.0060 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { type = tog_story_old_groves }
+			save_scope_as = tog_story
+		}
+		if = {
+			limit = { exists = scope:tog_story }
+			scope:tog_story = {
+				if = {
+					limit = {
+						var:tog_stage = 1
+						root.location = province:1692
+						NOT = { exists = var:tog_seen_stone }
+					}
+					set_variable = {
+						name = tog_seen_stone
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0003 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 2
+						root.location = province:1704
+						NOT = { exists = var:tog_v_wrong }
+					}
+					set_variable = {
+						name = tog_v_wrong
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0021 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 3
+						root.location = province:35
+						NOT = { exists = var:tog_v_house }
+					}
+					set_variable = {
+						name = tog_v_house
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0022 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 4
+						root.location = province:1701
+						OR = {
+							NOT = { exists = var:tog_v_camp }
+							exists = var:tog_returning
+						}
+					}
+					set_variable = {
+						name = tog_v_camp
+						value = yes
+					}
+					remove_variable = tog_returning
+					remove_variable = tog_left_camp
+					root = { trigger_event = tog_quest.0023 }
+				}
+			}
+		}
+	}
+}

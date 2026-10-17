@@ -1,0 +1,63 @@
+﻿# The Old Groves - current objective shown in the quest window (story scope)
+
+TogQuestObjective = {
+	type = all
+
+	text = {
+		trigger = { var:tog_stage = 1 }
+		localization_key = tog_obj_stone
+	}
+	text = {
+		trigger = { var:tog_stage = 2 }
+		localization_key = tog_obj_wrong
+	}
+	text = {
+		trigger = { var:tog_stage = 3 }
+		localization_key = tog_obj_house
+	}
+	text = {
+		trigger = { var:tog_stage = 4 }
+		localization_key = tog_obj_camp
+	}
+	text = {
+		trigger = { var:tog_stage = 5 }
+		localization_key = tog_obj_books
+	}
+}
+
+# Destination named in the travel decision (character scope).
+TogTravelTarget = {
+	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 2
+			}
+		}
+		localization_key = tog_dest_wrong
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 3
+			}
+		}
+		localization_key = tog_dest_house
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 4
+			}
+		}
+		localization_key = tog_dest_camp
+	}
+	text = {
+		trigger = { always = yes }
+		localization_key = tog_dest_stone
+	}
+}
