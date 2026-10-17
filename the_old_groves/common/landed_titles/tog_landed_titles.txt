@@ -2,7 +2,7 @@
 
 d_tog_laamp_dubgall = { # Dubgall the Apostate, former monk of Iona
 	color = { 40 60 120 }
-	capital = c_inner_hebrides
+	capital = c_outer_hebrides # Skye, where the Pictish stone lies
 
 	definite_form = yes
 	landless = yes
