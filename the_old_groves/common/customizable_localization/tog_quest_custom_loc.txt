@@ -61,3 +61,50 @@ TogTravelTarget = {
 		localization_key = tog_dest_stone
 	}
 }
+
+# Description of the travel decision, by stage (character scope).
+TogTravelDesc = {
+	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 2
+			}
+		}
+		localization_key = tog_travel_desc_wrong
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 3
+			}
+		}
+		localization_key = tog_travel_desc_house
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 4
+				exists = var:tog_left_camp
+			}
+		}
+		localization_key = tog_travel_desc_camp_return
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				type = tog_story_old_groves
+				var:tog_stage = 4
+			}
+		}
+		localization_key = tog_travel_desc_camp
+	}
+	text = {
+		trigger = { always = yes }
+		localization_key = tog_travel_desc_stone
+	}
+}
