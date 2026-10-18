@@ -122,7 +122,7 @@ tog_quest.0020 = {
 		hidden_effect = {
 			add_courtier = scope:tog_peredur
 			random_owned_story = {
-				limit = { type = tog_story_old_groves }
+				limit = { story_type = tog_story_old_groves }
 				set_variable = {
 					name = tog_peredur
 					value = scope:tog_peredur
@@ -163,7 +163,7 @@ tog_quest.0021 = {
 
 	immediate = {
 		random_owned_story = {
-			limit = { type = tog_story_old_groves }
+			limit = { story_type = tog_story_old_groves }
 			var:tog_peredur ?= { save_scope_as = tog_peredur }
 		}
 	}
@@ -239,7 +239,7 @@ tog_quest.0023 = {
 		name = tog_quest.0023.b
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				NOT = { exists = var:tog_tried_talk }
 			}
 		}
@@ -260,7 +260,7 @@ tog_quest.0023 = {
 				add_prestige = minor_prestige_loss
 				hidden_effect = {
 					random_owned_story = {
-						limit = { type = tog_story_old_groves }
+						limit = { story_type = tog_story_old_groves }
 						set_variable = {
 							name = tog_tried_talk
 							value = yes
@@ -384,7 +384,7 @@ tog_quest.0050 = {
 		hidden_effect = {
 			add_courtier = scope:tog_lailoken
 			random_owned_story = {
-				limit = { type = tog_story_old_groves }
+				limit = { story_type = tog_story_old_groves }
 				set_variable = {
 					name = tog_lailoken
 					value = scope:tog_lailoken
@@ -393,12 +393,8 @@ tog_quest.0050 = {
 					name = tog_companions
 					target = scope:tog_lailoken
 				}
-				set_variable = {
-					name = tog_stage
-					value = 5
-				}
-				remove_variable = tog_destination
 			}
+			tog_start_step2_effect = yes
 			remove_global_variable = tog_poi_stone_active
 			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
 			tog_travel_home_effect = yes
@@ -515,7 +511,7 @@ tog_quest.0060 = {
 
 	immediate = {
 		random_owned_story = {
-			limit = { type = tog_story_old_groves }
+			limit = { story_type = tog_story_old_groves }
 			save_scope_as = tog_story
 		}
 		if = {
@@ -574,7 +570,1295 @@ tog_quest.0060 = {
 					remove_variable = tog_left_camp
 					root = { trigger_event = tog_quest.0023 }
 				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1606
+						NOT = { exists = var:tog_m_jarrow_done }
+					}
+					root = { trigger_event = tog_quest.0101 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1684
+						NOT = { exists = var:tog_m_whithorn_done }
+					}
+					root = { trigger_event = tog_quest.0102 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1655
+						NOT = { exists = var:tog_m_mynyw_done }
+					}
+					root = { trigger_event = tog_quest.0103 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1743
+						NOT = { exists = var:tog_m_dunkeld_done }
+					}
+					root = { trigger_event = tog_quest.0104 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:8778
+						NOT = { exists = var:tog_m_applecross_done }
+					}
+					root = { trigger_event = tog_quest.0105 }
+				}
 			}
 		}
+	}
+}
+
+# Step 2 - arrival at the monastery (jarrow).
+tog_quest.0101 = {
+	type = character_event
+	title = tog_quest.0101.t
+	desc = tog_quest.0101.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { tog_monastery_open_trigger = { M = jarrow FLAG = talk } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = jarrow
+			TITLE = b_durham
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			tog_monastery_open_trigger = { M = jarrow FLAG = pay }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = jarrow
+			TITLE = b_durham
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = jarrow FLAG = steal } } }
+		show_as_unavailable = { always = yes }
+		tog_monastery_steal_effect = {
+			M = jarrow
+			TITLE = b_durham
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		trigger = { martial >= 12 }
+		show_as_unavailable = { always = yes }
+		tog_monastery_force_effect = {
+			M = jarrow
+			TITLE = b_durham
+			PROV = 1606
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+	}
+}
+
+# Step 2 - reading the book of jarrow, a few months later.
+tog_quest.0121 = {
+	type = character_event
+	title = tog_quest.0121.t
+	desc = tog_quest.0121.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0121.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (whithorn).
+tog_quest.0102 = {
+	type = character_event
+	title = tog_quest.0102.t
+	desc = tog_quest.0102.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { tog_monastery_open_trigger = { M = whithorn FLAG = talk } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			tog_monastery_open_trigger = { M = whithorn FLAG = pay }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = whithorn FLAG = steal } } }
+		show_as_unavailable = { always = yes }
+		tog_monastery_steal_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		trigger = { martial >= 12 }
+		show_as_unavailable = { always = yes }
+		tog_monastery_force_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+			PROV = 1684
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+	}
+}
+
+# Step 2 - reading the book of whithorn, a few months later.
+tog_quest.0122 = {
+	type = character_event
+	title = tog_quest.0122.t
+	desc = tog_quest.0122.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0122.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (mynyw).
+tog_quest.0103 = {
+	type = character_event
+	title = tog_quest.0103.t
+	desc = tog_quest.0103.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { tog_monastery_open_trigger = { M = mynyw FLAG = talk } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			tog_monastery_open_trigger = { M = mynyw FLAG = pay }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = mynyw FLAG = steal } } }
+		show_as_unavailable = { always = yes }
+		tog_monastery_steal_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		trigger = { martial >= 12 }
+		show_as_unavailable = { always = yes }
+		tog_monastery_force_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+			PROV = 1655
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+	}
+}
+
+# Step 2 - reading the book of mynyw, a few months later.
+tog_quest.0123 = {
+	type = character_event
+	title = tog_quest.0123.t
+	desc = tog_quest.0123.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0123.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (dunkeld).
+tog_quest.0104 = {
+	type = character_event
+	title = tog_quest.0104.t
+	desc = tog_quest.0104.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { tog_monastery_open_trigger = { M = dunkeld FLAG = talk } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			tog_monastery_open_trigger = { M = dunkeld FLAG = pay }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = dunkeld FLAG = steal } } }
+		show_as_unavailable = { always = yes }
+		tog_monastery_steal_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		trigger = { martial >= 12 }
+		show_as_unavailable = { always = yes }
+		tog_monastery_force_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+			PROV = 1743
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+	}
+}
+
+# Step 2 - reading the book of dunkeld, a few months later.
+tog_quest.0124 = {
+	type = character_event
+	title = tog_quest.0124.t
+	desc = tog_quest.0124.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0124.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (applecross).
+tog_quest.0105 = {
+	type = character_event
+	title = tog_quest.0105.t
+	desc = tog_quest.0105.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { tog_monastery_open_trigger = { M = applecross FLAG = talk } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = applecross
+			TITLE = b_applecross
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			tog_monastery_open_trigger = { M = applecross FLAG = pay }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = applecross
+			TITLE = b_applecross
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = applecross FLAG = steal } } }
+		show_as_unavailable = { always = yes }
+		tog_monastery_steal_effect = {
+			M = applecross
+			TITLE = b_applecross
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		trigger = { martial >= 12 }
+		show_as_unavailable = { always = yes }
+		tog_monastery_force_effect = {
+			M = applecross
+			TITLE = b_applecross
+			PROV = 8778
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+	}
+}
+
+# Step 2 - reading the book of applecross, a few months later.
+tog_quest.0125 = {
+	type = character_event
+	title = tog_quest.0125.t
+	desc = tog_quest.0125.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0125.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - the five books read: the synthesis (end of step 2).
+tog_quest.0130 = {
+	type = character_event
+	title = tog_quest.0130.t
+	desc = tog_quest.0130.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	option = {
+		name = tog_quest.0130.a
+		custom_tooltip = tog_quest.0130.a.tt
+		add_piety = major_piety_gain
+		add_learning_lifestyle_xp = 150
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 11
+				}
+			}
+		}
+	}
+}
+
+# Step 2 - choosing which monastery to travel to.
+tog_quest.0140 = {
+	type = character_event
+	title = tog_quest.0140.t
+	desc = tog_quest.0140.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0140.jarrow
+		trigger = { tog_monastery_todo_trigger = { M = jarrow } }
+		if = {
+			limit = { location = province:1606 }
+			hidden_effect = { trigger_event = tog_quest.0101 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1606 } }
+	}
+	option = {
+		name = tog_quest.0140.whithorn
+		trigger = { tog_monastery_todo_trigger = { M = whithorn } }
+		if = {
+			limit = { location = province:1684 }
+			hidden_effect = { trigger_event = tog_quest.0102 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1684 } }
+	}
+	option = {
+		name = tog_quest.0140.mynyw
+		trigger = { tog_monastery_todo_trigger = { M = mynyw } }
+		if = {
+			limit = { location = province:1655 }
+			hidden_effect = { trigger_event = tog_quest.0103 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1655 } }
+	}
+	option = {
+		name = tog_quest.0140.dunkeld
+		trigger = { tog_monastery_todo_trigger = { M = dunkeld } }
+		if = {
+			limit = { location = province:1743 }
+			hidden_effect = { trigger_event = tog_quest.0104 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1743 } }
+	}
+	option = {
+		name = tog_quest.0140.applecross
+		trigger = { tog_monastery_todo_trigger = { M = applecross } }
+		if = {
+			limit = { location = province:8778 }
+			hidden_effect = { trigger_event = tog_quest.0105 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 8778 } }
+	}
+	option = {
+		name = tog_quest.0140.stay
+	}
+}
+
+# ---- Step 2: road events, rolled every 25 to 38 days of a journey to a monastery ----
+
+tog_quest.0150 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		remove_variable = tog_tev_pending
+		if = {
+			limit = {
+				is_travelling = yes
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					var:tog_stage = 10
+				}
+			}
+			# Each road event happens only once.
+			random_list = {
+				105 = {}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_1 } }
+					set_variable = { name = tog_tev_1 value = yes }
+					trigger_event = tog_quest.0151
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_2 } }
+					set_variable = { name = tog_tev_2 value = yes }
+					trigger_event = tog_quest.0152
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_3 } }
+					set_variable = { name = tog_tev_3 value = yes }
+					trigger_event = tog_quest.0153
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_4 } }
+					set_variable = { name = tog_tev_4 value = yes }
+					trigger_event = tog_quest.0154
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_5 } }
+					set_variable = { name = tog_tev_5 value = yes }
+					trigger_event = tog_quest.0155
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_6 } }
+					set_variable = { name = tog_tev_6 value = yes }
+					trigger_event = tog_quest.0156
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_7 } }
+					set_variable = { name = tog_tev_7 value = yes }
+					trigger_event = tog_quest.0157
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_8 }
+						tog_lailoken_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_8 value = yes }
+					trigger_event = tog_quest.0158
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_9 }
+						tog_lailoken_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_9 value = yes }
+					trigger_event = tog_quest.0159
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_10 }
+						tog_peredur_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_10 value = yes }
+					trigger_event = tog_quest.0181
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_11 }
+						tog_peredur_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_11 value = yes }
+					trigger_event = tog_quest.0182
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_12 }
+						tog_peredur_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_12 value = yes }
+					trigger_event = tog_quest.0183
+				}
+			}
+			set_variable = { name = tog_tev_pending value = yes }
+			trigger_event = {
+				id = tog_quest.0150
+				days = { 25 38 }
+			}
+		}
+	}
+}
+
+# Road: Norse raiders.
+tog_quest.0151 = {
+	type = character_event
+	title = tog_quest.0151.t
+	desc = tog_quest.0151.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	option = { # Fight (martial)
+		name = tog_quest.0151.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_martial_value }
+				custom_tooltip = tog_quest.0151.a.good
+				add_gold = minor_gold_value
+				add_prestige = minor_prestige_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0151.a.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+				remove_short_term_gold = tiny_gold_value
+			}
+		}
+	}
+
+	option = { # Parley in their tongue (diplomacy)
+		name = tog_quest.0151.b
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0151.b.good
+				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0151.b.bad
+				remove_short_term_gold = minor_gold_value
+			}
+		}
+	}
+}
+
+# Road: a wandering monk who wants to debate.
+tog_quest.0152 = {
+	type = character_event
+	title = tog_quest.0152.t
+	desc = tog_quest.0152.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Debate (learning)
+		name = tog_quest.0152.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0152.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0152.a.bad
+				add_prestige = minor_prestige_loss
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Keep quiet
+		name = tog_quest.0152.b
+		add_stress = minor_stress_gain
+	}
+}
+
+# Road: a spring hung with ribbons, an old rite that survives.
+tog_quest.0153 = {
+	type = character_event
+	title = tog_quest.0153.t
+	desc = tog_quest.0153.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = { # Understand the rite (learning)
+		name = tog_quest.0153.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0153.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0153.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Tie a ribbon too
+		name = tog_quest.0153.b
+		add_piety = minor_piety_gain
+		add_stress = minor_stress_loss
+	}
+}
+
+# Road: Christian persecution of the old customs.
+tog_quest.0154 = {
+	type = character_event
+	title = tog_quest.0154.t
+	desc = tog_quest.0154.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+
+	option = { # Step in by force (martial)
+		name = tog_quest.0154.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_martial_value }
+				custom_tooltip = tog_quest.0154.a.good
+				add_prestige = minor_prestige_gain
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0154.a.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+			}
+		}
+	}
+
+	option = { # Step in with words (diplomacy)
+		name = tog_quest.0154.b
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0154.b.good
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0154.b.bad
+				add_prestige = minor_prestige_loss
+			}
+		}
+	}
+
+	option = { # Stay hidden and go on
+		name = tog_quest.0154.c
+		add_stress = medium_stress_gain
+	}
+}
+
+# Road: Peredur knows a shortcut.
+tog_quest.0155 = {
+	type = character_event
+	title = tog_quest.0155.t
+	desc = tog_quest.0155.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_peredur ?= { save_scope_as = tog_peredur }
+		}
+	}
+
+	option = { # Follow Peredur (pure chance)
+		name = tog_quest.0155.a
+		random_list = {
+			40 = {
+				custom_tooltip = tog_quest.0155.a.good
+				add_stress = minor_stress_loss
+			}
+			60 = {
+				custom_tooltip = tog_quest.0155.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Ask the locals (diplomacy)
+		name = tog_quest.0155.b
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0155.b.good
+				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0155.b.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+}
+
+# Road: a thief in the night.
+tog_quest.0156 = {
+	type = character_event
+	title = tog_quest.0156.t
+	desc = tog_quest.0156.desc
+	theme = intrigue
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = { # Catch him unawares (intrigue)
+		name = tog_quest.0156.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_intrigue_value }
+				custom_tooltip = tog_quest.0156.a.good
+				add_intrigue_lifestyle_xp = minor_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0156.a.bad
+				remove_short_term_gold = minor_gold_value
+			}
+		}
+	}
+
+	option = { # Fight him (prowess)
+		name = tog_quest.0156.b
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_prowess_value }
+				custom_tooltip = tog_quest.0156.b.good
+				add_prestige = minor_prestige_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0156.b.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+				remove_short_term_gold = minor_gold_value
+			}
+		}
+	}
+}
+
+# Road: a dying pilgrim by the wayside.
+tog_quest.0157 = {
+	type = character_event
+	title = tog_quest.0157.t
+	desc = tog_quest.0157.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+
+	option = { # Help him
+		name = tog_quest.0157.a
+		remove_short_term_gold = tiny_gold_value
+		add_piety = minor_piety_gain
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		custom_tooltip = tog_quest.0157.a.tt
+	}
+
+	option = { # Pass by
+		name = tog_quest.0157.b
+		add_stress = minor_stress_gain
+	}
+}
+
+# ---- Step 2: failure scenes; their option goes back to the monastery ----
+
+# The monk would not be convinced.
+tog_quest.0161 = {
+	type = character_event
+	title = tog_quest.0161.t
+	desc = tog_quest.0161.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0161.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# The monk refused the money.
+tog_quest.0162 = {
+	type = character_event
+	title = tog_quest.0162.t
+	desc = tog_quest.0162.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0162.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# The monk kept the money and vanished.
+tog_quest.0163 = {
+	type = character_event
+	title = tog_quest.0163.t
+	desc = tog_quest.0163.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+
+	option = {
+		name = tog_quest.0163.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# Caught stealing.
+tog_quest.0164 = {
+	type = character_event
+	title = tog_quest.0164.t
+	desc = tog_quest.0164.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+
+	option = {
+		name = tog_quest.0164.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# Repelled at the doors.
+tog_quest.0165 = {
+	type = character_event
+	title = tog_quest.0165.t
+	desc = tog_quest.0165.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	option = {
+		name = tog_quest.0165.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# ---- Step 2: success scenes, one per method ----
+
+tog_quest.0171 = {
+	type = character_event
+	title = tog_quest.0171.t
+	desc = tog_quest.0171.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = {
+		name = tog_quest.0171.a
+	}
+}
+
+tog_quest.0172 = {
+	type = character_event
+	title = tog_quest.0172.t
+	desc = tog_quest.0172.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = tog_quest.0172.a
+	}
+}
+
+tog_quest.0173 = {
+	type = character_event
+	title = tog_quest.0173.t
+	desc = tog_quest.0173.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = {
+		name = tog_quest.0173.a
+	}
+}
+
+tog_quest.0174 = {
+	type = character_event
+	title = tog_quest.0174.t
+	desc = tog_quest.0174.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	option = {
+		name = tog_quest.0174.a
+	}
+}
+
+# Road: Lailoken vanishes one night and comes back with an idea.
+tog_quest.0158 = {
+	type = character_event
+	title = tog_quest.0158.t
+	desc = tog_quest.0158.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+		}
+	}
+
+	option = { # Listen to him
+		name = tog_quest.0158.a
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 15
+			}
+		}
+	}
+
+	option = { # Scold him
+		name = tog_quest.0158.b
+		add_stress = minor_stress_loss
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = disappointed_opinion
+				opinion = -10
+			}
+		}
+	}
+}
+
+# Road: Lailoken can no longer keep up.
+tog_quest.0159 = {
+	type = character_event
+	title = tog_quest.0159.t
+	desc = tog_quest.0159.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = pain
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+		}
+	}
+
+	option = { # Slow down for him
+		name = tog_quest.0159.a
+		add_stress = minor_stress_gain
+		custom_tooltip = tog_quest.0159.a.tt
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 20
+			}
+		}
+	}
+
+	option = { # Push on
+		name = tog_quest.0159.b
+		add_stress = minor_stress_loss
+		scope:tog_lailoken = {
+			contract_disease_effect = {
+				DISEASE = ill
+				TREATMENT_EVENT = no
+			}
+		}
+	}
+}
+
+# Road: Peredur and the toll keeper (he counts everything).
+tog_quest.0181 = {
+	type = character_event
+	title = tog_quest.0181.t
+	desc = tog_quest.0181.desc
+	theme = stewardship
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let Peredur handle it
+		name = tog_quest.0181.a
+		add_gold = tiny_gold_value
+		add_stress = minor_stress_loss
+	}
+
+	option = { # Pay and move on
+		name = tog_quest.0181.b
+		remove_short_term_gold = tiny_gold_value
+	}
+}
+
+# Road: Peredur tries to read one of the books.
+tog_quest.0182 = {
+	type = character_event
+	title = tog_quest.0182.t
+	desc = tog_quest.0182.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = thinking
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Teach him a few letters
+		name = tog_quest.0182.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		scope:tog_peredur = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 15
+			}
+		}
+	}
+
+	option = { # Burst out laughing
+		name = tog_quest.0182.b
+		add_stress = medium_stress_loss
+		scope:tog_peredur = {
+			add_opinion = {
+				target = root
+				modifier = disappointed_opinion
+				opinion = -5
+			}
+		}
+	}
+}
+
+# Road: the shepherd's wager.
+tog_quest.0183 = {
+	type = character_event
+	title = tog_quest.0183.t
+	desc = tog_quest.0183.desc
+	theme = diplomacy
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = personality_bold
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Bet on Peredur
+		name = tog_quest.0183.a
+		add_gold = minor_gold_value
+		add_prestige = minor_prestige_gain
+	}
+
+	option = { # No betting
+		name = tog_quest.0183.b
+		add_piety = minor_piety_gain
 	}
 }

@@ -1,0 +1,34 @@
+﻿# The Old Groves - restoration quest triggers
+
+# Step 2: is a method still open at monastery M? FLAG = talk, pay or steal.
+tog_monastery_open_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		NOT = { exists = var:tog_m_$M$_no_$FLAG$ }
+	}
+}
+
+# Step 2: has the book of monastery M not been obtained yet?
+tog_monastery_todo_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_stage = 10
+		NOT = { exists = var:tog_m_$M$_done }
+	}
+}
+
+# Lailoken has joined the quest and is still alive.
+tog_lailoken_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_lailoken ?= { is_alive = yes }
+	}
+}
+
+# Peredur has joined the quest and is still alive.
+tog_peredur_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_peredur ?= { is_alive = yes }
+	}
+}

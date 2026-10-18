@@ -23,6 +23,18 @@ tog_story_old_groves = {
 			variable_name = "tog_destination"
 			label = "tog_story_old_groves_destination"
 		}
+		title_list = {
+			variable_name = "tog_monasteries"
+			label = "tog_story_old_groves_monasteries"
+		}
+		basic_counter = {
+			variable_name = "tog_books_read"
+			min = 0
+			max = 5
+			label = "tog_story_old_groves_books"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_books_max"
+		}
 		decisions = { tog_quest_travel_decision }
 		character_list = {
 			variable_name = "tog_companions"
@@ -72,6 +84,86 @@ tog_story_old_groves = {
 			trigger = { always = yes }
 			effect = {
 				story_owner = { trigger_event = tog_quest.0060 }
+			}
+		}
+	}
+
+	# Step 2 fallback: the first time the owner stands at a monastery (camp moved,
+	# travel arrival missed...), run its arrival scene.
+	effect_group = {
+		months = 1
+		trigger = { var:tog_stage = 10 }
+
+		first_valid = {
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1606
+					NOT = { exists = var:tog_m_jarrow_done }
+					NOT = { exists = var:tog_m_jarrow_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_m_jarrow_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0101 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1684
+					NOT = { exists = var:tog_m_whithorn_done }
+					NOT = { exists = var:tog_m_whithorn_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_m_whithorn_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0102 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1655
+					NOT = { exists = var:tog_m_mynyw_done }
+					NOT = { exists = var:tog_m_mynyw_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_m_mynyw_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0103 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1743
+					NOT = { exists = var:tog_m_dunkeld_done }
+					NOT = { exists = var:tog_m_dunkeld_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_m_dunkeld_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0104 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:8778
+					NOT = { exists = var:tog_m_applecross_done }
+					NOT = { exists = var:tog_m_applecross_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_m_applecross_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0105 }
+				}
 			}
 		}
 	}

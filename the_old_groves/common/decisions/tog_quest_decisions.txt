@@ -22,7 +22,7 @@ tog_quest_start_decision = {
 		}
 		NOT = { faith = faith:tog_druidism }
 		NOT = {
-			any_owned_story = { type = tog_story_old_groves }
+			any_owned_story = { story_type = tog_story_old_groves }
 		}
 	}
 
@@ -61,8 +61,15 @@ tog_quest_travel_decision = {
 	is_shown = {
 		is_ai = no
 		any_owned_story = {
-			type = tog_story_old_groves
-			exists = var:tog_destination
+			story_type = tog_story_old_groves
+			OR = {
+				exists = var:tog_destination
+				# Step 2: hidden once the five books are recovered.
+				AND = {
+					var:tog_stage = 10
+					NOT = { var:tog_books_got ?= 5 }
+				}
+			}
 		}
 	}
 
@@ -72,7 +79,8 @@ tog_quest_travel_decision = {
 			text = tog_quest_travel_decision_not_there
 			NOT = {
 				any_owned_story = {
-					type = tog_story_old_groves
+					story_type = tog_story_old_groves
+					exists = var:tog_destination
 					var:tog_destination.title_province = root.location
 					NOT = { exists = var:tog_left_camp }
 				}
@@ -83,25 +91,130 @@ tog_quest_travel_decision = {
 	effect = {
 		custom_tooltip = tog_quest_travel_decision_effect_tt
 		hidden_effect = {
-			# Coming back to the bandits' camp after leaving it.
-			random_owned_story = {
-				limit = {
-					type = tog_story_old_groves
-					exists = var:tog_left_camp
-				}
-				set_variable = {
-					name = tog_returning
-					value = yes
-				}
-			}
+			# Step 2: choose which monastery to go to.
 			if = {
-				limit = { location = province:1701 }
-				trigger_event = tog_quest.0060
+				limit = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage = 10
+					}
+				}
+				trigger_event = tog_quest.0140
 			}
 			else = {
-				tog_travel_to_destination_effect = yes
+				# Coming back to the bandits' camp after leaving it.
+				random_owned_story = {
+					limit = {
+						story_type = tog_story_old_groves
+						exists = var:tog_left_camp
+					}
+					set_variable = {
+						name = tog_returning
+						value = yes
+					}
+				}
+				if = {
+					limit = { location = province:1701 }
+					trigger_event = tog_quest.0060
+				}
+				else = {
+					tog_travel_to_destination_effect = yes
+				}
 			}
 		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Skips step 1: starts the quest if needed, adds Peredur and Lailoken, opens step 2.
+tog_test_skip_step1_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step1_decision_desc
+	selection_tooltip = tog_test_skip_step1_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 10
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { any_owned_story = { story_type = tog_story_old_groves } }
+			}
+			tog_start_quest_effect = yes
+		}
+		create_character = {
+			name = "Peredur"
+			age = 20
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = strong
+			trait = trusting
+			stewardship = 14
+			prowess = 14
+			save_scope_as = tog_peredur
+		}
+		create_character = {
+			name = "Lailoken"
+			age = 68
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = eccentric
+			learning = 13
+			save_scope_as = tog_lailoken
+		}
+		add_courtier = scope:tog_peredur
+		add_courtier = scope:tog_lailoken
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_peredur
+				value = scope:tog_peredur
+			}
+			set_variable = {
+				name = tog_lailoken
+				value = scope:tog_lailoken
+			}
+			add_to_variable_list = {
+				name = tog_companions
+				target = scope:tog_peredur
+			}
+			add_to_variable_list = {
+				name = tog_companions
+				target = scope:tog_lailoken
+			}
+		}
+		if = {
+			limit = { exists = global_var:tog_poi_stone_active }
+			remove_global_variable = tog_poi_stone_active
+			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+		}
+		tog_start_step2_effect = yes
 	}
 
 	ai_potential = {

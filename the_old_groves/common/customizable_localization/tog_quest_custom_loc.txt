@@ -20,8 +20,12 @@ TogQuestObjective = {
 		localization_key = tog_obj_camp
 	}
 	text = {
-		trigger = { var:tog_stage = 5 }
+		trigger = { var:tog_stage = 10 }
 		localization_key = tog_obj_books
+	}
+	text = {
+		trigger = { var:tog_stage = 11 }
+		localization_key = tog_obj_step3
 	}
 }
 
@@ -32,7 +36,16 @@ TogTravelTarget = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
+				var:tog_stage = 10
+			}
+		}
+		localization_key = tog_dest_monastery
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
 				var:tog_stage = 2
 			}
 		}
@@ -41,7 +54,7 @@ TogTravelTarget = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				var:tog_stage = 3
 			}
 		}
@@ -50,7 +63,7 @@ TogTravelTarget = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				var:tog_stage = 4
 			}
 		}
@@ -69,7 +82,16 @@ TogTravelDesc = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
+				var:tog_stage = 10
+			}
+		}
+		localization_key = tog_travel_desc_monastery
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
 				var:tog_stage = 2
 			}
 		}
@@ -78,7 +100,7 @@ TogTravelDesc = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				var:tog_stage = 3
 			}
 		}
@@ -87,7 +109,7 @@ TogTravelDesc = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				var:tog_stage = 4
 				exists = var:tog_left_camp
 			}
@@ -97,7 +119,7 @@ TogTravelDesc = {
 	text = {
 		trigger = {
 			any_owned_story = {
-				type = tog_story_old_groves
+				story_type = tog_story_old_groves
 				var:tog_stage = 4
 			}
 		}

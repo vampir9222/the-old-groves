@@ -8,7 +8,7 @@ tog_start_quest_effect = {
 # Moves the quest to a new stage: STAGE and DESTINATION (a barony).
 tog_next_stage_effect = {
 	random_owned_story = {
-		limit = { type = tog_story_old_groves }
+		limit = { story_type = tog_story_old_groves }
 		set_variable = {
 			name = tog_stage
 			value = $STAGE$
@@ -24,7 +24,7 @@ tog_next_stage_effect = {
 # Adventurers move their camp; rulers travel and stay until the next leg or the way home.
 tog_travel_to_destination_effect = {
 	random_owned_story = {
-		limit = { type = tog_story_old_groves }
+		limit = { story_type = tog_story_old_groves }
 		var:tog_destination ?= {
 			title_province = { save_scope_as = tog_travel_target }
 		}
@@ -121,12 +121,450 @@ tog_camp_leave_effect = {
 	custom_tooltip = tog_quest.0025.c.tt
 	hidden_effect = {
 		random_owned_story = {
-			limit = { type = tog_story_old_groves }
+			limit = { story_type = tog_story_old_groves }
 			set_variable = {
 				name = tog_left_camp
 				value = yes
 			}
 		}
 		tog_travel_home_effect = yes
+	}
+}
+
+# ---- Step 2: the monks' books ----
+
+# Starts step 2: five monasteries to visit in any order.
+tog_start_step2_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_books_read
+			value = 0
+		}
+		set_variable = {
+			name = tog_stage
+			value = 10
+		}
+		remove_variable = tog_destination
+		add_to_variable_list = {
+			name = tog_monasteries
+			target = title:b_durham
+		}
+		add_to_variable_list = {
+			name = tog_monasteries
+			target = title:b_wigtown
+		}
+		add_to_variable_list = {
+			name = tog_monasteries
+			target = title:b_st_davids
+		}
+		add_to_variable_list = {
+			name = tog_monasteries
+			target = title:b_dunkeld
+		}
+		add_to_variable_list = {
+			name = tog_monasteries
+			target = title:b_applecross
+		}
+	}
+}
+
+# Sets out for a monastery (province PROV), one way.
+tog_travel_to_province_effect = {
+	if = {
+		limit = {
+			is_travelling = no
+			NOT = { location = province:$PROV$ }
+		}
+		if = {
+			limit = { is_landless_adventurer = yes }
+			start_travel_plan = {
+				destination = province:$PROV$
+				on_arrival_event = tog_quest.0060
+				on_arrival_destinations = last
+				return_trip = no
+				travel_with_domicile = yes
+			}
+		}
+		else = {
+			start_travel_plan = {
+				destination = province:$PROV$
+				on_arrival_event = tog_quest.0060
+				on_arrival_destinations = last
+				return_trip = no
+			}
+		}
+	}
+	# Road events: the roll checks that the journey is under way. Only one roll
+	# can be pending at a time, so several trips never stack their rolls.
+	hidden_effect = {
+		if = {
+			limit = { NOT = { exists = var:tog_tev_pending } }
+			set_variable = { name = tog_tev_pending value = yes }
+			trigger_event = {
+				id = tog_quest.0150
+				days = { 25 38 }
+			}
+		}
+	}
+}
+
+# The book of monastery M is obtained: remove it from the list, read it in 2 to 4 months.
+tog_monastery_book_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_m_$M$_done
+			value = yes
+		}
+		if = {
+			limit = { NOT = { exists = var:tog_books_got } }
+			set_variable = {
+				name = tog_books_got
+				value = 0
+			}
+		}
+		change_variable = {
+			name = tog_books_got
+			add = 1
+		}
+		set_variable = {
+			name = tog_m_$M$_toread
+			value = var:tog_books_got
+		}
+		remove_list_variable = {
+			name = tog_monasteries
+			target = title:$TITLE$
+		}
+	}
+	custom_tooltip = tog_m.book_tt
+	hidden_effect = { tog_next_reading_effect = yes }
+}
+
+# Closes a method at monastery M (FLAG = talk, pay or steal) and shows the failure scene FAIL.
+tog_monastery_close_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_m_$M$_no_$FLAG$
+			value = yes
+		}
+		set_variable = {
+			name = tog_current_m
+			value = flag:$M$
+		}
+	}
+	hidden_effect = {
+		trigger_event = {
+			id = $FAIL$
+			days = 1
+		}
+	}
+}
+
+# Paying a monk: fixed odds, gold only. A refusal costs nothing; a monk who keeps
+# the money costs it. Either way, paying is no longer possible here.
+tog_monastery_pay_effect = {
+	random_list = {
+		60 = {
+			custom_tooltip = tog_m.pay_good
+			hidden_effect = { trigger_event = tog_quest.0172 }
+			remove_short_term_gold = minor_gold_value
+			tog_monastery_book_effect = {
+				M = $M$
+				TITLE = $TITLE$
+			}
+		}
+		20 = {
+			custom_tooltip = tog_m.pay_refused
+			tog_monastery_close_effect = {
+				M = $M$
+				FLAG = pay
+				FAIL = tog_quest.0162
+			}
+		}
+		20 = {
+			custom_tooltip = tog_m.pay_kept
+			remove_short_term_gold = minor_gold_value
+			tog_monastery_close_effect = {
+				M = $M$
+				FLAG = pay
+				FAIL = tog_quest.0163
+			}
+		}
+	}
+}
+
+# Stealing the book (intrigue). Caught: prestige lost, but stealing can be tried again after 75 days.
+tog_monastery_steal_effect = {
+	random_list = {
+		0 = {
+			modifier = { add = tog_good_weight_intrigue_value }
+			custom_tooltip = tog_m.steal_good
+			hidden_effect = { trigger_event = tog_quest.0173 }
+			add_intrigue_lifestyle_xp = minor_lifestyle_xp
+			tog_monastery_book_effect = {
+				M = $M$
+				TITLE = $TITLE$
+			}
+		}
+		60 = {
+			custom_tooltip = tog_m.steal_bad
+			add_prestige = minor_prestige_loss
+			hidden_effect = {
+				random_owned_story = {
+					limit = { story_type = tog_story_old_groves }
+					set_variable = {
+						name = tog_m_$M$_no_steal
+						value = yes
+						days = 75
+					}
+					set_variable = {
+						name = tog_current_m
+						value = flag:$M$
+					}
+				}
+				trigger_event = {
+					id = tog_quest.0164
+					days = 1
+				}
+			}
+		}
+	}
+}
+
+# Forcing the doors (martial). Every attack puts the other monasteries on their guard.
+# Success: the book and some loot, but piety lost and the local lord is angry.
+tog_monastery_force_effect = {
+	random_list = {
+		100 = {
+			custom_tooltip = tog_m.force_good
+			hidden_effect = { trigger_event = tog_quest.0174 }
+			add_gold = minor_gold_value
+			add_prestige = medium_prestige_gain
+			add_piety = medium_piety_loss
+			province:$PROV$.county.holder ?= {
+				if = {
+					limit = { NOT = { this = root } }
+					add_opinion = {
+						target = root
+						modifier = angry_opinion
+						opinion = -30
+					}
+				}
+			}
+			tog_monastery_book_effect = {
+				M = $M$
+				TITLE = $TITLE$
+			}
+		}
+		0 = {
+			modifier = { add = tog_force_fail_value }
+			custom_tooltip = tog_m.force_bad
+			add_prestige = minor_prestige_loss
+			hidden_effect = {
+				random_owned_story = {
+					limit = { story_type = tog_story_old_groves }
+					set_variable = {
+						name = tog_current_m
+						value = flag:$M$
+					}
+				}
+				trigger_event = {
+					id = tog_quest.0165
+					days = 1
+				}
+			}
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = { NOT = { exists = var:tog_raids } }
+			set_variable = {
+				name = tog_raids
+				value = 0
+			}
+		}
+		change_variable = {
+			name = tog_raids
+			add = 1
+		}
+	}
+}
+
+# One answer in the talk with a monk; WEIGHT is the skill value used.
+tog_monastery_talk_effect = {
+	random_list = {
+		0 = {
+			modifier = { add = $WEIGHT$ }
+			custom_tooltip = tog_m.talk_good
+			hidden_effect = { trigger_event = tog_quest.0171 }
+			tog_monastery_book_effect = {
+				M = $M$
+				TITLE = $TITLE$
+			}
+		}
+		60 = {
+			custom_tooltip = tog_m.talk_bad
+			tog_monastery_close_effect = {
+				M = $M$
+				FLAG = talk
+				FAIL = tog_quest.0161
+			}
+		}
+	}
+}
+
+# A book has been read; after the fifth, the synthesis.
+tog_book_read_effect = {
+	add_learning_lifestyle_xp = medium_lifestyle_xp
+	hidden_effect = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			if = {
+				limit = { NOT = { exists = var:tog_books_read } }
+				set_variable = {
+					name = tog_books_read
+					value = 0
+				}
+			}
+			change_variable = {
+				name = tog_books_read
+				add = 1
+			}
+			remove_variable = tog_reading
+			if = {
+				limit = { var:tog_books_read >= 5 }
+				story_owner = {
+					trigger_event = {
+						id = tog_quest.0130
+						days = 1
+					}
+				}
+			}
+		}
+		tog_next_reading_effect = yes
+	}
+}
+
+# After a failure scene: back to the arrival scene of the current monastery.
+tog_reopen_monastery_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		save_scope_as = tog_story
+	}
+	if = {
+		limit = { scope:tog_story.var:tog_current_m ?= flag:jarrow }
+		trigger_event = tog_quest.0101
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_current_m ?= flag:whithorn }
+		trigger_event = tog_quest.0102
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_current_m ?= flag:mynyw }
+		trigger_event = tog_quest.0103
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_current_m ?= flag:dunkeld }
+		trigger_event = tog_quest.0104
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_current_m ?= flag:applecross }
+		trigger_event = tog_quest.0105
+	}
+}
+
+
+# Saves the companions as scope:tog_peredur and scope:tog_lailoken, for event portraits.
+tog_save_companions_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		var:tog_peredur ?= { save_scope_as = tog_peredur }
+		var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+	}
+}
+
+# Books are read one at a time, in the order they were obtained: starts the next
+# waiting book (number tog_books_read + 1), if no reading is under way.
+tog_next_reading_effect = {
+	random_owned_story = {
+		limit = {
+			story_type = tog_story_old_groves
+			NOT = { exists = var:tog_reading }
+		}
+		save_scope_as = tog_story
+	}
+	scope:tog_story ?= {
+		if = {
+			limit = { var:tog_m_jarrow_toread ?= tog_next_book_value }
+			remove_variable = tog_m_jarrow_toread
+			set_variable = {
+				name = tog_reading
+				value = yes
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0121
+					days = { 60 120 }
+				}
+			}
+		}
+		else_if = {
+			limit = { var:tog_m_whithorn_toread ?= tog_next_book_value }
+			remove_variable = tog_m_whithorn_toread
+			set_variable = {
+				name = tog_reading
+				value = yes
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0122
+					days = { 60 120 }
+				}
+			}
+		}
+		else_if = {
+			limit = { var:tog_m_mynyw_toread ?= tog_next_book_value }
+			remove_variable = tog_m_mynyw_toread
+			set_variable = {
+				name = tog_reading
+				value = yes
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0123
+					days = { 60 120 }
+				}
+			}
+		}
+		else_if = {
+			limit = { var:tog_m_dunkeld_toread ?= tog_next_book_value }
+			remove_variable = tog_m_dunkeld_toread
+			set_variable = {
+				name = tog_reading
+				value = yes
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0124
+					days = { 60 120 }
+				}
+			}
+		}
+		else_if = {
+			limit = { var:tog_m_applecross_toread ?= tog_next_book_value }
+			remove_variable = tog_m_applecross_toread
+			set_variable = {
+				name = tog_reading
+				value = yes
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0125
+					days = { 60 120 }
+				}
+			}
+		}
 	}
 }
