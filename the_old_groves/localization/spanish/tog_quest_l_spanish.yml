@@ -97,7 +97,7 @@
  tog_quest_travel_decision_confirm: "Partir"
  tog_quest.0050.a.tt: "#V Lailoken#! se une a ti. Los libros de los monjes copistas te esperan en cinco monasterios (decisión «Viajar a un monasterio»)."
  tog_story_old_groves_monasteries: "Monasterios por visitar"
- tog_obj_books: "Objetivo: recuperar los libros de los monjes copistas y después leerlos. Los monasterios restantes están en la lista de abajo; visítalos en el orden que quieras (decisión «Viajar a un monasterio»).nnLa lectura es automática: los libros se leen uno a uno, en el orden en que los recuperaste, y cada uno lleva unos meses."
+ tog_obj_books: "Objetivo: recuperar los libros de los monjes copistas y después leerlos. Los monasterios restantes están en la lista de abajo; visítalos en el orden que quieras (decisión «Viajar a un monasterio»).\n\nLa lectura es automática: los libros se leen uno a uno, en el orden en que los recuperaste, y cada uno lleva unos meses."
  tog_obj_step3: "Los libros han hablado: ahora hay que ir allí donde se rezaba a los antiguos dioses.\n(La continuación llegará en una próxima versión.)"
  tog_dest_monastery: "a un monasterio"
  tog_travel_desc_monastery: "Los libros de los monjes copistas te esperan en Jarrow, Whithorn, Mynyw, Dunkeld y Applecross. Elige adónde ir."

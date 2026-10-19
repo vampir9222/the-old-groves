@@ -1,0 +1,125 @@
+﻿# The Old Groves - schemes
+
+# Freeing Gwion's daughter from the convent. Only started by the quest (no
+# interaction): each completed phase is an attempt, rolled in tog_quest.0231.
+tog_free_daughter = {
+	# Basic Setup
+	skill = intrigue
+	desc = tog_free_daughter_desc_general
+	success_desc = "TOG_FREE_DAUGHTER_SUCCESS_DESC"
+	icon = icon_scheme_abduct
+	illustration = "gfx/interface/illustrations/event_scenes/corridor.dds"
+	category = hostile
+	target_type = character
+	is_secret = no
+	cooldown = { days = 0 }
+
+	# Parameters
+	speed_per_skill_point = t2_spsp_owner_value
+	speed_per_target_skill_point = 0
+	base_progress_goal = 60
+	base_maximum_success = 70
+	phases_per_agent_charge = 1
+	success_chance_growth_per_skill_point = t2_scgpsp_value
+
+	# Core Triggers
+	allow = {
+		is_ai = no
+		is_imprisoned = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			exists = var:tog_freeing
+		}
+	}
+	valid = {
+		is_incapable = no
+		scope:target = { is_alive = yes }
+	}
+
+	# Agents
+	agent_leave_threshold = -25
+	agent_join_chance = {
+		base = 0
+		ai_agent_join_chance_basic_suite_modifier = yes
+		# The companions of the quest help for nothing in return.
+		modifier = {
+			add = 200
+			desc = TOG_COMPANION_HELPS
+			scope:owner = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					any_in_list = {
+						variable = tog_companions
+						this = root
+					}
+				}
+			}
+		}
+	}
+	valid_agent = { is_valid_agent_standard_trigger = yes }
+	agent_groups_owner_perspective = { courtiers guests }
+	agent_groups_target_character_perspective = { courtiers }
+
+	odds_prediction = {
+		add = base_odds_prediction_target_is_char_value
+		add = odds_skill_contribution_intrigue_value
+		add = agent_groups_owner_perspective_value
+		min = 0
+	}
+
+	# Base Chances
+	base_success_chance = {
+		base = 25
+		scheme_type_skill_success_chance_modifier = { SKILL = INTRIGUE }
+	}
+
+	# On Actions
+	on_start = {
+		# Advantages: from intrigue, plus one for Gwion's knowledge of the convent.
+		add_scheme_starting_opportunities_intrigue_effect = yes
+		change_opportunities = 1
+		add_agent_slot = agent_infiltrator
+		add_agent_slot = agent_lookout
+		add_agent_slot = agent_thug
+	}
+	# A few things happen while the scheme goes on, each once.
+	on_monthly = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		random = {
+			chance = 25
+			random_list = {
+				10 = {
+					trigger = { NOT = { exists = var:tog_ev_portress } }
+					set_variable = tog_ev_portress
+					scheme_owner = { trigger_event = tog_quest.0251 }
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_ev_abbess } }
+					set_variable = tog_ev_abbess
+					scheme_owner = { trigger_event = tog_quest.0252 }
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_ev_message } }
+					set_variable = tog_ev_message
+					scheme_owner = { trigger_event = tog_quest.0253 }
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_ev_peredur }
+						scheme_owner = { tog_peredur_alive_trigger = yes }
+					}
+					set_variable = tog_ev_peredur
+					scheme_owner = { trigger_event = tog_quest.0254 }
+				}
+			}
+		}
+	}
+	on_phase_completed = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		scheme_owner = { trigger_event = tog_quest.0231 }
+	}
+}

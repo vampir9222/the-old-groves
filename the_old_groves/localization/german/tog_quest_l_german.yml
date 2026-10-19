@@ -97,7 +97,7 @@
  tog_quest_travel_decision_confirm: "Aufbrechen"
  tog_quest.0050.a.tt: "#V Lailoken#! schließt sich Euch an. Die Bücher der Kopistenmönche erwarten Euch in fünf Klöstern (Entscheidung „Zu einem Kloster reisen“)."
  tog_story_old_groves_monasteries: "Zu besuchende Klöster"
- tog_obj_books: "Ziel: die Bücher der Kopistenmönche beschaffen und dann lesen. Die verbleibenden Klöster stehen in der Liste unten; besucht sie in beliebiger Reihenfolge (Entscheidung „Zu einem Kloster reisen“).nnDas Lesen geschieht automatisch: Die Bücher werden einzeln gelesen, in der Reihenfolge, in der Ihr sie beschafft habt, und jedes dauert einige Monate."
+ tog_obj_books: "Ziel: die Bücher der Kopistenmönche beschaffen und dann lesen. Die verbleibenden Klöster stehen in der Liste unten; besucht sie in beliebiger Reihenfolge (Entscheidung „Zu einem Kloster reisen“).\n\nDas Lesen geschieht automatisch: Die Bücher werden einzeln gelesen, in der Reihenfolge, in der Ihr sie beschafft habt, und jedes dauert einige Monate."
  tog_obj_step3: "Die Bücher haben gesprochen: Nun müsst Ihr dorthin, wo man die alten Götter anbetete.\n(Die Fortsetzung folgt in einer künftigen Version.)"
  tog_dest_monastery: "zu einem Kloster"
  tog_travel_desc_monastery: "Die Bücher der Kopistenmönche erwarten dich in Jarrow, Whithorn, Mynyw, Dunkeld und Applecross. Wähle, wohin du gehst."

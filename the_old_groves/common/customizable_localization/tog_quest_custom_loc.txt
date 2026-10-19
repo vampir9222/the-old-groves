@@ -27,12 +27,83 @@ TogQuestObjective = {
 		trigger = { var:tog_stage = 11 }
 		localization_key = tog_obj_step3
 	}
+	text = {
+		trigger = {
+			var:tog_stage = 20
+			exists = var:tog_freeing
+		}
+		localization_key = tog_obj_daughter
+	}
+	text = {
+		trigger = {
+			var:tog_stage = 20
+			exists = var:tog_learning
+		}
+		localization_key = tog_obj_learning
+	}
+	text = {
+		trigger = { var:tog_stage = 20 }
+		localization_key = tog_obj_places
+	}
+	text = {
+		trigger = { var:tog_stage = 30 }
+		localization_key = tog_obj_village
+	}
+	text = {
+		trigger = { var:tog_stage = 31 }
+		localization_key = tog_obj_heric
+	}
+	text = {
+		trigger = { var:tog_stage = 32 }
+		localization_key = tog_obj_alise
+	}
+	text = {
+		trigger = { var:tog_stage = 40 }
+		localization_key = tog_obj_step6
+	}
 }
 
 # Destination named in the travel decision (character scope).
 TogTravelTarget = {
 	type = character
 
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 30
+			}
+		}
+		localization_key = tog_dest_village
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 31
+			}
+		}
+		localization_key = tog_dest_heric
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 32
+			}
+		}
+		localization_key = tog_dest_alise
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 20
+			}
+		}
+		localization_key = tog_dest_place
+	}
 	text = {
 		trigger = {
 			any_owned_story = {
@@ -79,6 +150,43 @@ TogTravelTarget = {
 TogTravelDesc = {
 	type = character
 
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 30
+			}
+		}
+		localization_key = tog_travel_desc_village
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 31
+			}
+		}
+		localization_key = tog_travel_desc_heric
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 32
+			}
+		}
+		localization_key = tog_travel_desc_alise
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 20
+			}
+		}
+		localization_key = tog_travel_desc_places
+	}
 	text = {
 		trigger = {
 			any_owned_story = {

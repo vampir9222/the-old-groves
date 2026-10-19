@@ -97,7 +97,7 @@
  tog_quest_travel_decision_confirm: "Set out"
  tog_quest.0050.a.tt: "#V Lailoken#! joins you. The books of the copyist monks await you in five monasteries (decision “Travel to a monastery”)."
  tog_story_old_groves_monasteries: "Monasteries to visit"
- tog_obj_books: "Objective: recover the books of the copyist monks, then read them. The remaining monasteries are in the list below; visit them in any order (decision “Travel to a monastery”).nnReading is automatic: the books are read one at a time, in the order you recovered them, and each takes a few months."
+ tog_obj_books: "Objective: recover the books of the copyist monks, then read them. The remaining monasteries are in the list below; visit them in any order (decision “Travel to a monastery”).\n\nReading is automatic: the books are read one at a time, in the order you recovered them, and each takes a few months."
  tog_obj_step3: "The books have spoken: now you must go where the old gods were worshipped.\n(The next part will come in a future version.)"
  tog_dest_monastery: "a monastery"
  tog_travel_desc_monastery: "The books of the copyist monks await you at Jarrow, Whithorn, Mynyw, Dunkeld and Applecross. Choose where to go."

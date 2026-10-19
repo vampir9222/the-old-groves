@@ -27,6 +27,10 @@ tog_story_old_groves = {
 			variable_name = "tog_monasteries"
 			label = "tog_story_old_groves_monasteries"
 		}
+		title_list = {
+			variable_name = "tog_places"
+			label = "tog_story_old_groves_places"
+		}
 		basic_counter = {
 			variable_name = "tog_books_read"
 			min = 0
@@ -34,6 +38,14 @@ tog_story_old_groves = {
 			label = "tog_story_old_groves_books"
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_books_max"
+		}
+		basic_counter = {
+			variable_name = "tog_lessons"
+			min = 0
+			max = 4
+			label = "tog_story_old_groves_lessons"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_lessons_max"
 		}
 		decisions = { tog_quest_travel_decision }
 		character_list = {
@@ -164,6 +176,83 @@ tog_story_old_groves = {
 					}
 					story_owner = { trigger_event = tog_quest.0105 }
 				}
+			}
+		}
+	}
+
+	# Step 3 fallback: the first time the owner stands at a sacred place, run its
+	# arrival scene (the stone of Mabon only once the two others are done).
+	effect_group = {
+		months = 1
+		trigger = { var:tog_stage = 20 }
+
+		first_valid = {
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:32
+					NOT = { exists = var:tog_p_bru_done }
+					NOT = { exists = var:tog_p_bru_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_p_bru_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0201 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:36
+					NOT = { exists = var:tog_p_uisneach_done }
+					NOT = { exists = var:tog_p_uisneach_seen }
+				}
+				effect = {
+					set_variable = {
+						name = tog_p_uisneach_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0211 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1681
+					NOT = { exists = var:tog_p_mabon_done }
+					NOT = { exists = var:tog_p_mabon_seen }
+					exists = var:tog_p_bru_done
+					exists = var:tog_p_uisneach_done
+				}
+				effect = {
+					set_variable = {
+						name = tog_p_mabon_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0221 }
+				}
+			}
+		}
+	}
+
+	# Safety net: the scheme to free Eluned vanished without freeing her (ended,
+	# invalidated...). The player is told and can start it again.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_freeing
+			exists = var:tog_eluned
+			var:tog_eluned = { is_alive = yes }
+			story_owner = {
+				NOT = {
+					any_scheme = { type = tog_free_daughter }
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = { trigger_event = tog_quest.0229 }
 			}
 		}
 	}

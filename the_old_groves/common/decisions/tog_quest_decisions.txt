@@ -69,6 +69,10 @@ tog_quest_travel_decision = {
 					var:tog_stage = 10
 					NOT = { var:tog_books_got ?= 5 }
 				}
+				AND = {
+					var:tog_stage = 20
+					NOT = { exists = var:tog_p_mabon_done }
+				}
 			}
 		}
 	}
@@ -100,6 +104,16 @@ tog_quest_travel_decision = {
 					}
 				}
 				trigger_event = tog_quest.0140
+			}
+			# Step 3: choose which sacred place to go to.
+			else_if = {
+				limit = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage = 20
+					}
+				}
+				trigger_event = tog_quest.0240
 			}
 			else = {
 				# Coming back to the bandits' camp after leaving it.
@@ -156,65 +170,105 @@ tog_test_skip_step1_decision = {
 	}
 
 	effect = {
+		tog_test_skip_step1_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Skips step 2 (shown during step 2): opens step 3 at once.
+tog_test_skip_step2_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step2_decision_desc
+	selection_tooltip = tog_test_skip_step2_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 20
+			}
+		}
+	}
+
+	effect = {
+		# From anywhere before step 3: skip step 1 first if needed.
 		if = {
 			limit = {
-				NOT = { any_owned_story = { story_type = tog_story_old_groves } }
+				NOT = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage = 10
+					}
+				}
 			}
-			tog_start_quest_effect = yes
+			tog_test_skip_step1_effect = yes
 		}
-		create_character = {
-			name = "Peredur"
-			age = 20
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = strong
-			trait = trusting
-			stewardship = 14
-			prowess = 14
-			save_scope_as = tog_peredur
-		}
-		create_character = {
-			name = "Lailoken"
-			age = 68
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = eccentric
-			learning = 13
-			save_scope_as = tog_lailoken
-		}
-		add_courtier = scope:tog_peredur
-		add_courtier = scope:tog_lailoken
-		random_owned_story = {
-			limit = { story_type = tog_story_old_groves }
-			set_variable = {
-				name = tog_peredur
-				value = scope:tog_peredur
-			}
-			set_variable = {
-				name = tog_lailoken
-				value = scope:tog_lailoken
-			}
-			add_to_variable_list = {
-				name = tog_companions
-				target = scope:tog_peredur
-			}
-			add_to_variable_list = {
-				name = tog_companions
-				target = scope:tog_lailoken
+		tog_start_step3_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Opens step 5 (the continent) from anywhere before it.
+tog_test_skip_step4_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step4_decision_desc
+	selection_tooltip = tog_test_skip_step4_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 30
 			}
 		}
+	}
+
+	effect = {
 		if = {
-			limit = { exists = global_var:tog_poi_stone_active }
-			remove_global_variable = tog_poi_stone_active
-			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+			limit = {
+				NOT = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage >= 10
+					}
+				}
+			}
+			tog_test_skip_step1_effect = yes
 		}
-		tog_start_step2_effect = yes
+		tog_start_step3_effect = yes
+		tog_next_stage_effect = {
+			STAGE = 30
+			DESTINATION = b_saint_brieuc
+		}
+		trigger_event = tog_quest.0301
 	}
 
 	ai_potential = {

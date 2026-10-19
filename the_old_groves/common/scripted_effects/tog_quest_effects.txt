@@ -54,6 +54,17 @@ tog_travel_to_destination_effect = {
 			}
 		}
 	}
+	# Road events (the roll only fires from step 2 on, while travelling).
+	hidden_effect = {
+		if = {
+			limit = { NOT = { exists = var:tog_tev_pending } }
+			set_variable = { name = tog_tev_pending value = yes }
+			trigger_event = {
+				id = tog_quest.0150
+				days = { 40 55 }
+			}
+		}
+	}
 }
 
 # Rulers only: the way home at the end of the step.
@@ -203,7 +214,7 @@ tog_travel_to_province_effect = {
 			set_variable = { name = tog_tev_pending value = yes }
 			trigger_event = {
 				id = tog_quest.0150
-				days = { 25 38 }
+				days = { 40 55 }
 			}
 		}
 	}
@@ -476,12 +487,14 @@ tog_reopen_monastery_effect = {
 }
 
 
-# Saves the companions as scope:tog_peredur and scope:tog_lailoken, for event portraits.
+# Saves the companions as companions as scopes (tog_peredur, tog_lailoken, tog_eogan, tog_gwion) for portraits.
 tog_save_companions_effect = {
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		var:tog_peredur ?= { save_scope_as = tog_peredur }
 		var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+		var:tog_eogan ?= { save_scope_as = tog_eogan }
+		var:tog_gwion ?= { save_scope_as = tog_gwion }
 	}
 }
 
@@ -566,5 +579,195 @@ tog_next_reading_effect = {
 				}
 			}
 		}
+	}
+}
+
+# ---- Step 3: the sacred places ----
+
+# Opens step 3: Brú na Bóinne and Uisneach in any order; the stone of Mabon is added later.
+tog_start_step3_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		clear_variable_list = tog_monasteries
+		# Hides the books counter of step 2.
+		remove_variable = tog_books_read
+		set_variable = {
+			name = tog_stage
+			value = 20
+		}
+		add_to_variable_list = {
+			name = tog_places
+			target = title:b_drogheda
+		}
+		add_to_variable_list = {
+			name = tog_places
+			target = title:b_uisneach
+		}
+	}
+}
+
+# Place P (bru, uisneach or mabon, title TITLE) is done.
+tog_place_done_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_p_$P$_done
+			value = yes
+		}
+		remove_list_variable = {
+			name = tog_places
+			target = title:$TITLE$
+		}
+		# The stone of Mabon shows up once the two other places are done.
+		if = {
+			limit = {
+				exists = var:tog_p_bru_done
+				exists = var:tog_p_uisneach_done
+				NOT = { exists = var:tog_p_mabon_done }
+			}
+			add_to_variable_list = {
+				name = tog_places
+				target = title:b_dumfries
+			}
+		}
+	}
+}
+
+# Companion scope:WHO joins the court and the quest, saved in the story as var WHO.
+tog_join_quest_effect = {
+	add_courtier = scope:$WHO$
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = $WHO$
+			value = scope:$WHO$
+		}
+		add_to_variable_list = {
+			name = tog_companions
+			target = scope:$WHO$
+		}
+	}
+}
+
+# TEST ONLY - remove before any release. Skips step 1: starts the quest if needed,
+# adds Peredur and Lailoken, opens step 2.
+tog_test_skip_step1_effect = {
+	if = {
+		limit = {
+			NOT = { any_owned_story = { story_type = tog_story_old_groves } }
+		}
+		tog_start_quest_effect = yes
+	}
+	create_character = {
+		name = "Peredur"
+		age = 18
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = strong
+		trait = trusting
+		stewardship = 14
+		prowess = 14
+		save_scope_as = tog_peredur
+	}
+	create_character = {
+		name = "Lailoken"
+		age = 60
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = eccentric
+		learning = 13
+		save_scope_as = tog_lailoken
+	}
+	add_courtier = scope:tog_peredur
+	add_courtier = scope:tog_lailoken
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_peredur
+			value = scope:tog_peredur
+		}
+		set_variable = {
+			name = tog_lailoken
+			value = scope:tog_lailoken
+		}
+		add_to_variable_list = {
+			name = tog_companions
+			target = scope:tog_peredur
+		}
+		add_to_variable_list = {
+			name = tog_companions
+			target = scope:tog_lailoken
+		}
+	}
+	if = {
+		limit = { exists = global_var:tog_poi_stone_active }
+		remove_global_variable = tog_poi_stone_active
+		province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+	}
+	tog_start_step2_effect = yes
+}
+
+# Scheme "Free Eluned": an attempt, with the scheme's odds plus BONUS (advantages spent).
+tog_free_attempt_effect = {
+	random = {
+		chance = {
+			value = scope:scheme.scheme_success_chance
+			add = $BONUS$
+		}
+		custom_tooltip = tog_free.success_tt
+		save_scope_value_as = {
+			name = tog_win
+			value = yes
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:tog_win }
+			scope:scheme = { end_scheme = yes }
+			trigger_event = tog_quest.0232
+		}
+		else = {
+			trigger_event = tog_quest.0230
+		}
+	}
+}
+
+# ---- Step 5: the artefacts of the continent ----
+
+# The golden sickle found under the hearth of the village of the cape.
+tog_create_golden_sickle_effect = {
+	create_artifact = {
+		name = tog_golden_sickle_name
+		description = tog_golden_sickle_description
+		template = general_unique_template
+		type = pedestal
+		visuals = dagger_court
+		wealth = 60
+		quality = 60
+		modifier = tog_golden_sickle_modifier
+		save_scope_as = tog_sickle
+		decaying = no
+	}
+}
+
+# The war horn with a boar's head, from the field of Alise.
+tog_create_carnyx_effect = {
+	create_artifact = {
+		name = tog_carnyx_name
+		description = tog_carnyx_description
+		template = general_unique_template
+		type = pedestal
+		visuals = olifant_court
+		wealth = 40
+		quality = 50
+		modifier = tog_carnyx_modifier
+		save_scope_as = tog_carnyx
+		decaying = no
 	}
 }
