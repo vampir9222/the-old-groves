@@ -246,7 +246,7 @@ tog_test_skip_step4_decision = {
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
-				var:tog_stage >= 30
+				var:tog_stage >= 29
 			}
 		}
 	}
@@ -264,11 +264,46 @@ tog_test_skip_step4_decision = {
 			tog_test_skip_step1_effect = yes
 		}
 		tog_start_step3_effect = yes
-		tog_next_stage_effect = {
-			STAGE = 30
-			DESTINATION = b_saint_brieuc
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stage
+				value = 29
+			}
 		}
-		trigger_event = tog_quest.0301
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 5: before leaving for the continent, find someone who knows Gaul well.
+tog_find_guide_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_find_guide_decision_desc
+	selection_tooltip = tog_find_guide_decision_tooltip
+	confirm_text = tog_find_guide_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 29
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_find_guide_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0300 }
 	}
 
 	ai_potential = {

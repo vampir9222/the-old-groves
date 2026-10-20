@@ -649,13 +649,6 @@ tog_quest.0060 = {
 					}
 					root = { trigger_event = tog_quest.0321 }
 				}
-				else_if = {
-					limit = {
-						var:tog_stage = 32
-						root.location = province:2379
-					}
-					root = { trigger_event = tog_quest.0331 }
-				}
 			}
 		}
 	}
@@ -1172,7 +1165,6 @@ tog_quest.0150 = {
 						var:tog_stage = 20
 						var:tog_stage = 30
 						var:tog_stage = 31
-						var:tog_stage = 32
 					}
 				}
 			}
@@ -2464,8 +2456,6 @@ tog_quest.0224 = {
 	option = { # Free his daughter: a scheme
 		name = tog_quest.0224.a
 		custom_tooltip = tog_quest.0224.a.tt
-		add_learning_lifestyle_xp = medium_lifestyle_xp
-		add_piety = minor_piety_gain
 		start_scheme = {
 			type = tog_free_daughter
 			target_character = scope:tog_eluned
@@ -2932,14 +2922,13 @@ tog_quest.0236 = {
 				remove_variable = tog_learning
 				remove_variable = tog_lessons
 			}
-			# Step 5: the continent. First, a pilot.
-			tog_next_stage_effect = {
-				STAGE = 30
-				DESTINATION = b_saint_brieuc
-			}
-			trigger_event = {
-				id = tog_quest.0301
-				days = { 15 30 }
+			# Step 5: the continent. First, find a guide (decision).
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 29
+				}
 			}
 		}
 	}
@@ -2975,13 +2964,56 @@ tog_quest.0229 = {
 
 # ---- Step 5: the continent ----
 
-# Gofraid, the Norse-Gael pilot, takes the quest across the sea.
+# Looking for a guide (from the decision): pay in gold or in prestige.
+tog_quest.0300 = {
+	type = character_event
+	title = tog_quest.0300.t
+	desc = tog_quest.0300.desc
+	theme = travel
+	override_background = { reference = tavern }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Pay for the word to go round
+		name = tog_quest.0300.a
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = medium_gold_value
+		custom_tooltip = tog_quest.0300.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0301
+				days = { 7 14 }
+			}
+		}
+	}
+	option = { # Let your name do the work
+		name = tog_quest.0300.b
+		trigger = { prestige >= medium_prestige_value }
+		show_as_unavailable = { always = yes }
+		add_prestige = medium_prestige_loss
+		custom_tooltip = tog_quest.0300.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0301
+				days = { 7 14 }
+			}
+		}
+	}
+	option = { # Not now
+		name = tog_quest.0140.stay
+	}
+}
+
+# Gofraid, who knows Gaul well, comes forward and joins the quest.
 tog_quest.0301 = {
 	type = character_event
 	title = tog_quest.0301.t
 	desc = tog_quest.0301.desc
 	theme = travel
-	override_background = { reference = docks }
+	override_background = { reference = tavern }
 	left_portrait = {
 		character = root
 		animation = personality_rational
@@ -3003,27 +3035,22 @@ tog_quest.0301 = {
 			trait = brave
 			trait = adventurer
 			martial = 10
-			stewardship = 8
+			diplomacy = 9
 			save_scope_as = tog_gofraid
 		}
 	}
 
-	option = { # He comes for the tale
+	option = {
 		name = tog_quest.0301.a
-		trigger = { prestige_level >= 1 }
-		show_as_unavailable = { always = yes }
-		tog_join_quest_effect = { WHO = tog_gofraid }
 		custom_tooltip = tog_quest.0301.join_tt
-		hidden_effect = { tog_travel_to_destination_effect = yes }
-	}
-	option = { # He comes for silver
-		name = tog_quest.0301.b
-		trigger = { gold >= minor_gold_value }
-		show_as_unavailable = { always = yes }
-		remove_short_term_gold = minor_gold_value
-		tog_join_quest_effect = { WHO = tog_gofraid }
-		custom_tooltip = tog_quest.0301.join_tt
-		hidden_effect = { tog_travel_to_destination_effect = yes }
+		hidden_effect = {
+			tog_join_quest_effect = { WHO = tog_gofraid }
+			tog_next_stage_effect = {
+				STAGE = 30
+				DESTINATION = b_saint_brieuc
+			}
+			tog_travel_to_destination_effect = yes
+		}
 	}
 }
 
@@ -3151,13 +3178,8 @@ tog_quest.0321 = {
 		name = tog_quest.0321.a
 		custom_tooltip = tog_quest.0321.a.tt
 		add_learning_lifestyle_xp = minor_lifestyle_xp
-		hidden_effect = {
-			tog_next_stage_effect = {
-				STAGE = 32
-				DESTINATION = b_montbard
-			}
-			tog_travel_to_destination_effect = yes
-		}
+		# Alise is two days away: no second journey, the field comes right after.
+		hidden_effect = { trigger_event = tog_quest.0331 }
 	}
 }
 

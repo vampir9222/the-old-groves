@@ -50,12 +50,12 @@ TogQuestObjective = {
 		localization_key = tog_obj_village
 	}
 	text = {
-		trigger = { var:tog_stage = 31 }
-		localization_key = tog_obj_heric
+		trigger = { var:tog_stage = 29 }
+		localization_key = tog_obj_guide
 	}
 	text = {
-		trigger = { var:tog_stage = 32 }
-		localization_key = tog_obj_alise
+		trigger = { var:tog_stage = 31 }
+		localization_key = tog_obj_heric
 	}
 	text = {
 		trigger = { var:tog_stage = 40 }
@@ -84,15 +84,6 @@ TogTravelTarget = {
 			}
 		}
 		localization_key = tog_dest_heric
-	}
-	text = {
-		trigger = {
-			any_owned_story = {
-				story_type = tog_story_old_groves
-				var:tog_stage = 32
-			}
-		}
-		localization_key = tog_dest_alise
 	}
 
 	text = {
@@ -167,15 +158,6 @@ TogTravelDesc = {
 			}
 		}
 		localization_key = tog_travel_desc_heric
-	}
-	text = {
-		trigger = {
-			any_owned_story = {
-				story_type = tog_story_old_groves
-				var:tog_stage = 32
-			}
-		}
-		localization_key = tog_travel_desc_alise
 	}
 
 	text = {

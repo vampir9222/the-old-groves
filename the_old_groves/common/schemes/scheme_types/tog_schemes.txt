@@ -1,7 +1,7 @@
 ﻿# The Old Groves - schemes
 
 # Freeing Gwion's daughter from the convent. Only started by the quest (no
-# interaction): each completed phase is an attempt, rolled in tog_quest.0231.
+# interaction): the player attempts it with the "Execute" button (tog_quest.0231).
 tog_free_daughter = {
 	# Basic Setup
 	skill = intrigue
@@ -116,7 +116,12 @@ tog_free_daughter = {
 			}
 		}
 	}
+	# No event at the end of a phase: the player decides when to act, with the
+	# scheme's "Execute" button, which opens tog_quest.0231.
 	on_phase_completed = {
+		suppress_scheme_follow_up_event_till_input_given_effect = yes
+	}
+	on_hud_click = {
 		save_scope_as = scheme
 		scheme_owner = { save_scope_as = owner }
 		scheme_target_character = { save_scope_as = target }
