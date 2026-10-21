@@ -14,6 +14,7 @@ tog_quest_start_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		culture = {
 			OR = {
 				has_cultural_pillar = heritage_goidelic
@@ -60,6 +61,7 @@ tog_quest_travel_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		any_owned_story = {
 			story_type = tog_story_old_groves
 			OR = {
@@ -161,6 +163,7 @@ tog_test_skip_step1_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
@@ -196,6 +199,7 @@ tog_test_skip_step2_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
@@ -243,6 +247,7 @@ tog_test_skip_step4_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
@@ -295,6 +300,7 @@ tog_find_guide_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		any_owned_story = {
 			story_type = tog_story_old_groves
 			var:tog_stage = 29
@@ -328,6 +334,7 @@ tog_read_stone_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		any_owned_story = {
 			story_type = tog_story_old_groves
 			var:tog_stage = 40
@@ -362,6 +369,7 @@ tog_test_skip_step5_decision = {
 
 	is_shown = {
 		is_ai = no
+		tog_quest_not_paused_trigger = yes
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
@@ -389,6 +397,118 @@ tog_test_skip_step5_decision = {
 			set_variable = {
 				name = tog_stage
 				value = 40
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 7: writing the Sacred Verses (vellum and copyists cost gold).
+tog_write_verses_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_write_verses_decision_desc
+	selection_tooltip = tog_write_verses_decision_tooltip
+	confirm_text = tog_write_verses_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 50
+		}
+	}
+
+	cost = {
+		gold = {
+			value = medium_gold_value
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_write_verses_decision_effect_tt
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 60
+				}
+				set_variable = {
+					name = tog_verses
+					value = 0
+				}
+				set_variable = {
+					name = tog_verses_rate
+					value = tog_verses_monthly_value
+				}
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Opens step 7 (the Sacred Verses) from anywhere before it.
+tog_test_skip_step6_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step6_decision_desc
+	selection_tooltip = tog_test_skip_step6_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 50
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage >= 10
+					}
+				}
+			}
+			tog_test_skip_step1_effect = yes
+		}
+		tog_test_step3_done_effect = yes
+		tog_test_step5_done_effect = yes
+		tog_test_step6_done_effect = yes
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stage
+				value = 50
 			}
 		}
 	}

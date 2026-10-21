@@ -41,3 +41,11 @@ tog_mistletoe_modifier = {
 	monthly_piety = 1
 	health = 0.25
 }
+
+# Artefact of step 7: the Sacred Verses.
+tog_verses_book_modifier = {
+	icon = learning_positive
+	learning = 2
+	monthly_piety = 1
+	monthly_learning_lifestyle_xp_gain_mult = 0.1
+}

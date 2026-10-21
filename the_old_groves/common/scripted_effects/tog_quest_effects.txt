@@ -952,3 +952,120 @@ tog_companions_rally_effect = {
 		}
 	}
 }
+
+# ---- Step 7: the Sacred Verses ----
+
+# Changes the writing progress by VALUE (can be negative), never below 0.
+tog_verses_progress_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		change_variable = {
+			name = tog_verses
+			add = $VALUE$
+		}
+		if = {
+			limit = { var:tog_verses < 0 }
+			set_variable = {
+				name = tog_verses
+				value = 0
+			}
+		}
+	}
+}
+
+# One outcome of a writing event: the progress changes, with a tooltip.
+tog_verses_outcome_effect = {
+	custom_tooltip = $TT$
+	hidden_effect = { tog_verses_progress_effect = { VALUE = $VALUE$ } }
+}
+
+# The founding: the owner, the court and the companions take the faith, in the
+# owner's rite (by heritage), which becomes the main rite. The Sacred Verses become
+# an artefact, the companions think better of the founder, and the line takes a
+# legendary name (Lugaid for the Gaelic rite).
+tog_found_cult_effect = {
+	hidden_effect = {
+		# The founder's rite, from his heritage.
+		if = {
+			limit = {
+				culture = { has_cultural_pillar = heritage_brythonic }
+			}
+			rite:tog_brythonic_rite = { save_scope_as = tog_rite }
+		}
+		else = {
+			rite:tog_gaelic_rite = { save_scope_as = tog_rite }
+		}
+		set_character_faith = faith:tog_druidism
+		set_character_rite = scope:tog_rite
+		scope:tog_rite = { set_main_rite = yes }
+		every_courtier = {
+			set_character_faith = faith:tog_druidism
+			set_character_rite = scope:tog_rite
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			every_in_list = {
+				variable = tog_companions
+				limit = { is_alive = yes }
+				set_character_faith = faith:tog_druidism
+				set_character_rite = scope:tog_rite
+				add_opinion = {
+					target = root
+					modifier = respect_opinion
+					opinion = 30
+				}
+			}
+			set_variable = {
+				name = tog_stage
+				value = 70
+			}
+			remove_variable = tog_verses
+			remove_variable = tog_verses_rate
+		}
+		if = {
+			limit = { scope:tog_rite = rite:tog_gaelic_rite }
+			house ?= { set_house_name = tog_house_lugaid }
+		}
+		create_artifact = {
+			name = tog_verses_book_name
+			description = tog_verses_book_description
+			template = general_unique_template
+			type = journal
+			visuals = book
+			wealth = 50
+			quality = 80
+			modifier = tog_verses_book_modifier
+			save_scope_as = tog_verses_book
+			decaying = no
+		}
+	}
+}
+
+# TEST ONLY - remove before any release.
+# As if step 6 were done: Nest with the quest.
+tog_test_step6_done_effect = {
+	if = {
+		limit = {
+			NOT = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					exists = var:tog_nest
+				}
+			}
+		}
+		create_character = {
+			name = "Nest"
+			age = 25
+			gender = female
+			culture = culture:welsh
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = calm
+			trait = honest
+			learning = 9
+			save_scope_as = tog_nest
+		}
+		tog_join_quest_effect = { WHO = tog_nest }
+	}
+}

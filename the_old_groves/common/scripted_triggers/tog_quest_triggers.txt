@@ -59,3 +59,13 @@ tog_companion_alive_trigger = {
 		var:$WHO$ ?= { is_alive = yes }
 	}
 }
+
+# The quest is not waiting for a minor heir to come of age.
+tog_quest_not_paused_trigger = {
+	NOT = {
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			exists = var:tog_paused
+		}
+	}
+}

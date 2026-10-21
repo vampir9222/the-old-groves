@@ -60,3 +60,13 @@ tog_next_book_value = {
 	}
 	add = 1
 }
+
+# Story scope: monthly progress of the Sacred Verses, from the owner's learning
+# (3 to 6 points a month: about two years with the events).
+tog_verses_monthly_value = {
+	value = story_owner.learning
+	divide = 4
+	floor = yes
+	min = 3
+	max = 6
+}

@@ -69,6 +69,19 @@ TogQuestObjective = {
 		trigger = { var:tog_stage = 50 }
 		localization_key = tog_obj_step7
 	}
+	text = {
+		trigger = {
+			OR = {
+				var:tog_stage = 60
+				var:tog_stage = 61
+			}
+		}
+		localization_key = tog_obj_verses
+	}
+	text = {
+		trigger = { var:tog_stage = 70 }
+		localization_key = tog_obj_founded
+	}
 }
 
 # Destination named in the travel decision (character scope).

@@ -3661,3 +3661,602 @@ tog_quest.0413 = {
 		hidden_effect = { trigger_event = tog_quest.0412 }
 	}
 }
+
+# ---- Step 7: writing the Sacred Verses ----
+
+# Hidden: picks a writing event; each companion event once, then a plain night.
+tog_quest.0510 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			save_scope_as = tog_story
+		}
+		random_list = {
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_1 }
+					tog_companion_alive_trigger = { WHO = tog_gwion }
+					tog_companion_alive_trigger = { WHO = tog_eogan }
+				}
+				scope:tog_story = { set_variable = tog_vev_1 }
+				trigger_event = tog_quest.0511
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_2 }
+					tog_companion_alive_trigger = { WHO = tog_lailoken }
+				}
+				scope:tog_story = { set_variable = tog_vev_2 }
+				trigger_event = tog_quest.0512
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_3 }
+					tog_companion_alive_trigger = { WHO = tog_nest }
+				}
+				scope:tog_story = { set_variable = tog_vev_3 }
+				trigger_event = tog_quest.0513
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_4 }
+					tog_companion_alive_trigger = { WHO = tog_peredur }
+				}
+				scope:tog_story = { set_variable = tog_vev_4 }
+				trigger_event = tog_quest.0514
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_5 }
+					tog_companion_alive_trigger = { WHO = tog_gwion }
+				}
+				scope:tog_story = { set_variable = tog_vev_5 }
+				trigger_event = tog_quest.0515
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_6 }
+					tog_companion_alive_trigger = { WHO = tog_gofraid }
+				}
+				scope:tog_story = { set_variable = tog_vev_6 }
+				trigger_event = tog_quest.0516
+			}
+			3 = {
+				trigger_event = tog_quest.0519
+			}
+			3 = {
+				trigger_event = tog_quest.0520
+			}
+			3 = {
+				trigger_event = tog_quest.0521
+			}
+			3 = {
+				trigger_event = tog_quest.0522
+			}
+		}
+	}
+}
+
+# Gwion and Eógan disagree on how a tale should be told.
+tog_quest.0511 = {
+	type = character_event
+	title = tog_quest.0511.t
+	desc = tog_quest.0511.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = scope:tog_gwion
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = personality_bold
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Gwion's way: the words said to the gods
+		name = tog_quest.0511.a
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+	option = { # Eógan's way: the tale as the people tell it
+		name = tog_quest.0511.b
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+	option = { # Write both, side by side
+		name = tog_quest.0511.c
+		add_stress = minor_stress_gain
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
+			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_verses.down } }
+		}
+	}
+}
+
+# Lailoken remembers something from his childhood.
+tog_quest.0512 = {
+	type = character_event
+	title = tog_quest.0512.t
+	desc = tog_quest.0512.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Write it down
+		name = tog_quest.0512.a
+		tog_companion_opinion_effect = {
+			WHO = tog_lailoken
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
+			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0512.a.bad } }
+		}
+	}
+	option = { # Have him sing it, and check it against the books
+		name = tog_quest.0512.b
+		tog_companion_opinion_effect = {
+			WHO = tog_lailoken
+			MOD = respect_opinion
+			VALUE = 5
+		}
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+}
+
+# Nest and what the women did.
+tog_quest.0513 = {
+	type = character_event
+	title = tog_quest.0513.t
+	desc = tog_quest.0513.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # A chapter of its own
+		name = tog_quest.0513.a
+		tog_companion_opinion_effect = {
+			WHO = tog_nest
+			MOD = respect_opinion
+			VALUE = 15
+		}
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+	option = { # Go and ask the other women of the land
+		name = tog_quest.0513.b
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		tog_companion_opinion_effect = {
+			WHO = tog_nest
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
+			50 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0513.b.bad } }
+		}
+	}
+}
+
+# Peredur counts the pages.
+tog_quest.0514 = {
+	type = character_event
+	title = tog_quest.0514.t
+	desc = tog_quest.0514.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let him number the pages
+		name = tog_quest.0514.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0514.a.good } }
+			40 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0514.a.bad } }
+		}
+	}
+	option = { # Have him count the lines of each prayer
+		name = tog_quest.0514.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0514.b.good } }
+			30 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0514.b.bad } }
+		}
+	}
+}
+
+# Gwion dreams a missing passage.
+tog_quest.0515 = {
+	type = character_event
+	title = tog_quest.0515.t
+	desc = tog_quest.0515.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_zealous
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Write the dream
+		name = tog_quest.0515.a
+		add_stress = minor_stress_gain
+		add_piety = minor_piety_gain
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 20 TT = tog_verses.up_big } }
+			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0515.a.bad } }
+		}
+	}
+	option = { # Check the dream against the books before writing
+		name = tog_quest.0515.b
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = respect_opinion
+			VALUE = 5
+		}
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+}
+
+# Gofraid brings vellum from a market.
+tog_quest.0516 = {
+	type = character_event
+	title = tog_quest.0516.t
+	desc = tog_quest.0516.desc
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_gofraid
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Buy it all
+		name = tog_quest.0516.a
+		trigger = { gold >= minor_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			80 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0516.a.meh } }
+		}
+	}
+	option = { # Scrape old pages and write over them
+		name = tog_quest.0516.b
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0516.b.good } }
+			50 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0516.b.bad } }
+		}
+	}
+	option = { # Buy it all, and pay a copyist from Tours too
+		name = tog_quest.0516.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = medium_gold_value
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		random_list = {
+			80 = { tog_verses_outcome_effect = { VALUE = 20 TT = tog_verses.up_big } }
+			20 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0516.c.meh } }
+		}
+	}
+}
+
+# A night of writing (repeatable, when the companions have had their say).
+tog_quest.0519 = {
+	type = character_event
+	title = tog_quest.0519.t
+	desc = tog_quest.0519.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Write all night
+		name = tog_quest.0519.a
+		add_stress = minor_stress_gain
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			50 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+	option = { # Read it all again from the start
+		name = tog_quest.0519.b
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0519.b.good } }
+			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+	option = { # Pay copyists to speed things up
+		name = tog_quest.0519.c
+		trigger = { gold >= minor_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
+			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0519.c.meh } }
+		}
+	}
+}
+
+# The oath of Beltaine: the Sacred Verses read aloud, the cult is founded.
+tog_quest.0501 = {
+	type = character_event
+	title = tog_quest.0501.t
+	desc = tog_quest.0501.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_gwion }
+		character = scope:tog_gwion
+		animation = admiration
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0501.a
+		custom_tooltip = tog_quest.0501.a.tt
+		add_piety = 300
+		add_learning_lifestyle_xp = major_lifestyle_xp
+		tog_found_cult_effect = yes
+	}
+}
+
+# A companion died: their child takes their place in the quest.
+tog_quest.0603 = {
+	type = character_event
+	title = tog_quest.0603.t
+	desc = tog_quest.0603.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = scope:tog_heir_companion
+		animation = sadness
+	}
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = {
+		name = tog_quest.0603.a
+		custom_tooltip = tog_quest.0603.a.tt
+	}
+}
+
+# ---- The quest passes to the heir ----
+
+# A minor heir: the quest waits until 16.
+tog_quest.0601 = {
+	type = character_event
+	title = tog_quest.0601.t
+	desc = tog_quest.0601.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+
+	option = {
+		name = tog_quest.0601.a
+		custom_tooltip = tog_quest.0601.a.tt
+	}
+}
+
+# The heir takes up the quest.
+tog_quest.0602 = {
+	type = character_event
+	title = tog_quest.0602.t
+	desc = tog_quest.0602.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = {
+		name = tog_quest.0602.a
+		custom_tooltip = tog_quest.0602.a.tt
+	}
+}
+
+# A page that does not hold: rewrite it, or move on and come back later.
+tog_quest.0520 = {
+	type = character_event
+	title = tog_quest.0520.t
+	desc = tog_quest.0520.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = stress
+	}
+
+	option = { # Tear it up and start again
+		name = tog_quest.0520.a
+		add_stress = minor_stress_gain
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			40 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_verses.down } }
+		}
+	}
+	option = { # Leave it and write on
+		name = tog_quest.0520.b
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+}
+
+# A curious visitor asks what is being written.
+tog_quest.0521 = {
+	type = character_event
+	title = tog_quest.0521.t
+	desc = tog_quest.0521.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Show him a harmless page
+		name = tog_quest.0521.a
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0521.a.good } }
+			30 = {
+				add_piety = minor_piety_loss
+				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0521.a.bad }
+			}
+		}
+	}
+	option = { # Pay for his silence
+		name = tog_quest.0521.b
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		random_list = {
+			80 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			20 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+		}
+	}
+}
+
+# The ink runs out.
+tog_quest.0522 = {
+	type = character_event
+	title = tog_quest.0522.t
+	desc = tog_quest.0522.desc
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Buy good ink in town
+		name = tog_quest.0522.a
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		random_list = {
+			80 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+		}
+	}
+	option = { # Make it yourself, with oak galls
+		name = tog_quest.0522.b
+		random_list = {
+			50 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0522.b.good } }
+			50 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0522.b.bad } }
+		}
+	}
+}

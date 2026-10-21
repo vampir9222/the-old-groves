@@ -47,7 +47,15 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_lessons_max"
 		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision }
+		basic_counter = {
+			variable_name = "tog_verses"
+			min = 0
+			max = 100
+			label = "tog_story_old_groves_verses"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_verses_max"
+		}
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"
@@ -78,9 +86,27 @@ tog_story_old_groves = {
 		}
 	}
 
-	# Passing the quest to the heir comes later; for now the quest ends with its owner.
 	on_owner_death = {
-		end_story = yes
+		# The quest passes to the heir; a minor heir takes it up at 16.
+		if = {
+			limit = { exists = story_owner.player_heir }
+			story_owner.player_heir = { save_scope_as = tog_new_owner }
+			make_story_owner = scope:tog_new_owner
+			if = {
+				limit = { scope:tog_new_owner = { age < 16 } }
+				set_variable = {
+					name = tog_paused
+					value = yes
+				}
+				scope:tog_new_owner = { trigger_event = tog_quest.0601 }
+			}
+			else = {
+				scope:tog_new_owner = { trigger_event = tog_quest.0602 }
+			}
+		}
+		else = {
+			end_story = yes
+		}
 	}
 
 	# Fallback: if the owner stands at the current destination (camp moved, travel
@@ -88,6 +114,7 @@ tog_story_old_groves = {
 	effect_group = {
 		months = 1
 		trigger = {
+			NOT = { exists = var:tog_paused }
 			exists = var:tog_destination
 			story_owner.location = var:tog_destination.title_province
 		}
@@ -104,7 +131,10 @@ tog_story_old_groves = {
 	# travel arrival missed...), run its arrival scene.
 	effect_group = {
 		months = 1
-		trigger = { var:tog_stage = 10 }
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 10
+		}
 
 		first_valid = {
 			triggered_effect = {
@@ -184,7 +214,10 @@ tog_story_old_groves = {
 	# arrival scene (the stone of Mabon only once the two others are done).
 	effect_group = {
 		months = 1
-		trigger = { var:tog_stage = 20 }
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 20
+		}
 
 		first_valid = {
 			triggered_effect = {
@@ -239,6 +272,7 @@ tog_story_old_groves = {
 	effect_group = {
 		months = 1
 		trigger = {
+			NOT = { exists = var:tog_paused }
 			exists = var:tog_freeing
 			exists = var:tog_eluned
 			var:tog_eluned = { is_alive = yes }
@@ -253,6 +287,70 @@ tog_story_old_groves = {
 			trigger = { always = yes }
 			effect = {
 				story_owner = { trigger_event = tog_quest.0229 }
+			}
+		}
+	}
+
+	# Step 7: the Sacred Verses are written month after month; events make the
+	# writing move forward or back. At 100, the oath of Beltaine.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 60
+			exists = var:tog_verses
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				# Shown under the bar.
+				set_variable = {
+					name = tog_verses_rate
+					value = tog_verses_monthly_value
+				}
+				change_variable = {
+					name = tog_verses
+					add = tog_verses_monthly_value
+				}
+				if = {
+					limit = { var:tog_verses >= 100 }
+					set_variable = {
+						name = tog_verses
+						value = 100
+					}
+					set_variable = {
+						name = tog_stage
+						value = 61
+					}
+					story_owner = {
+						trigger_event = {
+							id = tog_quest.0501
+							days = 7
+						}
+					}
+				}
+				# One writing event every month.
+				else = {
+					story_owner = { trigger_event = tog_quest.0510 }
+				}
+			}
+		}
+	}
+
+	# A minor heir takes the quest up at 16.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_paused
+			story_owner = { age >= 16 }
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				remove_variable = tog_paused
+				story_owner = { trigger_event = tog_quest.0602 }
 			}
 		}
 	}
