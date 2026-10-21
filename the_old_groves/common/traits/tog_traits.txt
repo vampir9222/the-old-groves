@@ -75,3 +75,14 @@ tog_novice = {
 	shown_in_encyclopedia = no
 	shown_in_ruler_designer = no
 }
+
+# Lailoken claims to descend from Myrddin: the old man is hard to kill, and
+# he has the second sight (his liege gets tog_second_sight_modifier while he is at court).
+tog_blood_of_myrddin = {
+	category = fame
+	icon = divine_blood.dds
+	health = 3
+	learning = 1
+	intrigue = 2
+	shown_in_ruler_designer = no
+}

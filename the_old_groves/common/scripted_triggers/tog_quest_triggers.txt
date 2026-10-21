@@ -17,11 +17,11 @@ tog_monastery_todo_trigger = {
 	}
 }
 
-# Lailoken has joined the quest and is still alive.
+# Lailoken (the old man himself, not an heir) has joined the quest and is still alive.
 tog_lailoken_alive_trigger = {
 	any_owned_story = {
 		story_type = tog_story_old_groves
-		var:tog_lailoken ?= { is_alive = yes }
+		var:tog_lailoken ?= { is_alive = yes NOT = { has_character_flag = tog_heir_companion } }
 	}
 }
 
@@ -67,5 +67,29 @@ tog_quest_not_paused_trigger = {
 			story_type = tog_story_old_groves
 			exists = var:tog_paused
 		}
+	}
+}
+
+# Step 8: a count a missionary may try to win over.
+tog_mission_target_trigger = {
+	is_alive = yes
+	is_ai = yes
+	NOT = { this = root }
+	NOT = { root.liege ?= this }
+	NOT = { faith = faith:tog_druidism }
+}
+
+# Event with scope:tog_missionary and scope:tog_story: the missionary is companion WHO.
+tog_is_companion_trigger = {
+	scope:tog_story.var:$WHO$ ?= scope:tog_missionary
+}
+
+# Story scope: Lailoken, with the Blood of Myrddin, is alive at the owner's court.
+tog_second_sight_valid_trigger = {
+	exists = var:tog_lailoken
+	var:tog_lailoken = {
+		is_alive = yes
+		has_trait = tog_blood_of_myrddin
+		is_courtier_of = root.story_owner
 	}
 }

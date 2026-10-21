@@ -521,3 +521,198 @@ tog_test_skip_step6_decision = {
 		base = 0
 	}
 }
+
+# Step 8: send all the companions out to win over counts.
+tog_send_companions_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_send_companions_decision_desc
+	selection_tooltip = tog_send_companions_decision_tooltip
+	confirm_text = tog_send_companions_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 70
+			NOT = { exists = var:tog_mission_sent }
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_send_companions_decision_effect_tt
+		tog_start_mission_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 8: look for a bard, as one looks for a spouse.
+tog_find_bard_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_find_bard_decision_desc
+	selection_tooltip = tog_find_bard_decision_tooltip
+	confirm_text = tog_find_bard_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 70
+			NOT = { exists = var:tog_bard }
+		}
+	}
+
+	cost = {
+		gold = {
+			value = medium_gold_value
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_find_bard_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0721 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Opens step 8 (the faithful) from anywhere before it: companions, artefacts and
+# the founding.
+tog_test_skip_step7_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step7_decision_desc
+	selection_tooltip = tog_test_skip_step7_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 70
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage >= 10
+					}
+				}
+			}
+			tog_test_skip_step1_effect = yes
+		}
+		tog_test_step3_done_effect = yes
+		tog_test_step5_done_effect = yes
+		tog_test_step6_done_effect = yes
+		tog_found_cult_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Gives each companion a random opinion of the owner, to test the missions.
+tog_test_random_opinions_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_random_opinions_decision_desc
+	selection_tooltip = tog_test_random_opinions_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage >= 70
+		}
+	}
+
+	effect = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			every_in_list = {
+				variable = tog_companions
+				limit = { is_alive = yes }
+				random_list = {
+					25 = {
+						add_opinion = {
+							target = root
+							modifier = respect_opinion
+							opinion = 80
+						}
+					}
+					25 = {
+						add_opinion = {
+							target = root
+							modifier = respect_opinion
+							opinion = 40
+						}
+					}
+					25 = {
+						add_opinion = {
+							target = root
+							modifier = disappointed_opinion
+							opinion = -20
+						}
+					}
+					25 = {
+						add_opinion = {
+							target = root
+							modifier = angry_opinion
+							opinion = -60
+						}
+					}
+				}
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

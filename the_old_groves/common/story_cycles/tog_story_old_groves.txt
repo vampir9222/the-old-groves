@@ -55,7 +55,7 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_verses_max"
 		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision }
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"
@@ -351,6 +351,70 @@ tog_story_old_groves = {
 			effect = {
 				remove_variable = tog_paused
 				story_owner = { trigger_event = tog_quest.0602 }
+			}
+		}
+	}
+
+	# Step 8: the bard's bonus lasts as long as the bard is at court.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_bard
+			story_owner = {
+				OR = {
+					has_character_modifier = tog_bard_fili_modifier
+					has_character_modifier = tog_bard_welsh_modifier
+					has_character_modifier = tog_bard_breton_modifier
+				}
+			}
+			NOT = {
+				var:tog_bard = {
+					is_alive = yes
+					is_courtier_of = root.story_owner
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					remove_character_modifier = tog_bard_fili_modifier
+					remove_character_modifier = tog_bard_welsh_modifier
+					remove_character_modifier = tog_bard_breton_modifier
+				}
+			}
+		}
+	}
+
+	# Lailoken's second sight: his liege sees the plots coming while he is at court.
+	effect_group = {
+		months = 1
+		trigger = {
+			OR = {
+				AND = {
+					tog_second_sight_valid_trigger = yes
+					NOT = { story_owner = { has_character_modifier = tog_second_sight_modifier } }
+				}
+				AND = {
+					NOT = { tog_second_sight_valid_trigger = yes }
+					story_owner = { has_character_modifier = tog_second_sight_modifier }
+				}
+			}
+		}
+
+		first_valid = {
+			triggered_effect = {
+				trigger = { tog_second_sight_valid_trigger = yes }
+				effect = {
+					story_owner = { add_character_modifier = { modifier = tog_second_sight_modifier } }
+				}
+			}
+			triggered_effect = {
+				trigger = { always = yes }
+				effect = {
+					story_owner = { remove_character_modifier = tog_second_sight_modifier }
+				}
 			}
 		}
 	}

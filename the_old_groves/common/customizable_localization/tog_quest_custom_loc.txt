@@ -80,7 +80,11 @@ TogQuestObjective = {
 	}
 	text = {
 		trigger = { var:tog_stage = 70 }
-		localization_key = tog_obj_founded
+		localization_key = tog_obj_faithful
+	}
+	text = {
+		trigger = { var:tog_stage = 80 }
+		localization_key = tog_obj_step9
 	}
 }
 
@@ -259,5 +263,280 @@ TogTravelDesc = {
 	text = {
 		trigger = { always = yes }
 		localization_key = tog_travel_desc_stone
+	}
+}
+
+# Step 8: one line per missionary in the quest window (empty if not sent).
+
+TogMissionLine_tog_eogan = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_eogan }
+		localization_key = tog_mission_line_tog_eogan
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_eogan = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_nest = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_nest }
+		localization_key = tog_mission_line_tog_nest
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_nest = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_gofraid = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_gofraid }
+		localization_key = tog_mission_line_tog_gofraid
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_gofraid = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_ursin = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_ursin }
+		localization_key = tog_mission_line_tog_ursin
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_ursin = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_gwion = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_gwion }
+		localization_key = tog_mission_line_tog_gwion
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_gwion = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_peredur = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_peredur }
+		localization_key = tog_mission_line_tog_peredur
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_peredur = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_lailoken = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_lailoken }
+		localization_key = tog_mission_line_tog_lailoken
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_lailoken = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
 	}
 }

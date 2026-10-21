@@ -684,6 +684,7 @@ tog_test_skip_step1_effect = {
 		dynasty = none
 		location = root.location
 		trait = eccentric
+		trait = tog_blood_of_myrddin
 		learning = 13
 		save_scope_as = tog_lailoken
 	}
@@ -748,7 +749,7 @@ tog_create_golden_sickle_effect = {
 	create_artifact = {
 		name = tog_golden_sickle_name
 		description = tog_golden_sickle_description
-		template = general_unique_template
+		template = tog_relic_template
 		type = pedestal
 		visuals = dagger_court
 		wealth = 60
@@ -764,7 +765,7 @@ tog_create_carnyx_effect = {
 	create_artifact = {
 		name = tog_carnyx_name
 		description = tog_carnyx_description
-		template = general_unique_template
+		template = tog_relic_template
 		type = pedestal
 		visuals = olifant_court
 		wealth = 40
@@ -783,10 +784,13 @@ tog_first_rite_effect = {
 	custom_tooltip = tog_quest.0412.tt
 	add_piety = major_piety_gain
 	hidden_effect = {
+		# Crowns pick their decorations from these saved values.
+		save_scope_value_as = { name = wealth value = 30 }
+		save_scope_value_as = { name = quality value = 70 }
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
-			template = crown_wearable_template
+			template = tog_relic_crown_template
 			type = helmet
 			visuals = crown
 			wealth = 30
@@ -1029,7 +1033,7 @@ tog_found_cult_effect = {
 		create_artifact = {
 			name = tog_verses_book_name
 			description = tog_verses_book_description
-			template = general_unique_template
+			template = tog_relic_template
 			type = journal
 			visuals = book
 			wealth = 50
@@ -1067,16 +1071,213 @@ tog_test_step6_done_effect = {
 			save_scope_as = tog_nest
 		}
 		tog_join_quest_effect = { WHO = tog_nest }
+		# Crowns pick their decorations from these saved values.
+		save_scope_value_as = { name = wealth value = 30 }
+		save_scope_value_as = { name = quality value = 70 }
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
-			template = crown_wearable_template
+			template = tog_relic_crown_template
 			type = helmet
 			visuals = crown
 			wealth = 30
 			quality = 70
 			modifier = tog_mistletoe_modifier
 			decaying = no
+		}
+	}
+}
+
+# ---- Step 8: the faithful ----
+
+# Sends companion WHO (story variable) to PROV to win over a count there.
+# The count is the county's holder if he is a count, else one of his count
+# vassals; never the owner nor his liege, never one of the faith already.
+tog_send_companion_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		var:$WHO$ ?= {
+			if = {
+				limit = {
+					is_alive = yes
+					is_courtier_of = root
+					is_travelling = no
+				}
+				save_scope_as = tog_missionary
+			}
+		}
+	}
+	if = {
+		limit = { exists = scope:tog_missionary }
+		province:$PROV$.county.holder ?= {
+			if = {
+				limit = {
+					highest_held_title_tier = tier_county
+					tog_mission_target_trigger = yes
+				}
+				save_scope_as = tog_mission_target
+			}
+			else = {
+				random_vassal = {
+					limit = {
+						highest_held_title_tier = tier_county
+						tog_mission_target_trigger = yes
+					}
+					save_scope_as = tog_mission_target
+				}
+			}
+		}
+		if = {
+			limit = { exists = scope:tog_mission_target }
+			scope:tog_missionary = {
+				set_variable = {
+					name = tog_mission_target
+					value = scope:tog_mission_target
+				}
+				set_variable = {
+					name = tog_mission_owner
+					value = root
+				}
+				start_travel_plan = {
+					destination = province:$PROV$
+					on_arrival_event = tog_quest.0711
+					on_arrival_destinations = last
+					return_trip = yes
+				}
+			}
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				change_variable = {
+					name = tog_mission_pending
+					add = 1
+				}
+				# For the recap in the quest window.
+				set_variable = {
+					name = tog_res_$WHO$
+					value = flag:pending
+				}
+			}
+		}
+	}
+	clear_saved_scope = tog_missionary
+	clear_saved_scope = tog_mission_target
+}
+
+# One mission result is in; when all are, the companions' return.
+tog_mission_result_in_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		change_variable = {
+			name = tog_mission_pending
+			add = -1
+		}
+		if = {
+			limit = {
+				var:tog_mission_pending <= 0
+				NOT = { exists = var:tog_mission_done }
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0719
+					days = 30
+				}
+			}
+		}
+	}
+}
+
+# Step 8 done once the mission is over and a bard is at court.
+tog_step8_check_effect = {
+	random_owned_story = {
+		limit = {
+			story_type = tog_story_old_groves
+			exists = var:tog_mission_done
+			exists = var:tog_bard
+		}
+		set_variable = {
+			name = tog_stage
+			value = 80
+		}
+		story_owner = {
+			trigger_event = {
+				id = tog_quest.0730
+				days = 7
+			}
+		}
+	}
+}
+
+# The mission starts: each companion goes to a land of their own.
+tog_start_mission_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = tog_mission_sent
+		set_variable = {
+			name = tog_mission_pending
+			value = 0
+		}
+	}
+	hidden_effect = {
+		tog_send_companion_effect = { WHO = tog_eogan PROV = 36 }
+		tog_send_companion_effect = { WHO = tog_nest PROV = 1655 }
+		tog_send_companion_effect = { WHO = tog_gofraid PROV = 1692 }
+		tog_send_companion_effect = { WHO = tog_ursin PROV = 2379 }
+		tog_send_companion_effect = { WHO = tog_gwion PROV = 1681 }
+		tog_send_companion_effect = { WHO = tog_peredur PROV = 1704 }
+		tog_send_companion_effect = { WHO = tog_lailoken PROV = 1743 }
+		random_owned_story = {
+			limit = {
+				story_type = tog_story_old_groves
+				var:tog_mission_pending <= 0
+			}
+			story_owner = { trigger_event = tog_quest.0719 }
+		}
+		trigger_event = {
+			id = tog_quest.0718
+			days = 450
+		}
+	}
+}
+
+# The chosen bard (scope:tog_bard) joins the court and the quest; MOD is his bonus.
+tog_take_bard_effect = {
+	custom_tooltip = tog_quest.0721.tt
+	add_character_modifier = { modifier = $MOD$ }
+	# His songs win over the county where the court stands, in a few months.
+	custom_tooltip = tog_quest.0721.county_tt
+	hidden_effect = {
+		tog_join_quest_effect = { WHO = tog_bard }
+		trigger_event = {
+			id = tog_quest.0722
+			days = 60
+		}
+		tog_step8_check_effect = yes
+	}
+}
+
+# The mission's count takes the faith and thinks well of the owner.
+tog_mission_convert_effect = {
+	scope:tog_mission_target = {
+		set_character_faith = faith:tog_druidism
+		add_opinion = {
+			target = scope:tog_mission_owner
+			modifier = respect_opinion
+			opinion = 30
+		}
+	}
+	scope:tog_mission_owner = { add_piety = medium_piety_gain }
+	# Counted for the end of step 8.
+	scope:tog_story ?= {
+		if = {
+			limit = { NOT = { exists = var:tog_mission_wins } }
+			set_variable = {
+				name = tog_mission_wins
+				value = 0
+			}
+		}
+		change_variable = {
+			name = tog_mission_wins
+			add = 1
 		}
 	}
 }

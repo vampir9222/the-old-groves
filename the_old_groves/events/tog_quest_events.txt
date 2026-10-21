@@ -369,6 +369,7 @@ tog_quest.0050 = {
 			dynasty = none
 			location = root.location
 			trait = eccentric
+			trait = tog_blood_of_myrddin
 			diplomacy = 6
 			martial = 2
 			stewardship = 5
@@ -2808,7 +2809,7 @@ tog_quest.0233 = {
 		if = {
 			limit = {
 				exists = scope:tog_lailoken
-				scope:tog_lailoken = { is_alive = no }
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
 			}
 			clear_saved_scope = tog_lailoken
 		}
@@ -2865,7 +2866,7 @@ tog_quest.0234 = {
 		if = {
 			limit = {
 				exists = scope:tog_lailoken
-				scope:tog_lailoken = { is_alive = no }
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
 			}
 			clear_saved_scope = tog_lailoken
 		}
@@ -2922,7 +2923,7 @@ tog_quest.0235 = {
 		if = {
 			limit = {
 				exists = scope:tog_lailoken
-				scope:tog_lailoken = { is_alive = no }
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
 			}
 			clear_saved_scope = tog_lailoken
 		}
@@ -2979,7 +2980,7 @@ tog_quest.0236 = {
 		if = {
 			limit = {
 				exists = scope:tog_lailoken
-				scope:tog_lailoken = { is_alive = no }
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
 			}
 			clear_saved_scope = tog_lailoken
 		}
@@ -3190,6 +3191,8 @@ tog_quest.0312 = {
 		animation = disappointed
 	}
 
+	immediate = { tog_save_companions_effect = yes }
+
 	option = {
 		name = tog_quest.0312.a
 		hidden_effect = { trigger_event = tog_quest.0311 }
@@ -3357,7 +3360,7 @@ tog_quest.0401 = {
 		if = {
 			limit = {
 				exists = scope:tog_lailoken
-				scope:tog_lailoken = { is_alive = no }
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
 			}
 			clear_saved_scope = tog_lailoken
 		}
@@ -3638,7 +3641,7 @@ tog_quest.0413 = {
 			desc = tog_quest.0413.eogan
 		}
 		triggered_desc = {
-			trigger = { tog_companion_alive_trigger = { WHO = tog_lailoken } }
+			trigger = { tog_lailoken_alive_trigger = yes }
 			desc = tog_quest.0413.lailoken
 		}
 		triggered_desc = {
@@ -3712,7 +3715,7 @@ tog_quest.0510 = {
 			10 = {
 				trigger = {
 					NOT = { exists = scope:tog_story.var:tog_vev_2 }
-					tog_companion_alive_trigger = { WHO = tog_lailoken }
+					tog_lailoken_alive_trigger = yes
 				}
 				scope:tog_story = { set_variable = tog_vev_2 }
 				trigger_event = tog_quest.0512
@@ -4266,6 +4269,8 @@ tog_quest.0522 = {
 		animation = thinking
 	}
 
+	immediate = { tog_save_companions_effect = yes }
+
 	option = { # Buy good ink in town
 		name = tog_quest.0522.a
 		trigger = { gold >= tiny_gold_value }
@@ -4282,5 +4287,429 @@ tog_quest.0522 = {
 			50 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0522.b.good } }
 			50 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0522.b.bad } }
 		}
+	}
+}
+
+# ---- Step 8: the faithful ----
+
+# Hidden, on the missionary's arrival: does the count listen?
+tog_quest.0711 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		save_scope_as = tog_missionary
+		var:tog_mission_target ?= { save_scope_as = tog_mission_target }
+		var:tog_mission_owner ?= { save_scope_as = tog_mission_owner }
+		scope:tog_mission_owner ?= {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				save_scope_as = tog_story
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:tog_mission_target
+				exists = scope:tog_story
+				scope:tog_mission_target = { is_alive = yes }
+			}
+			# Five outcomes; the better the missionary thinks of the owner, the
+			# better the odds.
+			random_list = {
+				# A triumph: the count converts and sends a gift.
+				10 = {
+					opinion_modifier = {
+						who = scope:tog_missionary
+						opinion_target = scope:tog_mission_owner
+						multiplier = 0.3
+					}
+					save_scope_value_as = { name = tog_mission_result value = flag:triumph }
+					tog_mission_convert_effect = yes
+					scope:tog_mission_owner = {
+						add_gold = minor_gold_value
+						add_prestige = minor_prestige_gain
+					}
+				}
+				# A success: the count converts.
+				40 = {
+					opinion_modifier = {
+						who = scope:tog_missionary
+						opinion_target = scope:tog_mission_owner
+						multiplier = 0.6
+					}
+					save_scope_value_as = { name = tog_mission_result value = flag:won }
+					tog_mission_convert_effect = yes
+				}
+				# A failure: the count does not listen.
+				25 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:lost }
+				}
+				# Driven out: the count's men chase the missionary away.
+				10 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:chased }
+					scope:tog_mission_owner = { add_prestige = minor_prestige_loss }
+					scope:tog_mission_target = {
+						add_opinion = {
+							target = scope:tog_mission_owner
+							modifier = angry_opinion
+							opinion = -20
+						}
+					}
+				}
+				# Wounded: the priest's men beat the missionary.
+				5 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:wounded }
+					scope:tog_missionary = {
+						increase_wounds_no_death_effect = { REASON = fight }
+					}
+				}
+			}
+			# For the recap in the quest window.
+			if = {
+				limit = { scope:tog_story.var:tog_eogan ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_eogan
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_nest ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_nest
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_gofraid ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_gofraid
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_ursin ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_ursin
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_gwion ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_gwion
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_peredur ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_peredur
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_lailoken ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_lailoken
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			scope:tog_mission_owner = { trigger_event = tog_quest.0712 }
+		}
+		remove_variable = tog_mission_target
+		remove_variable = tog_mission_owner
+		scope:tog_mission_owner ?= { tog_mission_result_in_effect = yes }
+	}
+}
+
+# News from a missionary: who it is, then how it went.
+tog_quest.0712 = {
+	type = character_event
+	title = tog_quest.0712.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_eogan } }
+				desc = tog_quest.0712.eogan
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_nest } }
+				desc = tog_quest.0712.nest
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_gofraid } }
+				desc = tog_quest.0712.gofraid
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_ursin } }
+				desc = tog_quest.0712.ursin
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_gwion } }
+				desc = tog_quest.0712.gwion
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_peredur } }
+				desc = tog_quest.0712.peredur
+			}
+			triggered_desc = {
+				trigger = {
+					tog_is_companion_trigger = { WHO = tog_lailoken }
+					scope:tog_missionary = { NOT = { has_character_flag = tog_heir_companion } }
+				}
+				desc = tog_quest.0712.lailoken
+			}
+			desc = tog_quest.0712.other
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:triumph }
+				desc = tog_quest.0712.triumph
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:won }
+				desc = tog_quest.0712.won
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:chased }
+				desc = tog_quest.0712.chased
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:wounded }
+				desc = tog_quest.0712.wounded
+			}
+			desc = tog_quest.0712.lost
+		}
+	}
+	theme = faith
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = scope:tog_missionary
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_mission_target
+		animation = thinking
+	}
+
+	option = { # Converted
+		name = tog_quest.0712.yes
+		trigger = {
+			OR = {
+				scope:tog_mission_result = flag:triumph
+				scope:tog_mission_result = flag:won
+			}
+		}
+	}
+	option = { # Not converted
+		name = tog_quest.0712.no
+		trigger = {
+			NOR = {
+				scope:tog_mission_result = flag:triumph
+				scope:tog_mission_result = flag:won
+			}
+		}
+	}
+}
+
+# Safety net: if a missionary never arrives, the mission still ends.
+tog_quest.0718 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = {
+				story_type = tog_story_old_groves
+				NOT = { exists = var:tog_mission_done }
+			}
+			story_owner = { trigger_event = tog_quest.0719 }
+		}
+	}
+}
+
+# The companions are back (hidden): the mission is over.
+tog_quest.0719 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = tog_mission_done
+		}
+		tog_step8_check_effect = yes
+	}
+}
+
+# Looking for a bard: three come forward.
+tog_quest.0721 = {
+	type = character_event
+	title = tog_quest.0721.t
+	desc = tog_quest.0721.desc
+	theme = diplomacy
+	override_background = { reference = feast }
+	left_portrait = {
+		character = scope:tog_bard_1
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_bard_2
+		animation = happiness
+	}
+	lower_right_portrait = {
+		character = scope:tog_bard_3
+	}
+
+	immediate = {
+		create_character = {
+			age = { 25 45 }
+			gender = male
+			culture = culture:irish
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = diligent
+			learning = 14
+			save_scope_as = tog_bard_1
+		}
+		create_character = {
+			age = { 20 40 }
+			gender_female_chance = 50
+			culture = culture:welsh
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = gregarious
+			diplomacy = 14
+			save_scope_as = tog_bard_2
+		}
+		create_character = {
+			age = { 30 55 }
+			gender = male
+			culture = culture:breton
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = humble
+			intrigue = 12
+			save_scope_as = tog_bard_3
+		}
+	}
+
+	option = {
+		name = tog_quest.0721.a
+		scope:tog_bard_1 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_fili_modifier }
+	}
+	option = {
+		name = tog_quest.0721.b
+		scope:tog_bard_2 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_welsh_modifier }
+	}
+	option = {
+		name = tog_quest.0721.c
+		scope:tog_bard_3 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_breton_modifier }
+	}
+}
+
+# Step 8 is done.
+tog_quest.0730 = {
+	type = character_event
+	title = tog_quest.0730.t
+	desc = {
+		desc = tog_quest.0730.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						exists = var:tog_mission_wins
+					}
+				}
+				desc = tog_quest.0730.lords
+			}
+			desc = tog_quest.0730.nolords
+		}
+	}
+	theme = faith
+	override_background = { reference = feast }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_bard }
+		character = scope:tog_bard
+		animation = happiness
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_bard ?= { save_scope_as = tog_bard }
+		}
+	}
+
+	option = {
+		name = tog_quest.0730.a
+		custom_tooltip = tog_quest.0730.a.tt
+	}
+}
+
+# A few months later: the bard's songs have won over the county where the court stands.
+tog_quest.0722 = {
+	type = character_event
+	title = tog_quest.0722.t
+	desc = tog_quest.0722.desc
+	theme = faith
+	override_background = { reference = feast }
+	left_portrait = {
+		character = scope:tog_bard
+		animation = happiness
+	}
+	right_portrait = {
+		character = root
+		animation = admiration
+	}
+
+	trigger = {
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_bard ?= { is_alive = yes }
+		}
+		exists = location.county
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_faith_conversion"
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_bard ?= { save_scope_as = tog_bard }
+		}
+		location.county = { save_scope_as = tog_bard_county }
+	}
+
+	option = {
+		name = tog_quest.0722.a
+		scope:tog_bard_county = { set_county_faith = faith:tog_druidism }
 	}
 }

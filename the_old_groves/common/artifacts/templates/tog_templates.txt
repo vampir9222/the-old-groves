@@ -1,0 +1,43 @@
+﻿# The Old Groves - artefact templates
+# The artefacts of the quest are holy relics of Druidism: they can be enshrined in
+# its holy sites, which activates them. Their bonuses work for anyone (the quest
+# gives them before the founding).
+
+tog_relic_template = {
+	can_equip = {
+		always = yes
+	}
+
+	can_benefit = {
+		always = yes
+	}
+
+	is_holy_relic = {
+		religion = religion:tog_celtic_religion
+	}
+
+	fallback = {
+	}
+
+	unique = yes
+}
+
+# Same, for the crown of mistletoe, which is worn.
+tog_relic_crown_template = {
+	can_equip = {
+		always = yes
+	}
+
+	can_benefit = {
+		always = yes
+	}
+
+	is_holy_relic = {
+		religion = religion:tog_celtic_religion
+	}
+
+	fallback = {
+	}
+
+	unique = yes
+}

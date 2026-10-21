@@ -70,3 +70,4 @@ tog_verses_monthly_value = {
 	min = 3
 	max = 6
 }
+
