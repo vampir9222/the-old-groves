@@ -314,3 +314,90 @@ tog_find_guide_decision = {
 		base = 0
 	}
 }
+
+# Step 6: reading the stone from the copy made at the start of the quest (at home).
+tog_read_stone_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_read_stone_decision_desc
+	selection_tooltip = tog_read_stone_decision_tooltip
+	confirm_text = tog_read_stone_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 40
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_read_stone_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0401 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Opens step 6 (the stone read, then Môn) from anywhere before it.
+tog_test_skip_step5_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_skip_step5_decision_desc
+	selection_tooltip = tog_test_skip_step5_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 40
+			}
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage >= 10
+					}
+				}
+			}
+			tog_test_skip_step1_effect = yes
+		}
+		tog_start_step3_effect = yes
+		tog_create_golden_sickle_effect = yes
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stage
+				value = 40
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

@@ -50,3 +50,12 @@ tog_mabon_open_trigger = {
 		exists = var:tog_p_uisneach_done
 	}
 }
+
+# Companion WHO (story variable: tog_eogan, tog_gwion, tog_gofraid...) has joined
+# the quest and is still alive.
+tog_companion_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:$WHO$ ?= { is_alive = yes }
+	}
+}

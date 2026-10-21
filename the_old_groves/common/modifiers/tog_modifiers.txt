@@ -34,3 +34,10 @@ tog_carnyx_modifier = {
 	prowess = 2
 	monthly_prestige = 0.5
 }
+
+# Artefact of step 6.
+tog_mistletoe_modifier = {
+	icon = health_positive
+	monthly_piety = 1
+	health = 0.25
+}

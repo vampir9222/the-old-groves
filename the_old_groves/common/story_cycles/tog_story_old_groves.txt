@@ -47,7 +47,7 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_lessons_max"
 		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision }
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"

@@ -61,7 +61,7 @@ tog_travel_to_destination_effect = {
 			set_variable = { name = tog_tev_pending value = yes }
 			trigger_event = {
 				id = tog_quest.0150
-				days = { 40 55 }
+				days = { 30 45 }
 			}
 		}
 	}
@@ -214,7 +214,7 @@ tog_travel_to_province_effect = {
 			set_variable = { name = tog_tev_pending value = yes }
 			trigger_event = {
 				id = tog_quest.0150
-				days = { 40 55 }
+				days = { 30 45 }
 			}
 		}
 	}
@@ -495,6 +495,9 @@ tog_save_companions_effect = {
 		var:tog_lailoken ?= { save_scope_as = tog_lailoken }
 		var:tog_eogan ?= { save_scope_as = tog_eogan }
 		var:tog_gwion ?= { save_scope_as = tog_gwion }
+		var:tog_gofraid ?= { save_scope_as = tog_gofraid }
+		var:tog_ursin ?= { save_scope_as = tog_ursin }
+		var:tog_nest ?= { save_scope_as = tog_nest }
 	}
 }
 
@@ -769,5 +772,52 @@ tog_create_carnyx_effect = {
 		modifier = tog_carnyx_modifier
 		save_scope_as = tog_carnyx
 		decaying = no
+	}
+}
+
+# ---- Step 6: the first rite on Ynys Môn ----
+
+# The mistletoe is cut and kept: Nest joins, the gui of Môn goes to the treasury,
+# end of step 6.
+tog_first_rite_effect = {
+	custom_tooltip = tog_quest.0412.tt
+	add_piety = major_piety_gain
+	hidden_effect = {
+		create_artifact = {
+			name = tog_mistletoe_name
+			description = tog_mistletoe_description
+			template = general_unique_template
+			type = pedestal
+			visuals = pedestal_branch_relic_germanic
+			wealth = 30
+			quality = 70
+			modifier = tog_mistletoe_modifier
+			save_scope_as = tog_mistletoe
+			decaying = no
+		}
+		if = {
+			limit = { exists = scope:tog_nest }
+			tog_join_quest_effect = { WHO = tog_nest }
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stage
+				value = 50
+			}
+			remove_variable = tog_destination
+		}
+	}
+}
+
+# A companion's opinion of the quest owner changes (road events and the like).
+# WHO = saved scope (tog_peredur, tog_lailoken...), MOD = opinion modifier, VALUE = amount.
+tog_companion_opinion_effect = {
+	scope:$WHO$ ?= {
+		add_opinion = {
+			target = root
+			modifier = $MOD$
+			opinion = $VALUE$
+		}
 	}
 }

@@ -59,13 +59,31 @@ TogQuestObjective = {
 	}
 	text = {
 		trigger = { var:tog_stage = 40 }
-		localization_key = tog_obj_step6
+		localization_key = tog_obj_read_stone
+	}
+	text = {
+		trigger = { var:tog_stage = 41 }
+		localization_key = tog_obj_mon
+	}
+	text = {
+		trigger = { var:tog_stage = 50 }
+		localization_key = tog_obj_step7
 	}
 }
 
 # Destination named in the travel decision (character scope).
 TogTravelTarget = {
 	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 41
+			}
+		}
+		localization_key = tog_dest_mon
+	}
 
 	text = {
 		trigger = {
@@ -140,6 +158,16 @@ TogTravelTarget = {
 # Description of the travel decision, by stage (character scope).
 TogTravelDesc = {
 	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 41
+			}
+		}
+		localization_key = tog_travel_desc_mon
+	}
 
 	text = {
 		trigger = {

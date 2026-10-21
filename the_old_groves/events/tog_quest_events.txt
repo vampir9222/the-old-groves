@@ -649,6 +649,13 @@ tog_quest.0060 = {
 					}
 					root = { trigger_event = tog_quest.0321 }
 				}
+				else_if = {
+					limit = {
+						var:tog_stage = 41
+						root.location = province:1673
+					}
+					root = { trigger_event = tog_quest.0411 }
+				}
 			}
 		}
 	}
@@ -1147,7 +1154,7 @@ tog_quest.0140 = {
 	}
 }
 
-# ---- Step 2: road events, rolled every 40 to 55 days of a journey to a monastery ----
+# ---- Step 2: road events, rolled every 30 to 45 days of a journey to a monastery ----
 
 tog_quest.0150 = {
 	type = character_event
@@ -1165,6 +1172,7 @@ tog_quest.0150 = {
 						var:tog_stage = 20
 						var:tog_stage = 30
 						var:tog_stage = 31
+						var:tog_stage = 41
 					}
 				}
 			}
@@ -1246,11 +1254,43 @@ tog_quest.0150 = {
 					set_variable = { name = tog_tev_12 value = yes }
 					trigger_event = tog_quest.0183
 				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_13 }
+						tog_companion_alive_trigger = { WHO = tog_eogan }
+					}
+					set_variable = { name = tog_tev_13 value = yes }
+					trigger_event = tog_quest.0184
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_14 }
+						tog_companion_alive_trigger = { WHO = tog_gwion }
+					}
+					set_variable = { name = tog_tev_14 value = yes }
+					trigger_event = tog_quest.0185
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_15 }
+						tog_companion_alive_trigger = { WHO = tog_gofraid }
+					}
+					set_variable = { name = tog_tev_15 value = yes }
+					trigger_event = tog_quest.0186
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_16 }
+						tog_companion_alive_trigger = { WHO = tog_ursin }
+					}
+					set_variable = { name = tog_tev_16 value = yes }
+					trigger_event = tog_quest.0187
+				}
 			}
 			set_variable = { name = tog_tev_pending value = yes }
 			trigger_event = {
 				id = tog_quest.0150
-				days = { 40 55 }
+				days = { 30 45 }
 			}
 		}
 	}
@@ -1444,20 +1484,29 @@ tog_quest.0155 = {
 
 	option = { # Follow Peredur (pure chance)
 		name = tog_quest.0155.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 15
+		}
 		random_list = {
 			40 = {
 				custom_tooltip = tog_quest.0155.a.good
-				add_stress = minor_stress_loss
+				add_stewardship_lifestyle_xp = medium_lifestyle_xp
 			}
 			60 = {
 				custom_tooltip = tog_quest.0155.a.bad
-				add_stress = minor_stress_gain
 			}
 		}
 	}
 
 	option = { # Ask the locals (diplomacy)
 		name = tog_quest.0155.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
 		random_list = {
 			0 = {
 				modifier = { add = tog_good_weight_diplomacy_value }
@@ -1466,7 +1515,6 @@ tog_quest.0155 = {
 			}
 			60 = {
 				custom_tooltip = tog_quest.0155.b.bad
-				add_stress = minor_stress_gain
 			}
 		}
 	}
@@ -1737,7 +1785,6 @@ tog_quest.0158 = {
 
 	option = { # Scold him
 		name = tog_quest.0158.b
-		add_stress = minor_stress_loss
 		scope:tog_lailoken = {
 			add_opinion = {
 				target = root
@@ -1773,7 +1820,7 @@ tog_quest.0159 = {
 
 	option = { # Slow down for him
 		name = tog_quest.0159.a
-		add_stress = minor_stress_gain
+		add_learning_lifestyle_xp = minor_lifestyle_xp
 		custom_tooltip = tog_quest.0159.a.tt
 		scope:tog_lailoken = {
 			add_opinion = {
@@ -1786,7 +1833,6 @@ tog_quest.0159 = {
 
 	option = { # Push on
 		name = tog_quest.0159.b
-		add_stress = minor_stress_loss
 		scope:tog_lailoken = {
 			contract_disease_effect = {
 				DISEASE = ill
@@ -1816,12 +1862,22 @@ tog_quest.0181 = {
 
 	option = { # Let Peredur handle it
 		name = tog_quest.0181.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 10
+		}
 		add_gold = tiny_gold_value
-		add_stress = minor_stress_loss
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
 	}
 
 	option = { # Pay and move on
 		name = tog_quest.0181.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
 		remove_short_term_gold = tiny_gold_value
 	}
 }
@@ -1858,7 +1914,6 @@ tog_quest.0182 = {
 
 	option = { # Burst out laughing
 		name = tog_quest.0182.b
-		add_stress = medium_stress_loss
 		scope:tog_peredur = {
 			add_opinion = {
 				target = root
@@ -1889,12 +1944,22 @@ tog_quest.0183 = {
 
 	option = { # Bet on Peredur
 		name = tog_quest.0183.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 15
+		}
 		add_gold = minor_gold_value
 		add_prestige = minor_prestige_gain
 	}
 
 	option = { # No betting
 		name = tog_quest.0183.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
 		add_piety = minor_piety_gain
 	}
 }
@@ -2603,6 +2668,11 @@ tog_quest.0254 = {
 
 	option = { # Lailoken saves the day
 		name = tog_quest.0254.a
+		tog_companion_opinion_effect = {
+			WHO = tog_lailoken
+			MOD = respect_opinion
+			VALUE = 10
+		}
 		trigger = { tog_lailoken_alive_trigger = yes }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_quest.0254.a.tt
@@ -3231,6 +3301,297 @@ tog_quest.0331 = {
 				}
 				remove_variable = tog_destination
 			}
+		}
+	}
+}
+
+# ---- Step 6: the stone read, then the first rite on Ynys Môn ----
+
+# Reading the stone from the copy made in step 1 (from the decision, at home).
+# Lailoken sits in when alive.
+tog_quest.0401 = {
+	type = character_event
+	title = tog_quest.0401.t
+	desc = {
+		desc = tog_quest.0401.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0401.lailoken
+		}
+		desc = tog_quest.0401.end
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { is_alive = no }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0401.a
+		custom_tooltip = tog_quest.0401.a.tt
+		add_learning_lifestyle_xp = major_lifestyle_xp
+		add_piety = medium_piety_gain
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 41
+				DESTINATION = b_yns_mon
+			}
+		}
+	}
+}
+
+# Ynys Môn: no woods left, a church on the hill of the old grove. Nest knows a valley.
+tog_quest.0411 = {
+	type = character_event
+	title = tog_quest.0411.t
+	desc = tog_quest.0411.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = personality_rational
+	}
+
+	immediate = {
+		create_character = {
+			name = "Nest"
+			age = 32
+			gender = female
+			culture = culture:welsh
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = calm
+			trait = honest
+			learning = 9
+			save_scope_as = tog_nest
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_nest_wait
+				value = scope:tog_nest
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0411.a
+		hidden_effect = { trigger_event = tog_quest.0412 }
+	}
+}
+
+# The first rite: the mistletoe cut from the oak; Nest holds the white cloak.
+tog_quest.0412 = {
+	type = character_event
+	title = tog_quest.0412.t
+	desc = tog_quest.0412.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = admiration
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_nest_wait ?= { save_scope_as = tog_nest }
+		}
+	}
+
+	option = { # Nest holds the white cloak
+		name = tog_quest.0412.a
+		tog_first_rite_effect = yes
+	}
+}
+
+# Road: Eógan tells a story by the fire.
+tog_quest.0184 = {
+	type = character_event
+	title = tog_quest.0184.t
+	desc = tog_quest.0184.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Listen all night
+		name = tog_quest.0184.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # We leave at dawn
+		name = tog_quest.0184.b
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+	}
+}
+
+# Road: Gwion dreamt of the road ahead.
+tog_quest.0185 = {
+	type = character_event
+	title = tog_quest.0185.t
+	desc = tog_quest.0185.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_zealous
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Take another road
+		name = tog_quest.0185.a
+		custom_tooltip = tog_quest.0185.a.tt
+		add_piety = minor_piety_gain
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # Dreams are dreams
+		name = tog_quest.0185.b
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = disappointed_opinion
+			VALUE = -10
+		}
+		random_list = {
+			50 = {
+				custom_tooltip = tog_quest.0185.b.good
+			}
+			50 = {
+				custom_tooltip = tog_quest.0185.b.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+				remove_short_term_gold = minor_gold_value
+			}
+		}
+	}
+}
+
+# Road: Gofraid knows the innkeeper's tricks.
+tog_quest.0186 = {
+	type = character_event
+	title = tog_quest.0186.t
+	desc = tog_quest.0186.desc
+	theme = stewardship
+	override_background = { reference = tavern }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_gofraid
+		animation = scheme
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let him haggle
+		name = tog_quest.0186.a
+		add_gold = tiny_gold_value
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # Pay the honest price
+		name = tog_quest.0186.b
+		remove_short_term_gold = tiny_gold_value
+		add_piety = minor_piety_gain
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+	}
+}
+
+# Road: Ursin practises the war horn at night.
+tog_quest.0187 = {
+	type = character_event
+	title = tog_quest.0187.t
+	desc = tog_quest.0187.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+	right_portrait = {
+		character = scope:tog_ursin
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Encourage him
+		name = tog_quest.0187.a
+		add_martial_lifestyle_xp = minor_lifestyle_xp
+		add_prestige = minor_prestige_gain
+		tog_companion_opinion_effect = {
+			WHO = tog_ursin
+			MOD = respect_opinion
+			VALUE = 15
+		}
+	}
+	option = { # Not at night
+		name = tog_quest.0187.b
+		tog_companion_opinion_effect = {
+			WHO = tog_ursin
+			MOD = disappointed_opinion
+			VALUE = -10
 		}
 	}
 }
