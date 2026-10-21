@@ -1,0 +1,38 @@
+﻿# The Old Groves - court chaplain of Druidism
+# The game names the chaplain of every faith with pagan hostility "Shaman"
+# (GetActualBishopTitle, vanilla). Rather than copying that rule, the "Shaman" texts
+# are replaced (localization/replace) by these selectors: Druidism gets its druid,
+# every other faith keeps the vanilla text, copied into our own keys.
+
+TogPaganChaplainCounty = {
+	type = character
+	text = {
+		trigger = { faith = faith:tog_druidism }
+		localization_key = tog_chaplain_county
+	}
+	text = {
+		localization_key = tog_vanilla_chaplain_pagan_county
+	}
+}
+
+TogPaganChaplainDuchy = {
+	type = character
+	text = {
+		trigger = { faith = faith:tog_druidism }
+		localization_key = tog_chaplain_duchy
+	}
+	text = {
+		localization_key = tog_vanilla_chaplain_pagan_duchy
+	}
+}
+
+TogPaganChaplainKingdom = {
+	type = character
+	text = {
+		trigger = { faith = faith:tog_druidism }
+		localization_key = tog_chaplain_kingdom
+	}
+	text = {
+		localization_key = tog_vanilla_chaplain_pagan_kingdom
+	}
+}
