@@ -55,7 +55,15 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_verses_max"
 		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision }
+		basic_counter = {
+			variable_name = "tog_training"
+			min = 0
+			max = 100
+			label = "tog_story_old_groves_training"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_verses_max"
+		}
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_train_druids_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"
@@ -414,6 +422,51 @@ tog_story_old_groves = {
 				trigger = { always = yes }
 				effect = {
 					story_owner = { remove_character_modifier = tog_second_sight_modifier }
+				}
+			}
+		}
+	}
+
+	# Step 9: the druids are trained month after month; one training event each
+	# month. At 100, their ordination.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 80
+			exists = var:tog_training
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				set_variable = {
+					name = tog_training_rate
+					value = tog_training_monthly_value
+				}
+				change_variable = {
+					name = tog_training
+					add = tog_training_monthly_value
+				}
+				if = {
+					limit = { var:tog_training >= 100 }
+					set_variable = {
+						name = tog_training
+						value = 100
+					}
+					set_variable = {
+						name = tog_stage
+						value = 81
+					}
+					story_owner = {
+						trigger_event = {
+							id = tog_quest.0801
+							days = 7
+						}
+					}
+				}
+				else = {
+					story_owner = { trigger_event = tog_quest.0810 }
 				}
 			}
 		}

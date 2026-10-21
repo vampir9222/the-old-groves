@@ -71,3 +71,13 @@ tog_verses_monthly_value = {
 	max = 6
 }
 
+
+# Story scope: monthly progress of the druids' training, from the owner's learning
+# (5 to 9 points a month: about a year with the events).
+tog_training_monthly_value = {
+	value = story_owner.learning
+	divide = 3
+	floor = yes
+	min = 5
+	max = 9
+}

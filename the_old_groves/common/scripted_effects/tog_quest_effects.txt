@@ -1281,3 +1281,110 @@ tog_mission_convert_effect = {
 		}
 	}
 }
+
+# ---- Step 9: training the first druids ----
+
+# Adds scope:tog_new_disciple to the disciples (to the court and the faith too).
+tog_add_disciple_effect = {
+	scope:tog_new_disciple = {
+		add_character_flag = tog_disciple
+		if = {
+			limit = { NOT = { is_courtier_of = root } }
+			root = { add_courtier = scope:tog_new_disciple }
+		}
+		set_character_faith = faith:tog_druidism
+	}
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		add_to_variable_list = {
+			name = tog_disciples
+			target = scope:tog_new_disciple
+		}
+	}
+	clear_saved_scope = tog_new_disciple
+}
+
+# One more disciple: a child of a living companion, old enough to learn, at random;
+# failing that, a random young person.
+tog_pick_young_disciple_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		random_in_list = {
+			variable = tog_companions
+			limit = {
+				is_alive = yes
+				any_child = { tog_disciple_candidate_trigger = yes }
+			}
+			random_child = {
+				limit = { tog_disciple_candidate_trigger = yes }
+				save_scope_as = tog_new_disciple
+			}
+		}
+	}
+	if = {
+		limit = { NOT = { exists = scope:tog_new_disciple } }
+		create_character = {
+			age = { 13 17 }
+			gender_female_chance = 50
+			culture = root.culture
+			faith = faith:tog_druidism
+			dynasty = none
+			location = root.location
+			learning = 8
+			save_scope_as = tog_new_disciple
+		}
+	}
+	tog_add_disciple_effect = yes
+}
+
+# The training starts: Lailoken first, then two young disciples.
+tog_start_training_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		clear_variable_list = tog_disciples
+		set_variable = {
+			name = tog_training
+			value = 0
+		}
+		set_variable = {
+			name = tog_training_rate
+			value = tog_training_monthly_value
+		}
+		var:tog_lailoken ?= {
+			if = {
+				limit = {
+					is_alive = yes
+					NOT = { has_character_flag = tog_heir_companion }
+				}
+				save_scope_as = tog_new_disciple
+			}
+		}
+	}
+	if = {
+		limit = { exists = scope:tog_new_disciple }
+		tog_add_disciple_effect = yes
+	}
+	tog_pick_young_disciple_effect = yes
+	tog_pick_young_disciple_effect = yes
+}
+
+# Changes the training progress by VALUE, never below 0, with a tooltip TT.
+tog_training_outcome_effect = {
+	custom_tooltip = $TT$
+	hidden_effect = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			change_variable = {
+				name = tog_training
+				add = $VALUE$
+			}
+			if = {
+				limit = { var:tog_training < 0 }
+				set_variable = {
+					name = tog_training
+					value = 0
+				}
+			}
+		}
+	}
+}

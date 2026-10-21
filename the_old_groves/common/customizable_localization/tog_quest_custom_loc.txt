@@ -83,8 +83,17 @@ TogQuestObjective = {
 		localization_key = tog_obj_faithful
 	}
 	text = {
-		trigger = { var:tog_stage = 80 }
-		localization_key = tog_obj_step9
+		trigger = {
+			OR = {
+				var:tog_stage = 80
+				var:tog_stage = 81
+			}
+		}
+		localization_key = tog_obj_druids
+	}
+	text = {
+		trigger = { var:tog_stage = 90 }
+		localization_key = tog_obj_step10
 	}
 }
 
