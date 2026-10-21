@@ -263,7 +263,7 @@ tog_test_skip_step4_decision = {
 			}
 			tog_test_skip_step1_effect = yes
 		}
-		tog_start_step3_effect = yes
+		tog_test_step3_done_effect = yes
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			set_variable = {
@@ -382,8 +382,8 @@ tog_test_skip_step5_decision = {
 			}
 			tog_test_skip_step1_effect = yes
 		}
-		tog_start_step3_effect = yes
-		tog_create_golden_sickle_effect = yes
+		tog_test_step3_done_effect = yes
+		tog_test_step5_done_effect = yes
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			set_variable = {

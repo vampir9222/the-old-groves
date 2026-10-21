@@ -777,7 +777,7 @@ tog_create_carnyx_effect = {
 
 # ---- Step 6: the first rite on Ynys Môn ----
 
-# The mistletoe is cut and kept: Nest joins, the gui of Môn goes to the treasury,
+# The mistletoe is cut and kept: Nest joins, the crown of mistletoe of Môn goes to the treasury,
 # end of step 6.
 tog_first_rite_effect = {
 	custom_tooltip = tog_quest.0412.tt
@@ -786,9 +786,9 @@ tog_first_rite_effect = {
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
-			template = general_unique_template
-			type = pedestal
-			visuals = pedestal_branch_relic_germanic
+			template = crown_wearable_template
+			type = helmet
+			visuals = crown
 			wealth = 30
 			quality = 70
 			modifier = tog_mistletoe_modifier
@@ -818,6 +818,137 @@ tog_companion_opinion_effect = {
 			target = root
 			modifier = $MOD$
 			opinion = $VALUE$
+		}
+	}
+}
+
+# TEST ONLY - remove before any release.
+# As if steps 2 to 4 were done: lists and counters cleared, Eógan, Gwion and Eluned
+# with the quest.
+tog_test_step3_done_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		clear_variable_list = tog_monasteries
+		clear_variable_list = tog_places
+		remove_variable = tog_books_read
+		remove_variable = tog_lessons
+		remove_variable = tog_destination
+	}
+	if = {
+		limit = {
+			NOT = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					exists = var:tog_gwion
+				}
+			}
+		}
+		create_character = {
+			name = "Eógan"
+			age = 33
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = gregarious
+			trait = trusting
+			diplomacy = 11
+			learning = 9
+			save_scope_as = tog_eogan
+		}
+		create_character = {
+			name = "Gwion"
+			age = 44
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_mystic
+			trait = zealous
+			trait = tog_awen
+			learning = 14
+			save_scope_as = tog_gwion
+		}
+		create_character = {
+			name = "Eluned"
+			age = 17
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = pious
+			save_scope_as = tog_eluned
+		}
+		tog_join_quest_effect = { WHO = tog_eogan }
+		tog_join_quest_effect = { WHO = tog_gwion }
+		add_courtier = scope:tog_eluned
+	}
+}
+
+# TEST ONLY - remove before any release.
+# As if step 5 were done: Gofraid and Ursin with the quest, sickle and carnyx owned.
+tog_test_step5_done_effect = {
+	if = {
+		limit = {
+			NOT = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					exists = var:tog_ursin
+				}
+			}
+		}
+		create_character = {
+			name = "Gofraid"
+			age = 35
+			gender = male
+			culture = culture:norse
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = brave
+			trait = adventurer
+			martial = 10
+			diplomacy = 9
+			save_scope_as = tog_gofraid
+		}
+		create_character = {
+			name = "Ursin"
+			age = 26
+			gender = male
+			culture = culture:frankish
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = strong
+			trait = humble
+			prowess = 12
+			save_scope_as = tog_ursin
+		}
+		tog_join_quest_effect = { WHO = tog_gofraid }
+		tog_join_quest_effect = { WHO = tog_ursin }
+		tog_create_golden_sickle_effect = yes
+		tog_create_carnyx_effect = yes
+	}
+}
+
+# The companions took up arms for the quest owner: each one alive thinks better of him.
+tog_companions_rally_effect = {
+	custom_tooltip = tog_quest.0413.tt
+	hidden_effect = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			every_in_list = {
+				variable = tog_companions
+				limit = { is_alive = yes }
+				add_opinion = {
+					target = root
+					modifier = grateful_opinion
+					opinion = 15
+				}
+			}
 		}
 	}
 }

@@ -2046,7 +2046,7 @@ tog_quest.0201 = {
 				story_owner = {
 					create_character = {
 						name = "Eógan"
-						age = 40
+						age = 33
 						gender = male
 						culture = root.culture
 						faith = root.faith
@@ -3375,7 +3375,7 @@ tog_quest.0411 = {
 	immediate = {
 		create_character = {
 			name = "Nest"
-			age = 32
+			age = 25
 			gender = female
 			culture = culture:welsh
 			faith = root.faith
@@ -3397,7 +3397,7 @@ tog_quest.0411 = {
 
 	option = {
 		name = tog_quest.0411.a
-		hidden_effect = { trigger_event = tog_quest.0412 }
+		hidden_effect = { trigger_event = tog_quest.0413 }
 	}
 }
 
@@ -3593,5 +3593,71 @@ tog_quest.0187 = {
 			MOD = disappointed_opinion
 			VALUE = -10
 		}
+	}
+}
+
+# Ynys Môn: men from the hill come to fell the oak during the rite; the companions
+# take up arms, and Ursin's carnyx sends them running.
+tog_quest.0413 = {
+	type = character_event
+	title = tog_quest.0413.t
+	desc = {
+		desc = tog_quest.0413.intro
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_peredur } }
+			desc = tog_quest.0413.peredur
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_gofraid } }
+			desc = tog_quest.0413.gofraid
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_eogan } }
+			desc = tog_quest.0413.eogan
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_lailoken } }
+			desc = tog_quest.0413.lailoken
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_gwion } }
+			desc = tog_quest.0413.gwion
+		}
+		desc = tog_quest.0413.together
+		first_valid = {
+			triggered_desc = {
+				trigger = { tog_companion_alive_trigger = { WHO = tog_ursin } }
+				desc = tog_quest.0413.carnyx
+			}
+			desc = tog_quest.0413.nocarnyx
+		}
+		desc = tog_quest.0413.end
+	}
+	theme = martial
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_ursin }
+		character = scope:tog_ursin
+		animation = personality_bold
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let them go
+		name = tog_quest.0413.a
+		add_piety = minor_piety_gain
+		tog_companions_rally_effect = yes
+		hidden_effect = { trigger_event = tog_quest.0412 }
+	}
+	option = { # Catch the monk
+		name = tog_quest.0413.b
+		add_prestige = minor_prestige_gain
+		add_piety = minor_piety_loss
+		tog_companions_rally_effect = yes
+		hidden_effect = { trigger_event = tog_quest.0412 }
 	}
 }
