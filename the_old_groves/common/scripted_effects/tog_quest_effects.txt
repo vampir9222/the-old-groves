@@ -1042,7 +1042,7 @@ tog_found_cult_effect = {
 }
 
 # TEST ONLY - remove before any release.
-# As if step 6 were done: Nest with the quest.
+# As if step 6 were done: Nest with the quest, and the crown of mistletoe of Môn.
 tog_test_step6_done_effect = {
 	if = {
 		limit = {
@@ -1067,5 +1067,16 @@ tog_test_step6_done_effect = {
 			save_scope_as = tog_nest
 		}
 		tog_join_quest_effect = { WHO = tog_nest }
+		create_artifact = {
+			name = tog_mistletoe_name
+			description = tog_mistletoe_description
+			template = crown_wearable_template
+			type = helmet
+			visuals = crown
+			wealth = 30
+			quality = 70
+			modifier = tog_mistletoe_modifier
+			decaying = no
+		}
 	}
 }

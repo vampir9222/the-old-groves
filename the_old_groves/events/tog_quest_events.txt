@@ -359,6 +359,7 @@ tog_quest.0050 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_positive_effect"
 		create_character = {
 			name = "Lailoken"
 			age = 60
@@ -1081,6 +1082,10 @@ tog_quest.0130 = {
 	left_portrait = {
 		character = root
 		animation = personality_zealous
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_faith_conversion"
 	}
 
 	option = {
@@ -2128,6 +2133,10 @@ tog_quest.0203 = {
 		animation = ecstasy
 	}
 
+	immediate = {
+		play_music_cue = "mx_cue_secret"
+	}
+
 	option = { # The cauldron
 		name = tog_quest.0203.a
 		add_trait = tog_dagda_cauldron
@@ -2320,6 +2329,10 @@ tog_quest.0216 = {
 		animation = personality_zealous
 	}
 
+	immediate = {
+		play_music_cue = "mx_cue_low_key_positive"
+	}
+
 	option = {
 		name = tog_quest.0216.a
 		add_piety = medium_piety_gain
@@ -2475,6 +2488,7 @@ tog_quest.0224 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_succession_instrumental"
 		create_character = {
 			name = "Gwion"
 			age = 44
@@ -2723,6 +2737,7 @@ tog_quest.0232 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_peace_ensues"
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			var:tog_gwion_wait ?= { save_scope_as = tog_gwion }
@@ -3193,6 +3208,10 @@ tog_quest.0313 = {
 		animation = ecstasy
 	}
 
+	immediate = {
+		play_music_cue = "mx_cue_ck3_vocal_maintheme"
+	}
+
 	option = {
 		name = tog_quest.0313.a
 		custom_tooltip = tog_quest.0313.a.tt
@@ -3270,6 +3289,7 @@ tog_quest.0331 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_combat_stinger"
 		create_character = {
 			name = "Ursin"
 			age = 26
@@ -3332,6 +3352,7 @@ tog_quest.0401 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_touching_moment"
 		tog_save_companions_effect = yes
 		if = {
 			limit = {
@@ -3418,6 +3439,7 @@ tog_quest.0412 = {
 	}
 
 	immediate = {
+		play_music_cue = "mx_cue_sacredrite"
 		tog_save_companions_effect = yes
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
@@ -3645,7 +3667,10 @@ tog_quest.0413 = {
 		animation = personality_bold
 	}
 
-	immediate = { tog_save_companions_effect = yes }
+	immediate = {
+		play_music_cue = "mx_cue_combat_2"
+		tog_save_companions_effect = yes
+	}
 
 	option = { # Let them go
 		name = tog_quest.0413.a
@@ -3740,6 +3765,10 @@ tog_quest.0510 = {
 	}
 }
 
+# Writing events with the companions: one choice follows the companion (they like
+# it, but it is riskier), the other goes against them (they resent it, but the
+# writing is more likely to move on).
+
 # Gwion and Eógan disagree on how a tale should be told.
 tog_quest.0511 = {
 	type = character_event
@@ -3760,44 +3789,31 @@ tog_quest.0511 = {
 
 	option = { # Gwion's way: the words said to the gods
 		name = tog_quest.0511.a
-		tog_companion_opinion_effect = {
-			WHO = tog_gwion
-			MOD = respect_opinion
-			VALUE = 10
-		}
-		tog_companion_opinion_effect = {
-			WHO = tog_eogan
-			MOD = disappointed_opinion
-			VALUE = -5
-		}
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 10 }
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = disappointed_opinion VALUE = -10 }
 		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+			40 = {
+				add_piety = minor_piety_gain
+				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0511.a.great }
+			}
+			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			25 = {
+				add_stress = minor_stress_gain
+				tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0511.a.bad }
+			}
 		}
 	}
 	option = { # Eógan's way: the tale as the people tell it
 		name = tog_quest.0511.b
-		tog_companion_opinion_effect = {
-			WHO = tog_eogan
-			MOD = respect_opinion
-			VALUE = 10
-		}
-		tog_companion_opinion_effect = {
-			WHO = tog_gwion
-			MOD = disappointed_opinion
-			VALUE = -5
-		}
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 10 }
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
 		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
-		}
-	}
-	option = { # Write both, side by side
-		name = tog_quest.0511.c
-		add_stress = minor_stress_gain
-		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
-			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_verses.down } }
+			55 = {
+				add_prestige = minor_prestige_gain
+				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0511.b.great }
+			}
+			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			15 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0511.b.bad } }
 		}
 	}
 }
@@ -3820,28 +3836,28 @@ tog_quest.0512 = {
 
 	immediate = { tog_save_companions_effect = yes }
 
-	option = { # Write it down
+	option = { # Write it as he remembers it
 		name = tog_quest.0512.a
-		tog_companion_opinion_effect = {
-			WHO = tog_lailoken
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = respect_opinion VALUE = 15 }
 		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
-			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0512.a.bad } }
+			35 = {
+				add_piety = minor_piety_gain
+				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0512.a.great }
+			}
+			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			35 = {
+				add_stress = minor_stress_gain
+				tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0512.a.bad }
+			}
 		}
 	}
-	option = { # Have him sing it, and check it against the books
+	option = { # Your memory fails you, old man
 		name = tog_quest.0512.b
-		tog_companion_opinion_effect = {
-			WHO = tog_lailoken
-			MOD = respect_opinion
-			VALUE = 5
-		}
+		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = disappointed_opinion VALUE = -15 }
 		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0512.b.bad } }
 		}
 	}
 }
@@ -3864,31 +3880,28 @@ tog_quest.0513 = {
 
 	immediate = { tog_save_companions_effect = yes }
 
-	option = { # A chapter of its own
+	option = { # They will have their chapter
 		name = tog_quest.0513.a
-		tog_companion_opinion_effect = {
-			WHO = tog_nest
-			MOD = respect_opinion
-			VALUE = 15
-		}
+		tog_companion_opinion_effect = { WHO = tog_nest MOD = respect_opinion VALUE = 15 }
 		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+			40 = {
+				add_piety = minor_piety_gain
+				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0513.a.great }
+			}
+			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			25 = {
+				remove_short_term_gold = tiny_gold_value
+				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0513.a.bad }
+			}
 		}
 	}
-	option = { # Go and ask the other women of the land
+	option = { # The book is about the gods, not the hearth
 		name = tog_quest.0513.b
-		trigger = { gold >= tiny_gold_value }
-		show_as_unavailable = { always = yes }
-		remove_short_term_gold = tiny_gold_value
-		tog_companion_opinion_effect = {
-			WHO = tog_nest
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_nest MOD = disappointed_opinion VALUE = -15 }
 		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
-			50 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0513.b.bad } }
+			65 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			10 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0513.b.bad } }
 		}
 	}
 }
@@ -3911,28 +3924,28 @@ tog_quest.0514 = {
 
 	immediate = { tog_save_companions_effect = yes }
 
-	option = { # Let him number the pages
+	option = { # Number them, Peredur
 		name = tog_quest.0514.a
-		tog_companion_opinion_effect = {
-			WHO = tog_peredur
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_peredur MOD = respect_opinion VALUE = 10 }
 		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0514.a.good } }
-			40 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0514.a.bad } }
+			35 = {
+				add_prestige = minor_prestige_gain
+				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0514.a.good }
+			}
+			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			30 = {
+				add_stress = minor_stress_gain
+				tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0514.a.bad }
+			}
 		}
 	}
-	option = { # Have him count the lines of each prayer
+	option = { # Leave the pages alone
 		name = tog_quest.0514.b
-		tog_companion_opinion_effect = {
-			WHO = tog_peredur
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_peredur MOD = disappointed_opinion VALUE = -10 }
 		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0514.b.good } }
-			30 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0514.b.bad } }
+			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0514.b.good } }
+			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0514.b.bad } }
 		}
 	}
 }
@@ -3958,27 +3971,26 @@ tog_quest.0515 = {
 	option = { # Write the dream
 		name = tog_quest.0515.a
 		add_stress = minor_stress_gain
-		add_piety = minor_piety_gain
-		tog_companion_opinion_effect = {
-			WHO = tog_gwion
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 15 }
 		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 20 TT = tog_verses.up_big } }
-			50 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0515.a.bad } }
+			35 = {
+				add_piety = medium_piety_gain
+				tog_verses_outcome_effect = { VALUE = 20 TT = tog_quest.0515.a.great }
+			}
+			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			40 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0515.a.bad } }
 		}
 	}
-	option = { # Check the dream against the books before writing
+	option = { # A dream is not a book
 		name = tog_quest.0515.b
-		tog_companion_opinion_effect = {
-			WHO = tog_gwion
-			MOD = respect_opinion
-			VALUE = 5
-		}
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
 		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			30 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
+			65 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			10 = {
+				add_piety = minor_piety_loss
+				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0515.b.bad }
+			}
 		}
 	}
 }
@@ -4001,26 +4013,31 @@ tog_quest.0516 = {
 
 	immediate = { tog_save_companions_effect = yes }
 
-	option = { # Buy it all
+	option = { # Take it at his price
 		name = tog_quest.0516.a
 		trigger = { gold >= minor_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = minor_gold_value
-		tog_companion_opinion_effect = {
-			WHO = tog_gofraid
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
 		random_list = {
-			80 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
+			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
+			30 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
 			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0516.a.meh } }
 		}
 	}
-	option = { # Scrape old pages and write over them
+	option = { # Haggle hard with him
 		name = tog_quest.0516.b
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = disappointed_opinion VALUE = -10 }
 		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0516.b.good } }
-			50 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0516.b.bad } }
+			70 = {
+				add_prestige = minor_prestige_gain
+				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0516.b.good }
+			}
+			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
+			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0516.b.bad } }
 		}
 	}
 	option = { # Buy it all, and pay a copyist from Tours too
@@ -4028,11 +4045,7 @@ tog_quest.0516 = {
 		trigger = { gold >= medium_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = medium_gold_value
-		tog_companion_opinion_effect = {
-			WHO = tog_gofraid
-			MOD = respect_opinion
-			VALUE = 10
-		}
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
 		random_list = {
 			80 = { tog_verses_outcome_effect = { VALUE = 20 TT = tog_verses.up_big } }
 			20 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0516.c.meh } }
@@ -4096,7 +4109,10 @@ tog_quest.0501 = {
 		animation = admiration
 	}
 
-	immediate = { tog_save_companions_effect = yes }
+	immediate = {
+		play_music_cue = "mx_cue_epic_sacral_moment"
+		tog_save_companions_effect = yes
+	}
 
 	option = {
 		name = tog_quest.0501.a
@@ -4121,6 +4137,10 @@ tog_quest.0603 = {
 	right_portrait = {
 		character = root
 		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_death"
 	}
 
 	option = {
@@ -4159,6 +4179,10 @@ tog_quest.0602 = {
 	left_portrait = {
 		character = root
 		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_succession"
 	}
 
 	option = {
