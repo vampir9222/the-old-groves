@@ -1,0 +1,24 @@
+name: release-zip
+
+# Versions are made by hand: bump the version in the_old_groves/descriptor.mod,
+# then publish a GitHub release (tag vX.Y.Z). This attaches the mod zip to it.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Attach mod zip to release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          zip -r "the_old_groves-${TAG}.zip" the_old_groves
+          gh release upload "${TAG}" "the_old_groves-${TAG}.zip"
