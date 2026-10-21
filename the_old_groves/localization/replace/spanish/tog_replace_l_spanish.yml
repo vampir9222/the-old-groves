@@ -1,0 +1,4 @@
+﻿l_spanish:
+ councillor_court_chaplain_paganism_religion_county: "[ROOT.Char.Custom('TogPaganChaplainCounty')]"
+ councillor_court_chaplain_paganism_religion_duchy: "[ROOT.Char.Custom('TogPaganChaplainDuchy')]"
+ councillor_court_chaplain_paganism_religion_kingdom: "[ROOT.Char.Custom('TogPaganChaplainKingdom')]"
