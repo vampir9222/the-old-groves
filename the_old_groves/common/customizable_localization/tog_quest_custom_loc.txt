@@ -549,3 +549,24 @@ TogMissionRes_tog_lailoken = {
 		localization_key = tog_mission_res_wounded
 	}
 }
+
+# Step 9: the teaching under way.
+TogTeachingName = {
+	type = all
+	text = {
+		trigger = { var:tog_teaching ?= 1 }
+		localization_key = tog_teaching_verses
+	}
+	text = {
+		trigger = { var:tog_teaching ?= 2 }
+		localization_key = tog_teaching_rites
+	}
+	text = {
+		trigger = { var:tog_teaching ?= 3 }
+		localization_key = tog_teaching_laws
+	}
+	text = {
+		trigger = { var:tog_teaching ?= 4 }
+		localization_key = tog_teaching_remedies
+	}
+}

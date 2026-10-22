@@ -96,3 +96,13 @@ tog_druid = {
 	monthly_piety = 0.5
 	shown_in_ruler_designer = no
 }
+
+# The founder of the reborn cult (given at the oath of Beltaine, step 7).
+tog_founder = {
+	category = fame
+	icon = theologian.dds
+	learning = 3
+	monthly_piety = 1.5
+	same_faith_opinion = 10
+	shown_in_ruler_designer = no
+}

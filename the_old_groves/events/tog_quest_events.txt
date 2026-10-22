@@ -4716,53 +4716,35 @@ tog_quest.0722 = {
 
 # ---- Step 9: training the first druids ----
 
-# Hidden: a training event each month, about one of the disciples. Lailoken's own
-# scene once, if he is one of them.
-tog_quest.0810 = {
+# The disciples: who they are and why.
+tog_quest.0800 = {
 	type = character_event
-	hidden = yes
-
-	immediate = {
-		random_owned_story = {
-			limit = { story_type = tog_story_old_groves }
-			save_scope_as = tog_story
-			random_in_list = {
-				variable = tog_disciples
-				limit = { is_alive = yes }
-				save_scope_as = tog_disciple
-			}
+	title = tog_quest.0800.t
+	desc = {
+		desc = tog_quest.0800.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0800.lailoken
 		}
-		if = {
-			limit = { exists = scope:tog_disciple }
-			random_list = {
-				10 = {
-					trigger = {
-						NOT = { exists = scope:tog_story.var:tog_tev_lailoken_disciple }
-						scope:tog_story = {
-							any_in_list = {
-								variable = tog_disciples
-								this = scope:tog_story.var:tog_lailoken
-							}
-						}
-					}
-					scope:tog_story = { set_variable = tog_tev_lailoken_disciple }
-					trigger_event = tog_quest.0816
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:tog_disc_2_parent
+					exists = scope:tog_disc_3_parent
 				}
-				10 = { trigger_event = tog_quest.0811 }
-				10 = { trigger_event = tog_quest.0812 }
-				10 = { trigger_event = tog_quest.0813 }
-				10 = { trigger_event = tog_quest.0814 }
-				10 = { trigger_event = tog_quest.0815 }
+				desc = tog_quest.0800.young_both
 			}
+			triggered_desc = {
+				trigger = { exists = scope:tog_disc_2_parent }
+				desc = tog_quest.0800.young_first
+			}
+			triggered_desc = {
+				trigger = { exists = scope:tog_disc_3_parent }
+				desc = tog_quest.0800.young_second
+			}
+			desc = tog_quest.0800.young_none
 		}
 	}
-}
-
-# The verses by heart.
-tog_quest.0811 = {
-	type = character_event
-	title = tog_quest.0811.t
-	desc = tog_quest.0811.desc
 	theme = learning
 	override_background = { reference = study }
 	left_portrait = {
@@ -4770,109 +4752,85 @@ tog_quest.0811 = {
 		animation = personality_rational
 	}
 	right_portrait = {
-		character = scope:tog_disciple
-		animation = thinking
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = interested
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
 	}
 
-	option = { # Until dawn
-		name = tog_quest.0811.a
-		add_stress = minor_stress_gain
-		random_list = {
-			50 = { tog_training_outcome_effect = { VALUE = 15 TT = tog_training.up_big } }
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-			20 = { tog_training_outcome_effect = { VALUE = -5 TT = tog_quest.0811.a.bad } }
-		}
+	immediate = {
+		tog_save_disciples_effect = yes
 	}
-	option = { # At their own pace
-		name = tog_quest.0811.b
-		random_list = {
-			70 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-		}
+
+	option = {
+		name = tog_quest.0800.a
+		custom_tooltip = tog_quest.0800.a.tt
 	}
 }
 
-# A night alone in the sacred wood.
-tog_quest.0812 = {
+# A teaching has been learnt: one scene per teaching (1 the stars and the calendar,
+# 2 the plants, 3 the counsel of kings, 4 divination).
+tog_quest.0821 = {
 	type = character_event
-	title = tog_quest.0812.t
-	desc = tog_quest.0812.desc
-	theme = faith
+	title = tog_quest.0821.t
+	desc = tog_quest.0821.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0821.a
+		add_piety = minor_piety_gain
+	}
+}
+
+tog_quest.0822 = {
+	type = character_event
+	title = tog_quest.0822.t
+	desc = {
+		desc = tog_quest.0822.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0822.lailoken
+		}
+	}
+	theme = learning
 	override_background = { reference = wilderness_forest }
 	left_portrait = {
 		character = root
-		animation = worry
+		animation = personality_zealous
 	}
 	right_portrait = {
-		character = scope:tog_disciple
-		animation = fear
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
+		animation = admiration
 	}
 
-	option = { # Send them alone
-		name = tog_quest.0812.a
-		random_list = {
-			40 = {
-				add_piety = minor_piety_gain
-				tog_training_outcome_effect = { VALUE = 20 TT = tog_quest.0812.a.great }
-			}
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-			30 = {
-				scope:tog_disciple = { add_stress = medium_stress_gain }
-				tog_training_outcome_effect = { VALUE = -10 TT = tog_quest.0812.a.bad }
-			}
-		}
-	}
-	option = { # Keep watch with them
-		name = tog_quest.0812.b
-		random_list = {
-			70 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-		}
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0822.a
+		add_piety = minor_piety_gain
 	}
 }
 
-# A disciple doubts.
-tog_quest.0813 = {
+tog_quest.0823 = {
 	type = character_event
-	title = tog_quest.0813.t
-	desc = tog_quest.0813.desc
-	theme = faith
-	override_background = { reference = study }
-	left_portrait = {
-		character = root
-		animation = thinking
-	}
-	right_portrait = {
-		character = scope:tog_disciple
-		animation = sadness
-	}
-
-	option = { # Answer with the Verses
-		name = tog_quest.0813.a
-		random_list = {
-			65 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			25 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-			10 = { tog_training_outcome_effect = { VALUE = -5 TT = tog_quest.0813.a.bad } }
-		}
-	}
-	option = { # Let them doubt and search
-		name = tog_quest.0813.b
-		random_list = {
-			40 = {
-				scope:tog_disciple = { add_learning_lifestyle_xp = minor_lifestyle_xp }
-				tog_training_outcome_effect = { VALUE = 15 TT = tog_quest.0813.b.great }
-			}
-			35 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-			25 = { tog_training_outcome_effect = { VALUE = -10 TT = tog_quest.0813.b.bad } }
-		}
-	}
-}
-
-# Judging a dispute, as the druids did.
-tog_quest.0814 = {
-	type = character_event
-	title = tog_quest.0814.t
-	desc = tog_quest.0814.desc
+	title = tog_quest.0823.t
+	desc = tog_quest.0823.desc
 	theme = diplomacy
 	override_background = { reference = courtyard }
 	left_portrait = {
@@ -4880,103 +4838,51 @@ tog_quest.0814 = {
 		animation = personality_rational
 	}
 	right_portrait = {
-		character = scope:tog_disciple
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
 		animation = thinking
 	}
 
-	option = { # Let them judge alone
-		name = tog_quest.0814.a
-		random_list = {
-			50 = {
-				add_prestige = minor_prestige_gain
-				tog_training_outcome_effect = { VALUE = 15 TT = tog_quest.0814.a.great }
-			}
-			50 = {
-				add_prestige = minor_prestige_loss
-				tog_training_outcome_effect = { VALUE = -10 TT = tog_quest.0814.a.bad }
-			}
-		}
-	}
-	option = { # Judge together
-		name = tog_quest.0814.b
-		random_list = {
-			70 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-		}
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0823.a
+		add_prestige = minor_prestige_gain
 	}
 }
 
-# Plants and remedies.
-tog_quest.0815 = {
+tog_quest.0824 = {
 	type = character_event
-	title = tog_quest.0815.t
-	desc = tog_quest.0815.desc
-	theme = learning
+	title = tog_quest.0824.t
+	desc = {
+		desc = tog_quest.0824.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0824.lailoken
+		}
+	}
+	theme = faith
 	override_background = { reference = wilderness_forest }
 	left_portrait = {
 		character = root
 		animation = interested
 	}
 	right_portrait = {
-		character = scope:tog_disciple
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
 		animation = happiness
 	}
 
-	option = { # Pay an old herbalist
-		name = tog_quest.0815.a
-		trigger = { gold >= minor_gold_value }
-		show_as_unavailable = { always = yes }
-		remove_short_term_gold = minor_gold_value
-		random_list = {
-			80 = { tog_training_outcome_effect = { VALUE = 15 TT = tog_training.up_big } }
-			20 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-		}
-	}
-	option = { # Learn in the woods
-		name = tog_quest.0815.b
-		random_list = {
-			50 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			30 = { tog_training_outcome_effect = { VALUE = 0 TT = tog_training.same } }
-			20 = {
-				scope:tog_disciple = { add_stress = minor_stress_gain }
-				tog_training_outcome_effect = { VALUE = -5 TT = tog_quest.0815.b.bad }
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0824.a
+		custom_tooltip = tog_quest.0824.a.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0801
+				days = 30
 			}
-		}
-	}
-}
-
-# The old disciple: Lailoken knows more than his master on some points.
-tog_quest.0816 = {
-	type = character_event
-	title = tog_quest.0816.t
-	desc = tog_quest.0816.desc
-	theme = learning
-	override_background = { reference = study }
-	left_portrait = {
-		character = root
-		animation = thinking
-	}
-	right_portrait = {
-		character = scope:tog_lailoken
-		animation = personality_rational
-	}
-
-	immediate = { tog_save_companions_effect = yes }
-
-	option = { # Let him teach the young ones
-		name = tog_quest.0816.a
-		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = respect_opinion VALUE = 15 }
-		random_list = {
-			60 = { tog_training_outcome_effect = { VALUE = 15 TT = tog_quest.0816.a.great } }
-			40 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
-		}
-	}
-	option = { # Here, I am the master
-		name = tog_quest.0816.b
-		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			70 = { tog_training_outcome_effect = { VALUE = 10 TT = tog_training.up } }
-			30 = { tog_training_outcome_effect = { VALUE = 5 TT = tog_training.up_small } }
 		}
 	}
 }
@@ -4985,7 +4891,14 @@ tog_quest.0816 = {
 tog_quest.0801 = {
 	type = character_event
 	title = tog_quest.0801.t
-	desc = tog_quest.0801.desc
+	desc = {
+		desc = tog_quest.0801.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0801.lailoken
+		}
+		desc = tog_quest.0801.end
+	}
 	theme = faith
 	override_background = { reference = wilderness_forest }
 	left_portrait = {
@@ -4993,28 +4906,25 @@ tog_quest.0801 = {
 		animation = personality_zealous
 	}
 	right_portrait = {
-		trigger = { exists = scope:tog_first_druid }
-		character = scope:tog_first_druid
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
 		animation = admiration
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
 	}
 
 	immediate = {
 		play_music_cue = "mx_cue_sacredrite"
-		random_owned_story = {
-			limit = { story_type = tog_story_old_groves }
-			ordered_in_list = {
-				variable = tog_disciples
-				limit = { is_alive = yes }
-				order_by = age
-				save_scope_as = tog_first_druid
-			}
-		}
+		tog_save_disciples_effect = yes
 	}
 
 	option = {
 		name = tog_quest.0801.a
 		custom_tooltip = tog_quest.0801.a.tt
-		add_piety = major_piety_gain
+		add_prestige = major_prestige_gain
+		add_piety = medium_piety_gain
 		hidden_effect = {
 			random_owned_story = {
 				limit = { story_type = tog_story_old_groves }
@@ -5028,8 +4938,9 @@ tog_quest.0801 = {
 						opinion = 30
 					}
 				}
-				remove_variable = tog_training
-				remove_variable = tog_training_rate
+				remove_variable = tog_teaching
+				remove_variable = tog_teaching_tries
+				remove_variable = tog_teaching_chance
 				set_variable = {
 					name = tog_stage
 					value = 90

@@ -56,12 +56,12 @@ tog_story_old_groves = {
 			max_label = "tog_story_old_groves_verses_max"
 		}
 		basic_counter = {
-			variable_name = "tog_training"
+			variable_name = "tog_teachings_done"
 			min = 0
-			max = 100
-			label = "tog_story_old_groves_training"
+			max = 4
+			label = "tog_story_old_groves_teachings"
 			min_label = "tog_story_old_groves_books_min"
-			max_label = "tog_story_old_groves_verses_max"
+			max_label = "tog_story_old_groves_lessons_max"
 		}
 		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_train_druids_decision }
 		character_list = {
@@ -427,46 +427,69 @@ tog_story_old_groves = {
 		}
 	}
 
-	# Step 9: the druids are trained month after month; one training event each
-	# month. At 100, their ordination.
+	# Step 9: every two months, an attempt at the current teaching; the chance
+	# grows with each attempt. After the fourth teaching, the ordination.
 	effect_group = {
-		months = 1
+		months = 2
 		trigger = {
 			NOT = { exists = var:tog_paused }
 			var:tog_stage = 80
-			exists = var:tog_training
+			exists = var:tog_teaching
 		}
 
 		triggered_effect = {
 			trigger = { always = yes }
 			effect = {
-				set_variable = {
-					name = tog_training_rate
-					value = tog_training_monthly_value
-				}
-				change_variable = {
-					name = tog_training
-					add = tog_training_monthly_value
+				random = {
+					chance = tog_teaching_chance_value
+					save_scope_value_as = {
+						name = tog_teaching_learnt
+						value = yes
+					}
 				}
 				if = {
-					limit = { var:tog_training >= 100 }
-					set_variable = {
-						name = tog_training
-						value = 100
+					limit = { exists = scope:tog_teaching_learnt }
+					change_variable = {
+						name = tog_teachings_done
+						add = 1
 					}
-					set_variable = {
-						name = tog_stage
-						value = 81
+					if = {
+						limit = { var:tog_teaching = 1 }
+						story_owner = { trigger_event = tog_quest.0821 }
 					}
-					story_owner = {
-						trigger_event = {
-							id = tog_quest.0801
-							days = 7
+					else_if = {
+						limit = { var:tog_teaching = 2 }
+						story_owner = { trigger_event = tog_quest.0822 }
+					}
+					else_if = {
+						limit = { var:tog_teaching = 3 }
+						story_owner = { trigger_event = tog_quest.0823 }
+					}
+					else = {
+						set_variable = {
+							name = tog_stage
+							value = 81
 						}
+						story_owner = { trigger_event = tog_quest.0824 }
+					}
+					change_variable = {
+						name = tog_teaching
+						add = 1
+					}
+					set_variable = {
+						name = tog_teaching_tries
+						value = 0
 					}
 				}
 				else = {
-					story_owner = { trigger_event = tog_quest.0810 }
+					change_variable = {
+						name = tog_teaching_tries
+						add = 1
+					}
+				}
+				set_variable = {
+					name = tog_teaching_chance
+					value = tog_teaching_chance_value
 				}
 			}
 		}
