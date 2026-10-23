@@ -132,3 +132,24 @@ tog_on_companion_death = {
 		}
 	}
 }
+
+# The Voice of Lug: now and then, the faithful take up arms and join him.
+yearly_playable_pulse = {
+	on_actions = { tog_on_yearly_voice_of_lug }
+}
+
+tog_on_yearly_voice_of_lug = {
+	trigger = {
+		has_trait = tog_voice_of_lug
+		is_imprisoned = no
+	}
+	effect = {
+		random = {
+			chance = 40
+			trigger_event = {
+				id = tog_quest.0910
+				days = { 1 300 }
+			}
+		}
+	}
+}

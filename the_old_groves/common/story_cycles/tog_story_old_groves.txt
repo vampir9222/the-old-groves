@@ -23,6 +23,10 @@ tog_story_old_groves = {
 			variable_name = "tog_destination"
 			label = "tog_story_old_groves_destination"
 		}
+		title = {
+			variable_name = "tog_plague_duchy"
+			label = "tog_story_old_groves_plague"
+		}
 		title_list = {
 			variable_name = "tog_monasteries"
 			label = "tog_story_old_groves_monasteries"
@@ -55,15 +59,7 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_verses_max"
 		}
-		basic_counter = {
-			variable_name = "tog_teachings_done"
-			min = 0
-			max = 4
-			label = "tog_story_old_groves_teachings"
-			min_label = "tog_story_old_groves_books_min"
-			max_label = "tog_story_old_groves_lessons_max"
-		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_train_druids_decision }
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_beltaine_fires_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"
@@ -427,69 +423,25 @@ tog_story_old_groves = {
 		}
 	}
 
-	# Step 9: every two months, an attempt at the current teaching; the chance
-	# grows with each attempt. After the fourth teaching, the ordination.
+	# Step 10: four months after the end of step 8, a cattle plague strikes a
+	# nearby duchy of another faith.
 	effect_group = {
-		months = 2
+		months = 1
 		trigger = {
 			NOT = { exists = var:tog_paused }
-			var:tog_stage = 80
-			exists = var:tog_teaching
+			var:tog_stage = 90
 		}
 
 		triggered_effect = {
 			trigger = { always = yes }
 			effect = {
-				random = {
-					chance = tog_teaching_chance_value
-					save_scope_value_as = {
-						name = tog_teaching_learnt
-						value = yes
-					}
+				change_variable = {
+					name = tog_plague_wait
+					add = 1
 				}
 				if = {
-					limit = { exists = scope:tog_teaching_learnt }
-					change_variable = {
-						name = tog_teachings_done
-						add = 1
-					}
-					if = {
-						limit = { var:tog_teaching = 1 }
-						story_owner = { trigger_event = tog_quest.0821 }
-					}
-					else_if = {
-						limit = { var:tog_teaching = 2 }
-						story_owner = { trigger_event = tog_quest.0822 }
-					}
-					else_if = {
-						limit = { var:tog_teaching = 3 }
-						story_owner = { trigger_event = tog_quest.0823 }
-					}
-					else = {
-						set_variable = {
-							name = tog_stage
-							value = 81
-						}
-						story_owner = { trigger_event = tog_quest.0801 }
-					}
-					change_variable = {
-						name = tog_teaching
-						add = 1
-					}
-					set_variable = {
-						name = tog_teaching_tries
-						value = 0
-					}
-				}
-				else = {
-					change_variable = {
-						name = tog_teaching_tries
-						add = 1
-					}
-				}
-				set_variable = {
-					name = tog_teaching_chance
-					value = tog_teaching_chance_value
+					limit = { var:tog_plague_wait >= 4 }
+					story_owner = { tog_start_plague_effect = yes }
 				}
 			}
 		}

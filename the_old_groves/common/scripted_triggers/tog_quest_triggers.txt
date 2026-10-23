@@ -94,11 +94,20 @@ tog_second_sight_valid_trigger = {
 	}
 }
 
-# Step 9: a young person who may become a disciple.
-tog_disciple_candidate_trigger = {
-	is_alive = yes
-	age >= 12
-	is_ruler = no
-	NOT = { has_trait = tog_druid }
-	NOT = { has_character_flag = tog_disciple }
+# After the quest: a ruler holding land in Britain or Ireland who is a foreigner
+# (neither Brythonic nor Goidelic) or not of the Celtic religion (a Christian
+# Gael too), a target for "Drive out the Saxons".
+tog_saxon_ruler_trigger = {
+	OR = {
+		NOT = { religion = religion:tog_celtic_religion }
+		culture = {
+			NOR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+	}
+	any_realm_county = {
+		title_province = { geographical_region = world_europe_west_britannia }
+	}
 }

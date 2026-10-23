@@ -1,0 +1,4 @@
+﻿# The Old Groves - nicknames
+
+# Given at the miracle of the fires of Beltaine (step 10), replacing the Apostate.
+nick_tog_voice_of_lug = {}

@@ -658,6 +658,18 @@ tog_quest.0060 = {
 					}
 					root = { trigger_event = tog_quest.0411 }
 				}
+				else_if = {
+					limit = {
+						var:tog_stage = 92
+						root.location = var:tog_destination.title_province
+						NOT = { exists = var:tog_crowd_seen }
+					}
+					set_variable = {
+						name = tog_crowd_seen
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0901 }
+				}
 			}
 		}
 	}
@@ -4714,207 +4726,128 @@ tog_quest.0722 = {
 	}
 }
 
-# ---- Step 9: training the first druids ----
+# ---- Step 10: the miracle of the fires of Beltaine ----
 
-# The disciples: who they are and why.
-tog_quest.0800 = {
+# Step 10 - news of the cattle plague.
+tog_quest.0900 = {
 	type = character_event
-	title = tog_quest.0800.t
-	desc = {
-		desc = tog_quest.0800.desc
-		triggered_desc = {
-			trigger = { exists = scope:tog_disc_1 }
-			desc = tog_quest.0800.lailoken
-		}
-		first_valid = {
-			triggered_desc = {
-				trigger = {
-					exists = scope:tog_disc_2_parent
-					exists = scope:tog_disc_3_parent
-				}
-				desc = tog_quest.0800.young_both
-			}
-			triggered_desc = {
-				trigger = { exists = scope:tog_disc_2_parent }
-				desc = tog_quest.0800.young_first
-			}
-			triggered_desc = {
-				trigger = { exists = scope:tog_disc_3_parent }
-				desc = tog_quest.0800.young_second
-			}
-			desc = tog_quest.0800.young_none
-		}
-	}
-	theme = learning
-	override_background = { reference = study }
+	title = tog_quest.0900.t
+	desc = tog_quest.0900.desc
+	theme = faith
+	override_background = { reference = farmland }
 	left_portrait = {
 		character = root
-		animation = personality_rational
-	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_2 }
-		character = scope:tog_disc_2
-		animation = interested
-	}
-	lower_right_portrait = {
-		trigger = { exists = scope:tog_disc_3 }
-		character = scope:tog_disc_3
+		animation = worry
 	}
 
 	immediate = {
-		tog_save_disciples_effect = yes
-	}
-
-	option = {
-		name = tog_quest.0800.a
-		custom_tooltip = tog_quest.0800.a.tt
-	}
-}
-
-# A teaching has been learnt: one scene per teaching (1 the stars and the calendar,
-# 2 the plants, 3 the counsel of kings, 4 divination).
-tog_quest.0821 = {
-	type = character_event
-	title = tog_quest.0821.t
-	desc = tog_quest.0821.desc
-	theme = learning
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = happiness
-	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_2 }
-		character = scope:tog_disc_2
-		animation = personality_rational
-	}
-
-	immediate = { tog_save_disciples_effect = yes }
-
-	option = {
-		name = tog_quest.0821.a
-		add_piety = minor_piety_gain
-	}
-}
-
-tog_quest.0822 = {
-	type = character_event
-	title = tog_quest.0822.t
-	desc = {
-		desc = tog_quest.0822.desc
-		triggered_desc = {
-			trigger = { exists = scope:tog_disc_1 }
-			desc = tog_quest.0822.lailoken
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
 		}
 	}
-	theme = learning
-	override_background = { reference = wilderness_forest }
+
+	option = {
+		name = tog_quest.0900.a
+		custom_tooltip = tog_quest.0900.a.tt
+	}
+}
+
+# Step 10 - arrival: the desperate crowd.
+tog_quest.0901 = {
+	type = character_event
+	title = tog_quest.0901.t
+	desc = tog_quest.0901.desc
+	theme = faith
+	override_background = { reference = wilderness }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
 	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_3 }
-		character = scope:tog_disc_3
-		animation = admiration
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		}
 	}
 
-	immediate = { tog_save_disciples_effect = yes }
-
 	option = {
-		name = tog_quest.0822.a
-		add_piety = minor_piety_gain
+		name = tog_quest.0901.a
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0902
+				days = 1
+			}
+		}
 	}
 }
 
-tog_quest.0823 = {
+# Step 10 - the miracle of the fires, the word of Lug, and the end of the quest.
+tog_quest.0902 = {
 	type = character_event
-	title = tog_quest.0823.t
-	desc = tog_quest.0823.desc
-	theme = diplomacy
-	override_background = { reference = courtyard }
-	left_portrait = {
-		character = root
-		animation = personality_rational
-	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_2 }
-		character = scope:tog_disc_2
-		animation = thinking
-	}
-
-	immediate = { tog_save_disciples_effect = yes }
-
-	option = {
-		name = tog_quest.0823.a
-		add_prestige = minor_prestige_gain
-	}
-}
-
-# Last teaching (divination), then the ordination of the first druids. End of step 9.
-tog_quest.0801 = {
-	type = character_event
-	title = tog_quest.0801.t
-	desc = {
-		desc = tog_quest.0801.omen
-		triggered_desc = {
-			trigger = { exists = scope:tog_disc_1 }
-			desc = tog_quest.0801.omen_lailoken
-		}
-		desc = tog_quest.0801.desc
-		triggered_desc = {
-			trigger = { exists = scope:tog_disc_1 }
-			desc = tog_quest.0801.lailoken
-		}
-		desc = tog_quest.0801.end
-	}
+	title = tog_quest.0902.t
+	desc = tog_quest.0902.desc
 	theme = faith
 	override_background = { reference = wilderness_forest }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
 	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_2 }
-		character = scope:tog_disc_2
-		animation = admiration
-	}
-	lower_right_portrait = {
-		trigger = { exists = scope:tog_disc_3 }
-		character = scope:tog_disc_3
-	}
 
 	immediate = {
-		play_music_cue = "mx_cue_sacredrite"
-		tog_save_disciples_effect = yes
+		play_music_cue = "mx_cue_epic_sacral_moment"
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		}
 	}
 
 	option = {
-		name = tog_quest.0801.a
-		custom_tooltip = tog_quest.0801.a.tt
-		add_prestige = major_prestige_gain
-		add_piety = medium_piety_gain
+		name = tog_quest.0902.a
+		custom_tooltip = tog_quest.0902.a.tt
+		add_prestige = {
+			value = major_prestige_gain
+			multiply = 2
+		}
+		add_piety = {
+			value = major_piety_gain
+			multiply = 2
+		}
 		hidden_effect = {
-			random_owned_story = {
-				limit = { story_type = tog_story_old_groves }
-				every_in_list = {
-					variable = tog_disciples
-					limit = { is_alive = yes }
-					add_trait = tog_druid
-					add_opinion = {
-						target = root
-						modifier = respect_opinion
-						opinion = 30
-					}
-				}
-				remove_variable = tog_teaching
-				remove_variable = tog_teaching_tries
-				remove_variable = tog_teaching_chance
+			tog_miracle_effect = yes
+			tog_travel_home_effect = yes
+			# End of the quest: the dynasty may now drive out the Saxons.
+			dynasty ?= {
 				set_variable = {
-					name = tog_stage
-					value = 90
+					name = tog_saxons_cb
+					value = yes
 				}
 			}
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				end_story = yes
+			}
 		}
+	}
+}
+
+# After the miracle: the faithful offer the Voice of Lug an army (yearly roll).
+tog_quest.0910 = {
+	type = character_event
+	title = tog_quest.0910.t
+	desc = tog_quest.0910.desc
+	theme = war
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	trigger = { has_trait = tog_voice_of_lug }
+
+	option = {
+		name = tog_quest.0910.a
+		tog_lug_host_effect = { MEN = 250 }
 	}
 }
