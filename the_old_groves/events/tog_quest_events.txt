@@ -118,6 +118,7 @@ tog_quest.0020 = {
 
 	option = {
 		name = tog_quest.0020.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		custom_tooltip = tog_quest.0020.a.tt
 		hidden_effect = {
 			add_courtier = scope:tog_peredur
@@ -1191,10 +1192,12 @@ tog_quest.0150 = {
 						var:tog_stage = 30
 						var:tog_stage = 31
 						var:tog_stage = 41
+						var:tog_stage = 92
 					}
 				}
 			}
-			# Each road event happens only once.
+			# Each road event happens only once, except the food found by the
+			# companions (adventurers only, once a year, likelier when food runs low).
 			random_list = {
 				105 = {}
 				10 = {
@@ -1303,6 +1306,45 @@ tog_quest.0150 = {
 					}
 					set_variable = { name = tog_tev_16 value = yes }
 					trigger_event = tog_quest.0187
+				}
+				10 = {
+					trigger = {
+						is_landless_adventurer = yes
+						NOT = { has_variable = tog_food_cd }
+						tog_peredur_alive_trigger = yes
+					}
+					modifier = {
+						add = 40
+						domicile ?= { provisions <= 500 }
+					}
+					set_variable = {
+						name = tog_food_cd
+						years = 1
+					}
+					trigger_event = tog_quest.0188
+				}
+				10 = {
+					trigger = {
+						is_landless_adventurer = yes
+						NOT = { has_variable = tog_food_cd }
+						any_owned_story = {
+							story_type = tog_story_old_groves
+							any_in_list = {
+								variable = tog_companions
+								is_alive = yes
+								NOT = { has_trait = tog_blood_of_myrddin }
+							}
+						}
+					}
+					modifier = {
+						add = 40
+						domicile ?= { provisions <= 500 }
+					}
+					set_variable = {
+						name = tog_food_cd
+						years = 1
+					}
+					trigger_event = tog_quest.0189
 				}
 			}
 			set_variable = { name = tog_tev_pending value = yes }
@@ -1715,6 +1757,7 @@ tog_quest.0171 = {
 
 	option = {
 		name = tog_quest.0171.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 	}
 }
 
@@ -2547,6 +2590,7 @@ tog_quest.0224 = {
 
 	option = { # Free his daughter: a scheme
 		name = tog_quest.0224.a
+		tog_feed_adventurer_effect = { AMOUNT = medium_provisions_gain }
 		custom_tooltip = tog_quest.0224.a.tt
 		start_scheme = {
 			type = tog_free_daughter
@@ -3280,6 +3324,7 @@ tog_quest.0321 = {
 
 	option = {
 		name = tog_quest.0321.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		custom_tooltip = tog_quest.0321.a.tt
 		add_learning_lifestyle_xp = minor_lifestyle_xp
 		# Alise is two days away: no second journey, the field comes right after.
@@ -3433,6 +3478,7 @@ tog_quest.0411 = {
 
 	option = {
 		name = tog_quest.0411.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		hidden_effect = { trigger_event = tog_quest.0413 }
 	}
 }
@@ -3575,6 +3621,7 @@ tog_quest.0186 = {
 
 	option = { # Let him haggle
 		name = tog_quest.0186.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		add_gold = tiny_gold_value
 		add_stewardship_lifestyle_xp = minor_lifestyle_xp
 		tog_companion_opinion_effect = {
@@ -3585,6 +3632,7 @@ tog_quest.0186 = {
 	}
 	option = { # Pay the honest price
 		name = tog_quest.0186.b
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		remove_short_term_gold = tiny_gold_value
 		add_piety = minor_piety_gain
 		tog_companion_opinion_effect = {
@@ -4805,6 +4853,7 @@ tog_quest.0902 = {
 
 	option = {
 		name = tog_quest.0902.a
+		tog_feed_adventurer_effect = { AMOUNT = major_provisions_gain }
 		custom_tooltip = tog_quest.0902.a.tt
 		add_prestige = {
 			value = major_prestige_gain
@@ -4868,5 +4917,72 @@ tog_quest.0920 = {
 		name = tog_quest.0920.a
 		play_music_cue = "mx_cue_epic_sacral_moment"
 		tog_create_spear_of_lug_effect = yes
+	}
+}
+
+# Road (adventurers): Peredur comes back with food, and counts it.
+tog_quest.0188 = {
+	type = character_event
+	title = tog_quest.0188.t
+	desc = tog_quest.0188.desc
+	theme = stewardship
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0188.a
+		tog_feed_adventurer_effect = { AMOUNT = medium_provisions_gain }
+	}
+}
+
+# Road (adventurers): a companion hunts or fishes for the camp.
+tog_quest.0189 = {
+	type = character_event
+	title = tog_quest.0189.t
+	desc = tog_quest.0189.desc
+	theme = hunting
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_hunter
+		animation = personality_bold
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			random_in_list = {
+				variable = tog_companions
+				limit = {
+					is_alive = yes
+					NOT = { has_trait = tog_blood_of_myrddin }
+				}
+				save_scope_as = tog_hunter
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0189.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		scope:tog_hunter ?= {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 5
+			}
+		}
 	}
 }

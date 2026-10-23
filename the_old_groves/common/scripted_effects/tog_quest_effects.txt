@@ -1439,3 +1439,11 @@ tog_create_spear_of_lug_effect = {
 		decaying = no
 	}
 }
+
+# Adventurers only: food for the camp (hospitality, or what the companions find).
+tog_feed_adventurer_effect = {
+	if = {
+		limit = { is_landless_adventurer = yes }
+		domicile ?= { change_provisions = $AMOUNT$ }
+	}
+}
