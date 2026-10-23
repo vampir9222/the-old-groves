@@ -4851,47 +4851,16 @@ tog_quest.0823 = {
 	}
 }
 
-tog_quest.0824 = {
-	type = character_event
-	title = tog_quest.0824.t
-	desc = {
-		desc = tog_quest.0824.desc
-		triggered_desc = {
-			trigger = { exists = scope:tog_disc_1 }
-			desc = tog_quest.0824.lailoken
-		}
-	}
-	theme = faith
-	override_background = { reference = wilderness_forest }
-	left_portrait = {
-		character = root
-		animation = interested
-	}
-	right_portrait = {
-		trigger = { exists = scope:tog_disc_3 }
-		character = scope:tog_disc_3
-		animation = happiness
-	}
-
-	immediate = { tog_save_disciples_effect = yes }
-
-	option = {
-		name = tog_quest.0824.a
-		custom_tooltip = tog_quest.0824.a.tt
-		hidden_effect = {
-			trigger_event = {
-				id = tog_quest.0801
-				days = 30
-			}
-		}
-	}
-}
-
-# The ordination of the first druids. End of step 9.
+# Last teaching (divination), then the ordination of the first druids. End of step 9.
 tog_quest.0801 = {
 	type = character_event
 	title = tog_quest.0801.t
 	desc = {
+		desc = tog_quest.0801.omen
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0801.omen_lailoken
+		}
 		desc = tog_quest.0801.desc
 		triggered_desc = {
 			trigger = { exists = scope:tog_disc_1 }

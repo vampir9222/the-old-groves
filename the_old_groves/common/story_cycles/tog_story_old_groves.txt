@@ -470,7 +470,7 @@ tog_story_old_groves = {
 							name = tog_stage
 							value = 81
 						}
-						story_owner = { trigger_event = tog_quest.0824 }
+						story_owner = { trigger_event = tog_quest.0801 }
 					}
 					change_variable = {
 						name = tog_teaching
