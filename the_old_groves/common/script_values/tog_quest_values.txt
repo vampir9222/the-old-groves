@@ -71,3 +71,20 @@ tog_verses_monthly_value = {
 	max = 6
 }
 
+
+
+# Story scope: chance that the current teaching succeeds at this attempt. It grows
+# with each attempt already made, and a little with the owner's learning.
+tog_teaching_chance_value = {
+	value = 20
+	add = {
+		value = var:tog_teaching_tries
+		multiply = 15
+	}
+	add = {
+		value = story_owner.learning
+		divide = 2
+		floor = yes
+	}
+	max = 95
+}

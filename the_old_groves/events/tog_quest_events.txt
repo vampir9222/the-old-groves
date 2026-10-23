@@ -4713,3 +4713,208 @@ tog_quest.0722 = {
 		scope:tog_bard_county = { set_county_faith = faith:tog_druidism }
 	}
 }
+
+# ---- Step 9: training the first druids ----
+
+# The disciples: who they are and why.
+tog_quest.0800 = {
+	type = character_event
+	title = tog_quest.0800.t
+	desc = {
+		desc = tog_quest.0800.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0800.lailoken
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					exists = scope:tog_disc_2_parent
+					exists = scope:tog_disc_3_parent
+				}
+				desc = tog_quest.0800.young_both
+			}
+			triggered_desc = {
+				trigger = { exists = scope:tog_disc_2_parent }
+				desc = tog_quest.0800.young_first
+			}
+			triggered_desc = {
+				trigger = { exists = scope:tog_disc_3_parent }
+				desc = tog_quest.0800.young_second
+			}
+			desc = tog_quest.0800.young_none
+		}
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = interested
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
+	}
+
+	immediate = {
+		tog_save_disciples_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0800.a
+		custom_tooltip = tog_quest.0800.a.tt
+	}
+}
+
+# A teaching has been learnt: one scene per teaching (1 the stars and the calendar,
+# 2 the plants, 3 the counsel of kings, 4 divination).
+tog_quest.0821 = {
+	type = character_event
+	title = tog_quest.0821.t
+	desc = tog_quest.0821.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0821.a
+		add_piety = minor_piety_gain
+	}
+}
+
+tog_quest.0822 = {
+	type = character_event
+	title = tog_quest.0822.t
+	desc = {
+		desc = tog_quest.0822.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0822.lailoken
+		}
+	}
+	theme = learning
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
+		animation = admiration
+	}
+
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0822.a
+		add_piety = minor_piety_gain
+	}
+}
+
+tog_quest.0823 = {
+	type = character_event
+	title = tog_quest.0823.t
+	desc = tog_quest.0823.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = thinking
+	}
+
+	immediate = { tog_save_disciples_effect = yes }
+
+	option = {
+		name = tog_quest.0823.a
+		add_prestige = minor_prestige_gain
+	}
+}
+
+# Last teaching (divination), then the ordination of the first druids. End of step 9.
+tog_quest.0801 = {
+	type = character_event
+	title = tog_quest.0801.t
+	desc = {
+		desc = tog_quest.0801.omen
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0801.omen_lailoken
+		}
+		desc = tog_quest.0801.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_disc_1 }
+			desc = tog_quest.0801.lailoken
+		}
+		desc = tog_quest.0801.end
+	}
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_disc_2 }
+		character = scope:tog_disc_2
+		animation = admiration
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_disc_3 }
+		character = scope:tog_disc_3
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_sacredrite"
+		tog_save_disciples_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0801.a
+		custom_tooltip = tog_quest.0801.a.tt
+		add_prestige = major_prestige_gain
+		add_piety = medium_piety_gain
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				every_in_list = {
+					variable = tog_disciples
+					limit = { is_alive = yes }
+					add_trait = tog_druid
+					add_opinion = {
+						target = root
+						modifier = respect_opinion
+						opinion = 30
+					}
+				}
+				remove_variable = tog_teaching
+				remove_variable = tog_teaching_tries
+				remove_variable = tog_teaching_chance
+				set_variable = {
+					name = tog_stage
+					value = 90
+				}
+			}
+		}
+	}
+}

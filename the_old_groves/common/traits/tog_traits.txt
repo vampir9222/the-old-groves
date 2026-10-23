@@ -86,3 +86,23 @@ tog_blood_of_myrddin = {
 	intrigue = 2
 	shown_in_ruler_designer = no
 }
+
+# The first druids of the reborn cult, trained by the founder (step 9).
+tog_druid = {
+	category = fame
+	icon = mystic_3.dds
+	learning = 2
+	diplomacy = 1
+	monthly_piety = 0.5
+	shown_in_ruler_designer = no
+}
+
+# The founder of the reborn cult (given at the oath of Beltaine, step 7).
+tog_founder = {
+	category = fame
+	icon = theologian.dds
+	learning = 3
+	monthly_piety = 1.5
+	same_faith_opinion = 10
+	shown_in_ruler_designer = no
+}

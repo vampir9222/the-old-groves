@@ -988,6 +988,7 @@ tog_verses_outcome_effect = {
 # an artefact, the companions think better of the founder, and the line takes a
 # legendary name (Lugaid for the Gaelic rite).
 tog_found_cult_effect = {
+	add_trait = tog_founder
 	hidden_effect = {
 		# The founder's rite, from his heritage.
 		if = {
@@ -1279,5 +1280,143 @@ tog_mission_convert_effect = {
 			name = tog_mission_wins
 			add = 1
 		}
+	}
+}
+
+# ---- Step 9: training the first druids ----
+
+# Adds scope:tog_new_disciple to the disciples (to the court and the faith too),
+# remembered as the story variable tog_disc_SLOT.
+tog_add_disciple_effect = {
+	scope:tog_new_disciple = {
+		add_character_flag = tog_disciple
+		if = {
+			limit = { NOT = { is_courtier_of = root } }
+			root = { add_courtier = scope:tog_new_disciple }
+		}
+		set_character_faith = faith:tog_druidism
+	}
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		add_to_variable_list = {
+			name = tog_disciples
+			target = scope:tog_new_disciple
+		}
+		set_variable = {
+			name = tog_disc_$SLOT$
+			value = scope:tog_new_disciple
+		}
+	}
+	clear_saved_scope = tog_new_disciple
+}
+
+# One more disciple (SLOT 2 or 3): a child of a living companion, old enough to
+# learn, at random (the parent is remembered for the texts); failing that, a
+# random young person.
+tog_pick_young_disciple_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		random_in_list = {
+			variable = tog_companions
+			limit = {
+				is_alive = yes
+				any_child = { tog_disciple_candidate_trigger = yes }
+			}
+			save_scope_as = tog_disciple_parent
+			random_child = {
+				limit = { tog_disciple_candidate_trigger = yes }
+				save_scope_as = tog_new_disciple
+			}
+		}
+		if = {
+			limit = { exists = scope:tog_disciple_parent }
+			set_variable = {
+				name = tog_disc_$SLOT$_parent
+				value = scope:tog_disciple_parent
+			}
+		}
+	}
+	if = {
+		limit = { NOT = { exists = scope:tog_new_disciple } }
+		create_character = {
+			age = { 13 17 }
+			gender_female_chance = 50
+			culture = root.culture
+			faith = faith:tog_druidism
+			dynasty = none
+			location = root.location
+			learning = 8
+			save_scope_as = tog_new_disciple
+		}
+	}
+	tog_add_disciple_effect = { SLOT = $SLOT$ }
+	clear_saved_scope = tog_disciple_parent
+}
+
+# The training starts: Lailoken first, then two young disciples; four teachings.
+tog_start_training_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		clear_variable_list = tog_disciples
+		set_variable = {
+			name = tog_teaching
+			value = 1
+		}
+		set_variable = {
+			name = tog_teachings_done
+			value = 0
+		}
+		set_variable = {
+			name = tog_teaching_tries
+			value = 0
+		}
+		set_variable = {
+			name = tog_teaching_chance
+			value = tog_teaching_chance_value
+		}
+		var:tog_lailoken ?= {
+			if = {
+				limit = {
+					is_alive = yes
+					NOT = { has_character_flag = tog_heir_companion }
+				}
+				save_scope_as = tog_new_disciple
+			}
+		}
+	}
+	if = {
+		limit = { exists = scope:tog_new_disciple }
+		tog_add_disciple_effect = { SLOT = 1 }
+	}
+	tog_pick_young_disciple_effect = { SLOT = 2 }
+	tog_pick_young_disciple_effect = { SLOT = 3 }
+	trigger_event = tog_quest.0800
+}
+
+# Saves the living disciples as scope:tog_disc_1 (Lailoken), tog_disc_2, tog_disc_3,
+# and the companions they are the children of as tog_disc_2_parent, tog_disc_3_parent.
+tog_save_disciples_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		var:tog_disc_1 ?= {
+			if = {
+				limit = { is_alive = yes }
+				save_scope_as = tog_disc_1
+			}
+		}
+		var:tog_disc_2 ?= {
+			if = {
+				limit = { is_alive = yes }
+				save_scope_as = tog_disc_2
+			}
+		}
+		var:tog_disc_3 ?= {
+			if = {
+				limit = { is_alive = yes }
+				save_scope_as = tog_disc_3
+			}
+		}
+		var:tog_disc_2_parent ?= { save_scope_as = tog_disc_2_parent }
+		var:tog_disc_3_parent ?= { save_scope_as = tog_disc_3_parent }
 	}
 }

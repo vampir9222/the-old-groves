@@ -93,3 +93,12 @@ tog_second_sight_valid_trigger = {
 		is_courtier_of = root.story_owner
 	}
 }
+
+# Step 9: a young person who may become a disciple.
+tog_disciple_candidate_trigger = {
+	is_alive = yes
+	age >= 12
+	is_ruler = no
+	NOT = { has_trait = tog_druid }
+	NOT = { has_character_flag = tog_disciple }
+}
