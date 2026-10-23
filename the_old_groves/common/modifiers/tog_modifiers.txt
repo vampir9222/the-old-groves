@@ -87,3 +87,12 @@ tog_cattle_plague_modifier = {
 	levy_size = -0.2
 	supply_limit_mult = -0.2
 }
+
+# After the quest: the spear of Lug.
+tog_spear_of_lug_modifier = {
+	icon = martial_positive
+	prowess = 8
+	martial = 2
+	advantage = 5
+	monthly_prestige = 1
+}

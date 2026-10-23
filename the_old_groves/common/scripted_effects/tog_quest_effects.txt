@@ -1420,3 +1420,22 @@ tog_lug_host_effect = {
 		name = tog_lug_host_name
 	}
 }
+
+# After the quest: the spear of Lug, one of the four treasures of the Tuatha Dé.
+tog_create_spear_of_lug_effect = {
+	# Weapons pick their features from these saved values.
+	save_scope_value_as = { name = wealth value = 80 }
+	save_scope_value_as = { name = quality value = 90 }
+	create_artifact = {
+		name = tog_spear_of_lug_name
+		description = tog_spear_of_lug_description
+		template = tog_relic_template
+		type = spear
+		visuals = spear
+		wealth = 80
+		quality = 90
+		modifier = tog_spear_of_lug_modifier
+		save_scope_as = tog_spear_of_lug
+		decaying = no
+	}
+}

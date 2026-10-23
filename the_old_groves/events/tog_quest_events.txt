@@ -4851,3 +4851,22 @@ tog_quest.0910 = {
 		tog_lug_host_effect = { MEN = 250 }
 	}
 }
+
+# After the quest: the spear of Lug is forged.
+tog_quest.0920 = {
+	type = character_event
+	title = tog_quest.0920.t
+	desc = tog_quest.0920.desc
+	theme = martial
+	override_background = { reference = armory }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	option = {
+		name = tog_quest.0920.a
+		play_music_cue = "mx_cue_epic_sacral_moment"
+		tog_create_spear_of_lug_effect = yes
+	}
+}

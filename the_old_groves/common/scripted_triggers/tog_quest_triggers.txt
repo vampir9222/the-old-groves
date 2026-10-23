@@ -94,19 +94,11 @@ tog_second_sight_valid_trigger = {
 	}
 }
 
-# After the quest: a ruler holding land in Britain or Ireland who is a foreigner
-# (neither Brythonic nor Goidelic) or not of the Celtic religion (a Christian
-# Gael too), a target for "Drive out the Saxons".
+# After the quest: a Christian ruler (of any culture: Saxon, Gael or Norse alike)
+# holding land in Britain or Ireland, a target for "Drive out the Saxons". Pagan
+# Norsemen are allies against them, not targets.
 tog_saxon_ruler_trigger = {
-	OR = {
-		NOT = { religion = religion:tog_celtic_religion }
-		culture = {
-			NOR = {
-				has_cultural_pillar = heritage_goidelic
-				has_cultural_pillar = heritage_brythonic
-			}
-		}
-	}
+	religion = religion:christianity_religion
 	any_realm_county = {
 		title_province = { geographical_region = world_europe_west_britannia }
 	}

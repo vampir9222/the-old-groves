@@ -867,3 +867,49 @@ tog_test_saxons_cb_decision = {
 		base = 0
 	}
 }
+
+# After the quest: have a faithful smith forge the spear of Lug. Expensive, once
+# in the world.
+tog_spear_of_lug_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_spear_of_lug_decision_desc
+	selection_tooltip = tog_spear_of_lug_decision_tooltip
+	confirm_text = tog_spear_of_lug_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		dynasty ?= { has_variable = tog_saxons_cb }
+		NOT = { exists = global_var:tog_spear_of_lug_forged }
+	}
+
+	is_valid = {
+		religion = religion:tog_celtic_religion
+	}
+
+	cost = {
+		gold = 500
+	}
+
+	effect = {
+		custom_tooltip = tog_spear_of_lug_decision_effect_tt
+		hidden_effect = {
+			set_global_variable = {
+				name = tog_spear_of_lug_forged
+				value = yes
+			}
+			trigger_event = tog_quest.0920
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
