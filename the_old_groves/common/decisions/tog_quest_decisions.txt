@@ -943,3 +943,32 @@ tog_test_provisions_decision = {
 		base = 0
 	}
 }
+
+# TEST ONLY - remove before any release.
+# 50 gold at once.
+tog_test_gold_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_gold_decision_desc
+	selection_tooltip = tog_test_gold_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+	}
+
+	effect = {
+		add_gold = 50
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

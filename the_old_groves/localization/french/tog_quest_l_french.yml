@@ -779,3 +779,5 @@
  baggage_train_tog_offerings_domicile_building: "Tente des offrandes"
  baggage_train_tog_offerings_domicile_building_desc: "#weak (Nécessite le [GetDomicileBuilding('baggage_train_01').GetName|l])#!\nPartout où le camp s'arrête, les fidèles des anciens dieux viennent déposer leurs dons : quelques pièces, du grain, un fromage, un agneau. Ils repartent avec une bénédiction.\n\nChaque mois, les fidèles apportent #P 100#! provisions."
  baggage_train_tog_offerings.tt.quest: "Offerte par les fidèles à la fondation du culte des anciens"
+ tog_test_gold_decision: "TEST : 50 or"
+ tog_test_gold_decision_desc: "Décision de test, à retirer avant publication : ajoute 50 pièces d'or."
