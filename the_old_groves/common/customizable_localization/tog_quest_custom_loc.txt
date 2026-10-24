@@ -94,6 +94,10 @@ TogQuestObjective = {
 		trigger = { var:tog_stage = 92 }
 		localization_key = tog_obj_fires
 	}
+	text = {
+		trigger = { var:tog_stage = 100 }
+		localization_key = tog_obj_after
+	}
 }
 
 # Destination named in the travel decision (character scope).

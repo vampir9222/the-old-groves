@@ -913,3 +913,33 @@ tog_spear_of_lug_decision = {
 		base = 0
 	}
 }
+
+# TEST ONLY - remove before any release.
+# Adventurers: 500 provisions for the camp.
+tog_test_provisions_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_provisions_decision_desc
+	selection_tooltip = tog_test_provisions_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		is_landless_adventurer = yes
+	}
+
+	effect = {
+		tog_feed_adventurer_effect = { AMOUNT = 500 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

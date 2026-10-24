@@ -1,0 +1,44 @@
+﻿# The Old Groves - camp buildings
+
+# The tent of offerings: a module of the baggage train, where the faithful of the
+# old gods bring their gifts wherever the camp goes. Gold and prestige every
+# month; 100 provisions every month to the quest owner (story cycle).
+baggage_train_tog_offerings = {
+	slot_type = internal
+	construction_time = 120
+	allowed_domicile_types = { camp }
+	previous_building = baggage_train_01
+
+	cost = { gold = 100 }
+	refund = {
+		gold = {
+			value = 100
+			multiply = camp_refund_mult_value
+			floor = yes
+		}
+	}
+
+	# Never built by hand: the quest gives it at the founding of the cult.
+	can_construct = {
+		custom_tooltip = {
+			text = baggage_train_tog_offerings.tt.quest
+			always = no
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 2
+		domicile_monthly_prestige_add = 0.5
+	}
+
+	ai_value = {
+		value = 0
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_camp_shrine.dds"
+		texture = "gfx/interface/window_domiciles/laamp_building_baggage_train.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/laamp_building_baggage_train_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/camp_buildings/ep3_ui_domicile_buildings_baggage_train"
+	}
+}

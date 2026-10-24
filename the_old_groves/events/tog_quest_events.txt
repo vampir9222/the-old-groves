@@ -69,6 +69,7 @@ tog_quest.0003 = {
 
 	option = {
 		name = tog_quest.0003.a
+		add_prestige = minor_prestige_gain
 		add_learning_lifestyle_xp = minor_lifestyle_xp
 		hidden_effect = {
 			trigger_event = {
@@ -382,6 +383,7 @@ tog_quest.0050 = {
 
 	option = {
 		name = tog_quest.0050.a
+		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0050.a.tt
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
@@ -649,8 +651,11 @@ tog_quest.0060 = {
 					limit = {
 						var:tog_stage = 31
 						root.location = province:2346
+						root = {
+							NOT = { any_scheme = { type = tog_reach_heric } }
+						}
 					}
-					root = { trigger_event = tog_quest.0321 }
+					root = { trigger_event = tog_quest.0320 }
 				}
 				else_if = {
 					limit = {
@@ -690,7 +695,7 @@ tog_quest.0101 = {
 
 	option = { # Talk to a monk
 		name = tog_m.talk
-		trigger = { tog_monastery_open_trigger = { M = jarrow FLAG = talk } }
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = jarrow FLAG = talk } } }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_m.talk_tt
 		tog_monastery_talk_effect = {
@@ -703,7 +708,7 @@ tog_quest.0101 = {
 	option = { # Pay a monk
 		name = tog_m.pay
 		trigger = {
-			tog_monastery_open_trigger = { M = jarrow FLAG = pay }
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = jarrow FLAG = pay } }
 			gold >= minor_gold_value
 		}
 		show_as_unavailable = { always = yes }
@@ -715,9 +720,9 @@ tog_quest.0101 = {
 
 	option = { # Steal the book
 		name = tog_m.steal
-		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = jarrow FLAG = steal } } }
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
 		show_as_unavailable = { always = yes }
-		tog_monastery_steal_effect = {
+		tog_start_steal_scheme_effect = {
 			M = jarrow
 			TITLE = b_durham
 		}
@@ -772,7 +777,7 @@ tog_quest.0102 = {
 
 	option = { # Talk to a monk
 		name = tog_m.talk
-		trigger = { tog_monastery_open_trigger = { M = whithorn FLAG = talk } }
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = whithorn FLAG = talk } } }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_m.talk_tt
 		tog_monastery_talk_effect = {
@@ -785,7 +790,7 @@ tog_quest.0102 = {
 	option = { # Pay a monk
 		name = tog_m.pay
 		trigger = {
-			tog_monastery_open_trigger = { M = whithorn FLAG = pay }
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = whithorn FLAG = pay } }
 			gold >= minor_gold_value
 		}
 		show_as_unavailable = { always = yes }
@@ -797,9 +802,9 @@ tog_quest.0102 = {
 
 	option = { # Steal the book
 		name = tog_m.steal
-		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = whithorn FLAG = steal } } }
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
 		show_as_unavailable = { always = yes }
-		tog_monastery_steal_effect = {
+		tog_start_steal_scheme_effect = {
 			M = whithorn
 			TITLE = b_wigtown
 		}
@@ -854,7 +859,7 @@ tog_quest.0103 = {
 
 	option = { # Talk to a monk
 		name = tog_m.talk
-		trigger = { tog_monastery_open_trigger = { M = mynyw FLAG = talk } }
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = mynyw FLAG = talk } } }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_m.talk_tt
 		tog_monastery_talk_effect = {
@@ -867,7 +872,7 @@ tog_quest.0103 = {
 	option = { # Pay a monk
 		name = tog_m.pay
 		trigger = {
-			tog_monastery_open_trigger = { M = mynyw FLAG = pay }
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = mynyw FLAG = pay } }
 			gold >= minor_gold_value
 		}
 		show_as_unavailable = { always = yes }
@@ -879,9 +884,9 @@ tog_quest.0103 = {
 
 	option = { # Steal the book
 		name = tog_m.steal
-		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = mynyw FLAG = steal } } }
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
 		show_as_unavailable = { always = yes }
-		tog_monastery_steal_effect = {
+		tog_start_steal_scheme_effect = {
 			M = mynyw
 			TITLE = b_st_davids
 		}
@@ -936,7 +941,7 @@ tog_quest.0104 = {
 
 	option = { # Talk to a monk
 		name = tog_m.talk
-		trigger = { tog_monastery_open_trigger = { M = dunkeld FLAG = talk } }
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = dunkeld FLAG = talk } } }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_m.talk_tt
 		tog_monastery_talk_effect = {
@@ -949,7 +954,7 @@ tog_quest.0104 = {
 	option = { # Pay a monk
 		name = tog_m.pay
 		trigger = {
-			tog_monastery_open_trigger = { M = dunkeld FLAG = pay }
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = dunkeld FLAG = pay } }
 			gold >= minor_gold_value
 		}
 		show_as_unavailable = { always = yes }
@@ -961,9 +966,9 @@ tog_quest.0104 = {
 
 	option = { # Steal the book
 		name = tog_m.steal
-		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = dunkeld FLAG = steal } } }
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
 		show_as_unavailable = { always = yes }
-		tog_monastery_steal_effect = {
+		tog_start_steal_scheme_effect = {
 			M = dunkeld
 			TITLE = b_dunkeld
 		}
@@ -1018,7 +1023,7 @@ tog_quest.0105 = {
 
 	option = { # Talk to a monk
 		name = tog_m.talk
-		trigger = { tog_monastery_open_trigger = { M = applecross FLAG = talk } }
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = applecross FLAG = talk } } }
 		show_as_unavailable = { always = yes }
 		custom_tooltip = tog_m.talk_tt
 		tog_monastery_talk_effect = {
@@ -1031,7 +1036,7 @@ tog_quest.0105 = {
 	option = { # Pay a monk
 		name = tog_m.pay
 		trigger = {
-			tog_monastery_open_trigger = { M = applecross FLAG = pay }
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = applecross FLAG = pay } }
 			gold >= minor_gold_value
 		}
 		show_as_unavailable = { always = yes }
@@ -1043,9 +1048,9 @@ tog_quest.0105 = {
 
 	option = { # Steal the book
 		name = tog_m.steal
-		trigger = { custom_description = { text = tog_m.steal_wait tog_monastery_open_trigger = { M = applecross FLAG = steal } } }
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
 		show_as_unavailable = { always = yes }
-		tog_monastery_steal_effect = {
+		tog_start_steal_scheme_effect = {
 			M = applecross
 			TITLE = b_applecross
 		}
@@ -1104,6 +1109,7 @@ tog_quest.0130 = {
 
 	option = {
 		name = tog_quest.0130.a
+		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0130.a.tt
 		add_piety = major_piety_gain
 		add_learning_lifestyle_xp = 150
@@ -1121,6 +1127,14 @@ tog_quest.0140 = {
 	left_portrait = {
 		character = root
 		animation = thinking
+	}
+
+	immediate = {
+		tog_distance_effect = { PROV = 1606 NAME = jarrow }
+		tog_distance_effect = { PROV = 1684 NAME = whithorn }
+		tog_distance_effect = { PROV = 1655 NAME = mynyw }
+		tog_distance_effect = { PROV = 1743 NAME = dunkeld }
+		tog_distance_effect = { PROV = 8778 NAME = applecross }
 	}
 
 	option = {
@@ -1201,16 +1215,6 @@ tog_quest.0150 = {
 			random_list = {
 				105 = {}
 				10 = {
-					trigger = { NOT = { exists = var:tog_tev_1 } }
-					set_variable = { name = tog_tev_1 value = yes }
-					trigger_event = tog_quest.0151
-				}
-				10 = {
-					trigger = { NOT = { exists = var:tog_tev_2 } }
-					set_variable = { name = tog_tev_2 value = yes }
-					trigger_event = tog_quest.0152
-				}
-				10 = {
 					trigger = { NOT = { exists = var:tog_tev_3 } }
 					set_variable = { name = tog_tev_3 value = yes }
 					trigger_event = tog_quest.0153
@@ -1224,16 +1228,6 @@ tog_quest.0150 = {
 					trigger = { NOT = { exists = var:tog_tev_5 } }
 					set_variable = { name = tog_tev_5 value = yes }
 					trigger_event = tog_quest.0155
-				}
-				10 = {
-					trigger = { NOT = { exists = var:tog_tev_6 } }
-					set_variable = { name = tog_tev_6 value = yes }
-					trigger_event = tog_quest.0156
-				}
-				10 = {
-					trigger = { NOT = { exists = var:tog_tev_7 } }
-					set_variable = { name = tog_tev_7 value = yes }
-					trigger_event = tog_quest.0157
 				}
 				10 = {
 					trigger = {
@@ -1266,14 +1260,6 @@ tog_quest.0150 = {
 					}
 					set_variable = { name = tog_tev_11 value = yes }
 					trigger_event = tog_quest.0182
-				}
-				10 = {
-					trigger = {
-						NOT = { exists = var:tog_tev_12 }
-						tog_peredur_alive_trigger = yes
-					}
-					set_variable = { name = tog_tev_12 value = yes }
-					trigger_event = tog_quest.0183
 				}
 				10 = {
 					trigger = {
@@ -1353,85 +1339,6 @@ tog_quest.0150 = {
 				days = { 30 45 }
 			}
 		}
-	}
-}
-
-# Road: Norse raiders.
-tog_quest.0151 = {
-	type = character_event
-	title = tog_quest.0151.t
-	desc = tog_quest.0151.desc
-	theme = martial
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = personality_bold
-	}
-
-	option = { # Fight (martial)
-		name = tog_quest.0151.a
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_martial_value }
-				custom_tooltip = tog_quest.0151.a.good
-				add_gold = minor_gold_value
-				add_prestige = minor_prestige_gain
-			}
-			60 = {
-				custom_tooltip = tog_quest.0151.a.bad
-				increase_wounds_no_death_effect = { REASON = fight }
-				remove_short_term_gold = tiny_gold_value
-			}
-		}
-	}
-
-	option = { # Parley in their tongue (diplomacy)
-		name = tog_quest.0151.b
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_diplomacy_value }
-				custom_tooltip = tog_quest.0151.b.good
-				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
-			}
-			60 = {
-				custom_tooltip = tog_quest.0151.b.bad
-				remove_short_term_gold = minor_gold_value
-			}
-		}
-	}
-}
-
-# Road: a wandering monk who wants to debate.
-tog_quest.0152 = {
-	type = character_event
-	title = tog_quest.0152.t
-	desc = tog_quest.0152.desc
-	theme = faith
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = thinking
-	}
-
-	option = { # Debate (learning)
-		name = tog_quest.0152.a
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_learning_value }
-				custom_tooltip = tog_quest.0152.a.good
-				add_learning_lifestyle_xp = medium_lifestyle_xp
-			}
-			60 = {
-				custom_tooltip = tog_quest.0152.a.bad
-				add_prestige = minor_prestige_loss
-				add_stress = minor_stress_gain
-			}
-		}
-	}
-
-	option = { # Keep quiet
-		name = tog_quest.0152.b
-		add_stress = minor_stress_gain
 	}
 }
 
@@ -1580,76 +1487,6 @@ tog_quest.0155 = {
 	}
 }
 
-# Road: a thief in the night.
-tog_quest.0156 = {
-	type = character_event
-	title = tog_quest.0156.t
-	desc = tog_quest.0156.desc
-	theme = intrigue
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = scheme
-	}
-
-	option = { # Catch him unawares (intrigue)
-		name = tog_quest.0156.a
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_intrigue_value }
-				custom_tooltip = tog_quest.0156.a.good
-				add_intrigue_lifestyle_xp = minor_lifestyle_xp
-			}
-			60 = {
-				custom_tooltip = tog_quest.0156.a.bad
-				remove_short_term_gold = minor_gold_value
-			}
-		}
-	}
-
-	option = { # Fight him (prowess)
-		name = tog_quest.0156.b
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_prowess_value }
-				custom_tooltip = tog_quest.0156.b.good
-				add_prestige = minor_prestige_gain
-			}
-			60 = {
-				custom_tooltip = tog_quest.0156.b.bad
-				increase_wounds_no_death_effect = { REASON = fight }
-				remove_short_term_gold = minor_gold_value
-			}
-		}
-	}
-}
-
-# Road: a dying pilgrim by the wayside.
-tog_quest.0157 = {
-	type = character_event
-	title = tog_quest.0157.t
-	desc = tog_quest.0157.desc
-	theme = faith
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = sadness
-	}
-
-	option = { # Help him
-		name = tog_quest.0157.a
-		remove_short_term_gold = tiny_gold_value
-		add_piety = minor_piety_gain
-		add_learning_lifestyle_xp = minor_lifestyle_xp
-		custom_tooltip = tog_quest.0157.a.tt
-	}
-
-	option = { # Pass by
-		name = tog_quest.0157.b
-		add_stress = minor_stress_gain
-	}
-}
-
 # ---- Step 2: failure scenes; their option goes back to the monastery ----
 
 # The monk would not be convinced.
@@ -1702,24 +1539,6 @@ tog_quest.0163 = {
 
 	option = {
 		name = tog_quest.0163.a
-		tog_reopen_monastery_effect = yes
-	}
-}
-
-# Caught stealing.
-tog_quest.0164 = {
-	type = character_event
-	title = tog_quest.0164.t
-	desc = tog_quest.0164.desc
-	theme = intrigue
-	override_background = { reference = study }
-	left_portrait = {
-		character = root
-		animation = fear
-	}
-
-	option = {
-		name = tog_quest.0164.a
 		tog_reopen_monastery_effect = yes
 	}
 }
@@ -1985,46 +1804,6 @@ tog_quest.0182 = {
 	}
 }
 
-# Road: the shepherd's wager.
-tog_quest.0183 = {
-	type = character_event
-	title = tog_quest.0183.t
-	desc = tog_quest.0183.desc
-	theme = diplomacy
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = personality_bold
-	}
-	right_portrait = {
-		character = scope:tog_peredur
-		animation = personality_bold
-	}
-
-	immediate = { tog_save_companions_effect = yes }
-
-	option = { # Bet on Peredur
-		name = tog_quest.0183.a
-		tog_companion_opinion_effect = {
-			WHO = tog_peredur
-			MOD = respect_opinion
-			VALUE = 15
-		}
-		add_gold = minor_gold_value
-		add_prestige = minor_prestige_gain
-	}
-
-	option = { # No betting
-		name = tog_quest.0183.b
-		tog_companion_opinion_effect = {
-			WHO = tog_peredur
-			MOD = disappointed_opinion
-			VALUE = -5
-		}
-		add_piety = minor_piety_gain
-	}
-}
-
 # ---- Step 3: the sacred places ----
 
 # Step 3 - choosing the next sacred place (from the travel decision).
@@ -2037,6 +1816,12 @@ tog_quest.0240 = {
 	left_portrait = {
 		character = root
 		animation = thinking
+	}
+
+	immediate = {
+		tog_distance_effect = { PROV = 32 NAME = bru }
+		tog_distance_effect = { PROV = 36 NAME = uisneach }
+		tog_distance_effect = { PROV = 1681 NAME = mabon }
 	}
 
 	option = {
@@ -2235,6 +2020,7 @@ tog_quest.0204 = {
 
 	option = {
 		name = tog_quest.0204.a
+		add_prestige = minor_prestige_gain
 		custom_tooltip = tog_quest.0204.a.tt
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
@@ -2391,6 +2177,7 @@ tog_quest.0216 = {
 
 	option = {
 		name = tog_quest.0216.a
+		add_prestige = minor_prestige_gain
 		add_piety = medium_piety_gain
 		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
 		add_martial_lifestyle_xp = minor_lifestyle_xp
@@ -2567,7 +2354,7 @@ tog_quest.0224 = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
-			trait = pious
+			trait = zealous
 			trait = tog_novice
 			save_scope_as = tog_eluned
 		}
@@ -2590,6 +2377,7 @@ tog_quest.0224 = {
 
 	option = { # Free his daughter: a scheme
 		name = tog_quest.0224.a
+		add_prestige = medium_prestige_gain
 		tog_feed_adventurer_effect = { AMOUNT = medium_provisions_gain }
 		custom_tooltip = tog_quest.0224.a.tt
 		start_scheme = {
@@ -2813,6 +2601,7 @@ tog_quest.0232 = {
 
 	option = {
 		name = tog_quest.0232.a
+		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0232.a.tt
 		add_piety = medium_piety_gain
 		add_learning_lifestyle_xp = medium_lifestyle_xp
@@ -3044,6 +2833,7 @@ tog_quest.0236 = {
 
 	option = {
 		name = tog_quest.0236.a
+		add_prestige = medium_prestige_gain
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			change_variable = {
@@ -3273,6 +3063,7 @@ tog_quest.0313 = {
 
 	option = {
 		name = tog_quest.0313.a
+		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0313.a.tt
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		add_piety = medium_piety_gain
@@ -3307,23 +3098,16 @@ tog_quest.0321 = {
 	}
 
 	immediate = {
-		create_character = {
-			name = "Héric"
-			age = 34
-			gender = male
-			culture = culture:frankish
-			faith = faith:catholic
-			dynasty = none
-			location = root.location
-			trait = education_learning_4
-			trait = curious
-			learning = 18
-			save_scope_as = tog_heric
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_heric ?= { save_scope_as = tog_heric }
 		}
+		scope:tog_heric ?= { remove_trait = tog_cloistered }
 	}
 
 	option = {
 		name = tog_quest.0321.a
+		add_prestige = minor_prestige_gain
 		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		custom_tooltip = tog_quest.0321.a.tt
 		add_learning_lifestyle_xp = minor_lifestyle_xp
@@ -3368,7 +3152,7 @@ tog_quest.0331 = {
 	option = {
 		name = tog_quest.0331.a
 		custom_tooltip = tog_quest.0331.a.tt
-		add_prestige = medium_prestige_gain
+		add_prestige = major_prestige_gain
 		add_martial_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
 			tog_create_carnyx_effect = yes
@@ -3425,6 +3209,7 @@ tog_quest.0401 = {
 
 	option = {
 		name = tog_quest.0401.a
+		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0401.a.tt
 		add_learning_lifestyle_xp = major_lifestyle_xp
 		add_piety = medium_piety_gain
@@ -3510,6 +3295,7 @@ tog_quest.0412 = {
 
 	option = { # Nest holds the white cloak
 		name = tog_quest.0412.a
+		add_prestige = major_prestige_gain
 		tog_first_rite_effect = yes
 	}
 }
@@ -3854,30 +3640,22 @@ tog_quest.0511 = {
 		name = tog_quest.0511.a
 		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 10 }
 		tog_companion_opinion_effect = { WHO = tog_eogan MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			40 = {
-				add_piety = minor_piety_gain
-				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0511.a.great }
-			}
-			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			25 = {
-				add_stress = minor_stress_gain
-				tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0511.a.bad }
-			}
-		}
+		add_piety = minor_piety_gain
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0511.a.great }
 	}
 	option = { # Eógan's way: the tale as the people tell it
 		name = tog_quest.0511.b
 		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 10 }
 		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			55 = {
-				add_prestige = minor_prestige_gain
-				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0511.b.great }
-			}
-			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			15 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0511.b.bad } }
-		}
+		add_prestige = minor_prestige_gain
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0511.b.great }
+	}
+	option = { # Both, side by side: slower, but nobody is hurt
+		name = tog_quest.0511.c
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 5 }
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 5 }
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0511.c.tt }
 	}
 }
 
@@ -3903,25 +3681,17 @@ tog_quest.0512 = {
 		name = tog_quest.0512.a
 		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = respect_opinion VALUE = 15 }
 		random_list = {
-			35 = {
+			70 = {
 				add_piety = minor_piety_gain
-				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0512.a.great }
+				tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_quest.0512.a.great }
 			}
-			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			35 = {
-				add_stress = minor_stress_gain
-				tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0512.a.bad }
-			}
+			30 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0512.a.bad } }
 		}
 	}
 	option = { # Your memory fails you, old man
 		name = tog_quest.0512.b
 		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = disappointed_opinion VALUE = -15 }
-		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0512.b.bad } }
-		}
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0512.b.bad }
 	}
 }
 
@@ -3946,26 +3716,13 @@ tog_quest.0513 = {
 	option = { # They will have their chapter
 		name = tog_quest.0513.a
 		tog_companion_opinion_effect = { WHO = tog_nest MOD = respect_opinion VALUE = 15 }
-		random_list = {
-			40 = {
-				add_piety = minor_piety_gain
-				tog_verses_outcome_effect = { VALUE = 15 TT = tog_quest.0513.a.great }
-			}
-			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			25 = {
-				remove_short_term_gold = tiny_gold_value
-				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0513.a.bad }
-			}
-		}
+		add_piety = minor_piety_gain
+		tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_quest.0513.a.great }
 	}
 	option = { # The book is about the gods, not the hearth
 		name = tog_quest.0513.b
 		tog_companion_opinion_effect = { WHO = tog_nest MOD = disappointed_opinion VALUE = -15 }
-		random_list = {
-			65 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			10 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0513.b.bad } }
-		}
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0513.b.bad }
 	}
 }
 
@@ -3987,29 +3744,15 @@ tog_quest.0514 = {
 
 	immediate = { tog_save_companions_effect = yes }
 
-	option = { # Number them, Peredur
+	option = { # Number them, Peredur (he never miscounts)
 		name = tog_quest.0514.a
 		tog_companion_opinion_effect = { WHO = tog_peredur MOD = respect_opinion VALUE = 10 }
-		random_list = {
-			35 = {
-				add_prestige = minor_prestige_gain
-				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0514.a.good }
-			}
-			35 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			30 = {
-				add_stress = minor_stress_gain
-				tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0514.a.bad }
-			}
-		}
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0514.a.good }
 	}
 	option = { # Leave the pages alone
 		name = tog_quest.0514.b
 		tog_companion_opinion_effect = { WHO = tog_peredur MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0514.b.good } }
-			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0514.b.bad } }
-		}
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0514.b.bad }
 	}
 }
 
@@ -4036,25 +3779,17 @@ tog_quest.0515 = {
 		add_stress = minor_stress_gain
 		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 15 }
 		random_list = {
-			35 = {
+			50 = {
 				add_piety = medium_piety_gain
-				tog_verses_outcome_effect = { VALUE = 20 TT = tog_quest.0515.a.great }
+				tog_verses_outcome_effect = { VALUE = 20 D = p20 TT = tog_quest.0515.a.great }
 			}
-			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			40 = { tog_verses_outcome_effect = { VALUE = -10 TT = tog_quest.0515.a.bad } }
+			50 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0515.a.bad } }
 		}
 	}
 	option = { # A dream is not a book
 		name = tog_quest.0515.b
 		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			65 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			25 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			10 = {
-				add_piety = minor_piety_loss
-				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0515.b.bad }
-			}
-		}
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_verses.up_small }
 	}
 }
 
@@ -4082,26 +3817,16 @@ tog_quest.0516 = {
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = minor_gold_value
 		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
-		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
-			30 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0516.a.meh } }
-		}
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
 	}
 	option = { # Haggle hard with him
 		name = tog_quest.0516.b
 		trigger = { gold >= tiny_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = tiny_gold_value
-		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = disappointed_opinion VALUE = -10 }
-		random_list = {
-			70 = {
-				add_prestige = minor_prestige_gain
-				tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0516.b.good }
-			}
-			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			10 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0516.b.bad } }
-		}
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = disappointed_opinion VALUE = -15 }
+		add_prestige = minor_prestige_gain
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0516.b.good }
 	}
 	option = { # Buy it all, and pay a copyist from Tours too
 		name = tog_quest.0516.c
@@ -4109,10 +3834,7 @@ tog_quest.0516 = {
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = medium_gold_value
 		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
-		random_list = {
-			80 = { tog_verses_outcome_effect = { VALUE = 20 TT = tog_verses.up_big } }
-			20 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_quest.0516.c.meh } }
-		}
+		tog_verses_outcome_effect = { VALUE = 20 D = p20 TT = tog_verses.up_big }
 	}
 }
 
@@ -4131,27 +3853,19 @@ tog_quest.0519 = {
 	option = { # Write all night
 		name = tog_quest.0519.a
 		add_stress = minor_stress_gain
-		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			50 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
-		}
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
 	}
 	option = { # Read it all again from the start
 		name = tog_quest.0519.b
-		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0519.b.good } }
-			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
-		}
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0519.b.good }
 	}
 	option = { # Pay copyists to speed things up
 		name = tog_quest.0519.c
 		trigger = { gold >= minor_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = minor_gold_value
-		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 15 TT = tog_verses.up_big } }
-			30 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0519.c.meh } }
-		}
+		tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_verses.up_big }
 	}
 }
 
@@ -4179,6 +3893,7 @@ tog_quest.0501 = {
 
 	option = {
 		name = tog_quest.0501.a
+		add_prestige = major_prestige_gain
 		custom_tooltip = tog_quest.0501.a.tt
 		add_piety = 300
 		add_learning_lifestyle_xp = major_lifestyle_xp
@@ -4270,16 +3985,13 @@ tog_quest.0520 = {
 		name = tog_quest.0520.a
 		add_stress = minor_stress_gain
 		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			40 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_verses.down } }
+			60 = { tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up } }
+			40 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_verses.down } }
 		}
 	}
 	option = { # Leave it and write on
 		name = tog_quest.0520.b
-		random_list = {
-			60 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			40 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
-		}
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_verses.up_small }
 	}
 }
 
@@ -4298,10 +4010,10 @@ tog_quest.0521 = {
 	option = { # Show him a harmless page
 		name = tog_quest.0521.a
 		random_list = {
-			70 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0521.a.good } }
+			70 = { tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0521.a.good } }
 			30 = {
 				add_piety = minor_piety_loss
-				tog_verses_outcome_effect = { VALUE = 0 TT = tog_quest.0521.a.bad }
+				tog_verses_outcome_effect = { VALUE = -10 D = m10 TT = tog_quest.0521.a.bad }
 			}
 		}
 	}
@@ -4310,10 +4022,7 @@ tog_quest.0521 = {
 		trigger = { gold >= tiny_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = tiny_gold_value
-		random_list = {
-			80 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-			20 = { tog_verses_outcome_effect = { VALUE = 0 TT = tog_verses.same } }
-		}
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0521.b.tt }
 	}
 }
 
@@ -4336,16 +4045,16 @@ tog_quest.0522 = {
 		trigger = { gold >= tiny_gold_value }
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = tiny_gold_value
-		random_list = {
-			80 = { tog_verses_outcome_effect = { VALUE = 10 TT = tog_verses.up } }
-			20 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_verses.up_small } }
-		}
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
 	}
 	option = { # Make it yourself, with oak galls
 		name = tog_quest.0522.b
 		random_list = {
-			50 = { tog_verses_outcome_effect = { VALUE = 5 TT = tog_quest.0522.b.good } }
-			50 = { tog_verses_outcome_effect = { VALUE = -5 TT = tog_quest.0522.b.bad } }
+			50 = {
+				add_learning_lifestyle_xp = minor_lifestyle_xp
+				tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0522.b.good }
+			}
+			50 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0522.b.bad } }
 		}
 	}
 }
@@ -4574,6 +4283,11 @@ tog_quest.0712 = {
 				scope:tog_mission_result = flag:won
 			}
 		}
+		# The converts give to the cause.
+		random = {
+			chance = 60
+			add_gold = 50
+		}
 	}
 	option = { # Not converted
 		name = tog_quest.0712.no
@@ -4582,6 +4296,11 @@ tog_quest.0712 = {
 				scope:tog_mission_result = flag:triumph
 				scope:tog_mission_result = flag:won
 			}
+		}
+		# A few villagers gave something all the same.
+		random = {
+			chance = 25
+			add_gold = 30
 		}
 	}
 }
@@ -4731,6 +4450,7 @@ tog_quest.0730 = {
 
 	option = {
 		name = tog_quest.0730.a
+		add_prestige = major_prestige_gain
 		custom_tooltip = tog_quest.0730.a.tt
 	}
 }
@@ -4770,6 +4490,11 @@ tog_quest.0722 = {
 
 	option = {
 		name = tog_quest.0722.a
+		# The listeners throw coins.
+		random = {
+			chance = 50
+			add_gold = 40
+		}
 		scope:tog_bard_county = { set_county_faith = faith:tog_druidism }
 	}
 }
@@ -4854,6 +4579,8 @@ tog_quest.0902 = {
 	option = {
 		name = tog_quest.0902.a
 		tog_feed_adventurer_effect = { AMOUNT = major_provisions_gain }
+		# The crowd gives to the cause.
+		add_gold = 200
 		custom_tooltip = tog_quest.0902.a.tt
 		add_prestige = {
 			value = major_prestige_gain
@@ -4873,9 +4600,13 @@ tog_quest.0902 = {
 					value = yes
 				}
 			}
+			# The story stays open in the Situations window, with the next goal.
 			random_owned_story = {
 				limit = { story_type = tog_story_old_groves }
-				end_story = yes
+				set_variable = {
+					name = tog_stage
+					value = 100
+				}
 			}
 		}
 	}
@@ -4984,5 +4715,227 @@ tog_quest.0189 = {
 				opinion = 5
 			}
 		}
+	}
+}
+
+# ---- Step 2: the scheme to steal a book ----
+
+# "Execute": try now, spend advantages, or wait.
+tog_quest.0260 = {
+	type = character_event
+	title = tog_quest.0260.t
+	desc = tog_quest.0260.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = { # Try now
+		name = tog_quest.0231.a
+		tog_steal_attempt_effect = { BONUS = 0 }
+	}
+	option = { # Spend one advantage
+		name = tog_quest.0231.b
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.b.tt
+		scope:scheme = { change_opportunities = -1 }
+		tog_steal_attempt_effect = { BONUS = 20 }
+	}
+	option = { # Spend two advantages
+		name = tog_quest.0231.c
+		trigger = { scope:scheme = { scheme_agent_charges >= 2 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.c.tt
+		scope:scheme = { change_opportunities = -2 }
+		tog_steal_attempt_effect = { BONUS = 40 }
+	}
+	option = { # Wait
+		name = tog_quest.0260.d
+		custom_tooltip = tog_quest.0231.d.tt
+	}
+}
+
+# During the scheme: the brother librarian talks too much.
+tog_quest.0261 = {
+	type = character_event
+	title = tog_quest.0261.t
+	desc = tog_quest.0261.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:target
+		animation = happiness
+	}
+
+	option = { # Buy him a jug of wine
+		name = tog_quest.0261.a
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		scope:scheme = { add_scheme_modifier = { type = tog_librarian_talks_modifier } }
+	}
+	option = { # Just listen
+		name = tog_quest.0261.b
+	}
+}
+
+# During the scheme: Peredur has counted everything.
+tog_quest.0262 = {
+	type = character_event
+	title = tog_quest.0262.t
+	desc = tog_quest.0262.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0262.a
+		scope:scheme = { add_scheme_modifier = { type = tog_peredur_map_modifier } }
+	}
+}
+
+# A failed attempt: the monks are warier, the scheme goes on.
+tog_quest.0263 = {
+	type = character_event
+	title = tog_quest.0263.t
+	desc = tog_quest.0263.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+
+	option = {
+		name = tog_quest.0263.a
+		custom_tooltip = tog_quest.0263.a.tt
+	}
+}
+
+# ---- Step 5: the scheme to reach Héric ----
+
+# At the gate of Saint-Germain: the monk who knows is inside; the porter must be
+# won over.
+tog_quest.0320 = {
+	type = character_event
+	title = tog_quest.0320.t
+	desc = tog_quest.0320.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_heric ?= { save_scope_as = tog_heric }
+		}
+		if = {
+			limit = { NOT = { exists = scope:tog_heric } }
+			create_character = {
+				name = "Héric"
+				age = 34
+				gender = male
+				culture = culture:frankish
+				faith = faith:catholic
+				dynasty = none
+				location = root.location
+				trait = education_learning_4
+				trait = curious
+				trait = tog_cloistered
+				learning = 18
+				save_scope_as = tog_heric
+			}
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_heric
+					value = scope:tog_heric
+				}
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0320.a
+		custom_tooltip = tog_quest.0320.a.tt
+		start_scheme = {
+			type = tog_reach_heric
+			target_character = scope:tog_heric
+		}
+	}
+}
+
+# "Execute": try now, spend advantages, or wait.
+tog_quest.0325 = {
+	type = character_event
+	title = tog_quest.0325.t
+	desc = tog_quest.0325.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Try now
+		name = tog_quest.0325.a
+		tog_heric_attempt_effect = { BONUS = 0 }
+	}
+	option = { # Spend one advantage
+		name = tog_quest.0231.b
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.b.tt
+		scope:scheme = { change_opportunities = -1 }
+		tog_heric_attempt_effect = { BONUS = 20 }
+	}
+	option = { # Spend two advantages
+		name = tog_quest.0231.c
+		trigger = { scope:scheme = { scheme_agent_charges >= 2 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.c.tt
+		scope:scheme = { change_opportunities = -2 }
+		tog_heric_attempt_effect = { BONUS = 40 }
+	}
+	option = { # Wait
+		name = tog_quest.0325.d
+		custom_tooltip = tog_quest.0231.d.tt
+	}
+}
+
+# A failed attempt: the porter is warier, the scheme goes on.
+tog_quest.0326 = {
+	type = character_event
+	title = tog_quest.0326.t
+	desc = tog_quest.0326.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0326.a
+		custom_tooltip = tog_quest.0263.a.tt
 	}
 }

@@ -98,3 +98,14 @@ tog_voice_of_lug = {
 	same_faith_opinion = 10
 	shown_in_ruler_designer = no
 }
+
+# A monk the quest needs (the librarian of a monastery during a theft, Héric at
+# the gate of Saint-Germain): he cannot die while the scheme is running.
+tog_cloistered = {
+	category = fame
+	icon = theologian.dds
+	immortal = yes
+	flag = is_immortal
+	shown_in_encyclopedia = no
+	shown_in_ruler_designer = no
+}

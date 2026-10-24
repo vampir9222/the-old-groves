@@ -40,11 +40,11 @@ tog_free_daughter = {
 	agent_leave_threshold = -25
 	agent_join_chance = {
 		base = 0
-		ai_agent_join_chance_basic_suite_modifier = yes
 		# The companions of the quest help for nothing in return.
 		modifier = {
 			add = 200
 			desc = TOG_COMPANION_HELPS
+			exists = scope:owner
 			scope:owner = {
 				any_owned_story = {
 					story_type = tog_story_old_groves
@@ -126,5 +126,211 @@ tog_free_daughter = {
 		scheme_owner = { save_scope_as = owner }
 		scheme_target_character = { save_scope_as = target }
 		scheme_owner = { trigger_event = tog_quest.0231 }
+	}
+}
+
+# Stealing the book of a monastery (step 2). Started from the monastery's window;
+# the target is the brother librarian. Like tog_free_daughter: the player attempts
+# it with "Execute" (tog_quest.0260); a failed attempt makes the monks warier but
+# the scheme goes on.
+tog_steal_book = {
+	# Basic Setup
+	skill = intrigue
+	desc = tog_steal_book_desc_general
+	success_desc = "TOG_STEAL_BOOK_SUCCESS_DESC"
+	icon = icon_scheme_steal_back_artifact
+	illustration = "gfx/interface/illustrations/event_scenes/corridor.dds"
+	category = hostile
+	target_type = character
+	is_secret = no
+	cooldown = { days = 0 }
+
+	# Parameters
+	speed_per_skill_point = t2_spsp_owner_value
+	speed_per_target_skill_point = 0
+	base_progress_goal = 30
+	base_maximum_success = 80
+	phases_per_agent_charge = 1
+	success_chance_growth_per_skill_point = t2_scgpsp_value
+
+	# Core Triggers
+	allow = {
+		is_ai = no
+		is_imprisoned = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			exists = var:tog_stealing
+		}
+	}
+	valid = {
+		is_incapable = no
+		scope:target = { is_alive = yes }
+	}
+
+	# Agents
+	agent_leave_threshold = -25
+	agent_join_chance = {
+		base = 0
+		# The companions of the quest help for nothing in return.
+		modifier = {
+			add = 200
+			desc = TOG_COMPANION_HELPS
+			exists = scope:owner
+			scope:owner = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					any_in_list = {
+						variable = tog_companions
+						this = root
+					}
+				}
+			}
+		}
+	}
+	valid_agent = { is_valid_agent_standard_trigger = yes }
+	agent_groups_owner_perspective = { courtiers guests }
+	agent_groups_target_character_perspective = { courtiers }
+
+	odds_prediction = {
+		add = base_odds_prediction_target_is_char_value
+		add = odds_skill_contribution_intrigue_value
+		add = agent_groups_owner_perspective_value
+		min = 0
+	}
+
+	# Base Chances
+	base_success_chance = {
+		base = 30
+		scheme_type_skill_success_chance_modifier = { SKILL = INTRIGUE }
+	}
+
+	# On Actions
+	on_start = {
+		add_scheme_starting_opportunities_intrigue_effect = yes
+		add_agent_slot = agent_infiltrator
+		add_agent_slot = agent_lookout
+		add_agent_slot = agent_thief
+	}
+	# A few things happen while the scheme goes on, each once.
+	on_monthly = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		random = {
+			chance = 30
+			random_list = {
+				10 = {
+					trigger = { NOT = { exists = var:tog_ev_librarian } }
+					set_variable = tog_ev_librarian
+					scheme_owner = { trigger_event = tog_quest.0261 }
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_ev_peredur_books }
+						scheme_owner = { tog_peredur_alive_trigger = yes }
+					}
+					set_variable = tog_ev_peredur_books
+					scheme_owner = { trigger_event = tog_quest.0262 }
+				}
+			}
+		}
+	}
+	on_phase_completed = {
+		suppress_scheme_follow_up_event_till_input_given_effect = yes
+	}
+	on_hud_click = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		scheme_owner = { trigger_event = tog_quest.0260 }
+	}
+}
+
+# Getting into Saint-Germain to speak with Héric (step 5): the porter must be won
+# over. Diplomacy. Attempted with "Execute" (tog_quest.0325).
+tog_reach_heric = {
+	# Basic Setup
+	skill = diplomacy
+	desc = tog_reach_heric_desc_general
+	success_desc = "TOG_REACH_HERIC_SUCCESS_DESC"
+	icon = icon_scheme_befriend
+	illustration = "gfx/interface/illustrations/event_scenes/courtyard.dds"
+	category = personal
+	target_type = character
+	is_secret = no
+	cooldown = { days = 0 }
+
+	# Parameters
+	speed_per_skill_point = t2_spsp_owner_value
+	speed_per_target_skill_point = 0
+	base_progress_goal = 30
+	base_maximum_success = 80
+	phases_per_agent_charge = 1
+	success_chance_growth_per_skill_point = t2_scgpsp_value
+
+	# Core Triggers
+	allow = {
+		is_ai = no
+		is_imprisoned = no
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 31
+		}
+	}
+	valid = {
+		is_incapable = no
+		scope:target = { is_alive = yes }
+	}
+
+	# Agents
+	agent_leave_threshold = -25
+	agent_join_chance = {
+		base = 0
+		modifier = {
+			add = 200
+			desc = TOG_COMPANION_HELPS
+			exists = scope:owner
+			scope:owner = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					any_in_list = {
+						variable = tog_companions
+						this = root
+					}
+				}
+			}
+		}
+	}
+	valid_agent = { is_valid_agent_standard_trigger = yes }
+	agent_groups_owner_perspective = { courtiers guests }
+	agent_groups_target_character_perspective = { courtiers }
+
+	odds_prediction = {
+		add = base_odds_prediction_target_is_char_value
+		add = agent_groups_owner_perspective_value
+		min = 0
+	}
+
+	# Base Chances
+	base_success_chance = {
+		base = 30
+		scheme_type_skill_success_chance_modifier = { SKILL = DIPLOMACY }
+	}
+
+	# On Actions
+	on_start = {
+		change_opportunities = 1
+		add_agent_slot = agent_diplomat
+		add_agent_slot = agent_cleric
+		add_agent_slot = agent_intermediary
+	}
+	on_phase_completed = {
+		suppress_scheme_follow_up_event_till_input_given_effect = yes
+	}
+	on_hud_click = {
+		save_scope_as = scheme
+		scheme_owner = { save_scope_as = owner }
+		scheme_target_character = { save_scope_as = target }
+		scheme_owner = { trigger_event = tog_quest.0325 }
 	}
 }

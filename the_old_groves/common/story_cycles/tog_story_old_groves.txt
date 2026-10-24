@@ -59,7 +59,7 @@ tog_story_old_groves = {
 			min_label = "tog_story_old_groves_books_min"
 			max_label = "tog_story_old_groves_verses_max"
 		}
-		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_beltaine_fires_decision }
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_beltaine_fires_decision tog_spear_of_lug_decision }
 		character_list = {
 			variable_name = "tog_companions"
 			label = "tog_story_old_groves_companions"
@@ -443,6 +443,25 @@ tog_story_old_groves = {
 					limit = { var:tog_plague_wait >= 4 }
 					story_owner = { tog_start_plague_effect = yes }
 				}
+			}
+		}
+	}
+
+	# The tent of offerings (given at the founding): the faithful bring food to
+	# the adventurer's camp every month.
+	effect_group = {
+		months = 1
+		trigger = {
+			story_owner = {
+				is_landless_adventurer = yes
+				domicile ?= { has_domicile_building = baggage_train_tog_offerings }
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner.domicile = { change_provisions = 100 }
 			}
 		}
 	}

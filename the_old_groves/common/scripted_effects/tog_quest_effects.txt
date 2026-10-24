@@ -222,6 +222,7 @@ tog_travel_to_province_effect = {
 
 # The book of monastery M is obtained: remove it from the list, read it in 2 to 4 months.
 tog_monastery_book_effect = {
+	add_prestige = minor_prestige_gain
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		set_variable = {
@@ -301,44 +302,6 @@ tog_monastery_pay_effect = {
 				M = $M$
 				FLAG = pay
 				FAIL = tog_quest.0163
-			}
-		}
-	}
-}
-
-# Stealing the book (intrigue). Caught: prestige lost, but stealing can be tried again after 75 days.
-tog_monastery_steal_effect = {
-	random_list = {
-		0 = {
-			modifier = { add = tog_good_weight_intrigue_value }
-			custom_tooltip = tog_m.steal_good
-			hidden_effect = { trigger_event = tog_quest.0173 }
-			add_intrigue_lifestyle_xp = minor_lifestyle_xp
-			tog_monastery_book_effect = {
-				M = $M$
-				TITLE = $TITLE$
-			}
-		}
-		60 = {
-			custom_tooltip = tog_m.steal_bad
-			add_prestige = minor_prestige_loss
-			hidden_effect = {
-				random_owned_story = {
-					limit = { story_type = tog_story_old_groves }
-					set_variable = {
-						name = tog_m_$M$_no_steal
-						value = yes
-						days = 75
-					}
-					set_variable = {
-						name = tog_current_m
-						value = flag:$M$
-					}
-				}
-				trigger_event = {
-					id = tog_quest.0164
-					days = 1
-				}
 			}
 		}
 	}
@@ -746,6 +709,7 @@ tog_free_attempt_effect = {
 
 # The golden sickle found under the hearth of the village of the cape.
 tog_create_golden_sickle_effect = {
+	save_scope_as = owner # the artifact visuals read scope:owner
 	create_artifact = {
 		name = tog_golden_sickle_name
 		description = tog_golden_sickle_description
@@ -762,6 +726,7 @@ tog_create_golden_sickle_effect = {
 
 # The war horn with a boar's head, from the field of Alise.
 tog_create_carnyx_effect = {
+	save_scope_as = owner # the artifact visuals read scope:owner
 	create_artifact = {
 		name = tog_carnyx_name
 		description = tog_carnyx_description
@@ -787,6 +752,7 @@ tog_first_rite_effect = {
 		# Crowns pick their decorations from these saved values.
 		save_scope_value_as = { name = wealth value = 30 }
 		save_scope_value_as = { name = quality value = 70 }
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
@@ -883,7 +849,7 @@ tog_test_step3_done_effect = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
-			trait = pious
+			trait = zealous
 			save_scope_as = tog_eluned
 		}
 		tog_join_quest_effect = { WHO = tog_eogan }
@@ -980,6 +946,7 @@ tog_verses_progress_effect = {
 # One outcome of a writing event: the progress changes, with a tooltip.
 tog_verses_outcome_effect = {
 	custom_tooltip = $TT$
+	custom_tooltip = tog_verses.d_$D$
 	hidden_effect = { tog_verses_progress_effect = { VALUE = $VALUE$ } }
 }
 
@@ -988,6 +955,7 @@ tog_verses_outcome_effect = {
 # an artefact, the companions think better of the founder, and the line takes a
 # legendary name (Lugaid for the Gaelic rite).
 tog_found_cult_effect = {
+	hidden_effect = { tog_give_offerings_tent_effect = yes }
 	hidden_effect = {
 		# The founder's rite, from his heritage.
 		if = {
@@ -1030,6 +998,7 @@ tog_found_cult_effect = {
 			limit = { scope:tog_rite = rite:tog_gaelic_rite }
 			house ?= { set_house_name = tog_house_lugaid }
 		}
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_verses_book_name
 			description = tog_verses_book_description
@@ -1074,6 +1043,7 @@ tog_test_step6_done_effect = {
 		# Crowns pick their decorations from these saved values.
 		save_scope_value_as = { name = wealth value = 30 }
 		save_scope_value_as = { name = quality value = 70 }
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
@@ -1233,7 +1203,10 @@ tog_start_mission_effect = {
 		random_owned_story = {
 			limit = {
 				story_type = tog_story_old_groves
-				var:tog_mission_pending <= 0
+				OR = {
+					NOT = { exists = var:tog_mission_pending }
+					var:tog_mission_pending <= 0
+				}
 			}
 			story_owner = { trigger_event = tog_quest.0719 }
 		}
@@ -1426,6 +1399,7 @@ tog_create_spear_of_lug_effect = {
 	# Weapons pick their features from these saved values.
 	save_scope_value_as = { name = wealth value = 80 }
 	save_scope_value_as = { name = quality value = 90 }
+	save_scope_as = owner # the artifact visuals read scope:owner
 	create_artifact = {
 		name = tog_spear_of_lug_name
 		description = tog_spear_of_lug_description
@@ -1445,5 +1419,198 @@ tog_feed_adventurer_effect = {
 	if = {
 		limit = { is_landless_adventurer = yes }
 		domicile ?= { change_provisions = $AMOUNT$ }
+	}
+}
+
+# Approximate distance in km from the character to province PROV, kept in the
+# character variable tog_km_NAME for the destination choices (0140, 0240).
+# The game gives the squared map distance: its square root by Newton's method,
+# then about 1.5 km per map pixel.
+tog_distance_effect = {
+	province:$PROV$ = { save_scope_as = tog_dist_target }
+	set_local_variable = {
+		name = tog_dist_sq
+		value = "location.squared_distance(scope:tog_dist_target)"
+	}
+	set_local_variable = {
+		name = tog_dist_x
+		value = 300
+	}
+	while = {
+		count = 8
+		set_local_variable = {
+			name = tog_dist_x
+			value = {
+				value = local_var:tog_dist_sq
+				divide = local_var:tog_dist_x
+				add = local_var:tog_dist_x
+				divide = 2
+			}
+		}
+	}
+	set_variable = {
+		name = tog_km_$NAME$
+		value = {
+			value = local_var:tog_dist_x
+			multiply = 0.15
+			round = yes
+			multiply = 10
+		}
+	}
+}
+
+# ---- Step 2: the scheme to steal the book of monastery M (barony TITLE) ----
+
+# From the monastery's window: the brother librarian becomes the target.
+tog_start_steal_scheme_effect = {
+	custom_tooltip = tog_m.steal_tt
+	hidden_effect = {
+		create_character = {
+			age = { 45 65 }
+			gender = male
+			culture = root.location.culture
+			faith = faith:catholic
+			dynasty = none
+			location = root.location
+			trait = tog_cloistered
+			trait = scholar
+			learning = 14
+			save_scope_as = tog_librarian
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stealing
+				value = flag:$M$
+			}
+			set_variable = {
+				name = tog_librarian
+				value = scope:tog_librarian
+			}
+		}
+		start_scheme = {
+			type = tog_steal_book
+			target_character = scope:tog_librarian
+		}
+	}
+}
+
+# "Execute": the attempt, with BONUS % from the advantages spent. Failure makes the
+# monks warier, but the scheme goes on.
+tog_steal_attempt_effect = {
+	random = {
+		chance = {
+			value = scope:scheme.scheme_success_chance
+			add = $BONUS$
+		}
+		custom_tooltip = tog_steal.success_tt
+		save_scope_value_as = {
+			name = tog_win
+			value = yes
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:tog_win }
+			scope:scheme = { end_scheme = yes }
+			tog_steal_success_effect = yes
+			trigger_event = tog_quest.0173
+		}
+		else = {
+			add_prestige = minor_prestige_loss
+			scope:scheme = {
+				add_scheme_modifier = { type = tog_monks_wary_modifier }
+			}
+			trigger_event = tog_quest.0263
+		}
+	}
+}
+
+# The book is stolen: from whichever monastery the scheme was aimed at.
+tog_steal_success_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		save_scope_as = tog_story
+		var:tog_librarian ?= { remove_trait = tog_cloistered }
+	}
+	add_intrigue_lifestyle_xp = minor_lifestyle_xp
+	if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:jarrow }
+		tog_monastery_book_effect = { M = jarrow TITLE = b_durham }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:whithorn }
+		tog_monastery_book_effect = { M = whithorn TITLE = b_wigtown }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:mynyw }
+		tog_monastery_book_effect = { M = mynyw TITLE = b_st_davids }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:dunkeld }
+		tog_monastery_book_effect = { M = dunkeld TITLE = b_dunkeld }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:applecross }
+		tog_monastery_book_effect = { M = applecross TITLE = b_applecross }
+	}
+	scope:tog_story = {
+		remove_variable = tog_stealing
+		remove_variable = tog_librarian
+	}
+}
+
+# ---- Step 5: the scheme to reach Héric at Saint-Germain ----
+
+# "Execute": the attempt. Failure makes the porter warier; the scheme goes on.
+tog_heric_attempt_effect = {
+	random = {
+		chance = {
+			value = scope:scheme.scheme_success_chance
+			add = $BONUS$
+		}
+		custom_tooltip = tog_heric.success_tt
+		save_scope_value_as = {
+			name = tog_win
+			value = yes
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:tog_win }
+			scope:scheme = { end_scheme = yes }
+			trigger_event = tog_quest.0321
+		}
+		else = {
+			add_prestige = minor_prestige_loss
+			scope:scheme = {
+				add_scheme_modifier = { type = tog_porter_wary_modifier }
+			}
+			trigger_event = tog_quest.0326
+		}
+	}
+}
+
+# At the founding: the adventurer's camp gets its tent of offerings (and the
+# baggage train it belongs to, if there is room for it).
+tog_give_offerings_tent_effect = {
+	if = {
+		limit = { is_landless_adventurer = yes }
+		domicile ?= {
+			if = {
+				limit = {
+					NOT = { has_domicile_building_or_higher = baggage_train_01 }
+					free_external_domicile_building_slots >= 1
+				}
+				add_domicile_building = baggage_train_01
+			}
+			if = {
+				limit = {
+					has_domicile_building_or_higher = baggage_train_01
+					NOT = { has_domicile_building = baggage_train_tog_offerings }
+				}
+				add_domicile_building = baggage_train_tog_offerings
+			}
+		}
 	}
 }
