@@ -97,24 +97,7 @@ tog_quest.0020 = {
 	}
 
 	immediate = {
-		create_character = {
-			name = "Peredur"
-			age = 18
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = strong
-			trait = trusting
-			diplomacy = 6
-			martial = 9
-			stewardship = 14
-			intrigue = 2
-			learning = 3
-			prowess = 14
-			save_scope_as = tog_peredur
-		}
+		tog_create_peredur_effect = yes
 	}
 
 	option = {
@@ -123,6 +106,7 @@ tog_quest.0020 = {
 		custom_tooltip = tog_quest.0020.a.tt
 		hidden_effect = {
 			add_courtier = scope:tog_peredur
+			add_courtier = scope:tog_cei
 			random_owned_story = {
 				limit = { story_type = tog_story_old_groves }
 				set_variable = {
@@ -371,6 +355,11 @@ tog_quest.0050 = {
 			dynasty = none
 			location = root.location
 			trait = eccentric
+			trait = humble
+			trait = education_learning_3
+			trait = pilgrim
+			trait = lifestyle_herbalist
+			trait = witch
 			trait = tog_blood_of_myrddin
 			diplomacy = 6
 			martial = 2
@@ -1890,20 +1879,7 @@ tog_quest.0201 = {
 					value = yes
 				}
 				story_owner = {
-					create_character = {
-						name = "Eógan"
-						age = 33
-						gender = male
-						culture = root.culture
-						faith = root.faith
-						dynasty = none
-						location = root.location
-						trait = gregarious
-						trait = trusting
-						diplomacy = 11
-						learning = 9
-						save_scope_as = tog_eogan
-					}
+					tog_create_eogan_effect = yes
 				}
 				set_variable = {
 					name = tog_eogan_wait
@@ -2341,11 +2317,23 @@ tog_quest.0224 = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_mystic
+			trait = education_learning_3
 			trait = zealous
 			trait = tog_awen_protected
 			learning = 14
 			save_scope_as = tog_gwion
 		}
+		create_character = {
+			name = "Ceridwen"
+			age = 40
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			save_scope_as = tog_gwion_wife
+		}
+		scope:tog_gwion = { marry = scope:tog_gwion_wife }
 		create_character = {
 			name = "Eluned"
 			age = 17
@@ -2356,6 +2344,8 @@ tog_quest.0224 = {
 			location = root.location
 			trait = zealous
 			trait = tog_novice
+			father = scope:tog_gwion
+			mother = scope:tog_gwion_wife
 			save_scope_as = tog_eluned
 		}
 		random_owned_story = {
@@ -2956,20 +2946,7 @@ tog_quest.0301 = {
 	}
 
 	immediate = {
-		create_character = {
-			name = "Gofraid"
-			age = 35
-			gender = male
-			culture = culture:norse
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = brave
-			trait = adventurer
-			martial = 10
-			diplomacy = 9
-			save_scope_as = tog_gofraid
-		}
+		tog_create_gofraid_effect = yes
 	}
 
 	option = {
@@ -3134,19 +3111,7 @@ tog_quest.0331 = {
 
 	immediate = {
 		play_music_cue = "mx_cue_combat_stinger"
-		create_character = {
-			name = "Ursin"
-			age = 26
-			gender = male
-			culture = culture:frankish
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = strong
-			trait = humble
-			prowess = 12
-			save_scope_as = tog_ursin
-		}
+		tog_create_ursin_effect = yes
 	}
 
 	option = {
@@ -3247,8 +3212,13 @@ tog_quest.0411 = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
+			trait = education_diplomacy_2
 			trait = calm
 			trait = honest
+			trait = compassionate
+			trait = lifestyle_gardener
+			trait = beauty_good_1
+			trait = physique_bad_1
 			learning = 9
 			save_scope_as = tog_nest
 		}
@@ -4363,7 +4333,7 @@ tog_quest.0721 = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_poet
-			trait = diligent
+			trait = education_intrigue_4
 			learning = 14
 			save_scope_as = tog_bard_1
 		}
@@ -4375,7 +4345,7 @@ tog_quest.0721 = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_poet
-			trait = gregarious
+			trait = education_intrigue_4
 			diplomacy = 14
 			save_scope_as = tog_bard_2
 		}
@@ -4387,7 +4357,7 @@ tog_quest.0721 = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_poet
-			trait = humble
+			trait = education_intrigue_4
 			intrigue = 12
 			save_scope_as = tog_bard_3
 		}

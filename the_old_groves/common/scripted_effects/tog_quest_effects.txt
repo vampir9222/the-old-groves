@@ -602,6 +602,19 @@ tog_place_done_effect = {
 # Companion scope:WHO joins the court and the quest, saved in the story as var WHO.
 tog_join_quest_effect = {
 	add_courtier = scope:$WHO$
+	# The family follows: spouse and children who hold no land.
+	scope:$WHO$ = {
+		every_spouse = {
+			limit = { is_ruler = no }
+			save_temporary_scope_as = tog_kin
+			root = { add_courtier = scope:tog_kin }
+		}
+		every_child = {
+			limit = { is_ruler = no }
+			save_temporary_scope_as = tog_kin
+			root = { add_courtier = scope:tog_kin }
+		}
+	}
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		set_variable = {
@@ -624,20 +637,7 @@ tog_test_skip_step1_effect = {
 		}
 		tog_start_quest_effect = yes
 	}
-	create_character = {
-		name = "Peredur"
-		age = 18
-		gender = male
-		culture = root.culture
-		faith = root.faith
-		dynasty = none
-		location = root.location
-		trait = strong
-		trait = trusting
-		stewardship = 14
-		prowess = 14
-		save_scope_as = tog_peredur
-	}
+	tog_create_peredur_effect = yes
 	create_character = {
 		name = "Lailoken"
 		age = 60
@@ -647,11 +647,17 @@ tog_test_skip_step1_effect = {
 		dynasty = none
 		location = root.location
 		trait = eccentric
+		trait = humble
+		trait = education_learning_3
+		trait = pilgrim
+		trait = lifestyle_herbalist
+		trait = witch
 		trait = tog_blood_of_myrddin
 		learning = 13
 		save_scope_as = tog_lailoken
 	}
 	add_courtier = scope:tog_peredur
+	add_courtier = scope:tog_cei
 	add_courtier = scope:tog_lailoken
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
@@ -813,20 +819,7 @@ tog_test_step3_done_effect = {
 				}
 			}
 		}
-		create_character = {
-			name = "Eógan"
-			age = 33
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = gregarious
-			trait = trusting
-			diplomacy = 11
-			learning = 9
-			save_scope_as = tog_eogan
-		}
+		tog_create_eogan_effect = yes
 		create_character = {
 			name = "Gwion"
 			age = 44
@@ -836,11 +829,23 @@ tog_test_step3_done_effect = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_mystic
+			trait = education_learning_3
 			trait = zealous
 			trait = tog_awen
 			learning = 14
 			save_scope_as = tog_gwion
 		}
+		create_character = {
+			name = "Ceridwen"
+			age = 40
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			save_scope_as = tog_gwion_wife
+		}
+		scope:tog_gwion = { marry = scope:tog_gwion_wife }
 		create_character = {
 			name = "Eluned"
 			age = 17
@@ -850,6 +855,8 @@ tog_test_step3_done_effect = {
 			dynasty = none
 			location = root.location
 			trait = zealous
+			father = scope:tog_gwion
+			mother = scope:tog_gwion_wife
 			save_scope_as = tog_eluned
 		}
 		tog_join_quest_effect = { WHO = tog_eogan }
@@ -870,33 +877,8 @@ tog_test_step5_done_effect = {
 				}
 			}
 		}
-		create_character = {
-			name = "Gofraid"
-			age = 35
-			gender = male
-			culture = culture:norse
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = brave
-			trait = adventurer
-			martial = 10
-			diplomacy = 9
-			save_scope_as = tog_gofraid
-		}
-		create_character = {
-			name = "Ursin"
-			age = 26
-			gender = male
-			culture = culture:frankish
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = strong
-			trait = humble
-			prowess = 12
-			save_scope_as = tog_ursin
-		}
+		tog_create_gofraid_effect = yes
+		tog_create_ursin_effect = yes
 		tog_join_quest_effect = { WHO = tog_gofraid }
 		tog_join_quest_effect = { WHO = tog_ursin }
 		tog_create_golden_sickle_effect = yes
@@ -1034,8 +1016,13 @@ tog_test_step6_done_effect = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
+			trait = education_diplomacy_2
 			trait = calm
 			trait = honest
+			trait = compassionate
+			trait = lifestyle_gardener
+			trait = beauty_good_1
+			trait = physique_bad_1
 			learning = 9
 			save_scope_as = tog_nest
 		}
@@ -1613,4 +1600,197 @@ tog_give_offerings_tent_effect = {
 			}
 		}
 	}
+}
+
+# Peredur and his little brother Cei, sons of Efrog (who stays on Skye), with
+# the same gift for counting. Saves scope:tog_peredur and scope:tog_cei.
+tog_create_peredur_effect = {
+	create_character = {
+		name = "Efrog"
+		age = 52
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_efrog
+	}
+	create_character = {
+		name = "Peredur"
+		dna = tog_peredur_dna
+		age = 18
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_efrog
+		trait = education_stewardship_4
+		trait = strong
+		trait = trusting
+		trait = content
+		trait = honest
+		trait = intellect_bad_2
+		diplomacy = 6
+		martial = 9
+		stewardship = 14
+		intrigue = 2
+		learning = 3
+		prowess = 14
+		save_scope_as = tog_peredur
+	}
+	create_character = {
+		name = "Cei"
+		age = 13
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_efrog
+		trait = pensive
+		stewardship = 10
+		save_scope_as = tog_cei
+	}
+}
+
+# Eógan the storyteller, with his wife Eithne and their children, named after
+# the children of Lir. Saves scope:tog_eogan.
+tog_create_eogan_effect = {
+	create_character = {
+		name = "Eógan"
+		age = 33
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_diplomacy_2
+		trait = brave
+		trait = gregarious
+		trait = fickle
+		diplomacy = 11
+		learning = 9
+		save_scope_as = tog_eogan
+	}
+	create_character = {
+		name = "Eithne"
+		age = 29
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_eogan_wife
+	}
+	scope:tog_eogan = { marry = scope:tog_eogan_wife }
+	create_character = {
+		name = "Fiachra"
+		age = 11
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_eogan
+		mother = scope:tog_eogan_wife
+	}
+	create_character = {
+		name = "Fionnuala"
+		age = 8
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_eogan
+		mother = scope:tog_eogan_wife
+	}
+}
+
+# Gofraid the guide, half Norse half Gael, with his wife Gormlaith and their two
+# sons, named like the kings of Dublin. Saves scope:tog_gofraid.
+tog_create_gofraid_effect = {
+	create_character = {
+		name = "Gofraid"
+		age = 35
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_martial_3
+		trait = brave
+		trait = adventurer
+		trait = gluttonous
+		trait = strong
+		trait = lifestyle_traveler
+		martial = 10
+		diplomacy = 9
+		save_scope_as = tog_gofraid
+	}
+	create_character = {
+		name = "Gormlaith"
+		age = 31
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_gofraid_wife
+	}
+	scope:tog_gofraid = { marry = scope:tog_gofraid_wife }
+	create_character = {
+		name = "Amlaíb"
+		age = 14
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_gofraid
+		mother = scope:tog_gofraid_wife
+	}
+	create_character = {
+		name = "Ímar"
+		age = 10
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_gofraid
+		mother = scope:tog_gofraid_wife
+	}
+}
+
+# Ursin the ploughman of Alise, with his wife Berthe. Saves scope:tog_ursin.
+tog_create_ursin_effect = {
+	create_character = {
+		name = "Ursin"
+		age = 26
+		gender = male
+		culture = culture:frankish
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_diplomacy_3
+		trait = trusting
+		trait = lazy
+		trait = fecund
+		trait = lifestyle_hunter
+		prowess = 12
+		save_scope_as = tog_ursin
+	}
+	create_character = {
+		name = "Berthe"
+		age = 23
+		gender = female
+		culture = culture:frankish
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_ursin_wife
+	}
+	scope:tog_ursin = { marry = scope:tog_ursin_wife }
 }

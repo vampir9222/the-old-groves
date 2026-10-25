@@ -22,8 +22,9 @@ tog_on_game_start_quest = {
 	}
 }
 
-# A companion of the quest dies (Lailoken excepted): their eldest living child, adult or minor, takes
-# their place. No child: too bad.
+# A companion of the quest dies (Lailoken excepted): their eldest living child (or, with no
+# child, their eldest brother or sister), adult or minor, takes
+# their place. Nobody: too bad.
 on_death = {
 	on_actions = { tog_on_companion_death }
 }
@@ -42,18 +43,32 @@ tog_on_companion_death = {
 				NOT = { var:tog_lailoken ?= root }
 			}
 		}
-		any_child = { is_alive = yes }
+		OR = {
+			any_child = { is_alive = yes }
+			any_sibling = { is_alive = yes }
+		}
 	}
 	effect = {
 		save_scope_as = tog_dead_companion
 		host = { save_scope_as = tog_quest_owner }
-		ordered_child = {
-			limit = { is_alive = yes }
-			order_by = age
-			save_scope_as = tog_heir_companion
-			# The scenes written for the original companion no longer apply.
-			add_character_flag = tog_heir_companion
+		# The eldest living child; with no child, the eldest living brother or sister.
+		if = {
+			limit = { any_child = { is_alive = yes } }
+			ordered_child = {
+				limit = { is_alive = yes }
+				order_by = age
+				save_scope_as = tog_heir_companion
+			}
 		}
+		else = {
+			ordered_sibling = {
+				limit = { is_alive = yes }
+				order_by = age
+				save_scope_as = tog_heir_companion
+			}
+		}
+		# The scenes written for the original companion no longer apply.
+		scope:tog_heir_companion = { add_character_flag = tog_heir_companion }
 		scope:tog_quest_owner = {
 			random_owned_story = {
 				limit = { story_type = tog_story_old_groves }
