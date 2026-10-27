@@ -454,7 +454,7 @@ tog_story_old_groves = {
 		trigger = {
 			story_owner = {
 				is_landless_adventurer = yes
-				domicile ?= { has_domicile_building = baggage_train_tog_offerings }
+				domicile ?= { has_domicile_building = tog_offerings_tent }
 			}
 		}
 
@@ -462,6 +462,64 @@ tog_story_old_groves = {
 			trigger = { always = yes }
 			effect = {
 				story_owner.domicile = { change_provisions = 100 }
+			}
+		}
+	}
+
+	# The tent of offerings is given at the founding; if the camp had no free slot
+	# then, it arrives here as soon as one is free.
+	effect_group = {
+		months = 1
+		trigger = {
+			var:tog_stage >= 70
+			story_owner = {
+				is_landless_adventurer = yes
+				religion = religion:tog_celtic_religion
+				domicile ?= {
+					NOT = { has_domicile_building = tog_offerings_tent }
+					free_external_domicile_building_slots >= 1
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner.domicile = { add_domicile_building = tog_offerings_tent }
+			}
+		}
+	}
+
+	# Landed after the founding: the faithful bring their offerings to the ruler
+	# instead of the camp's tent (a character modifier with the same bonuses).
+	effect_group = {
+		months = 1
+		trigger = { var:tog_stage >= 70 }
+
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					is_landless_adventurer = no
+					religion = religion:tog_celtic_religion
+					NOT = { has_character_modifier = tog_offerings_modifier }
+				}
+			}
+			effect = {
+				story_owner = { add_character_modifier = tog_offerings_modifier }
+			}
+		}
+		triggered_effect = {
+			trigger = {
+				story_owner = {
+					has_character_modifier = tog_offerings_modifier
+					OR = {
+						is_landless_adventurer = yes
+						NOT = { religion = religion:tog_celtic_religion }
+					}
+				}
+			}
+			effect = {
+				story_owner = { remove_character_modifier = tog_offerings_modifier }
 			}
 		}
 	}

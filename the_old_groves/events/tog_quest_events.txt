@@ -2212,29 +2212,27 @@ tog_quest.0222 = {
 		add_stewardship_lifestyle_xp = minor_lifestyle_xp
 		hidden_effect = { trigger_event = tog_quest.0223 }
 	}
-	# The other ways need no roll, only the skill.
+	# The other ways depend on a skill; a failed way closes, the others stay open.
 	option = { # Negotiate with the steward
 		name = tog_quest.0222.b
-		trigger = { diplomacy >= 12 }
+		trigger = { tog_mabon_open_trigger = { FLAG = debt_dipl } }
 		show_as_unavailable = { always = yes }
 		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
-		add_prestige = minor_prestige_gain
-		hidden_effect = { trigger_event = tog_quest.0223 }
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = debt_dipl NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.b.good BAD = tog_quest.0222.b.bad }
 	}
 	option = { # Frighten the steward
 		name = tog_quest.0222.d
-		trigger = { martial >= 12 }
+		trigger = { tog_mabon_open_trigger = { FLAG = debt_prow } }
 		show_as_unavailable = { always = yes }
 		add_martial_lifestyle_xp = medium_lifestyle_xp
-		add_prestige = minor_prestige_gain
-		hidden_effect = { trigger_event = tog_quest.0223 }
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = debt_prow NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.d.good BAD = tog_quest.0222.d.bad }
 	}
 	option = { # Forge the acknowledgement of debt
 		name = tog_quest.0222.c
-		trigger = { intrigue >= 14 }
+		trigger = { tog_mabon_open_trigger = { FLAG = debt_intr } }
 		show_as_unavailable = { always = yes }
 		add_intrigue_lifestyle_xp = medium_lifestyle_xp
-		hidden_effect = { trigger_event = tog_quest.0223 }
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_intrigue_value FLAG = debt_intr NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.c.good BAD = tog_quest.0222.c.bad }
 	}
 	option = {
 		name = tog_m.leave
@@ -2257,11 +2255,10 @@ tog_quest.0223 = {
 
 	option = { # Convince him
 		name = tog_quest.0223.a
-		trigger = { diplomacy >= 12 }
+		trigger = { tog_mabon_open_trigger = { FLAG = aedan_dipl } }
 		show_as_unavailable = { always = yes }
 		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
-		add_prestige = minor_prestige_gain
-		hidden_effect = { trigger_event = tog_quest.0224 }
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = aedan_dipl NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.a.good BAD = tog_quest.0223.a.bad }
 	}
 	option = { # Buy his silence
 		name = tog_quest.0223.b
@@ -2273,11 +2270,10 @@ tog_quest.0223 = {
 	}
 	option = { # Frighten him
 		name = tog_quest.0223.c
-		trigger = { intrigue >= 12 }
+		trigger = { tog_mabon_open_trigger = { FLAG = aedan_prow } }
 		show_as_unavailable = { always = yes }
-		add_intrigue_lifestyle_xp = medium_lifestyle_xp
-		add_prestige = minor_prestige_gain
-		hidden_effect = { trigger_event = tog_quest.0224 }
+		add_martial_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = aedan_prow NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.c.good BAD = tog_quest.0223.c.bad }
 	}
 	option = { # Make him disappear
 		name = tog_quest.0223.d

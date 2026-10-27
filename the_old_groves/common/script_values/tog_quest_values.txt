@@ -72,3 +72,10 @@ tog_verses_monthly_value = {
 }
 
 
+
+# The stone of Mabon: frightening someone rests on personal prowess.
+tog_good_weight_prowess_value = {
+	value = prowess
+	multiply = 4
+	add = 20
+}

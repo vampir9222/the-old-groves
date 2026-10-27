@@ -1329,6 +1329,8 @@ tog_miracle_effect = {
 		limit = { story_type = tog_story_old_groves }
 		var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
 		remove_variable = tog_destination
+		# The duchy is healed: no longer shown in the quest window.
+		remove_variable = tog_plague_duchy
 	}
 	scope:tog_plague_duchy = {
 		every_de_jure_county = {
@@ -1578,25 +1580,18 @@ tog_heric_attempt_effect = {
 	}
 }
 
-# At the founding: the adventurer's camp gets its tent of offerings (and the
-# baggage train it belongs to, if there is room for it).
+# At the founding: the adventurer's camp gets its tent of offerings, if there is
+# room for it (otherwise the story cycle adds it as soon as a slot is free).
 tog_give_offerings_tent_effect = {
 	if = {
 		limit = { is_landless_adventurer = yes }
 		domicile ?= {
 			if = {
 				limit = {
-					NOT = { has_domicile_building_or_higher = baggage_train_01 }
+					NOT = { has_domicile_building = tog_offerings_tent }
 					free_external_domicile_building_slots >= 1
 				}
-				add_domicile_building = baggage_train_01
-			}
-			if = {
-				limit = {
-					has_domicile_building_or_higher = baggage_train_01
-					NOT = { has_domicile_building = baggage_train_tog_offerings }
-				}
-				add_domicile_building = baggage_train_tog_offerings
+				add_domicile_building = tog_offerings_tent
 			}
 		}
 	}
@@ -1793,4 +1788,31 @@ tog_create_ursin_effect = {
 		save_scope_as = tog_ursin_wife
 	}
 	scope:tog_ursin = { marry = scope:tog_ursin_wife }
+}
+
+# The stone of Mabon: one way of getting through, with odds from a skill (WEIGHT,
+# against 60). Success leads to NEXT; failure closes this way (FLAG) and the
+# scene (SELF) opens again for the other ways.
+tog_mabon_try_effect = {
+	random_list = {
+		0 = {
+			modifier = { add = $WEIGHT$ }
+			custom_tooltip = $GOOD$
+			add_prestige = minor_prestige_gain
+			hidden_effect = { trigger_event = $NEXT$ }
+		}
+		60 = {
+			custom_tooltip = $BAD$
+			hidden_effect = {
+				random_owned_story = {
+					limit = { story_type = tog_story_old_groves }
+					set_variable = tog_mabon_no_$FLAG$
+				}
+				trigger_event = {
+					id = $SELF$
+					days = 1
+				}
+			}
+		}
+	}
 }

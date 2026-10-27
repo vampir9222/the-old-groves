@@ -118,3 +118,11 @@ tog_porter_wary_modifier = {
 	icon = diplomacy_negative
 	scheme_success_chance = -10
 }
+
+# Once landed, the offerings of the faithful no longer go to a tent but to the
+# ruler: the same gold and prestige as the tent of offerings.
+tog_offerings_modifier = {
+	icon = prestige_positive
+	monthly_income = 2
+	monthly_prestige = 0.5
+}

@@ -103,3 +103,16 @@ tog_saxon_ruler_trigger = {
 		title_province = { geographical_region = world_europe_west_britannia }
 	}
 }
+
+# The stone of Mabon: this way (FLAG) has not failed yet.
+tog_mabon_open_trigger = {
+	custom_description = {
+		text = tog_mabon.tried
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				exists = var:tog_mabon_no_$FLAG$
+			}
+		}
+	}
+}
