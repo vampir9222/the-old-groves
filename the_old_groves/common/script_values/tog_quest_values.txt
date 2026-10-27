@@ -73,18 +73,9 @@ tog_verses_monthly_value = {
 
 
 
-# Story scope: chance that the current teaching succeeds at this attempt. It grows
-# with each attempt already made, and a little with the owner's learning.
-tog_teaching_chance_value = {
-	value = 20
-	add = {
-		value = var:tog_teaching_tries
-		multiply = 15
-	}
-	add = {
-		value = story_owner.learning
-		divide = 2
-		floor = yes
-	}
-	max = 95
+# The stone of Mabon: frightening someone rests on personal prowess.
+tog_good_weight_prowess_value = {
+	value = prowess
+	multiply = 4
+	add = 20
 }

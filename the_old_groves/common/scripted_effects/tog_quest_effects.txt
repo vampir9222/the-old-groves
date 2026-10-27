@@ -222,6 +222,7 @@ tog_travel_to_province_effect = {
 
 # The book of monastery M is obtained: remove it from the list, read it in 2 to 4 months.
 tog_monastery_book_effect = {
+	add_prestige = minor_prestige_gain
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		set_variable = {
@@ -301,44 +302,6 @@ tog_monastery_pay_effect = {
 				M = $M$
 				FLAG = pay
 				FAIL = tog_quest.0163
-			}
-		}
-	}
-}
-
-# Stealing the book (intrigue). Caught: prestige lost, but stealing can be tried again after 75 days.
-tog_monastery_steal_effect = {
-	random_list = {
-		0 = {
-			modifier = { add = tog_good_weight_intrigue_value }
-			custom_tooltip = tog_m.steal_good
-			hidden_effect = { trigger_event = tog_quest.0173 }
-			add_intrigue_lifestyle_xp = minor_lifestyle_xp
-			tog_monastery_book_effect = {
-				M = $M$
-				TITLE = $TITLE$
-			}
-		}
-		60 = {
-			custom_tooltip = tog_m.steal_bad
-			add_prestige = minor_prestige_loss
-			hidden_effect = {
-				random_owned_story = {
-					limit = { story_type = tog_story_old_groves }
-					set_variable = {
-						name = tog_m_$M$_no_steal
-						value = yes
-						days = 75
-					}
-					set_variable = {
-						name = tog_current_m
-						value = flag:$M$
-					}
-				}
-				trigger_event = {
-					id = tog_quest.0164
-					days = 1
-				}
 			}
 		}
 	}
@@ -639,6 +602,19 @@ tog_place_done_effect = {
 # Companion scope:WHO joins the court and the quest, saved in the story as var WHO.
 tog_join_quest_effect = {
 	add_courtier = scope:$WHO$
+	# The family follows: spouse and children who hold no land.
+	scope:$WHO$ = {
+		every_spouse = {
+			limit = { is_ruler = no }
+			save_temporary_scope_as = tog_kin
+			root = { add_courtier = scope:tog_kin }
+		}
+		every_child = {
+			limit = { is_ruler = no }
+			save_temporary_scope_as = tog_kin
+			root = { add_courtier = scope:tog_kin }
+		}
+	}
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		set_variable = {
@@ -661,20 +637,7 @@ tog_test_skip_step1_effect = {
 		}
 		tog_start_quest_effect = yes
 	}
-	create_character = {
-		name = "Peredur"
-		age = 18
-		gender = male
-		culture = root.culture
-		faith = root.faith
-		dynasty = none
-		location = root.location
-		trait = strong
-		trait = trusting
-		stewardship = 14
-		prowess = 14
-		save_scope_as = tog_peredur
-	}
+	tog_create_peredur_effect = yes
 	create_character = {
 		name = "Lailoken"
 		age = 60
@@ -684,11 +647,17 @@ tog_test_skip_step1_effect = {
 		dynasty = none
 		location = root.location
 		trait = eccentric
+		trait = humble
+		trait = education_learning_3
+		trait = pilgrim
+		trait = lifestyle_herbalist
+		trait = witch
 		trait = tog_blood_of_myrddin
 		learning = 13
 		save_scope_as = tog_lailoken
 	}
 	add_courtier = scope:tog_peredur
+	add_courtier = scope:tog_cei
 	add_courtier = scope:tog_lailoken
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
@@ -746,6 +715,7 @@ tog_free_attempt_effect = {
 
 # The golden sickle found under the hearth of the village of the cape.
 tog_create_golden_sickle_effect = {
+	save_scope_as = owner # the artifact visuals read scope:owner
 	create_artifact = {
 		name = tog_golden_sickle_name
 		description = tog_golden_sickle_description
@@ -762,6 +732,7 @@ tog_create_golden_sickle_effect = {
 
 # The war horn with a boar's head, from the field of Alise.
 tog_create_carnyx_effect = {
+	save_scope_as = owner # the artifact visuals read scope:owner
 	create_artifact = {
 		name = tog_carnyx_name
 		description = tog_carnyx_description
@@ -787,6 +758,7 @@ tog_first_rite_effect = {
 		# Crowns pick their decorations from these saved values.
 		save_scope_value_as = { name = wealth value = 30 }
 		save_scope_value_as = { name = quality value = 70 }
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
@@ -847,20 +819,7 @@ tog_test_step3_done_effect = {
 				}
 			}
 		}
-		create_character = {
-			name = "Eógan"
-			age = 33
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = gregarious
-			trait = trusting
-			diplomacy = 11
-			learning = 9
-			save_scope_as = tog_eogan
-		}
+		tog_create_eogan_effect = yes
 		create_character = {
 			name = "Gwion"
 			age = 44
@@ -870,11 +829,23 @@ tog_test_step3_done_effect = {
 			dynasty = none
 			location = root.location
 			trait = lifestyle_mystic
+			trait = education_learning_3
 			trait = zealous
 			trait = tog_awen
 			learning = 14
 			save_scope_as = tog_gwion
 		}
+		create_character = {
+			name = "Ceridwen"
+			age = 40
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			save_scope_as = tog_gwion_wife
+		}
+		scope:tog_gwion = { marry = scope:tog_gwion_wife }
 		create_character = {
 			name = "Eluned"
 			age = 17
@@ -883,7 +854,9 @@ tog_test_step3_done_effect = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
-			trait = pious
+			trait = zealous
+			father = scope:tog_gwion
+			mother = scope:tog_gwion_wife
 			save_scope_as = tog_eluned
 		}
 		tog_join_quest_effect = { WHO = tog_eogan }
@@ -904,33 +877,8 @@ tog_test_step5_done_effect = {
 				}
 			}
 		}
-		create_character = {
-			name = "Gofraid"
-			age = 35
-			gender = male
-			culture = culture:norse
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = brave
-			trait = adventurer
-			martial = 10
-			diplomacy = 9
-			save_scope_as = tog_gofraid
-		}
-		create_character = {
-			name = "Ursin"
-			age = 26
-			gender = male
-			culture = culture:frankish
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			trait = strong
-			trait = humble
-			prowess = 12
-			save_scope_as = tog_ursin
-		}
+		tog_create_gofraid_effect = yes
+		tog_create_ursin_effect = yes
 		tog_join_quest_effect = { WHO = tog_gofraid }
 		tog_join_quest_effect = { WHO = tog_ursin }
 		tog_create_golden_sickle_effect = yes
@@ -980,6 +928,7 @@ tog_verses_progress_effect = {
 # One outcome of a writing event: the progress changes, with a tooltip.
 tog_verses_outcome_effect = {
 	custom_tooltip = $TT$
+	custom_tooltip = tog_verses.d_$D$
 	hidden_effect = { tog_verses_progress_effect = { VALUE = $VALUE$ } }
 }
 
@@ -988,7 +937,7 @@ tog_verses_outcome_effect = {
 # an artefact, the companions think better of the founder, and the line takes a
 # legendary name (Lugaid for the Gaelic rite).
 tog_found_cult_effect = {
-	add_trait = tog_founder
+	hidden_effect = { tog_give_offerings_tent_effect = yes }
 	hidden_effect = {
 		# The founder's rite, from his heritage.
 		if = {
@@ -1031,6 +980,7 @@ tog_found_cult_effect = {
 			limit = { scope:tog_rite = rite:tog_gaelic_rite }
 			house ?= { set_house_name = tog_house_lugaid }
 		}
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_verses_book_name
 			description = tog_verses_book_description
@@ -1066,8 +1016,13 @@ tog_test_step6_done_effect = {
 			faith = root.faith
 			dynasty = none
 			location = root.location
+			trait = education_diplomacy_2
 			trait = calm
 			trait = honest
+			trait = compassionate
+			trait = lifestyle_gardener
+			trait = beauty_good_1
+			trait = physique_bad_1
 			learning = 9
 			save_scope_as = tog_nest
 		}
@@ -1075,6 +1030,7 @@ tog_test_step6_done_effect = {
 		# Crowns pick their decorations from these saved values.
 		save_scope_value_as = { name = wealth value = 30 }
 		save_scope_value_as = { name = quality value = 70 }
+		save_scope_as = owner # the artifact visuals read scope:owner
 		create_artifact = {
 			name = tog_mistletoe_name
 			description = tog_mistletoe_description
@@ -1187,7 +1143,8 @@ tog_mission_result_in_effect = {
 	}
 }
 
-# Step 8 done once the mission is over and a bard is at court.
+# Step 8 done once the mission is over and a bard is at court; step 10 follows
+# (the plague strikes four months later).
 tog_step8_check_effect = {
 	random_owned_story = {
 		limit = {
@@ -1197,7 +1154,11 @@ tog_step8_check_effect = {
 		}
 		set_variable = {
 			name = tog_stage
-			value = 80
+			value = 90
+		}
+		set_variable = {
+			name = tog_plague_wait
+			value = 0
 		}
 		story_owner = {
 			trigger_event = {
@@ -1229,7 +1190,10 @@ tog_start_mission_effect = {
 		random_owned_story = {
 			limit = {
 				story_type = tog_story_old_groves
-				var:tog_mission_pending <= 0
+				OR = {
+					NOT = { exists = var:tog_mission_pending }
+					var:tog_mission_pending <= 0
+				}
 			}
 			story_owner = { trigger_event = tog_quest.0719 }
 		}
@@ -1283,140 +1247,572 @@ tog_mission_convert_effect = {
 	}
 }
 
-# ---- Step 9: training the first druids ----
+# ---- Step 10: the miracle of the fires of Beltaine ----
 
-# Adds scope:tog_new_disciple to the disciples (to the court and the faith too),
-# remembered as the story variable tog_disc_SLOT.
-tog_add_disciple_effect = {
-	scope:tog_new_disciple = {
-		add_character_flag = tog_disciple
-		if = {
-			limit = { NOT = { is_courtier_of = root } }
-			root = { add_courtier = scope:tog_new_disciple }
+# Step 10: the cattle plague strikes the nearest duchy of another faith
+# (Christian ones first). Its counties suffer until the miracle.
+tog_start_plague_effect = {
+	# Called from the story cycle: root is the story, so keep the owner as a scope.
+	save_scope_as = tog_owner
+	location = { save_scope_as = tog_here }
+	ordered_county = {
+		limit = {
+			exists = holder
+			NOT = { faith = scope:tog_owner.faith }
 		}
-		set_character_faith = faith:tog_druidism
+		order_by = {
+			value = 0
+			subtract = "title_province.squared_distance(scope:tog_here)"
+			if = {
+				limit = { faith.religion = religion:christianity_religion }
+				add = squared_distance_large
+			}
+		}
+		de_jure_liege = { save_scope_as = tog_plague_duchy }
+	}
+	if = {
+		limit = { NOT = { exists = scope:tog_plague_duchy } }
+		location.county.de_jure_liege = { save_scope_as = tog_plague_duchy }
+	}
+	scope:tog_plague_duchy = {
+		every_de_jure_county = {
+			add_county_modifier = {
+				modifier = tog_cattle_plague_modifier
+				years = 100
+			}
+		}
 	}
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
-		add_to_variable_list = {
-			name = tog_disciples
-			target = scope:tog_new_disciple
+		remove_variable = tog_plague_wait
+		set_variable = {
+			name = tog_plague_duchy
+			value = scope:tog_plague_duchy
 		}
 		set_variable = {
-			name = tog_disc_$SLOT$
-			value = scope:tog_new_disciple
+			name = tog_stage
+			value = 91
 		}
 	}
-	clear_saved_scope = tog_new_disciple
+	trigger_event = tog_quest.0900
 }
 
-# One more disciple (SLOT 2 or 3): a child of a living companion, old enough to
-# learn, at random (the parent is remembered for the texts); failing that, a
-# random young person.
-tog_pick_young_disciple_effect = {
+# Step 10: sets out for the duchy's capital to light the fires of Beltaine.
+tog_go_light_fires_effect = {
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
-		random_in_list = {
-			variable = tog_companions
-			limit = {
-				is_alive = yes
-				any_child = { tog_disciple_candidate_trigger = yes }
-			}
-			save_scope_as = tog_disciple_parent
-			random_child = {
-				limit = { tog_disciple_candidate_trigger = yes }
-				save_scope_as = tog_new_disciple
-			}
+		var:tog_plague_duchy = {
+			title_capital_county.title_province = { save_scope_as = tog_fires_place }
 		}
-		if = {
-			limit = { exists = scope:tog_disciple_parent }
-			set_variable = {
-				name = tog_disc_$SLOT$_parent
-				value = scope:tog_disciple_parent
-			}
+		set_variable = {
+			name = tog_destination
+			value = scope:tog_fires_place.barony
+		}
+		set_variable = {
+			name = tog_stage
+			value = 92
 		}
 	}
 	if = {
-		limit = { NOT = { exists = scope:tog_new_disciple } }
+		limit = { location = scope:tog_fires_place }
+		trigger_event = tog_quest.0060
+	}
+	else = {
+		tog_travel_to_destination_effect = yes
+	}
+}
+
+# Step 10: the miracle. The plague ends, the duchy takes up the faith, its lords
+# may follow, and the owner becomes the Voice of Lug.
+tog_miracle_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		remove_variable = tog_destination
+		# The duchy is healed: no longer shown in the quest window.
+		remove_variable = tog_plague_duchy
+	}
+	scope:tog_plague_duchy = {
+		every_de_jure_county = {
+			remove_county_modifier = tog_cattle_plague_modifier
+			set_county_faith = root.faith
+			holder ?= {
+				if = {
+					limit = {
+						NOT = { this = root }
+						NOT = { faith = root.faith }
+					}
+					add_to_list = tog_plague_lords
+				}
+			}
+		}
+	}
+	every_in_list = {
+		list = tog_plague_lords
+		random = {
+			chance = 30
+			modifier = {
+				add = 40
+				opinion = {
+					target = root
+					value >= 20
+				}
+			}
+			set_character_faith = root.faith
+		}
+	}
+	faith = {
+		change_fervor = {
+			value = 100
+			desc = fervor_gain_tog_miracle
+		}
+	}
+	add_trait = tog_voice_of_lug
+	tog_lug_host_effect = { MEN = 500 }
+	give_nickname = nick_tog_voice_of_lug
+}
+
+# The Voice of Lug: an army of the faithful (MEN footmen) joins him, free and
+# inherited by his heir, like the armies offered to a conqueror.
+tog_lug_host_effect = {
+	spawn_army = {
+		levies = $MEN$
+		location = root.location
+		inheritable = yes
+		name = tog_lug_host_name
+	}
+}
+
+# After the quest: the spear of Lug, one of the four treasures of the Tuatha Dé.
+tog_create_spear_of_lug_effect = {
+	# Weapons pick their features from these saved values.
+	save_scope_value_as = { name = wealth value = 80 }
+	save_scope_value_as = { name = quality value = 90 }
+	save_scope_as = owner # the artifact visuals read scope:owner
+	create_artifact = {
+		name = tog_spear_of_lug_name
+		description = tog_spear_of_lug_description
+		template = tog_relic_template
+		type = spear
+		visuals = spear
+		wealth = 80
+		quality = 90
+		modifier = tog_spear_of_lug_modifier
+		save_scope_as = tog_spear_of_lug
+		decaying = no
+	}
+}
+
+# Adventurers only: food for the camp (hospitality, or what the companions find).
+tog_feed_adventurer_effect = {
+	if = {
+		limit = { is_landless_adventurer = yes }
+		domicile ?= { change_provisions = $AMOUNT$ }
+	}
+}
+
+# Approximate distance in km from the character to province PROV, kept in the
+# character variable tog_km_NAME for the destination choices (0140, 0240).
+# The game gives the squared map distance: its square root by Newton's method,
+# then about 1.5 km per map pixel.
+tog_distance_effect = {
+	province:$PROV$ = { save_scope_as = tog_dist_target }
+	set_local_variable = {
+		name = tog_dist_sq
+		value = "location.squared_distance(scope:tog_dist_target)"
+	}
+	set_local_variable = {
+		name = tog_dist_x
+		value = 300
+	}
+	while = {
+		count = 8
+		set_local_variable = {
+			name = tog_dist_x
+			value = {
+				value = local_var:tog_dist_sq
+				divide = local_var:tog_dist_x
+				add = local_var:tog_dist_x
+				divide = 2
+			}
+		}
+	}
+	set_variable = {
+		name = tog_km_$NAME$
+		value = {
+			value = local_var:tog_dist_x
+			multiply = 0.15
+			round = yes
+			multiply = 10
+		}
+	}
+}
+
+# ---- Step 2: the scheme to steal the book of monastery M (barony TITLE) ----
+
+# From the monastery's window: the brother librarian becomes the target.
+tog_start_steal_scheme_effect = {
+	custom_tooltip = tog_m.steal_tt
+	hidden_effect = {
 		create_character = {
-			age = { 13 17 }
-			gender_female_chance = 50
-			culture = root.culture
-			faith = faith:tog_druidism
+			age = { 45 65 }
+			gender = male
+			culture = root.location.culture
+			faith = faith:catholic
 			dynasty = none
 			location = root.location
-			learning = 8
-			save_scope_as = tog_new_disciple
+			trait = tog_cloistered
+			trait = scholar
+			learning = 14
+			save_scope_as = tog_librarian
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_stealing
+				value = flag:$M$
+			}
+			set_variable = {
+				name = tog_librarian
+				value = scope:tog_librarian
+			}
+		}
+		start_scheme = {
+			type = tog_steal_book
+			target_character = scope:tog_librarian
 		}
 	}
-	tog_add_disciple_effect = { SLOT = $SLOT$ }
-	clear_saved_scope = tog_disciple_parent
 }
 
-# The training starts: Lailoken first, then two young disciples; four teachings.
-tog_start_training_effect = {
+# "Execute": the attempt, with BONUS % from the advantages spent. Failure makes the
+# monks warier, but the scheme goes on.
+tog_steal_attempt_effect = {
+	random = {
+		chance = {
+			value = scope:scheme.scheme_success_chance
+			add = $BONUS$
+		}
+		custom_tooltip = tog_steal.success_tt
+		save_scope_value_as = {
+			name = tog_win
+			value = yes
+		}
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:tog_win }
+			scope:scheme = { end_scheme = yes }
+			tog_steal_success_effect = yes
+			trigger_event = tog_quest.0173
+		}
+		else = {
+			add_prestige = minor_prestige_loss
+			scope:scheme = {
+				add_scheme_modifier = { type = tog_monks_wary_modifier }
+			}
+			trigger_event = tog_quest.0263
+		}
+	}
+}
+
+# The book is stolen: from whichever monastery the scheme was aimed at.
+tog_steal_success_effect = {
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
-		clear_variable_list = tog_disciples
-		set_variable = {
-			name = tog_teaching
-			value = 1
+		save_scope_as = tog_story
+		var:tog_librarian ?= { remove_trait = tog_cloistered }
+	}
+	add_intrigue_lifestyle_xp = minor_lifestyle_xp
+	if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:jarrow }
+		tog_monastery_book_effect = { M = jarrow TITLE = b_durham }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:whithorn }
+		tog_monastery_book_effect = { M = whithorn TITLE = b_wigtown }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:mynyw }
+		tog_monastery_book_effect = { M = mynyw TITLE = b_st_davids }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:dunkeld }
+		tog_monastery_book_effect = { M = dunkeld TITLE = b_dunkeld }
+	}
+	else_if = {
+		limit = { scope:tog_story.var:tog_stealing ?= flag:applecross }
+		tog_monastery_book_effect = { M = applecross TITLE = b_applecross }
+	}
+	scope:tog_story = {
+		remove_variable = tog_stealing
+		remove_variable = tog_librarian
+	}
+}
+
+# ---- Step 5: the scheme to reach Héric at Saint-Germain ----
+
+# "Execute": the attempt. Failure makes the porter warier; the scheme goes on.
+tog_heric_attempt_effect = {
+	random = {
+		chance = {
+			value = scope:scheme.scheme_success_chance
+			add = $BONUS$
 		}
-		set_variable = {
-			name = tog_teachings_done
-			value = 0
+		custom_tooltip = tog_heric.success_tt
+		save_scope_value_as = {
+			name = tog_win
+			value = yes
 		}
-		set_variable = {
-			name = tog_teaching_tries
-			value = 0
+	}
+	hidden_effect = {
+		if = {
+			limit = { exists = scope:tog_win }
+			scope:scheme = { end_scheme = yes }
+			trigger_event = tog_quest.0321
 		}
-		set_variable = {
-			name = tog_teaching_chance
-			value = tog_teaching_chance_value
+		else = {
+			add_prestige = minor_prestige_loss
+			scope:scheme = {
+				add_scheme_modifier = { type = tog_porter_wary_modifier }
+			}
+			trigger_event = tog_quest.0326
 		}
-		var:tog_lailoken ?= {
+	}
+}
+
+# At the founding: the adventurer's camp gets its tent of offerings, if there is
+# room for it (otherwise the story cycle adds it as soon as a slot is free).
+tog_give_offerings_tent_effect = {
+	if = {
+		limit = { is_landless_adventurer = yes }
+		domicile ?= {
 			if = {
 				limit = {
-					is_alive = yes
-					NOT = { has_character_flag = tog_heir_companion }
+					NOT = { has_domicile_building = tog_offerings_tent }
+					free_external_domicile_building_slots >= 1
 				}
-				save_scope_as = tog_new_disciple
+				add_domicile_building = tog_offerings_tent
 			}
 		}
 	}
-	if = {
-		limit = { exists = scope:tog_new_disciple }
-		tog_add_disciple_effect = { SLOT = 1 }
-	}
-	tog_pick_young_disciple_effect = { SLOT = 2 }
-	tog_pick_young_disciple_effect = { SLOT = 3 }
-	trigger_event = tog_quest.0800
 }
 
-# Saves the living disciples as scope:tog_disc_1 (Lailoken), tog_disc_2, tog_disc_3,
-# and the companions they are the children of as tog_disc_2_parent, tog_disc_3_parent.
-tog_save_disciples_effect = {
-	random_owned_story = {
-		limit = { story_type = tog_story_old_groves }
-		var:tog_disc_1 ?= {
-			if = {
-				limit = { is_alive = yes }
-				save_scope_as = tog_disc_1
+# Peredur and his little brother Cei, sons of Efrog (who stays on Skye), with
+# the same gift for counting. Saves scope:tog_peredur and scope:tog_cei.
+tog_create_peredur_effect = {
+	create_character = {
+		name = "Efrog"
+		age = 52
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_efrog
+	}
+	create_character = {
+		name = "Peredur"
+		dna = tog_peredur_dna
+		age = 18
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_efrog
+		trait = education_stewardship_4
+		trait = strong
+		trait = trusting
+		trait = content
+		trait = honest
+		trait = intellect_bad_2
+		diplomacy = 6
+		martial = 9
+		stewardship = 14
+		intrigue = 2
+		learning = 3
+		prowess = 14
+		save_scope_as = tog_peredur
+	}
+	create_character = {
+		name = "Cei"
+		age = 13
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_efrog
+		trait = pensive
+		stewardship = 10
+		save_scope_as = tog_cei
+	}
+}
+
+# Eógan the storyteller, with his wife Eithne and their children, named after
+# the children of Lir. Saves scope:tog_eogan.
+tog_create_eogan_effect = {
+	create_character = {
+		name = "Eógan"
+		age = 33
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_diplomacy_2
+		trait = brave
+		trait = gregarious
+		trait = fickle
+		diplomacy = 11
+		learning = 9
+		save_scope_as = tog_eogan
+	}
+	create_character = {
+		name = "Eithne"
+		age = 29
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_eogan_wife
+	}
+	scope:tog_eogan = { marry = scope:tog_eogan_wife }
+	create_character = {
+		name = "Fiachra"
+		age = 11
+		gender = male
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_eogan
+		mother = scope:tog_eogan_wife
+	}
+	create_character = {
+		name = "Fionnuala"
+		age = 8
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_eogan
+		mother = scope:tog_eogan_wife
+	}
+}
+
+# Gofraid the guide, half Norse half Gael, with his wife Gormlaith and their two
+# sons, named like the kings of Dublin. Saves scope:tog_gofraid.
+tog_create_gofraid_effect = {
+	create_character = {
+		name = "Gofraid"
+		age = 35
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_martial_3
+		trait = brave
+		trait = adventurer
+		trait = gluttonous
+		trait = strong
+		trait = lifestyle_traveler
+		martial = 10
+		diplomacy = 9
+		save_scope_as = tog_gofraid
+	}
+	create_character = {
+		name = "Gormlaith"
+		age = 31
+		gender = female
+		culture = root.culture
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_gofraid_wife
+	}
+	scope:tog_gofraid = { marry = scope:tog_gofraid_wife }
+	create_character = {
+		name = "Amlaíb"
+		age = 14
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_gofraid
+		mother = scope:tog_gofraid_wife
+	}
+	create_character = {
+		name = "Ímar"
+		age = 10
+		gender = male
+		culture = culture:norse
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		father = scope:tog_gofraid
+		mother = scope:tog_gofraid_wife
+	}
+}
+
+# Ursin the ploughman of Alise, with his wife Berthe. Saves scope:tog_ursin.
+tog_create_ursin_effect = {
+	create_character = {
+		name = "Ursin"
+		age = 26
+		gender = male
+		culture = culture:frankish
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		trait = education_diplomacy_3
+		trait = trusting
+		trait = lazy
+		trait = fecund
+		trait = lifestyle_hunter
+		prowess = 12
+		save_scope_as = tog_ursin
+	}
+	create_character = {
+		name = "Berthe"
+		age = 23
+		gender = female
+		culture = culture:frankish
+		faith = root.faith
+		dynasty = none
+		location = root.location
+		save_scope_as = tog_ursin_wife
+	}
+	scope:tog_ursin = { marry = scope:tog_ursin_wife }
+}
+
+# The stone of Mabon: one way of getting through, with odds from a skill (WEIGHT,
+# against 60). Success leads to NEXT; failure closes this way (FLAG) and the
+# scene (SELF) opens again for the other ways.
+tog_mabon_try_effect = {
+	random_list = {
+		0 = {
+			modifier = { add = $WEIGHT$ }
+			custom_tooltip = $GOOD$
+			add_prestige = minor_prestige_gain
+			hidden_effect = { trigger_event = $NEXT$ }
+		}
+		60 = {
+			custom_tooltip = $BAD$
+			hidden_effect = {
+				random_owned_story = {
+					limit = { story_type = tog_story_old_groves }
+					set_variable = tog_mabon_no_$FLAG$
+				}
+				trigger_event = {
+					id = $SELF$
+					days = 1
+				}
 			}
 		}
-		var:tog_disc_2 ?= {
-			if = {
-				limit = { is_alive = yes }
-				save_scope_as = tog_disc_2
-			}
-		}
-		var:tog_disc_3 ?= {
-			if = {
-				limit = { is_alive = yes }
-				save_scope_as = tog_disc_3
-			}
-		}
-		var:tog_disc_2_parent ?= { save_scope_as = tog_disc_2_parent }
-		var:tog_disc_3_parent ?= { save_scope_as = tog_disc_3_parent }
 	}
 }

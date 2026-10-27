@@ -78,3 +78,51 @@ tog_second_sight_modifier = {
 	icon = intrigue_positive
 	enemy_scheme_secrecy_add = -15
 }
+
+# Step 10: the cattle plague, until the miracle of the fires.
+tog_cattle_plague_modifier = {
+	icon = county_modifier_development_negative
+	development_growth_factor = -0.5
+	tax_mult = -0.3
+	levy_size = -0.2
+	supply_limit_mult = -0.2
+}
+
+# After the quest: the spear of Lug.
+tog_spear_of_lug_modifier = {
+	icon = martial_positive
+	prowess = 8
+	martial = 2
+	advantage = 5
+	monthly_prestige = 1
+}
+
+# Scheme "Steal the book".
+tog_monks_wary_modifier = {
+	icon = intrigue_negative
+	scheme_success_chance = -10
+}
+
+tog_librarian_talks_modifier = {
+	icon = intrigue_positive
+	scheme_success_chance = 15
+}
+
+tog_peredur_map_modifier = {
+	icon = intrigue_positive
+	scheme_success_chance = 10
+}
+
+# Scheme "Reach Héric".
+tog_porter_wary_modifier = {
+	icon = diplomacy_negative
+	scheme_success_chance = -10
+}
+
+# Once landed, the offerings of the faithful no longer go to a tent but to the
+# ruler: the same gold and prestige as the tent of offerings.
+tog_offerings_modifier = {
+	icon = prestige_positive
+	monthly_income = 2
+	monthly_prestige = 0.5
+}

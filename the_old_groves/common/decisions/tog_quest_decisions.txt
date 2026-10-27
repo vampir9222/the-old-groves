@@ -717,43 +717,8 @@ tog_test_random_opinions_decision = {
 	}
 }
 
-# Step 9: train the first druids.
-tog_train_druids_decision = {
-	picture = {
-		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
-	}
-	desc = tog_train_druids_decision_desc
-	selection_tooltip = tog_train_druids_decision_tooltip
-	confirm_text = tog_train_druids_decision_confirm
-
-	ai_check_interval = 0
-
-	is_shown = {
-		is_ai = no
-		tog_quest_not_paused_trigger = yes
-		any_owned_story = {
-			story_type = tog_story_old_groves
-			var:tog_stage = 80
-			NOT = { exists = var:tog_teaching }
-		}
-	}
-
-	effect = {
-		custom_tooltip = tog_train_druids_decision_effect_tt
-		hidden_effect = { tog_start_training_effect = yes }
-	}
-
-	ai_potential = {
-		always = no
-	}
-
-	ai_will_do = {
-		base = 0
-	}
-}
-
 # TEST ONLY - remove before any release.
-# Opens step 9 (training druids) from anywhere before it.
+# Opens step 10 from anywhere before it: the plague strikes next month.
 tog_test_skip_step8_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
@@ -769,7 +734,7 @@ tog_test_skip_step8_decision = {
 		NOT = {
 			any_owned_story = {
 				story_type = tog_story_old_groves
-				var:tog_stage >= 80
+				var:tog_stage >= 90
 			}
 		}
 	}
@@ -804,9 +769,199 @@ tog_test_skip_step8_decision = {
 			limit = { story_type = tog_story_old_groves }
 			set_variable = {
 				name = tog_stage
-				value = 80
+				value = 90
+			}
+			set_variable = {
+				name = tog_plague_wait
+				value = 3
 			}
 		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 10: go and light the fires of Beltaine in the stricken duchy.
+tog_beltaine_fires_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_beltaine_fires_decision_desc
+	selection_tooltip = tog_beltaine_fires_decision_tooltip
+	confirm_text = tog_beltaine_fires_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 91
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_travelling = no
+	}
+
+	effect = {
+		custom_tooltip = tog_beltaine_fires_decision_effect_tt
+		hidden_effect = { tog_go_light_fires_effect = yes }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Unlocks "Drive out the Saxons" for the dynasty, as at the end of the quest.
+tog_test_saxons_cb_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_saxons_cb_decision_desc
+	selection_tooltip = tog_test_saxons_cb_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = {
+			dynasty ?= { has_variable = tog_saxons_cb }
+		}
+	}
+
+	effect = {
+		if = {
+			limit = {
+				NOT = { religion = religion:tog_celtic_religion }
+			}
+			set_character_faith = faith:tog_druidism
+		}
+		dynasty ?= {
+			set_variable = {
+				name = tog_saxons_cb
+				value = yes
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# After the quest: have a faithful smith forge the spear of Lug. Expensive, once
+# in the world.
+tog_spear_of_lug_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_spear_of_lug_decision_desc
+	selection_tooltip = tog_spear_of_lug_decision_tooltip
+	confirm_text = tog_spear_of_lug_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		dynasty ?= { has_variable = tog_saxons_cb }
+		NOT = { exists = global_var:tog_spear_of_lug_forged }
+	}
+
+	is_valid = {
+		religion = religion:tog_celtic_religion
+	}
+
+	cost = {
+		gold = 500
+	}
+
+	effect = {
+		custom_tooltip = tog_spear_of_lug_decision_effect_tt
+		hidden_effect = {
+			set_global_variable = {
+				name = tog_spear_of_lug_forged
+				value = yes
+			}
+			trigger_event = tog_quest.0920
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# Adventurers: 500 provisions for the camp.
+tog_test_provisions_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_provisions_decision_desc
+	selection_tooltip = tog_test_provisions_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		is_landless_adventurer = yes
+	}
+
+	effect = {
+		tog_feed_adventurer_effect = { AMOUNT = 500 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# 50 gold at once.
+tog_test_gold_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_gold_decision_desc
+	selection_tooltip = tog_test_gold_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+	}
+
+	effect = {
+		add_gold = 50
 	}
 
 	ai_potential = {
