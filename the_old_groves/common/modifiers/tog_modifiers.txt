@@ -23,24 +23,24 @@ tog_peredur_blunder_modifier = {
 
 # Artefacts of step 5.
 tog_golden_sickle_modifier = {
-	icon = learning_positive
-	learning = 2
-	monthly_piety = 1
+	icon = prestige_positive
+	monthly_prestige = 0.5
+	monthly_piety = 0.5
 }
 
 tog_carnyx_modifier = {
 	icon = martial_positive
 	martial = 1
 	prowess = 2
-	monthly_prestige = 0.5
+	monthly_prestige = 0.25
 }
 
 # Artefact of step 6.
 tog_mistletoe_modifier = {
 	icon = health_positive
-	monthly_piety = 1
-	health = 0.25
-	monthly_prestige = 1
+	monthly_piety = 0.5
+	health = 0.15
+	monthly_prestige = 0.5
 }
 
 # Artefact of step 7: the Sacred Verses.
@@ -91,9 +91,9 @@ tog_cattle_plague_modifier = {
 # After the quest: the spear of Lug.
 tog_spear_of_lug_modifier = {
 	icon = martial_positive
-	prowess = 8
+	prowess = 6
 	martial = 2
-	advantage = 5
+	advantage = 3
 	monthly_prestige = 1
 }
 
@@ -101,15 +101,15 @@ tog_spear_of_lug_modifier = {
 # The cauldron of the Dagda: nobody leaves it unsatisfied.
 tog_cauldron_modifier = {
 	icon = stewardship_positive
-	stewardship = 2
-	monthly_piety = 1
+	stewardship = 1
+	monthly_piety = 0.5
 	vassal_opinion = 5
 }
 
 # The silver branch of Manannán: its music lulls to sleep.
 tog_silver_branch_modifier = {
 	icon = stress_positive
-	diplomacy = 2
+	diplomacy = 1
 	monthly_piety = 0.5
 	stress_loss_mult = 0.2
 }
@@ -118,7 +118,7 @@ tog_silver_branch_modifier = {
 tog_torc_modifier = {
 	icon = prestige_positive
 	prowess = 2
-	monthly_prestige = 1
+	monthly_prestige = 0.5
 	monthly_piety = 0.5
 }
 
