@@ -1,7 +1,7 @@
 ﻿# The Old Groves - restoration quest decisions
 
-# Any Goidelic or Brythonic character with enough learning can start the quest.
-# Dubgall gets an opening event instead, but can use this if he turned it down.
+# The quest belongs to Dubgall's line: he gets an opening event, and he or his heirs
+# can use this if he turned it down.
 tog_quest_start_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
@@ -14,6 +14,7 @@ tog_quest_start_decision = {
 
 	is_shown = {
 		is_ai = no
+		dynasty ?= dynasty:tog_manach
 		tog_quest_not_paused_trigger = yes
 		culture = {
 			OR = {
@@ -36,6 +37,66 @@ tog_quest_start_decision = {
 		hidden_effect = {
 			tog_start_quest_effect = yes
 			trigger_event = tog_quest.0002
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Any Goidelic or Brythonic character (Rhodri and Dumnarth in the bookmark) turns to
+# the old gods without the quest, which stays Dubgall's. Same logic as the vanilla
+# conversion window (capital, close family, vassals told); rite from the heritage, as
+# at the founding; cost: the vanilla minimum piety for a conversion.
+tog_convert_old_faith_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_convert_old_faith_decision_desc
+	selection_tooltip = tog_convert_old_faith_decision_tooltip
+	confirm_text = tog_convert_old_faith_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = { faith = faith:tog_druidism }
+		NOT = { dynasty ?= dynasty:tog_manach }
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+	}
+
+	cost = {
+		piety = 250
+	}
+
+	effect = {
+		if = {
+			limit = {
+				culture = { has_cultural_pillar = heritage_brythonic }
+			}
+			rite:tog_brythonic_rite = { save_scope_as = tog_rite }
+		}
+		else = {
+			rite:tog_gaelic_rite = { save_scope_as = tog_rite }
+		}
+		show_as_tooltip = {
+			set_character_faith = faith:tog_druidism
+			set_character_rite = scope:tog_rite
+		}
+		custom_tooltip = tog_convert_old_faith_decision_effect_tt
+		hidden_effect = {
+			set_character_faith_with_conversion = faith:tog_druidism
+			set_character_rite = scope:tog_rite
 		}
 	}
 
@@ -902,6 +963,63 @@ tog_spear_of_lug_decision = {
 				value = yes
 			}
 			trigger_event = tog_quest.0920
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# For a character already of the faith who never did the quest (ruler designer):
+# the dynasty takes up the heritage of the groves, which unlocks "Drive out the
+# Saxons" and the spear of Lug, as at the end of the quest.
+tog_druid_heritage_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_druid_heritage_decision_desc
+	selection_tooltip = tog_druid_heritage_decision_tooltip
+	confirm_text = tog_druid_heritage_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		faith = faith:tog_druidism
+		exists = dynasty
+		NOT = {
+			dynasty = { has_variable = tog_saxons_cb }
+		}
+		NOT = {
+			any_owned_story = { story_type = tog_story_old_groves }
+		}
+	}
+
+	is_valid = {
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+	}
+
+	cost = {
+		piety = 2000
+	}
+
+	effect = {
+		custom_tooltip = tog_druid_heritage_decision_effect_tt
+		dynasty = {
+			set_variable = {
+				name = tog_saxons_cb
+				value = yes
+			}
 		}
 	}
 

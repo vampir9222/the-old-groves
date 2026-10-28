@@ -168,3 +168,21 @@ tog_on_yearly_voice_of_lug = {
 		}
 	}
 }
+
+# On pilgrimage to a holy site of Druidism, a keeper may offer its relic, as the
+# vanilla relic merchant (pilgrimage.6770) does: about the same odds.
+pilgrimage_destination_events = {
+	on_actions = { tog_pilgrimage_relic_events }
+}
+
+tog_pilgrimage_relic_events = {
+	trigger = {
+		faith = faith:tog_druidism
+		location = scope:activity.activity_location
+		tog_relic_available_here_trigger = yes
+	}
+	random_events = {
+		1900 = 0
+		100 = tog_relic.0001
+	}
+}

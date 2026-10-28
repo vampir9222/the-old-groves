@@ -97,6 +97,31 @@ tog_spear_of_lug_modifier = {
 	monthly_prestige = 1
 }
 
+# Relics found in pilgrimage (tog_relic.0001).
+# The cauldron of the Dagda: nobody leaves it unsatisfied.
+tog_cauldron_modifier = {
+	icon = stewardship_positive
+	stewardship = 2
+	monthly_piety = 1
+	vassal_opinion = 5
+}
+
+# The silver branch of Manannán: its music lulls to sleep.
+tog_silver_branch_modifier = {
+	icon = stress_positive
+	diplomacy = 2
+	monthly_piety = 0.5
+	stress_loss_mult = 0.2
+}
+
+# The gold torc of Lugus, worn by the Celtiberian chiefs.
+tog_torc_modifier = {
+	icon = prestige_positive
+	prowess = 2
+	monthly_prestige = 1
+	monthly_piety = 0.5
+}
+
 # Scheme "Steal the book".
 tog_monks_wary_modifier = {
 	icon = intrigue_negative
