@@ -11,7 +11,12 @@
  tog_druidism_adj: "Druidic"
  tog_druidism_adherent: "Druidist"
  tog_druidism_adherent_plural: "Druidists"
+ tog_druidism_old: "Old Druidism"
+ tog_druidism_old_adj: "Old Druidic"
+ tog_druidism_old_adherent: "Old Druidist"
+ tog_druidism_old_adherent_plural: "Old Druidists"
  tog_druidism_desc: "A new faith that claims the druids as its own. Rebuilt from sagas preserved by monks, from half-understood ruins and from what its followers know of Norse paganism, it lays claim to a past it does not truly restore."
+ tog_druidism_old_desc: "The druidic faith as it was first rebuilt, kept by those who would not follow the reform: no head, no fixed rule, only the sagas, the stones and the old rites."
 
  # Rites
  tog_gaelic_rite: "Druídecht"

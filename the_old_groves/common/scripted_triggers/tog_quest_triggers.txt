@@ -76,7 +76,7 @@ tog_mission_target_trigger = {
 	is_ai = yes
 	NOT = { this = root }
 	NOT = { root.liege ?= this }
-	NOT = { faith = faith:tog_druidism }
+	NOT = { religion = religion:tog_celtic_religion }
 }
 
 # Event with scope:tog_missionary and scope:tog_story: the missionary is companion WHO.
@@ -105,7 +105,7 @@ tog_saxon_ruler_trigger = {
 }
 
 # The stone of Mabon: this way (FLAG) has not failed yet.
-tog_mabon_open_trigger = {
+tog_mabon_way_open_trigger = {
 	custom_description = {
 		text = tog_mabon.tried
 		NOT = {

@@ -177,7 +177,7 @@ pilgrimage_destination_events = {
 
 tog_pilgrimage_relic_events = {
 	trigger = {
-		faith = faith:tog_druidism
+		religion = religion:tog_celtic_religion
 		location = scope:activity.activity_location
 		tog_relic_available_here_trigger = yes
 	}

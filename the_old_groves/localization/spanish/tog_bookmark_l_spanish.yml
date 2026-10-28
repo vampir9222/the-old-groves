@@ -1,12 +1,24 @@
 ﻿l_spanish:
  bm_867_tog_old_groves: "Los Antiguos Bosques"
  bm_867_tog_old_groves_desc: "Los druidas llevan siglos muertos. Solo quedan piedras erguidas, nombres de dioses copiados por monjes y algunos recuerdos deformados. Pero en el 867, entre incursiones vikingas y reinos cristianos, algunos empiezan a hurgar en esas ruinas… y a soñar con despertar lo que duerme."
+ bm_867_tog_dubgall: "Dubgall el Apóstata"
+ bm_867_tog_dubgall_desc: "867. Las Hébridas. Un monje de Iona ha renegado de su bautismo y navega con los nórdicos. Sabe leer los viejos relatos que copiaron los monjes, y empieza a preguntarse si los dioses olvidados podrían volver a vivir."
 
  bookmark_tog_dubgall: "Dubgall el Apóstata"
  bookmark_tog_dubgall_subheading: "$BOOKMARK_SUBHEADING_ADVENTURER$"
  bookmark_tog_dubgall_desc: "Antes era el hermano Máel Brigte, «siervo de Brígida», y copiaba manuscritos en Iona. Cuando volvieron los vikingos, no huyó a Kells con los demás: se quedó y acabó pasándose a su bando. Los gaélicos lo llaman ahora Dubgall, «el extranjero oscuro».\n\nHa leído las viejas sagas que los monjes copiaron a su pesar. Conoce los nombres de dioses a los que ya nadie reza. Y empieza a preguntarse si podrían volver a vivir.\n\n#weak Consejo: elige el propósito de campamento de los Eruditos.#!"
+ bookmark_tog_rhodri_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_dumnarth_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_salomon_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
 
  dynn_tog_manach: "Manach"
+ dynn_tog_efrog: "ab Efrog"
+ dynn_tog_myrddin: "Myrddin"
+ dynn_tog_taliesin: "Taliesin"
+ dynn_tog_lir: "Lir"
+ dynn_tog_innse_gall: "Innse Gall"
+ dynn_tog_alise: "Alise"
+ dynn_tog_mon: "Môn"
  Dubgall: "Dubgall"
 
  d_tog_laamp_dubgall: "Exiliados de Iona"

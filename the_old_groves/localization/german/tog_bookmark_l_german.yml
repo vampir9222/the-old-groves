@@ -1,12 +1,24 @@
 ﻿l_german:
  bm_867_tog_old_groves: "Die alten Haine"
  bm_867_tog_old_groves_desc: "Die Druiden sind seit Jahrhunderten tot. Geblieben sind nur stehende Steine, Götternamen, die Mönche abgeschrieben haben, und ein paar verzerrte Erinnerungen. Doch im Jahr 867, inmitten von Wikingerüberfällen und christlichen Königreichen, beginnen einige, in diesen Ruinen zu graben … und davon zu träumen, das Schlafende zu erwecken."
+ bm_867_tog_dubgall: "Dubgall der Abtrünnige"
+ bm_867_tog_dubgall_desc: "867. Die Hebriden. Ein Mönch aus Iona hat seiner Taufe abgeschworen und segelt mit den Nordmännern. Er kann die alten Sagen lesen, die die Mönche aufgeschrieben haben, und er fragt sich allmählich, ob die vergessenen Götter wieder leben könnten."
 
  bookmark_tog_dubgall: "Dubgall der Abtrünnige"
  bookmark_tog_dubgall_subheading: "$BOOKMARK_SUBHEADING_ADVENTURER$"
  bookmark_tog_dubgall_desc: "Einst war er Bruder Máel Brigte, „Diener Brigits“, und kopierte Handschriften auf Iona. Als die Wikinger zurückkehrten, floh er nicht mit den anderen nach Kells: Er blieb und lief schließlich zu ihnen über. Die Gälen nennen ihn nun Dubgall, „der dunkle Fremde“.\n\nEr hat die alten Sagas gelesen, die die Mönche wider Willen abgeschrieben haben. Er kennt die Namen von Göttern, zu denen niemand mehr betet. Und er beginnt sich zu fragen, ob sie wieder leben könnten.\n\n#weak Tipp: Wählt den Lagerzweck der Gelehrten.#!"
+ bookmark_tog_rhodri_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_dumnarth_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_salomon_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
 
  dynn_tog_manach: "Manach"
+ dynn_tog_efrog: "ab Efrog"
+ dynn_tog_myrddin: "Myrddin"
+ dynn_tog_taliesin: "Taliesin"
+ dynn_tog_lir: "Lir"
+ dynn_tog_innse_gall: "Innse Gall"
+ dynn_tog_alise: "Alise"
+ dynn_tog_mon: "Môn"
  Dubgall: "Dubgall"
 
  d_tog_laamp_dubgall: "Verbannte von Iona"

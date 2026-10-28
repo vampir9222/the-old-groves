@@ -1,0 +1,47 @@
+﻿# The Old Groves - religion on_actions
+
+on_title_gain = {
+	on_actions = { tog_on_title_gain_archdruid }
+}
+
+# The vanilla reform creates the Archdruidate as a dynamic duchy, gives it to the
+# holder, and only then makes it the head title and gives it random arms: ours are
+# set a day later. Before the reform, only duchy gains are checked.
+tog_on_title_gain_archdruid = {
+	trigger = {
+		religion = religion:tog_celtic_religion
+		OR = {
+			faith.religious_head_title ?= scope:title
+			AND = {
+				NOT = { exists = faith.religious_head_title }
+				scope:title.tier = tier_duchy
+			}
+		}
+		NOT = { scope:title = { has_variable = tog_archdruid_coa } }
+	}
+	effect = {
+		trigger_event = {
+			id = tog_religion.0001
+			days = 1
+		}
+	}
+}
+
+# Safety net: an Archdruidate that slipped past the check above (or one from a save
+# made before it) takes its arms and name at the holder's next yearly pulse.
+yearly_playable_pulse = {
+	on_actions = { tog_yearly_archdruid_check }
+}
+
+tog_yearly_archdruid_check = {
+	trigger = {
+		is_ai = no
+		religion = religion:tog_celtic_religion
+		faith.religious_head_title ?= {
+			NOT = { has_variable = tog_archdruid_coa }
+		}
+	}
+	effect = {
+		trigger_event = tog_religion.0001
+	}
+}

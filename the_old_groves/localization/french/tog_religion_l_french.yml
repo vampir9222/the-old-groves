@@ -11,7 +11,12 @@
  tog_druidism_adj: "druidique"
  tog_druidism_adherent: "druidiste"
  tog_druidism_adherent_plural: "druidistes"
+ tog_druidism_old: "Druidisme ancien"
+ tog_druidism_old_adj: "druidique ancienne"
+ tog_druidism_old_adherent: "druidiste ancien"
+ tog_druidism_old_adherent_plural: "druidistes anciens"
  tog_druidism_desc: "Une foi neuve qui se réclame des druides. Rebâtie à partir de sagas conservées par des moines, de vestiges mal compris et de ce que ses fidèles savent du paganisme norrois, elle revendique un passé qu'elle ne restaure pas vraiment."
+ tog_druidism_old_desc: "La foi druidique telle qu'elle a d'abord été rebâtie, gardée par ceux qui n'ont pas suivi la réforme : ni chef ni règle fixe, seulement les sagas, les pierres et les vieux rites."
 
  # Rites
  tog_gaelic_rite: "Druídecht"

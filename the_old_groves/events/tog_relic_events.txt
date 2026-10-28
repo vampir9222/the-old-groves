@@ -50,7 +50,7 @@ tog_relic.0001 = {
 	cooldown = { years = 1 }
 
 	trigger = {
-		faith = faith:tog_druidism
+		religion = religion:tog_celtic_religion
 		tog_relic_available_here_trigger = yes
 	}
 

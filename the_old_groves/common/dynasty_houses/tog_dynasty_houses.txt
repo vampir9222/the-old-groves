@@ -1,0 +1,32 @@
+﻿# The Old Groves - the companions' houses (one per line, same name as the line)
+
+house_tog_efrog = {
+	name = "dynn_tog_efrog"
+	dynasty = tog_efrog
+}
+house_tog_myrddin = {
+	name = "dynn_tog_myrddin"
+	dynasty = tog_myrddin
+}
+house_tog_taliesin = {
+	name = "dynn_tog_taliesin"
+	dynasty = tog_taliesin
+}
+house_tog_lir = {
+	prefix = "dynnp_mac"
+	name = "dynn_tog_lir"
+	dynasty = tog_lir
+}
+house_tog_innse_gall = {
+	name = "dynn_tog_innse_gall"
+	dynasty = tog_innse_gall
+}
+house_tog_alise = {
+	prefix = "dynnp_d_"
+	name = "dynn_tog_alise"
+	dynasty = tog_alise
+}
+house_tog_mon = {
+	name = "dynn_tog_mon"
+	dynasty = tog_mon
+}
