@@ -80,7 +80,12 @@ tog_convert_old_faith_decision = {
 	}
 
 	effect = {
+		# Bretons, Salomon first: the Gaulish rite (Armorica was Gaulish).
 		if = {
+			limit = { culture = culture:breton }
+			rite:tog_gaulish_rite = { save_scope_as = tog_rite }
+		}
+		else_if = {
 			limit = {
 				culture = { has_cultural_pillar = heritage_brythonic }
 			}

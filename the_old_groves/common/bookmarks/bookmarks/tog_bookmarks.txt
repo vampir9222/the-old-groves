@@ -1,6 +1,6 @@
 ﻿# The Old Groves - bookmark, 867
 # Background and button images are PLACEHOLDERS copied from vanilla bm_867_northmen.
-# Positions of Rhodri and Dumnarth are estimated from the vanilla ones on that map.
+# Positions of Rhodri, Dumnarth and Salomon are estimated from the vanilla ones on that map.
 
 bm_867_tog_old_groves = {
 	start_date = 867.1.1
@@ -66,5 +66,24 @@ bm_867_tog_old_groves = {
 		position = { 130 790 }
 
 		animation = personality_zealous
+	}
+
+	# Salomon, king of Brittany (dies in 874 in vanilla history). Converts by decision,
+	# to the Gaulish rite. No vanilla bookmark portrait: to dump in game.
+	character = {
+		name = "bookmark_tog_salomon"
+		dynasty_house = house_poher
+		dynasty_splendor_level = 2
+		type = male
+		birth = 810.1.1
+		title = k_brittany
+		government = feudal_government
+		culture = breton
+		religion = carolingian_christianity
+		difficulty = "BOOKMARK_CHARACTER_DIFFICULTY_MEDIUM"
+		history_id = 163105
+		position = { 90 950 }
+
+		animation = personality_cynical
 	}
 }
