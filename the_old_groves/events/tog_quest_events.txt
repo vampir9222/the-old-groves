@@ -713,7 +713,6 @@ tog_quest.0101 = {
 		show_as_unavailable = { always = yes }
 		tog_start_steal_scheme_effect = {
 			M = jarrow
-			TITLE = b_durham
 		}
 	}
 
@@ -795,7 +794,6 @@ tog_quest.0102 = {
 		show_as_unavailable = { always = yes }
 		tog_start_steal_scheme_effect = {
 			M = whithorn
-			TITLE = b_wigtown
 		}
 	}
 
@@ -877,7 +875,6 @@ tog_quest.0103 = {
 		show_as_unavailable = { always = yes }
 		tog_start_steal_scheme_effect = {
 			M = mynyw
-			TITLE = b_st_davids
 		}
 	}
 
@@ -959,7 +956,6 @@ tog_quest.0104 = {
 		show_as_unavailable = { always = yes }
 		tog_start_steal_scheme_effect = {
 			M = dunkeld
-			TITLE = b_dunkeld
 		}
 	}
 
@@ -1041,7 +1037,6 @@ tog_quest.0105 = {
 		show_as_unavailable = { always = yes }
 		tog_start_steal_scheme_effect = {
 			M = applecross
-			TITLE = b_applecross
 		}
 	}
 
@@ -2215,21 +2210,21 @@ tog_quest.0222 = {
 	# The other ways depend on a skill; a failed way closes, the others stay open.
 	option = { # Negotiate with the steward
 		name = tog_quest.0222.b
-		trigger = { tog_mabon_open_trigger = { FLAG = debt_dipl } }
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_dipl } }
 		show_as_unavailable = { always = yes }
 		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
 		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = debt_dipl NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.b.good BAD = tog_quest.0222.b.bad }
 	}
 	option = { # Frighten the steward
 		name = tog_quest.0222.d
-		trigger = { tog_mabon_open_trigger = { FLAG = debt_prow } }
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_prow } }
 		show_as_unavailable = { always = yes }
 		add_martial_lifestyle_xp = medium_lifestyle_xp
 		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = debt_prow NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.d.good BAD = tog_quest.0222.d.bad }
 	}
 	option = { # Forge the acknowledgement of debt
 		name = tog_quest.0222.c
-		trigger = { tog_mabon_open_trigger = { FLAG = debt_intr } }
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_intr } }
 		show_as_unavailable = { always = yes }
 		add_intrigue_lifestyle_xp = medium_lifestyle_xp
 		tog_mabon_try_effect = { WEIGHT = tog_good_weight_intrigue_value FLAG = debt_intr NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.c.good BAD = tog_quest.0222.c.bad }
@@ -2255,7 +2250,7 @@ tog_quest.0223 = {
 
 	option = { # Convince him
 		name = tog_quest.0223.a
-		trigger = { tog_mabon_open_trigger = { FLAG = aedan_dipl } }
+		trigger = { tog_mabon_way_open_trigger = { FLAG = aedan_dipl } }
 		show_as_unavailable = { always = yes }
 		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
 		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = aedan_dipl NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.a.good BAD = tog_quest.0223.a.bad }
@@ -2270,7 +2265,7 @@ tog_quest.0223 = {
 	}
 	option = { # Frighten him
 		name = tog_quest.0223.c
-		trigger = { tog_mabon_open_trigger = { FLAG = aedan_prow } }
+		trigger = { tog_mabon_way_open_trigger = { FLAG = aedan_prow } }
 		show_as_unavailable = { always = yes }
 		add_martial_lifestyle_xp = medium_lifestyle_xp
 		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = aedan_prow NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.c.good BAD = tog_quest.0223.c.bad }

@@ -38,8 +38,8 @@ Achievements are disabled while a mod is active.
 **Planned for the next version**
 - A restoration quest to bring the faith back in play: find the remains, found the faith, reform it
 - An 867 bookmark with a landless start: **Dubgall the Apostate** (see below; requires *Roads to Power*)
-- New camp buildings for the quest
-- Other characters in the same bookmark: **Rhodri Mawr**, **Dumnarth** and **Salomon**
+- A new camp building for the quest: the tent of offerings
+- A second 867 bookmark, no DLC needed: **Rhodri Mawr**, **Dumnarth** and **Salomon**, who can turn back to the old gods
 - The **Archdruid**: a head of faith for the reformed religion
 - Coats of arms for the Archdruid and for the new dynasties
 

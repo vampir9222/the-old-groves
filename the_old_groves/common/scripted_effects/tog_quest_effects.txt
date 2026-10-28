@@ -1547,7 +1547,7 @@ tog_distance_effect = {
 	}
 }
 
-# ---- Step 2: the scheme to steal the book of monastery M (barony TITLE) ----
+# ---- Step 2: the scheme to steal the book of monastery M (M: jarrow, whithorn...) ----
 
 # From the monastery's window: the brother librarian becomes the target.
 tog_start_steal_scheme_effect = {
@@ -1711,7 +1711,6 @@ tog_create_peredur_effect = {
 	}
 	create_character = {
 		name = "Peredur"
-		dna = tog_peredur_dna
 		age = 18
 		gender = male
 		culture = root.culture

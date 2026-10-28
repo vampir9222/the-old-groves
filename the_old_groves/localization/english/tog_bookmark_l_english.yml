@@ -1,10 +1,15 @@
 ﻿l_english:
  bm_867_tog_old_groves: "The Old Groves"
  bm_867_tog_old_groves_desc: "The druids have been dead for centuries. All that remains are standing stones, the names of gods copied out by monks, and a few twisted memories. But in 867, amid Viking raids and Christian kingdoms, some begin to dig through these ruins… and to dream of awakening what sleeps."
+ bm_867_tog_dubgall: "Dubgall the Apostate"
+ bm_867_tog_dubgall_desc: "867. The Hebrides. A monk of Iona has renounced his baptism and sails with the Norse. He can read the old tales the monks wrote down, and he is beginning to wonder whether the forgotten gods could live again."
 
  bookmark_tog_dubgall: "Dubgall the Apostate"
  bookmark_tog_dubgall_subheading: "$BOOKMARK_SUBHEADING_ADVENTURER$"
  bookmark_tog_dubgall_desc: "He was once Brother Máel Brigte, 'servant of Brigit', copying manuscripts on Iona. When the Vikings came back, he did not flee to Kells with the others: he stayed, and in time went over to them. The Gaels now call him Dubgall, 'the dark foreigner'.\n\nHe has read the old sagas the monks copied in spite of themselves. He knows the names of gods no one prays to anymore. And he has begun to wonder whether they might live again.\n\n#weak Tip: choose the Scholars camp purpose.#!"
+ bookmark_tog_rhodri_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_dumnarth_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_salomon_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
 
  dynn_tog_manach: "Manach"
  dynn_tog_efrog: "ab Efrog"

@@ -22,7 +22,7 @@ tog_quest_start_decision = {
 				has_cultural_pillar = heritage_brythonic
 			}
 		}
-		NOT = { faith = faith:tog_druidism }
+		NOT = { religion = religion:tog_celtic_religion }
 		NOT = {
 			any_owned_story = { story_type = tog_story_old_groves }
 		}
@@ -65,12 +65,21 @@ tog_convert_old_faith_decision = {
 
 	is_shown = {
 		is_ai = no
-		NOT = { faith = faith:tog_druidism }
+		NOT = { religion = religion:tog_celtic_religion }
 		NOT = { dynasty ?= dynasty:tog_manach }
 		culture = {
 			OR = {
 				has_cultural_pillar = heritage_goidelic
 				has_cultural_pillar = heritage_brythonic
+			}
+		}
+		# Only to revive a dead religion: once a landed ruler follows it, conversion
+		# goes through the vanilla ways (chaplain, conversion interaction...).
+		religion:tog_celtic_religion = {
+			NOT = {
+				any_faith = {
+					any_faith_character = { is_landed = yes }
+				}
 			}
 		}
 	}
@@ -995,7 +1004,7 @@ tog_druid_heritage_decision = {
 
 	is_shown = {
 		is_ai = no
-		faith = faith:tog_druidism
+		religion = religion:tog_celtic_religion
 		exists = dynasty
 		NOT = {
 			dynasty = { has_variable = tog_saxons_cb }
@@ -1085,6 +1094,60 @@ tog_test_gold_decision = {
 
 	effect = {
 		add_gold = 50
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# TEST ONLY - remove before any release.
+# What the reform (and the Archdruidate) should need: every holy site of the faith,
+# held by the player and converted, and plenty of piety.
+tog_test_reform_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_test_reform_decision_desc
+	selection_tooltip = tog_test_reform_decision_desc
+	confirm_text = tog_test_skip_step1_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		religion = religion:tog_celtic_religion
+		is_landed = yes
+	}
+
+	effect = {
+		add_piety = 5000
+		create_title_and_vassal_change = {
+			type = granted
+			save_scope_as = change
+			add_claim_on_loss = no
+		}
+		faith = {
+			every_holy_site = {
+				holy_site_county = {
+					if = {
+						limit = {
+							NOT = { holder ?= root }
+						}
+						change_title_holder = {
+							holder = root
+							change = scope:change
+						}
+					}
+					set_county_faith = root.faith
+				}
+			}
+		}
+		resolve_title_and_vassal_change = scope:change
 	}
 
 	ai_potential = {

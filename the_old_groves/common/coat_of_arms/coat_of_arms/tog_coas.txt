@@ -136,3 +136,29 @@ tog_mon = {
 		instance = { scale = { 0.8 0.8 } }
 	}
 }
+
+# The Archdruidate, created by the vanilla reform (spiritual head doctrine): a triskele
+# in a wreath. Set by tog_religion.0001, since the vanilla title gets random arms.
+tog_archdruidate = {
+	pattern = "pattern_solid.dds"
+	color1 = green
+	colored_emblem = {
+		texture = "ce_wreath_circle.dds"
+		color1 = yellow
+		instance = { scale = { 0.9 0.9 } }
+	}
+	colored_emblem = {
+		texture = "ce_triskel.dds"
+		color1 = white
+		instance = { scale = { 0.45 0.45 } }
+	}
+}
+
+# The companions' houses wear their line's arms (the game looks them up by house key).
+house_tog_efrog = tog_efrog
+house_tog_myrddin = tog_myrddin
+house_tog_taliesin = tog_taliesin
+house_tog_lir = tog_lir
+house_tog_innse_gall = tog_innse_gall
+house_tog_alise = tog_alise
+house_tog_mon = tog_mon

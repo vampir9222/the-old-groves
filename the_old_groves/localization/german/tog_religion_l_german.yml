@@ -11,7 +11,12 @@
  tog_druidism_adj: "druidisch"
  tog_druidism_adherent: "Druidist"
  tog_druidism_adherent_plural: "Druidisten"
+ tog_druidism_old: "Alt-Druidentum"
+ tog_druidism_old_adj: "altdruidisch"
+ tog_druidism_old_adherent: "Altdruidist"
+ tog_druidism_old_adherent_plural: "Altdruidisten"
  tog_druidism_desc: "Ein neuer Glaube, der sich auf die Druiden beruft. Neu errichtet aus von Mönchen bewahrten Sagas, aus halb verstandenen Ruinen und aus dem, was seine Anhänger vom nordischen Heidentum wissen, beansprucht er eine Vergangenheit, die er nicht wirklich wiederherstellt."
+ tog_druidism_old_desc: "Der druidische Glaube, wie er zuerst neu errichtet wurde, bewahrt von jenen, die der Reform nicht folgen wollten: kein Oberhaupt, keine feste Ordnung, nur die Sagas, die Steine und die alten Riten."
 
  # Rites
  tog_gaelic_rite: "Druídecht"

@@ -7,7 +7,7 @@
 TogPaganChaplainCounty = {
 	type = character
 	text = {
-		trigger = { faith = faith:tog_druidism }
+		trigger = { religion = religion:tog_celtic_religion }
 		localization_key = tog_chaplain_county
 	}
 	text = {
@@ -18,7 +18,7 @@ TogPaganChaplainCounty = {
 TogPaganChaplainDuchy = {
 	type = character
 	text = {
-		trigger = { faith = faith:tog_druidism }
+		trigger = { religion = religion:tog_celtic_religion }
 		localization_key = tog_chaplain_duchy
 	}
 	text = {
@@ -29,7 +29,7 @@ TogPaganChaplainDuchy = {
 TogPaganChaplainKingdom = {
 	type = character
 	text = {
-		trigger = { faith = faith:tog_druidism }
+		trigger = { religion = religion:tog_celtic_religion }
 		localization_key = tog_chaplain_kingdom
 	}
 	text = {
