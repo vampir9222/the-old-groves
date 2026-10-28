@@ -116,3 +116,34 @@ tog_mabon_open_trigger = {
 		}
 	}
 }
+
+# A pilgrim stands on a holy site of Druidism whose relic does not exist yet in
+# the world (tog_relic.0001). Each site has its relic.
+tog_relic_available_here_trigger = {
+	OR = {
+		AND = {
+			location = title:c_anglesey.title_province
+			NOT = { exists = global_var:tog_relic_mistletoe }
+		}
+		AND = {
+			location = title:c_chartres.title_province
+			NOT = { exists = global_var:tog_relic_sickle }
+		}
+		AND = {
+			location = title:b_montbard.title_province
+			NOT = { exists = global_var:tog_relic_carnyx }
+		}
+		AND = {
+			location = title:b_trim.title_province
+			NOT = { exists = global_var:tog_relic_cauldron }
+		}
+		AND = {
+			location = title:c_inner_hebrides.title_province
+			NOT = { exists = global_var:tog_relic_branch }
+		}
+		AND = {
+			location = title:c_teruel.title_province
+			NOT = { exists = global_var:tog_relic_torc }
+		}
+	}
+}

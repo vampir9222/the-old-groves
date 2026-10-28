@@ -713,48 +713,56 @@ tog_free_attempt_effect = {
 
 # ---- Step 5: the artefacts of the continent ----
 
+# The relics of Druidism are unique in the world: each one sets a global variable
+# when created (quest or pilgrimage), and is never created twice.
+
 # The golden sickle found under the hearth of the village of the cape.
 tog_create_golden_sickle_effect = {
-	save_scope_as = owner # the artifact visuals read scope:owner
-	create_artifact = {
-		name = tog_golden_sickle_name
-		description = tog_golden_sickle_description
-		template = tog_relic_template
-		type = pedestal
-		visuals = dagger_court
-		wealth = 60
-		quality = 60
-		modifier = tog_golden_sickle_modifier
-		save_scope_as = tog_sickle
-		decaying = no
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_sickle } }
+		set_global_variable = { name = tog_relic_sickle value = yes }
+		save_scope_as = owner # the artifact visuals read scope:owner
+		create_artifact = {
+			name = tog_golden_sickle_name
+			description = tog_golden_sickle_description
+			template = tog_relic_template
+			type = pedestal
+			visuals = dagger_court
+			wealth = 60
+			quality = 60
+			modifier = tog_golden_sickle_modifier
+			save_scope_as = tog_sickle
+			decaying = no
+		}
 	}
 }
 
 # The war horn with a boar's head, from the field of Alise.
 tog_create_carnyx_effect = {
-	save_scope_as = owner # the artifact visuals read scope:owner
-	create_artifact = {
-		name = tog_carnyx_name
-		description = tog_carnyx_description
-		template = tog_relic_template
-		type = pedestal
-		visuals = olifant_court
-		wealth = 40
-		quality = 50
-		modifier = tog_carnyx_modifier
-		save_scope_as = tog_carnyx
-		decaying = no
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_carnyx } }
+		set_global_variable = { name = tog_relic_carnyx value = yes }
+		save_scope_as = owner # the artifact visuals read scope:owner
+		create_artifact = {
+			name = tog_carnyx_name
+			description = tog_carnyx_description
+			template = tog_relic_template
+			type = pedestal
+			visuals = olifant_court
+			wealth = 40
+			quality = 50
+			modifier = tog_carnyx_modifier
+			save_scope_as = tog_carnyx
+			decaying = no
+		}
 	}
 }
 
-# ---- Step 6: the first rite on Ynys Môn ----
-
-# The mistletoe is cut and kept: Nest joins, the crown of mistletoe of Môn goes to the treasury,
-# end of step 6.
-tog_first_rite_effect = {
-	custom_tooltip = tog_quest.0412.tt
-	add_piety = major_piety_gain
-	hidden_effect = {
+# The crown of mistletoe of Môn, cut at the first rite.
+tog_create_mistletoe_effect = {
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_mistletoe } }
+		set_global_variable = { name = tog_relic_mistletoe value = yes }
 		# Crowns pick their decorations from these saved values.
 		save_scope_value_as = { name = wealth value = 30 }
 		save_scope_value_as = { name = quality value = 70 }
@@ -771,6 +779,101 @@ tog_first_rite_effect = {
 			save_scope_as = tog_mistletoe
 			decaying = no
 		}
+	}
+}
+
+# Relics found only in pilgrimage (tog_relic.0001).
+# The cauldron of the Dagda, at Tara: one of the four treasures of the Tuatha Dé.
+tog_create_cauldron_effect = {
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_cauldron } }
+		set_global_variable = { name = tog_relic_cauldron value = yes }
+		save_scope_value_as = { name = wealth value = 70 }
+		save_scope_value_as = { name = quality value = 70 }
+		save_scope_as = owner # the artifact visuals read scope:owner
+		create_artifact = {
+			name = tog_cauldron_name
+			description = tog_cauldron_description
+			template = tog_relic_template
+			type = pedestal
+			visuals = bowl
+			wealth = 70
+			quality = 70
+			modifier = tog_cauldron_modifier
+			save_scope_as = tog_relic
+			decaying = no
+		}
+	}
+}
+
+# The pilgrim buys the relic from its keeper (tog_relic.0001).
+tog_relic_bought_effect = {
+	add_piety = medium_piety_gain
+	involved_activity ?= {
+		add_activity_log_entry = {
+			key = pilgrimage_acquired_relic_log
+			tags = { relic }
+			score = 50
+			character = root
+			artifact = scope:tog_relic
+			location = scope:tog_relic_location
+			show_in_conclusion = yes
+		}
+	}
+	scope:tog_relic = { set_owner = root }
+}
+
+# The silver branch of Manannán, at Iona.
+tog_create_silver_branch_effect = {
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_branch } }
+		set_global_variable = { name = tog_relic_branch value = yes }
+		save_scope_as = owner # the artifact visuals read scope:owner
+		create_artifact = {
+			name = tog_silver_branch_name
+			description = tog_silver_branch_description
+			template = tog_relic_template
+			type = pedestal
+			visuals = pedestal_branch_relic_germanic
+			wealth = 60
+			quality = 60
+			modifier = tog_silver_branch_modifier
+			save_scope_as = tog_relic
+			decaying = no
+		}
+	}
+}
+
+# The Celtiberian gold torc, offered to Lugus at Peñalba.
+tog_create_torc_effect = {
+	if = {
+		limit = { NOT = { exists = global_var:tog_relic_torc } }
+		set_global_variable = { name = tog_relic_torc value = yes }
+		save_scope_as = owner # the artifact visuals read scope:owner
+		create_artifact = {
+			name = tog_torc_name
+			description = tog_torc_description
+			template = tog_relic_template
+			type = pedestal
+			visuals = necklace_pedestal
+			wealth = 60
+			quality = 50
+			modifier = tog_torc_modifier
+			save_scope_as = tog_relic
+			decaying = no
+		}
+	}
+}
+
+# ---- Step 6: the first rite on Ynys Môn ----
+
+# The mistletoe is cut and kept: Nest joins, the crown of mistletoe of Môn goes to the treasury,
+# end of step 6.
+tog_first_rite_effect = {
+	custom_tooltip = tog_quest.0412.tt
+	add_piety = major_piety_gain
+	hidden_effect = {
+		tog_create_mistletoe_effect = yes
 		if = {
 			limit = { exists = scope:tog_nest }
 			tog_join_quest_effect = { WHO = tog_nest }
@@ -1027,21 +1130,7 @@ tog_test_step6_done_effect = {
 			save_scope_as = tog_nest
 		}
 		tog_join_quest_effect = { WHO = tog_nest }
-		# Crowns pick their decorations from these saved values.
-		save_scope_value_as = { name = wealth value = 30 }
-		save_scope_value_as = { name = quality value = 70 }
-		save_scope_as = owner # the artifact visuals read scope:owner
-		create_artifact = {
-			name = tog_mistletoe_name
-			description = tog_mistletoe_description
-			template = tog_relic_crown_template
-			type = helmet
-			visuals = crown
-			wealth = 30
-			quality = 70
-			modifier = tog_mistletoe_modifier
-			decaying = no
-		}
+		tog_create_mistletoe_effect = yes
 	}
 }
 
