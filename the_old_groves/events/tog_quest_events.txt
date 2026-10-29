@@ -43,6 +43,7 @@ tog_quest.0002 = {
 	desc = tog_quest.0002.desc
 	theme = learning
 	override_background = { reference = fp1_runestone }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_intrigue" }
 	left_portrait = {
 		character = root
 		animation = interested
@@ -1939,7 +1940,8 @@ tog_quest.0203 = {
 	title = tog_quest.0203.t
 	desc = tog_quest.0203.desc
 	theme = faith
-	override_background = { reference = dungeon }
+	override_background = { reference = fp3_cave }
+	override_sound = { reference = "event:/SFX/Events/Backgrounds/temple_generic" }
 	left_portrait = {
 		character = root
 		animation = ecstasy
@@ -2136,7 +2138,7 @@ tog_quest.0216 = {
 	title = tog_quest.0216.t
 	desc = tog_quest.0216.desc
 	theme = faith
-	override_background = { reference = wilderness }
+	override_background = { reference = fp1_runestone_circle }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
@@ -2287,7 +2289,7 @@ tog_quest.0224 = {
 	title = tog_quest.0224.t
 	desc = tog_quest.0224.desc
 	theme = faith
-	override_background = { reference = wilderness }
+	override_background = { reference = ce1_legendary_spring }
 	left_portrait = {
 		character = root
 		animation = admiration
@@ -3141,7 +3143,7 @@ tog_quest.0401 = {
 		desc = tog_quest.0401.end
 	}
 	theme = learning
-	override_background = { reference = study }
+	override_background = { reference = fp1_tribal_temple }
 	left_portrait = {
 		character = root
 		animation = thinking
@@ -3235,7 +3237,8 @@ tog_quest.0412 = {
 	title = tog_quest.0412.t
 	desc = tog_quest.0412.desc
 	theme = faith
-	override_background = { reference = wilderness_forest }
+	override_background = { reference = fp1_runestone_circle }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_dynasty" }
 	left_portrait = {
 		character = root
 		animation = ecstasy
@@ -3466,7 +3469,7 @@ tog_quest.0413 = {
 		desc = tog_quest.0413.end
 	}
 	theme = martial
-	override_background = { reference = wilderness_forest }
+	override_background = { reference = ep2_hunt_foggy_forest }
 	left_portrait = {
 		character = root
 		animation = shock
@@ -3836,7 +3839,8 @@ tog_quest.0501 = {
 	title = tog_quest.0501.t
 	desc = tog_quest.0501.desc
 	theme = faith
-	override_background = { reference = wilderness_forest }
+	override_background = { reference = bp1_bonfire }
+	override_sound = { reference = "event:/MUSIC/Cues/Events/Sacral Happening/mx_cue_epic_sacral_moment" }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
@@ -3848,7 +3852,6 @@ tog_quest.0501 = {
 	}
 
 	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
 		tog_save_companions_effect = yes
 	}
 
@@ -3868,7 +3871,8 @@ tog_quest.0603 = {
 	title = tog_quest.0603.t
 	desc = tog_quest.0603.desc
 	theme = faith
-	override_background = { reference = study }
+	override_background = { reference = ce1_funeral_pyre }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_health_bad" }
 	left_portrait = {
 		character = scope:tog_heir_companion
 		animation = sadness
@@ -3915,6 +3919,7 @@ tog_quest.0602 = {
 	desc = tog_quest.0602.desc
 	theme = faith
 	override_background = { reference = study }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_duty" }
 	left_portrait = {
 		character = root
 		animation = personality_rational
@@ -4523,14 +4528,15 @@ tog_quest.0902 = {
 	title = tog_quest.0902.t
 	desc = tog_quest.0902.desc
 	theme = faith
-	override_background = { reference = wilderness_forest }
+	override_background = { reference = bp1_bonfire }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_health_good" }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
 	}
 
 	immediate = {
-		play_music_cue = "mx_cue_epic_sacral_moment"
+		play_music_cue = "mx_cue_majesty"
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
@@ -4600,6 +4606,7 @@ tog_quest.0920 = {
 	desc = tog_quest.0920.desc
 	theme = martial
 	override_background = { reference = armory }
+	override_sound = { reference = "event:/MUSIC/Cues/Events/Positive/mx_cue_postive_effect" }
 	left_portrait = {
 		character = root
 		animation = personality_zealous
@@ -4607,7 +4614,7 @@ tog_quest.0920 = {
 
 	option = {
 		name = tog_quest.0920.a
-		play_music_cue = "mx_cue_epic_sacral_moment"
+		play_music_cue = "mx_cue_legend"
 		tog_create_spear_of_lug_effect = yes
 	}
 }
