@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Keltisch"
  tog_celtic_religion_adj: "keltisch"
- tog_celtic_religion_adherent: "Kelte"
- tog_celtic_religion_adherent_plural: "Kelten"
+ tog_celtic_religion_adherent: "keltischer Heide"
+ tog_celtic_religion_adherent_plural: "keltische Heiden"
  tog_celtic_religion_desc: "Der alte Glaube der keltischen Völker, von Irland bis Gallien und bis nach Hispanien. Er überlebt nur noch in den Erzählungen der Mönche und in den stehenden Steinen und wartet darauf, dass jemand ihn erweckt."
 
  # Faith
@@ -87,12 +87,12 @@
  tog_religious_symbol: "Triskele"
  tog_religious_symbol_2: "$tog_religious_symbol$" #Optional translation alt
  tog_religious_symbol_3: "$tog_religious_symbol$" #Optional translation alt
- tog_religious_text: "Heilige Verse"
+ tog_religious_text: "Buch der Druiden"
  tog_religious_text_2: "$tog_religious_text$" #Optional translation alt
  tog_religious_text_3: "$tog_religious_text$" #Optional translation alt
  tog_religious_head_title: "Erzdruide"
  tog_religious_head_title_female: "Erzdruidin"
- tog_religious_head_title_name: "Erzdruidentum"
+ tog_religious_head_title_name: "Erzdruidat"
  tog_devotee: "Vate"
  tog_devotee_plural: "Vaten"
  tog_priest_male: "Druide"

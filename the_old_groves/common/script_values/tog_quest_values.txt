@@ -23,6 +23,17 @@ tog_good_weight_intrigue_value = {
 	add = 20
 }
 
+# Chance (%) of being wounded in a fight the quest offers (bandits' camp, monastery
+# doors), whatever the outcome: 60 % at martial 0, 28 % at 8, 12 % at 12, 5 % from 14.
+tog_wound_chance_value = {
+	value = 60
+	subtract = {
+		value = martial
+		multiply = 4
+	}
+	min = 5
+}
+
 # Forcing a monastery's doors: martial, minus 15 for every monastery already
 # attacked (the others are on their guard).
 # Failure weight when forcing the doors, against 100 for success. Every attack puts

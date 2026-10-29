@@ -31,7 +31,7 @@ Achievements are disabled while a mod is active.
 
 **Virtues and sins** of the Celtic world: brave, generous, just and **poet** (the Irish *filid*, the Welsh bards); cowardly, greedy and arbitrary.
 
-**Its own vocabulary**: druids and druidesses, the *nemeton*, the Sacred Verses, the Otherworld.
+**Its own vocabulary**: druids and druidesses, the *nemeton*, the Book of the Druids, the Otherworld.
 
 ## Roadmap
 

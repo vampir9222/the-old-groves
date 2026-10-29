@@ -1,15 +1,21 @@
 ﻿l_spanish:
- bm_867_tog_old_groves: "Los Antiguos Bosques"
- bm_867_tog_old_groves_desc: "Los druidas llevan siglos muertos. Solo quedan piedras erguidas, nombres de dioses copiados por monjes y algunos recuerdos deformados. Pero en el 867, entre incursiones vikingas y reinos cristianos, algunos empiezan a hurgar en esas ruinas… y a soñar con despertar lo que duerme."
+ bm_867_tog_old_groves: "Las Antiguas Arboledas"
+ bm_867_tog_old_groves_desc: "Los druidas llevan siglos muertos. Solo quedan piedras erguidas, nombres de dioses copiados por monjes y algunos recuerdos deformados. Pero en 867, entre las incursiones nórdicas y los reinos cristianos, algunos empiezan a escarbar en esas ruinas… y a soñar con despertar lo que duerme."
  bm_867_tog_dubgall: "Dubgall el Apóstata"
  bm_867_tog_dubgall_desc: "867. Las Hébridas. Un monje de Iona ha renegado de su bautismo y navega con los nórdicos. Sabe leer los viejos relatos que copiaron los monjes, y empieza a preguntarse si los dioses olvidados podrían volver a vivir."
 
  bookmark_tog_dubgall: "Dubgall el Apóstata"
  bookmark_tog_dubgall_subheading: "$BOOKMARK_SUBHEADING_ADVENTURER$"
- bookmark_tog_dubgall_desc: "Antes era el hermano Máel Brigte, «siervo de Brígida», y copiaba manuscritos en Iona. Cuando volvieron los vikingos, no huyó a Kells con los demás: se quedó y acabó pasándose a su bando. Los gaélicos lo llaman ahora Dubgall, «el extranjero oscuro».\n\nHa leído las viejas sagas que los monjes copiaron a su pesar. Conoce los nombres de dioses a los que ya nadie reza. Y empieza a preguntarse si podrían volver a vivir.\n\n#weak Consejo: elige el propósito de campamento de los Eruditos.#!"
+ bookmark_tog_dubgall_desc: "Se llamaba hermano Máel Brigte, «el siervo de Brigit», y copiaba manuscritos en Iona. Cuando los nórdicos volvieron, no huyó a Kells con los demás. Se quedó, y acabó pasándose a su bando. Los gaélicos lo llaman ahora Dubgall, «el extranjero oscuro».\n\nHa leído las viejas sagas que los monjes copiaron a su pesar. Conoce los nombres de dioses a los que ya nadie reza. Y empieza a preguntarse si podrían volver a vivir.\n\n#weak Consejo: elige la vocación de campamento de los Eruditos.#!"
+ bookmark_tog_rhodri: "Príncipe Rhodri"
  bookmark_tog_rhodri_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_rhodri_desc: "Rhodri ap Merfyn tiene Gwynedd y la isla de Môn, donde los romanos masacraron a los últimos druidas. Los nórdicos asolan sus costas, los sajones aprietan por el este y los santos apenas lo protegen. Sus bardos, en cambio, todavía cantan a los Hijos de Dôn.\n\n#weak Consejo: una decisión te permite volver a los antiguos dioses.#!"
+ bookmark_tog_dumnarth: "Reyezuelo Dumnarth"
  bookmark_tog_dumnarth_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_dumnarth_desc: "Dumnarth reina sobre Cornualles, el último reino de los britanos del sur. Cada año, Wessex avanza un poco más hacia el oeste. Los monjes rezan por él, pero las oraciones no detienen a los sajones. En los páramos, las piedras erguidas siguen esperando.\n\n#weak Consejo: una decisión te permite volver a los antiguos dioses.#!"
+ bookmark_tog_salomon: "Rey Salomón"
  bookmark_tog_salomon_subheading: "$BOOKMARK_SUBHEADING_DEFAULT$"
+ bookmark_tog_salomon_desc: "Salomón tomó el trono de Bretaña matando a su primo Erispoe al pie de un altar. Desde entonces ha arrancado a los francos una parte de Anjou, y no teme ni al rey Carlos ni al arzobispo de Tours. Tiene casi sesenta años: si quiere dejar algo más que un reino, le queda poco tiempo. Bajo las capillas de Armórica, los viejos dioses de la Galia aún duermen.\n\n#weak Consejo: una decisión te permite volver a los antiguos dioses.#!"
 
  dynn_tog_manach: "Manach"
  dynn_tog_efrog: "ab Efrog"
@@ -22,4 +28,4 @@
  Dubgall: "Dubgall"
 
  d_tog_laamp_dubgall: "Exiliados de Iona"
- d_tog_laamp_dubgall_article: "los"
+ d_tog_laamp_dubgall_article: "$FR_empty$"

@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Celta"
  tog_celtic_religion_adj: "celta"
- tog_celtic_religion_adherent: "Celta"
- tog_celtic_religion_adherent_plural: "Celtas"
+ tog_celtic_religion_adherent: "pagano celta"
+ tog_celtic_religion_adherent_plural: "paganos celtas"
  tog_celtic_religion_desc: "Las antiguas creencias de los pueblos celtas, de Irlanda a la Galia y hasta Hispania. Solo sobreviven en los relatos que guardaron los monjes y en las piedras erguidas, a la espera de que alguien las despierte."
 
  # Faith
@@ -87,7 +87,7 @@
  tog_religious_symbol: "trisquel"
  tog_religious_symbol_2: "$tog_religious_symbol$" #Optional translation alt
  tog_religious_symbol_3: "$tog_religious_symbol$" #Optional translation alt
- tog_religious_text: "Versos Sagrados"
+ tog_religious_text: "Libro de los Druidas"
  tog_religious_text_2: "$tog_religious_text$" #Optional translation alt
  tog_religious_text_3: "$tog_religious_text$" #Optional translation alt
  tog_religious_head_title: "Archidruida"
