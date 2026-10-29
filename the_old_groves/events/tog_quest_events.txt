@@ -4051,7 +4051,7 @@ tog_quest.0711 = {
 			# Five outcomes; the better the missionary thinks of the owner, the
 			# better the odds.
 			random_list = {
-				# A triumph: the count converts and sends a gift.
+				# A triumph: the count converts and sings the owner's praises.
 				10 = {
 					opinion_modifier = {
 						who = scope:tog_missionary
@@ -4061,7 +4061,6 @@ tog_quest.0711 = {
 					save_scope_value_as = { name = tog_mission_result value = flag:triumph }
 					tog_mission_convert_effect = yes
 					scope:tog_mission_owner = {
-						add_gold = minor_gold_value
 						add_prestige = minor_prestige_gain
 					}
 				}
@@ -4249,11 +4248,6 @@ tog_quest.0712 = {
 				scope:tog_mission_result = flag:won
 			}
 		}
-		# The converts give to the cause.
-		random = {
-			chance = 60
-			add_gold = 50
-		}
 	}
 	option = { # Not converted
 		name = tog_quest.0712.no
@@ -4262,11 +4256,6 @@ tog_quest.0712 = {
 				scope:tog_mission_result = flag:triumph
 				scope:tog_mission_result = flag:won
 			}
-		}
-		# A few villagers gave something all the same.
-		random = {
-			chance = 25
-			add_gold = 30
 		}
 	}
 }
