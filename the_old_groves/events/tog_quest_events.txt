@@ -285,10 +285,7 @@ tog_quest.0024 = {
 		name = tog_quest.0024.a
 		custom_tooltip = tog_quest.0024.a.tt
 		hidden_effect = {
-			trigger_event = {
-				id = tog_quest.0023
-				days = { 5 10 }
-			}
+			trigger_event = tog_quest.0023
 		}
 	}
 }
@@ -564,7 +561,12 @@ tog_quest.0060 = {
 						var:tog_stage = 10
 						root.location = province:1606
 						NOT = { exists = var:tog_m_jarrow_done }
+						# Not while a theft is being plotted: the scheme has its own scenes.
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0101 }
 				}
 				else_if = {
@@ -572,7 +574,11 @@ tog_quest.0060 = {
 						var:tog_stage = 10
 						root.location = province:1684
 						NOT = { exists = var:tog_m_whithorn_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0102 }
 				}
 				else_if = {
@@ -580,7 +586,11 @@ tog_quest.0060 = {
 						var:tog_stage = 10
 						root.location = province:1655
 						NOT = { exists = var:tog_m_mynyw_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0103 }
 				}
 				else_if = {
@@ -588,7 +598,11 @@ tog_quest.0060 = {
 						var:tog_stage = 10
 						root.location = province:1743
 						NOT = { exists = var:tog_m_dunkeld_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0104 }
 				}
 				else_if = {
@@ -596,7 +610,11 @@ tog_quest.0060 = {
 						var:tog_stage = 10
 						root.location = province:8778
 						NOT = { exists = var:tog_m_applecross_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0105 }
 				}
 				else_if = {
@@ -604,7 +622,10 @@ tog_quest.0060 = {
 						var:tog_stage = 20
 						root.location = province:32
 						NOT = { exists = var:tog_p_bru_done }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0201 }
 				}
 				else_if = {
@@ -612,7 +633,10 @@ tog_quest.0060 = {
 						var:tog_stage = 20
 						root.location = province:36
 						NOT = { exists = var:tog_p_uisneach_done }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0211 }
 				}
 				else_if = {
@@ -621,7 +645,10 @@ tog_quest.0060 = {
 						root.location = province:1681
 						NOT = { exists = var:tog_p_mabon_done }
 						root = { tog_mabon_open_trigger = yes }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
 					}
+					tog_arrival_lock_effect = yes
 					root = { trigger_event = tog_quest.0221 }
 				}
 				else_if = {
@@ -723,6 +750,7 @@ tog_quest.0101 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -802,6 +830,7 @@ tog_quest.0102 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -881,6 +910,7 @@ tog_quest.0103 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -960,6 +990,7 @@ tog_quest.0104 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -1039,6 +1070,7 @@ tog_quest.0105 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -1669,7 +1701,6 @@ tog_quest.0159 = {
 
 	option = { # Slow down for him
 		name = tog_quest.0159.a
-		add_learning_lifestyle_xp = minor_lifestyle_xp
 		custom_tooltip = tog_quest.0159.a.tt
 		scope:tog_lailoken = {
 			add_opinion = {
@@ -1878,6 +1909,7 @@ tog_quest.0201 = {
 	option = { # Leave
 		name = tog_m.leave
 		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -2014,6 +2046,7 @@ tog_quest.0211 = {
 	option = {
 		name = tog_m.leave
 		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -2149,6 +2182,24 @@ tog_quest.0216 = {
 
 # ---- The stone of Mabon: the hidden cult (always the last place) ----
 
+# Brú na Bóinne and Uisneach are done: the stone of Mabon is the last place left.
+tog_quest.0220 = {
+	type = character_event
+	title = tog_quest.0220.t
+	desc = tog_quest.0220.desc
+	theme = learning
+	override_background = { reference = ep3_campfire }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0220.a
+		custom_tooltip = tog_quest.0220.a.tt
+	}
+}
+
 # Arrival: the villagers deny everything; the lord's steward measures the field.
 tog_quest.0221 = {
 	type = character_event
@@ -2169,6 +2220,7 @@ tog_quest.0221 = {
 	option = {
 		name = tog_m.leave
 		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -2217,6 +2269,7 @@ tog_quest.0222 = {
 	option = {
 		name = tog_m.leave
 		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
 	}
 }
 
@@ -4017,8 +4070,51 @@ tog_quest.0711 = {
 				save_scope_as = tog_story
 			}
 		}
+		# A result is told only once per companion: their mission must still be under way.
 		if = {
 			limit = {
+				exists = scope:tog_story
+				scope:tog_story = {
+					OR = {
+						AND = {
+							var:tog_eogan ?= scope:tog_missionary
+							var:tog_res_tog_eogan ?= flag:pending
+						}
+						AND = {
+							var:tog_nest ?= scope:tog_missionary
+							var:tog_res_tog_nest ?= flag:pending
+						}
+						AND = {
+							var:tog_gofraid ?= scope:tog_missionary
+							var:tog_res_tog_gofraid ?= flag:pending
+						}
+						AND = {
+							var:tog_ursin ?= scope:tog_missionary
+							var:tog_res_tog_ursin ?= flag:pending
+						}
+						AND = {
+							var:tog_gwion ?= scope:tog_missionary
+							var:tog_res_tog_gwion ?= flag:pending
+						}
+						AND = {
+							var:tog_peredur ?= scope:tog_missionary
+							var:tog_res_tog_peredur ?= flag:pending
+						}
+						AND = {
+							var:tog_lailoken ?= scope:tog_missionary
+							var:tog_res_tog_lailoken ?= flag:pending
+						}
+					}
+				}
+			}
+			save_scope_value_as = {
+				name = tog_mission_pending_here
+				value = yes
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:tog_mission_pending_here
 				exists = scope:tog_mission_target
 				exists = scope:tog_story
 				scope:tog_mission_target = { is_alive = yes }
@@ -4141,7 +4237,10 @@ tog_quest.0711 = {
 		}
 		remove_variable = tog_mission_target
 		remove_variable = tog_mission_owner
-		scope:tog_mission_owner ?= { tog_mission_result_in_effect = yes }
+		if = {
+			limit = { exists = scope:tog_mission_pending_here }
+			scope:tog_mission_owner ?= { tog_mission_result_in_effect = yes }
+		}
 	}
 }
 
@@ -4511,16 +4610,10 @@ tog_quest.0902 = {
 		name = tog_quest.0902.a
 		tog_feed_adventurer_effect = { AMOUNT = major_provisions_gain }
 		# The crowd gives to the cause.
-		add_gold = 200
+		add_gold = 100
 		custom_tooltip = tog_quest.0902.a.tt
-		add_prestige = {
-			value = major_prestige_gain
-			multiply = 2
-		}
-		add_piety = {
-			value = major_piety_gain
-			multiply = 2
-		}
+		add_prestige = major_prestige_gain
+		add_piety = major_piety_gain
 		hidden_effect = {
 			tog_miracle_effect = yes
 			tog_travel_home_effect = yes
@@ -4539,6 +4632,8 @@ tog_quest.0902 = {
 					value = 100
 				}
 			}
+			# The tent of offerings grows to level 2.
+			tog_give_offerings_tent_effect = yes
 		}
 	}
 }
