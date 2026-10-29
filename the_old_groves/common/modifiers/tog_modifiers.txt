@@ -146,9 +146,15 @@ tog_porter_wary_modifier = {
 	scheme_success_chance = -10
 }
 
-# Once landed, the offerings of the faithful no longer go to a tent but to the
-# ruler: the same gold and prestige as the tent of offerings.
+# No longer given (the offerings are for the adventurer's camp only); kept so that
+# older saves load, and removed from them by the story cycle.
 tog_offerings_modifier = {
+	icon = prestige_positive
+	monthly_income = 0.5
+	monthly_prestige = 0.25
+}
+
+tog_offerings_02_modifier = {
 	icon = prestige_positive
 	monthly_income = 2
 	monthly_prestige = 0.5

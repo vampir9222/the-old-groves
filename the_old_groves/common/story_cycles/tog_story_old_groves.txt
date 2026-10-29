@@ -146,8 +146,14 @@ tog_story_old_groves = {
 					story_owner.location = province:1606
 					NOT = { exists = var:tog_m_jarrow_done }
 					NOT = { exists = var:tog_m_jarrow_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_m_jarrow_seen
 						value = yes
@@ -160,8 +166,14 @@ tog_story_old_groves = {
 					story_owner.location = province:1684
 					NOT = { exists = var:tog_m_whithorn_done }
 					NOT = { exists = var:tog_m_whithorn_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_m_whithorn_seen
 						value = yes
@@ -174,8 +186,14 @@ tog_story_old_groves = {
 					story_owner.location = province:1655
 					NOT = { exists = var:tog_m_mynyw_done }
 					NOT = { exists = var:tog_m_mynyw_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_m_mynyw_seen
 						value = yes
@@ -188,8 +206,14 @@ tog_story_old_groves = {
 					story_owner.location = province:1743
 					NOT = { exists = var:tog_m_dunkeld_done }
 					NOT = { exists = var:tog_m_dunkeld_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_m_dunkeld_seen
 						value = yes
@@ -202,8 +226,14 @@ tog_story_old_groves = {
 					story_owner.location = province:8778
 					NOT = { exists = var:tog_m_applecross_done }
 					NOT = { exists = var:tog_m_applecross_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_m_applecross_seen
 						value = yes
@@ -229,8 +259,14 @@ tog_story_old_groves = {
 					story_owner.location = province:32
 					NOT = { exists = var:tog_p_bru_done }
 					NOT = { exists = var:tog_p_bru_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_p_bru_seen
 						value = yes
@@ -243,8 +279,14 @@ tog_story_old_groves = {
 					story_owner.location = province:36
 					NOT = { exists = var:tog_p_uisneach_done }
 					NOT = { exists = var:tog_p_uisneach_seen }
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_p_uisneach_seen
 						value = yes
@@ -259,8 +301,14 @@ tog_story_old_groves = {
 					NOT = { exists = var:tog_p_mabon_seen }
 					exists = var:tog_p_bru_done
 					exists = var:tog_p_uisneach_done
+					NOT = { exists = var:tog_arrival_lock }
 				}
 				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
 					set_variable = {
 						name = tog_p_mabon_seen
 						value = yes
@@ -454,12 +502,22 @@ tog_story_old_groves = {
 		trigger = {
 			story_owner = {
 				is_landless_adventurer = yes
-				domicile ?= { has_domicile_building = tog_offerings_tent }
+				domicile ?= { has_domicile_building_or_higher = tog_offerings_tent }
 			}
 		}
 
 		triggered_effect = {
-			trigger = { always = yes }
+			trigger = {
+				story_owner.domicile = { has_domicile_building = tog_offerings_tent_02 }
+			}
+			effect = {
+				story_owner.domicile = { change_provisions = 150 }
+			}
+		}
+		triggered_effect = {
+			trigger = {
+				story_owner.domicile = { has_domicile_building = tog_offerings_tent }
+			}
 			effect = {
 				story_owner.domicile = { change_provisions = 100 }
 			}
@@ -467,7 +525,8 @@ tog_story_old_groves = {
 	}
 
 	# The tent of offerings is given at the founding; if the camp had no free slot
-	# then, it arrives here as soon as one is free.
+	# then, it arrives here as soon as one is free. After the miracle, it grows to
+	# level 2.
 	effect_group = {
 		months = 1
 		trigger = {
@@ -476,8 +535,21 @@ tog_story_old_groves = {
 				is_landless_adventurer = yes
 				religion = religion:tog_celtic_religion
 				domicile ?= {
-					NOT = { has_domicile_building = tog_offerings_tent }
-					free_external_domicile_building_slots >= 1
+					OR = {
+						AND = {
+							NOT = { has_domicile_building_or_higher = tog_offerings_tent }
+							free_external_domicile_building_slots >= 1
+						}
+						AND = {
+							has_domicile_building = tog_offerings_tent
+							domicile_owner = {
+								any_owned_story = {
+									story_type = tog_story_old_groves
+									var:tog_stage >= 100
+								}
+							}
+						}
+					}
 				}
 			}
 		}
@@ -485,41 +557,31 @@ tog_story_old_groves = {
 		triggered_effect = {
 			trigger = { always = yes }
 			effect = {
-				story_owner.domicile = { add_domicile_building = tog_offerings_tent }
+				story_owner = { tog_add_offerings_tent_effect = yes }
 			}
 		}
 	}
 
-	# Landed after the founding: the faithful bring their offerings to the ruler
-	# instead of the camp's tent (a character modifier with the same bonuses).
+	# The offerings of the faithful are for the adventurer's camp only. Older saves
+	# may still carry the landed version of them (removed 2026-10-29): take it off.
 	effect_group = {
 		months = 1
-		trigger = { var:tog_stage >= 70 }
-
-		triggered_effect = {
-			trigger = {
-				story_owner = {
-					is_landless_adventurer = no
-					religion = religion:tog_celtic_religion
-					NOT = { has_character_modifier = tog_offerings_modifier }
+		trigger = {
+			story_owner = {
+				OR = {
+					has_character_modifier = tog_offerings_modifier
+					has_character_modifier = tog_offerings_02_modifier
 				}
-			}
-			effect = {
-				story_owner = { add_character_modifier = tog_offerings_modifier }
 			}
 		}
+
 		triggered_effect = {
-			trigger = {
-				story_owner = {
-					has_character_modifier = tog_offerings_modifier
-					OR = {
-						is_landless_adventurer = yes
-						NOT = { religion = religion:tog_celtic_religion }
-					}
-				}
-			}
+			trigger = { always = yes }
 			effect = {
-				story_owner = { remove_character_modifier = tog_offerings_modifier }
+				story_owner = {
+					remove_character_modifier = tog_offerings_modifier
+					remove_character_modifier = tog_offerings_02_modifier
+				}
 			}
 		}
 	}

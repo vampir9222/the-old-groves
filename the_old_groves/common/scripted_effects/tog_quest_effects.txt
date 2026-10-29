@@ -430,6 +430,29 @@ tog_book_read_effect = {
 	}
 }
 
+# Story scope: an arrival scene (monastery or sacred place) has just been launched;
+# the other triggers (travel arrival, monthly checks) keep quiet for a week, so
+# the scene does not pile up.
+tog_arrival_lock_effect = {
+	set_variable = {
+		name = tog_arrival_lock
+		value = yes
+		days = 7
+	}
+}
+
+# "Leave" at a monastery or sacred place: the scene does not come back by itself
+# until the travel decision is used again.
+tog_left_here_effect = {
+	random_owned_story = {
+		limit = { story_type = tog_story_old_groves }
+		set_variable = {
+			name = tog_left_here
+			value = yes
+		}
+	}
+}
+
 # After a failure scene: back to the arrival scene of the current monastery.
 tog_reopen_monastery_effect = {
 	random_owned_story = {
@@ -603,6 +626,12 @@ tog_place_done_effect = {
 			add_to_variable_list = {
 				name = tog_places
 				target = title:b_dumfries
+			}
+			story_owner = {
+				trigger_event = {
+					id = tog_quest.0220
+					days = 3
+				}
 			}
 		}
 	}
@@ -1050,6 +1079,27 @@ tog_verses_outcome_effect = {
 # legendary name (Lugaid for the Gaelic rite).
 tog_found_cult_effect = {
 	hidden_effect = { tog_give_offerings_tent_effect = yes }
+	# A legend seed, as the vanilla faith creation gives its founder
+	# (religion_on_actions.txt): Legends of the Dead only.
+	if = {
+		limit = {
+			has_dlc_feature = legends
+			NOT = { has_game_rule = historical_legends_only }
+			NOT = { has_character_flag = reformer_legend }
+		}
+		add_character_flag = reformer_legend
+		create_legend_seed = {
+			type = holy
+			quality = famed
+			chronicle = new_faith_legend
+			properties = {
+				reformer = root
+				faith = faith:tog_druidism
+				religion = religion:tog_celtic_religion
+				reason = flag:new_faith
+			}
+		}
+	}
 	hidden_effect = {
 		# The founder's rite, from his heritage.
 		if = {
@@ -1458,9 +1508,9 @@ tog_miracle_effect = {
 	every_in_list = {
 		list = tog_plague_lords
 		random = {
-			chance = 30
+			chance = 20
 			modifier = {
-				add = 40
+				add = 30
 				opinion = {
 					target = root
 					value >= 20
@@ -1471,7 +1521,7 @@ tog_miracle_effect = {
 	}
 	faith = {
 		change_fervor = {
-			value = 100
+			value = 50
 			desc = fervor_gain_tog_miracle
 		}
 	}
@@ -1695,14 +1745,45 @@ tog_heric_attempt_effect = {
 tog_give_offerings_tent_effect = {
 	if = {
 		limit = { is_landless_adventurer = yes }
-		domicile ?= {
-			if = {
-				limit = {
-					NOT = { has_domicile_building = tog_offerings_tent }
-					free_external_domicile_building_slots >= 1
-				}
-				add_domicile_building = tog_offerings_tent
+		tog_add_offerings_tent_effect = yes
+	}
+}
+
+# Adds the tent to the owner's camp if a slot is free, and raises it to level 2
+# after the miracle. The building cannot be built by hand: its can_construct asks
+# for this short-lived variable, which only the quest sets.
+tog_add_offerings_tent_effect = {
+	set_variable = {
+		name = tog_offerings_tent_gift
+		value = yes
+		days = 1
+	}
+	if = {
+		limit = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage >= 100
 			}
+		}
+		save_temporary_scope_value_as = {
+			name = tog_tent_level_2
+			value = yes
+		}
+	}
+	domicile ?= {
+		if = {
+			limit = {
+				NOT = { has_domicile_building_or_higher = tog_offerings_tent }
+				free_external_domicile_building_slots >= 1
+			}
+			add_domicile_building = tog_offerings_tent
+		}
+		if = {
+			limit = {
+				exists = scope:tog_tent_level_2
+				has_domicile_building = tog_offerings_tent
+			}
+			add_domicile_building = tog_offerings_tent_02
 		}
 	}
 }

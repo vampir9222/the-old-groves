@@ -170,6 +170,10 @@ tog_quest_travel_decision = {
 	effect = {
 		custom_tooltip = tog_quest_travel_decision_effect_tt
 		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				remove_variable = tog_left_here
+			}
 			# Step 2: choose which monastery to go to.
 			if = {
 				limit = {
