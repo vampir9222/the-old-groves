@@ -28,10 +28,6 @@ tog_quest_start_decision = {
 		}
 	}
 
-	is_valid = {
-		learning >= 10
-	}
-
 	effect = {
 		custom_tooltip = tog_quest_start_decision_effect_tt
 		hidden_effect = {
@@ -52,7 +48,7 @@ tog_quest_start_decision = {
 # Any Goidelic or Brythonic character (Rhodri and Dumnarth in the bookmark) turns to
 # the old gods without the quest, which stays Dubgall's. Same logic as the vanilla
 # conversion window (capital, close family, vassals told); rite from the heritage, as
-# at the founding; cost: the vanilla minimum piety for a conversion.
+# at the founding; cost: twice the vanilla minimum piety for a conversion.
 tog_convert_old_faith_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
@@ -85,7 +81,7 @@ tog_convert_old_faith_decision = {
 	}
 
 	cost = {
-		piety = 250
+		piety = 500
 	}
 
 	effect = {
@@ -111,6 +107,8 @@ tog_convert_old_faith_decision = {
 		hidden_effect = {
 			set_character_faith_with_conversion = faith:tog_druidism
 			set_character_rite = scope:tog_rite
+			# The religion is dead: whoever revives it sets the main rite, as at the founding.
+			scope:tog_rite = { set_main_rite = yes }
 		}
 	}
 
