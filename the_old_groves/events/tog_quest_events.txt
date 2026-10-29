@@ -70,7 +70,6 @@ tog_quest.0003 = {
 
 	option = {
 		name = tog_quest.0003.a
-		add_prestige = minor_prestige_gain
 		add_learning_lifestyle_xp = minor_lifestyle_xp
 		hidden_effect = {
 			trigger_event = {
@@ -217,8 +216,6 @@ tog_quest.0023 = {
 
 	option = { # Attack the camp
 		name = tog_quest.0023.a
-		trigger = { martial >= 8 }
-		show_as_unavailable = { always = yes }
 		tog_camp_attack_effect = yes
 	}
 
@@ -311,8 +308,6 @@ tog_quest.0025 = {
 
 	option = { # Attack the camp
 		name = tog_quest.0023.a
-		trigger = { martial >= 8 }
-		show_as_unavailable = { always = yes }
 		tog_camp_attack_effect = yes
 	}
 
@@ -373,7 +368,6 @@ tog_quest.0050 = {
 
 	option = {
 		name = tog_quest.0050.a
-		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0050.a.tt
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
@@ -719,8 +713,6 @@ tog_quest.0101 = {
 
 	option = { # Force the doors
 		name = tog_m.force
-		trigger = { martial >= 12 }
-		show_as_unavailable = { always = yes }
 		tog_monastery_force_effect = {
 			M = jarrow
 			TITLE = b_durham
@@ -800,8 +792,6 @@ tog_quest.0102 = {
 
 	option = { # Force the doors
 		name = tog_m.force
-		trigger = { martial >= 12 }
-		show_as_unavailable = { always = yes }
 		tog_monastery_force_effect = {
 			M = whithorn
 			TITLE = b_wigtown
@@ -881,8 +871,6 @@ tog_quest.0103 = {
 
 	option = { # Force the doors
 		name = tog_m.force
-		trigger = { martial >= 12 }
-		show_as_unavailable = { always = yes }
 		tog_monastery_force_effect = {
 			M = mynyw
 			TITLE = b_st_davids
@@ -962,8 +950,6 @@ tog_quest.0104 = {
 
 	option = { # Force the doors
 		name = tog_m.force
-		trigger = { martial >= 12 }
-		show_as_unavailable = { always = yes }
 		tog_monastery_force_effect = {
 			M = dunkeld
 			TITLE = b_dunkeld
@@ -1043,8 +1029,6 @@ tog_quest.0105 = {
 
 	option = { # Force the doors
 		name = tog_m.force
-		trigger = { martial >= 12 }
-		show_as_unavailable = { always = yes }
 		tog_monastery_force_effect = {
 			M = applecross
 			TITLE = b_applecross
@@ -1993,7 +1977,6 @@ tog_quest.0204 = {
 
 	option = {
 		name = tog_quest.0204.a
-		add_prestige = minor_prestige_gain
 		custom_tooltip = tog_quest.0204.a.tt
 		add_learning_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
@@ -2584,7 +2567,6 @@ tog_quest.0232 = {
 
 	option = {
 		name = tog_quest.0232.a
-		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0232.a.tt
 		add_piety = medium_piety_gain
 		add_learning_lifestyle_xp = medium_lifestyle_xp
@@ -2816,7 +2798,6 @@ tog_quest.0236 = {
 
 	option = {
 		name = tog_quest.0236.a
-		add_prestige = medium_prestige_gain
 		random_owned_story = {
 			limit = { story_type = tog_story_old_groves }
 			change_variable = {
@@ -3077,7 +3058,6 @@ tog_quest.0321 = {
 
 	option = {
 		name = tog_quest.0321.a
-		add_prestige = minor_prestige_gain
 		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
 		custom_tooltip = tog_quest.0321.a.tt
 		add_learning_lifestyle_xp = minor_lifestyle_xp
@@ -3110,7 +3090,6 @@ tog_quest.0331 = {
 	option = {
 		name = tog_quest.0331.a
 		custom_tooltip = tog_quest.0331.a.tt
-		add_prestige = major_prestige_gain
 		add_martial_lifestyle_xp = medium_lifestyle_xp
 		hidden_effect = {
 			tog_create_carnyx_effect = yes
@@ -3167,7 +3146,6 @@ tog_quest.0401 = {
 
 	option = {
 		name = tog_quest.0401.a
-		add_prestige = medium_prestige_gain
 		custom_tooltip = tog_quest.0401.a.tt
 		add_learning_lifestyle_xp = major_lifestyle_xp
 		add_piety = medium_piety_gain
@@ -3414,7 +3392,6 @@ tog_quest.0187 = {
 	option = { # Encourage him
 		name = tog_quest.0187.a
 		add_martial_lifestyle_xp = minor_lifestyle_xp
-		add_prestige = minor_prestige_gain
 		tog_companion_opinion_effect = {
 			WHO = tog_ursin
 			MOD = respect_opinion
@@ -3611,7 +3588,6 @@ tog_quest.0511 = {
 		name = tog_quest.0511.b
 		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 10 }
 		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
-		add_prestige = minor_prestige_gain
 		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0511.b.great }
 	}
 	option = { # Both, side by side: slower, but nobody is hurt
@@ -3789,7 +3765,6 @@ tog_quest.0516 = {
 		show_as_unavailable = { always = yes }
 		remove_short_term_gold = tiny_gold_value
 		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = disappointed_opinion VALUE = -15 }
-		add_prestige = minor_prestige_gain
 		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0516.b.good }
 	}
 	option = { # Buy it all, and pay a copyist from Tours too

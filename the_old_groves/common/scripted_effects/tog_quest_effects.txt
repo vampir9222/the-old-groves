@@ -83,8 +83,8 @@ tog_travel_home_effect = {
 	}
 }
 
-# Bandits' camp: attacking (martial). Success frees the old man and yields the loot;
-# failure wounds you and you come back a few days later.
+# Bandits' camp: attacking (martial). Success frees the old man and yields the loot,
+# though you may be wounded; failure wounds you and you come back a few days later.
 tog_camp_attack_effect = {
 	random_list = {
 		0 = {
@@ -93,6 +93,10 @@ tog_camp_attack_effect = {
 			add_gold = medium_gold_value
 			add_martial_lifestyle_xp = minor_lifestyle_xp
 			add_prestige = minor_prestige_gain
+			random = {
+				chance = tog_wound_chance_value
+				increase_wounds_no_death_effect = { REASON = fight }
+			}
 			hidden_effect = {
 				trigger_event = {
 					id = tog_quest.0050
@@ -222,7 +226,6 @@ tog_travel_to_province_effect = {
 
 # The book of monastery M is obtained: remove it from the list, read it in 2 to 4 months.
 tog_monastery_book_effect = {
-	add_prestige = minor_prestige_gain
 	random_owned_story = {
 		limit = { story_type = tog_story_old_groves }
 		set_variable = {
@@ -308,15 +311,21 @@ tog_monastery_pay_effect = {
 }
 
 # Forcing the doors (martial). Every attack puts the other monasteries on their guard.
-# Success: the book and some loot, but piety lost and the local lord is angry.
+# Attacking monks costs piety, whatever the outcome. Success: the book, some loot and
+# prestige, but the local lord is angry. Either way, you may be wounded (the lower
+# your martial, the likelier).
 tog_monastery_force_effect = {
+	add_piety = medium_piety_loss
+	random = {
+		chance = tog_wound_chance_value
+		increase_wounds_no_death_effect = { REASON = fight }
+	}
 	random_list = {
 		100 = {
 			custom_tooltip = tog_m.force_good
 			hidden_effect = { trigger_event = tog_quest.0174 }
 			add_gold = minor_gold_value
 			add_prestige = medium_prestige_gain
-			add_piety = medium_piety_loss
 			province:$PROV$.county.holder ?= {
 				if = {
 					limit = { NOT = { this = root } }
@@ -1584,8 +1593,11 @@ tog_start_steal_scheme_effect = {
 }
 
 # "Execute": the attempt, with BONUS % from the advantages spent. Failure makes the
-# monks warier, but the scheme goes on.
+# monks warier, but the scheme goes on. Stealing from monks costs prestige and piety,
+# whether it works or not.
 tog_steal_attempt_effect = {
+	add_prestige = minor_prestige_loss
+	add_piety = minor_piety_loss
 	random = {
 		chance = {
 			value = scope:scheme.scheme_success_chance
@@ -1605,7 +1617,6 @@ tog_steal_attempt_effect = {
 			trigger_event = tog_quest.0173
 		}
 		else = {
-			add_prestige = minor_prestige_loss
 			scope:scheme = {
 				add_scheme_modifier = { type = tog_monks_wary_modifier }
 			}

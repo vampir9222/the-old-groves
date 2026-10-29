@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Celtique"
  tog_celtic_religion_adj: "celtique"
- tog_celtic_religion_adherent: "Celte"
- tog_celtic_religion_adherent_plural: "Celtes"
+ tog_celtic_religion_adherent: "païen celte"
+ tog_celtic_religion_adherent_plural: "païens celtes"
  tog_celtic_religion_desc: "Les anciennes croyances des peuples celtes, d'Irlande en Gaule et jusqu'en Hispanie. Elles ne survivent plus que dans les récits des moines et les pierres dressées, en attendant que quelqu'un les réveille."
 
  # Faith
@@ -87,9 +87,9 @@
  tog_religious_symbol: "le triskèle"
  tog_religious_symbol_2: "au triskèle" #Optional translation alt
  tog_religious_symbol_3: "du triskèle" #Optional translation alt
- tog_religious_text: "les Vers sacrés"
- tog_religious_text_2: "aux Vers sacrés" #Optional translation alt
- tog_religious_text_3: "des Vers sacrés" #Optional translation alt
+ tog_religious_text: "le Livre des Druides"
+ tog_religious_text_2: "au Livre des Druides" #Optional translation alt
+ tog_religious_text_3: "du Livre des Druides" #Optional translation alt
  tog_religious_head_title: "Archidruide"
  tog_religious_head_title_female: "Archidruidesse"
  tog_religious_head_title_name: "Archidruidat"

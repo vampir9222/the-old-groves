@@ -49,6 +49,7 @@ tog_verses_book_modifier = {
 	learning = 2
 	monthly_piety = 1
 	monthly_learning_lifestyle_xp_gain_mult = 0.1
+	faith_conversion_piety_cost_mult = -0.2
 }
 
 # Step 8: a bard of the old gods at court, one kind of bonus per bard.
@@ -93,8 +94,9 @@ tog_spear_of_lug_modifier = {
 	icon = martial_positive
 	prowess = 6
 	martial = 2
-	advantage = 3
-	monthly_prestige = 1
+	advantage = 2
+	monthly_prestige = 0.5
+	same_faith_opinion = 10
 }
 
 # Relics found in pilgrimage (tog_relic.0001).
