@@ -1,0 +1,111 @@
+﻿# The Old Groves - traits
+
+# The night in the mound of Brú na Bóinne: the symbol of the Dagda chosen in the
+# vision. Only one of the three.
+tog_dagda_cauldron = {
+	category = lifestyle
+	icon = education_stewardship_5.dds
+	opposites = {
+		tog_dagda_club
+		tog_dagda_harp
+	}
+	stewardship = 2
+	monthly_income_mult = 0.1
+	monthly_piety = 1
+}
+
+tog_dagda_club = {
+	category = lifestyle
+	icon = blademaster.dds
+	opposites = {
+		tog_dagda_cauldron
+		tog_dagda_harp
+	}
+	martial = 2
+	prowess = 2
+	monthly_piety = 1
+}
+
+tog_dagda_harp = {
+	category = lifestyle
+	icon = lifestyle_poet.dds
+	opposites = {
+		tog_dagda_cauldron
+		tog_dagda_club
+	}
+	diplomacy = 2
+	vassal_opinion = 10
+	monthly_piety = 1
+}
+
+# The awen, the gift of Gwion (and of his father before him): some of his dreams
+# come true.
+tog_awen = {
+	category = fame
+	icon = blood_of_prophet.dds
+	learning = 2
+	monthly_piety = 1
+	stress_loss_mult = 0.1
+	same_faith_opinion = 10
+}
+
+# The same gift while Gwion is still needed by the quest: it also keeps him alive
+# (no natural death, no harm events). Swapped for tog_awen after his last lesson,
+# so the player never sees a separate protection trait.
+tog_awen_protected = {
+	category = fame
+	icon = blood_of_prophet.dds
+	learning = 2
+	monthly_piety = 1
+	stress_loss_mult = 0.1
+	same_faith_opinion = 10
+	immortal = yes
+	flag = is_immortal
+	shown_in_encyclopedia = no
+	shown_in_ruler_designer = no
+}
+
+# Eluned in the convent: she cannot die before she is freed (the scheme would be
+# left without a target). Removed once she is out.
+tog_novice = {
+	category = fame
+	icon = theologian.dds
+	immortal = yes
+	flag = is_immortal
+	shown_in_encyclopedia = no
+	shown_in_ruler_designer = no
+}
+
+# Lailoken claims to descend from Myrddin: the old man is hard to kill, and
+# he has the second sight (his liege gets tog_second_sight_modifier while he is at court).
+tog_blood_of_myrddin = {
+	category = fame
+	icon = divine_blood.dds
+	health = 3
+	learning = 1
+	intrigue = 2
+	shown_in_ruler_designer = no
+}
+
+# The Voice of Lug: Lug spoke through his mouth at the miracle of the fires
+# (step 10). The founder of the reborn cult; the faithful offer him armies (tog_quest.0910).
+tog_voice_of_lug = {
+	category = fame
+	icon = theologian.dds
+	learning = 3
+	martial = 2
+	monthly_piety = 1.5
+	same_faith_opinion = 10
+	shown_in_ruler_designer = no
+}
+
+# A monk the quest needs (the librarian of a monastery during a theft, Héric at
+# the gate of Saint-Germain): he cannot die while the scheme is running.
+tog_cloistered = {
+	category = fame
+	icon = theologian.dds
+	immortal = yes
+	flag = is_immortal
+	shown_in_encyclopedia = no
+	shown_in_ruler_designer = no
+}

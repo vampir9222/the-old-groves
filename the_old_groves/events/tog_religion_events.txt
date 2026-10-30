@@ -1,0 +1,24 @@
+﻿namespace = tog_religion
+
+# The Archdruidate takes its arms and its name (see tog_on_title_gain_archdruid).
+tog_religion.0001 = {
+	type = character_event
+	hidden = yes
+
+	trigger = {
+		religion = religion:tog_celtic_religion
+		exists = faith.religious_head_title
+	}
+
+	immediate = {
+		faith.religious_head_title = {
+			if = {
+				limit = { NOT = { has_variable = tog_archdruid_coa } }
+				set_coa = tog_archdruidate
+				# "Archdruidate" rather than the vanilla "Druidic Archdruidate".
+				set_title_name = tog_religious_head_title_name
+				set_variable = { name = tog_archdruid_coa value = yes }
+			}
+		}
+	}
+}

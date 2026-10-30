@@ -1,0 +1,4930 @@
+﻿namespace = tog_quest
+
+# The Old Groves - restoration quest, step 1: the stone and the old man.
+# 0001 Dubgall's opening | 0002 start by decision | 0003 copying the stone
+# 0020 Peredur at the stone | 0021 the wrong old man | 0022 the empty house
+# 0023 the bandits' camp | 0024 a failed attempt | 0050 the old man rescued
+# 0010-0012 events on the road | 0060 arrival dispatcher (hidden)
+
+# Dubgall: who he is, and the stone on the moor.
+tog_quest.0001 = {
+	type = character_event
+	title = tog_quest.0001.t
+	desc = tog_quest.0001.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0001.a
+		custom_tooltip = tog_quest.0001.a.tt
+		tog_start_quest_effect = yes
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0060
+				days = 1
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0001.b
+		custom_tooltip = tog_quest.0001.b.tt
+	}
+}
+
+# Any other character: word of a strange stone on Skye.
+tog_quest.0002 = {
+	type = character_event
+	title = tog_quest.0002.t
+	desc = tog_quest.0002.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_intrigue" }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0002.a
+		custom_tooltip = tog_quest.0002.a.tt
+		hidden_effect = { tog_travel_to_destination_effect = yes }
+	}
+}
+
+# At the stone: the character copies the signs onto a wax tablet.
+tog_quest.0003 = {
+	type = character_event
+	title = tog_quest.0003.t
+	desc = tog_quest.0003.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0003.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0020
+				days = 1
+			}
+		}
+	}
+}
+
+# Peredur, looking for his goat, finds you at the stone and offers to take you to the old man.
+tog_quest.0020 = {
+	type = character_event
+	title = tog_quest.0020.t
+	desc = tog_quest.0020.desc
+	theme = learning
+	override_background = { reference = fp1_runestone }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = {
+		tog_create_peredur_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0020.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		custom_tooltip = tog_quest.0020.a.tt
+		hidden_effect = {
+			add_courtier = scope:tog_peredur
+			add_courtier = scope:tog_cei
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_peredur
+					value = scope:tog_peredur
+				}
+				add_to_variable_list = {
+					name = tog_companions
+					target = scope:tog_peredur
+				}
+			}
+			tog_next_stage_effect = {
+				STAGE = 2
+				DESTINATION = b_gairloch
+			}
+			tog_travel_to_destination_effect = yes
+			trigger_event = {
+				id = tog_quest.0010
+				days = { 4 8 }
+			}
+		}
+	}
+}
+
+# The wrong old man: Peredur went left.
+tog_quest.0021 = {
+	type = character_event
+	title = tog_quest.0021.t
+	desc = tog_quest.0021.desc
+	theme = learning
+	override_background = { reference = fp1_ocean_norse }
+	left_portrait = {
+		character = root
+		animation = disapproval
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = shame
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_peredur ?= { save_scope_as = tog_peredur }
+		}
+	}
+
+	option = {
+		name = tog_quest.0021.a
+		custom_tooltip = tog_quest.0021.a.tt
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 3
+				DESTINATION = b_ardnamurchon
+			}
+			tog_travel_to_destination_effect = yes
+		}
+	}
+}
+
+# The right old man's house: broken door, and he is gone, taken by bandits.
+tog_quest.0022 = {
+	type = character_event
+	title = tog_quest.0022.t
+	desc = tog_quest.0022.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = {
+		name = tog_quest.0022.a
+		custom_tooltip = tog_quest.0022.a.tt
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 4
+				DESTINATION = b_glencoe
+			}
+			tog_travel_to_destination_effect = yes
+			trigger_event = {
+				id = tog_quest.0012
+				days = { 4 8 }
+			}
+		}
+	}
+}
+
+# The bandits' camp: attack (martial), talk (diplomacy) or pay (gold, certain).
+# A failed attack wounds you; you come back a few days later and may attack again.
+# A failed talk opens tog_quest.0025 at once: attack, pay, or leave and come back later.
+tog_quest.0023 = {
+	type = character_event
+	title = tog_quest.0023.t
+	desc = tog_quest.0023.desc
+	theme = martial
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	option = { # Attack the camp
+		name = tog_quest.0023.a
+		tog_camp_attack_effect = yes
+	}
+
+	option = { # Talk them round
+		name = tog_quest.0023.b
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				NOT = { exists = var:tog_tried_talk }
+			}
+		}
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0023.b.good
+				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+				hidden_effect = {
+					trigger_event = {
+						id = tog_quest.0050
+						days = 1
+					}
+				}
+			}
+			60 = {
+				custom_tooltip = tog_quest.0023.b.bad
+				add_prestige = minor_prestige_loss
+				hidden_effect = {
+					random_owned_story = {
+						limit = { story_type = tog_story_old_groves }
+						set_variable = {
+							name = tog_tried_talk
+							value = yes
+						}
+					}
+					trigger_event = tog_quest.0025
+				}
+			}
+		}
+	}
+
+	option = { # Pay the ransom
+		name = tog_quest.0023.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		tog_camp_pay_effect = yes
+	}
+
+	option = { # Leave, and come back when ready
+		name = tog_quest.0025.c
+		tog_camp_leave_effect = yes
+	}
+}
+
+# The attack failed: you escaped by a hair, wounded. Back to the camp a few days later.
+tog_quest.0024 = {
+	type = character_event
+	title = tog_quest.0024.t
+	desc = tog_quest.0024.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	option = {
+		name = tog_quest.0024.a
+		custom_tooltip = tog_quest.0024.a.tt
+		hidden_effect = {
+			trigger_event = tog_quest.0023
+		}
+	}
+}
+
+# The talk failed: the bandits laughed you out of the camp.
+# Attack, pay, or leave and come back later.
+tog_quest.0025 = {
+	type = character_event
+	title = tog_quest.0025.t
+	desc = tog_quest.0025.desc
+	theme = martial
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = shame
+	}
+
+	option = { # Attack the camp
+		name = tog_quest.0023.a
+		tog_camp_attack_effect = yes
+	}
+
+	option = { # Pay the ransom
+		name = tog_quest.0023.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		tog_camp_pay_effect = yes
+	}
+
+	option = { # Leave, and come back when ready
+		name = tog_quest.0025.c
+		tog_camp_leave_effect = yes
+	}
+}
+
+# The old man is free: he joins you, explains the stone, and sends you to the monks' books.
+tog_quest.0050 = {
+	type = character_event
+	title = tog_quest.0050.t
+	desc = tog_quest.0050.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_positive_effect"
+		create_character = {
+			name = "Lailoken"
+			age = 60
+			gender = male
+			culture = root.location.county.culture
+			faith = root.location.county.faith
+			dynasty_house = house:house_tog_myrddin
+			location = root.location
+			trait = eccentric
+			trait = humble
+			trait = education_learning_3
+			trait = pilgrim
+			trait = lifestyle_herbalist
+			trait = witch
+			trait = tog_blood_of_myrddin
+			diplomacy = 6
+			martial = 2
+			stewardship = 5
+			intrigue = 4
+			learning = 13
+			save_scope_as = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0050.a
+		custom_tooltip = tog_quest.0050.a.tt
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		hidden_effect = {
+			add_courtier = scope:tog_lailoken
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_lailoken
+					value = scope:tog_lailoken
+				}
+				add_to_variable_list = {
+					name = tog_companions
+					target = scope:tog_lailoken
+				}
+			}
+			tog_start_step2_effect = yes
+			remove_global_variable = tog_poi_stone_active
+			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+			tog_travel_home_effect = yes
+		}
+	}
+}
+
+# On the road (to the wrong old man): the wax tablet has melted near the fire.
+tog_quest.0010 = {
+	type = character_event
+	title = tog_quest.0010.t
+	desc = tog_quest.0010.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Redraw the signs from memory (learning)
+		name = tog_quest.0010.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0010.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0010.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Let Peredur carry the tablet from now on
+		name = tog_quest.0010.b
+		custom_tooltip = tog_quest.0010.b.tt
+		add_stress = minor_stress_loss
+	}
+}
+
+# On the road (to the bandits' camp): the crescent haunts your dreams.
+tog_quest.0012 = {
+	type = character_event
+	title = tog_quest.0012.t
+	desc = tog_quest.0012.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Write the dream down (learning)
+		name = tog_quest.0012.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0012.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0012.a.bad
+				add_stress = medium_stress_gain
+			}
+		}
+	}
+
+	option = { # It is only a dream
+		name = tog_quest.0012.b
+		add_stress = minor_stress_loss
+	}
+}
+
+# Arrival at a quest destination (travel, point of interest, or the monthly check).
+tog_quest.0060 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			save_scope_as = tog_story
+		}
+		if = {
+			limit = { exists = scope:tog_story }
+			scope:tog_story = {
+				if = {
+					limit = {
+						var:tog_stage = 1
+						root.location = province:1692
+						NOT = { exists = var:tog_seen_stone }
+					}
+					set_variable = {
+						name = tog_seen_stone
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0003 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 2
+						root.location = province:1704
+						NOT = { exists = var:tog_v_wrong }
+					}
+					set_variable = {
+						name = tog_v_wrong
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0021 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 3
+						root.location = province:35
+						NOT = { exists = var:tog_v_house }
+					}
+					set_variable = {
+						name = tog_v_house
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0022 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 4
+						root.location = province:1701
+						OR = {
+							NOT = { exists = var:tog_v_camp }
+							exists = var:tog_returning
+						}
+					}
+					set_variable = {
+						name = tog_v_camp
+						value = yes
+					}
+					remove_variable = tog_returning
+					remove_variable = tog_left_camp
+					root = { trigger_event = tog_quest.0023 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1606
+						NOT = { exists = var:tog_m_jarrow_done }
+						# Not while a theft is being plotted: the scheme has its own scenes.
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0101 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1684
+						NOT = { exists = var:tog_m_whithorn_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0102 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1655
+						NOT = { exists = var:tog_m_mynyw_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0103 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:1743
+						NOT = { exists = var:tog_m_dunkeld_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0104 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 10
+						root.location = province:8778
+						NOT = { exists = var:tog_m_applecross_done }
+						NOT = { root = { any_scheme = { type = tog_steal_book } } }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0105 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 20
+						root.location = province:32
+						NOT = { exists = var:tog_p_bru_done }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0201 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 20
+						root.location = province:36
+						NOT = { exists = var:tog_p_uisneach_done }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0211 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 20
+						root.location = province:1681
+						NOT = { exists = var:tog_p_mabon_done }
+						root = { tog_mabon_open_trigger = yes }
+						NOT = { exists = var:tog_arrival_lock }
+						NOT = { exists = var:tog_left_here }
+					}
+					tog_arrival_lock_effect = yes
+					root = { trigger_event = tog_quest.0221 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 30
+						root.location = province:2162
+					}
+					root = { trigger_event = tog_quest.0311 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 31
+						root.location = province:2346
+						root = {
+							NOT = { any_scheme = { type = tog_reach_heric } }
+						}
+					}
+					root = { trigger_event = tog_quest.0320 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 41
+						root.location = province:1673
+					}
+					root = { trigger_event = tog_quest.0411 }
+				}
+				else_if = {
+					limit = {
+						var:tog_stage = 92
+						root.location = var:tog_destination.title_province
+						NOT = { exists = var:tog_crowd_seen }
+					}
+					set_variable = {
+						name = tog_crowd_seen
+						value = yes
+					}
+					root = { trigger_event = tog_quest.0901 }
+				}
+			}
+		}
+	}
+}
+
+# Step 2 - arrival at the monastery (jarrow).
+tog_quest.0101 = {
+	type = character_event
+	title = tog_quest.0101.t
+	desc = tog_quest.0101.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = jarrow FLAG = talk } } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = jarrow
+			TITLE = b_durham
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = jarrow FLAG = pay } }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = jarrow
+			TITLE = b_durham
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
+		show_as_unavailable = { always = yes }
+		tog_start_steal_scheme_effect = {
+			M = jarrow
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		tog_monastery_force_effect = {
+			M = jarrow
+			TITLE = b_durham
+			PROV = 1606
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Step 2 - reading the book of jarrow, a few months later.
+tog_quest.0121 = {
+	type = character_event
+	title = tog_quest.0121.t
+	desc = tog_quest.0121.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0121.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (whithorn).
+tog_quest.0102 = {
+	type = character_event
+	title = tog_quest.0102.t
+	desc = tog_quest.0102.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = whithorn FLAG = talk } } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = whithorn FLAG = pay } }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
+		show_as_unavailable = { always = yes }
+		tog_start_steal_scheme_effect = {
+			M = whithorn
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		tog_monastery_force_effect = {
+			M = whithorn
+			TITLE = b_wigtown
+			PROV = 1684
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Step 2 - reading the book of whithorn, a few months later.
+tog_quest.0122 = {
+	type = character_event
+	title = tog_quest.0122.t
+	desc = tog_quest.0122.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0122.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (mynyw).
+tog_quest.0103 = {
+	type = character_event
+	title = tog_quest.0103.t
+	desc = tog_quest.0103.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = mynyw FLAG = talk } } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = mynyw FLAG = pay } }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
+		show_as_unavailable = { always = yes }
+		tog_start_steal_scheme_effect = {
+			M = mynyw
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		tog_monastery_force_effect = {
+			M = mynyw
+			TITLE = b_st_davids
+			PROV = 1655
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Step 2 - reading the book of mynyw, a few months later.
+tog_quest.0123 = {
+	type = character_event
+	title = tog_quest.0123.t
+	desc = tog_quest.0123.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0123.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (dunkeld).
+tog_quest.0104 = {
+	type = character_event
+	title = tog_quest.0104.t
+	desc = tog_quest.0104.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = dunkeld FLAG = talk } } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = dunkeld FLAG = pay } }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
+		show_as_unavailable = { always = yes }
+		tog_start_steal_scheme_effect = {
+			M = dunkeld
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		tog_monastery_force_effect = {
+			M = dunkeld
+			TITLE = b_dunkeld
+			PROV = 1743
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Step 2 - reading the book of dunkeld, a few months later.
+tog_quest.0124 = {
+	type = character_event
+	title = tog_quest.0124.t
+	desc = tog_quest.0124.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0124.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - arrival at the monastery (applecross).
+tog_quest.0105 = {
+	type = character_event
+	title = tog_quest.0105.t
+	desc = tog_quest.0105.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = { # Talk to a monk
+		name = tog_m.talk
+		trigger = { custom_description = { text = tog_m.talk_closed tog_monastery_open_trigger = { M = applecross FLAG = talk } } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_m.talk_tt
+		tog_monastery_talk_effect = {
+			M = applecross
+			TITLE = b_applecross
+			WEIGHT = tog_good_weight_diplomacy_value
+		}
+	}
+
+	option = { # Pay a monk
+		name = tog_m.pay
+		trigger = {
+			custom_description = { text = tog_m.pay_closed tog_monastery_open_trigger = { M = applecross FLAG = pay } }
+			gold >= minor_gold_value
+		}
+		show_as_unavailable = { always = yes }
+		tog_monastery_pay_effect = {
+			M = applecross
+			TITLE = b_applecross
+		}
+	}
+
+	option = { # Steal the book
+		name = tog_m.steal
+		trigger = { custom_description = { text = tog_m.steal_scheming NOT = { any_scheme = { type = tog_steal_book } } } }
+		show_as_unavailable = { always = yes }
+		tog_start_steal_scheme_effect = {
+			M = applecross
+		}
+	}
+
+	option = { # Force the doors
+		name = tog_m.force
+		tog_monastery_force_effect = {
+			M = applecross
+			TITLE = b_applecross
+			PROV = 8778
+		}
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_m.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Step 2 - reading the book of applecross, a few months later.
+tog_quest.0125 = {
+	type = character_event
+	title = tog_quest.0125.t
+	desc = tog_quest.0125.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = {
+		name = tog_quest.0125.a
+		tog_book_read_effect = yes
+	}
+}
+
+# Step 2 - the five books read: the synthesis (end of step 2).
+tog_quest.0130 = {
+	type = character_event
+	title = tog_quest.0130.t
+	desc = tog_quest.0130.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_faith_conversion"
+	}
+
+	option = {
+		name = tog_quest.0130.a
+		add_prestige = medium_prestige_gain
+		custom_tooltip = tog_quest.0130.a.tt
+		add_piety = major_piety_gain
+		add_learning_lifestyle_xp = 150
+		hidden_effect = { tog_start_step3_effect = yes }
+	}
+}
+
+# Step 2 - choosing which monastery to travel to.
+tog_quest.0140 = {
+	type = character_event
+	title = tog_quest.0140.t
+	desc = tog_quest.0140.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	immediate = {
+		tog_distance_effect = { PROV = 1606 NAME = jarrow }
+		tog_distance_effect = { PROV = 1684 NAME = whithorn }
+		tog_distance_effect = { PROV = 1655 NAME = mynyw }
+		tog_distance_effect = { PROV = 1743 NAME = dunkeld }
+		tog_distance_effect = { PROV = 8778 NAME = applecross }
+	}
+
+	option = {
+		name = tog_quest.0140.jarrow
+		trigger = { tog_monastery_todo_trigger = { M = jarrow } }
+		if = {
+			limit = { location = province:1606 }
+			hidden_effect = { trigger_event = tog_quest.0101 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1606 } }
+	}
+	option = {
+		name = tog_quest.0140.whithorn
+		trigger = { tog_monastery_todo_trigger = { M = whithorn } }
+		if = {
+			limit = { location = province:1684 }
+			hidden_effect = { trigger_event = tog_quest.0102 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1684 } }
+	}
+	option = {
+		name = tog_quest.0140.mynyw
+		trigger = { tog_monastery_todo_trigger = { M = mynyw } }
+		if = {
+			limit = { location = province:1655 }
+			hidden_effect = { trigger_event = tog_quest.0103 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1655 } }
+	}
+	option = {
+		name = tog_quest.0140.dunkeld
+		trigger = { tog_monastery_todo_trigger = { M = dunkeld } }
+		if = {
+			limit = { location = province:1743 }
+			hidden_effect = { trigger_event = tog_quest.0104 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1743 } }
+	}
+	option = {
+		name = tog_quest.0140.applecross
+		trigger = { tog_monastery_todo_trigger = { M = applecross } }
+		if = {
+			limit = { location = province:8778 }
+			hidden_effect = { trigger_event = tog_quest.0105 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 8778 } }
+	}
+	option = {
+		name = tog_quest.0140.stay
+	}
+}
+
+# ---- Road events, rolled every 45 to 75 days of a journey (about one in three rolls) ----
+
+tog_quest.0150 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		remove_variable = tog_tev_pending
+		if = {
+			limit = {
+				is_travelling = yes
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					OR = {
+						var:tog_stage = 10
+						var:tog_stage = 20
+						var:tog_stage = 30
+						var:tog_stage = 31
+						var:tog_stage = 41
+						var:tog_stage = 92
+					}
+				}
+			}
+			# Each road event happens only once, except the food found by the
+			# companions (adventurers only, once a year, likelier when food runs low).
+			random_list = {
+				240 = {}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_3 } }
+					set_variable = { name = tog_tev_3 value = yes }
+					trigger_event = tog_quest.0153
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_4 } }
+					set_variable = { name = tog_tev_4 value = yes }
+					trigger_event = tog_quest.0154
+				}
+				10 = {
+					trigger = { NOT = { exists = var:tog_tev_5 } }
+					set_variable = { name = tog_tev_5 value = yes }
+					trigger_event = tog_quest.0155
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_8 }
+						tog_lailoken_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_8 value = yes }
+					trigger_event = tog_quest.0158
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_9 }
+						tog_lailoken_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_9 value = yes }
+					trigger_event = tog_quest.0159
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_10 }
+						tog_peredur_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_10 value = yes }
+					trigger_event = tog_quest.0181
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_11 }
+						tog_peredur_alive_trigger = yes
+					}
+					set_variable = { name = tog_tev_11 value = yes }
+					trigger_event = tog_quest.0182
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_13 }
+						tog_companion_alive_trigger = { WHO = tog_eogan }
+					}
+					set_variable = { name = tog_tev_13 value = yes }
+					trigger_event = tog_quest.0184
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_14 }
+						tog_companion_alive_trigger = { WHO = tog_gwion }
+					}
+					set_variable = { name = tog_tev_14 value = yes }
+					trigger_event = tog_quest.0185
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_15 }
+						tog_companion_alive_trigger = { WHO = tog_gofraid }
+					}
+					set_variable = { name = tog_tev_15 value = yes }
+					trigger_event = tog_quest.0186
+				}
+				10 = {
+					trigger = {
+						NOT = { exists = var:tog_tev_16 }
+						tog_companion_alive_trigger = { WHO = tog_ursin }
+					}
+					set_variable = { name = tog_tev_16 value = yes }
+					trigger_event = tog_quest.0187
+				}
+				10 = {
+					trigger = {
+						is_landless_adventurer = yes
+						NOT = { has_variable = tog_food_cd }
+						tog_peredur_alive_trigger = yes
+					}
+					modifier = {
+						add = 40
+						domicile ?= { provisions <= 500 }
+					}
+					set_variable = {
+						name = tog_food_cd
+						years = 1
+					}
+					trigger_event = tog_quest.0188
+				}
+				10 = {
+					trigger = {
+						is_landless_adventurer = yes
+						NOT = { has_variable = tog_food_cd }
+						any_owned_story = {
+							story_type = tog_story_old_groves
+							any_in_list = {
+								variable = tog_companions
+								is_alive = yes
+								NOT = { has_trait = tog_blood_of_myrddin }
+							}
+						}
+					}
+					modifier = {
+						add = 40
+						domicile ?= { provisions <= 500 }
+					}
+					set_variable = {
+						name = tog_food_cd
+						years = 1
+					}
+					trigger_event = tog_quest.0189
+				}
+			}
+			set_variable = { name = tog_tev_pending value = yes }
+			trigger_event = {
+				id = tog_quest.0150
+				days = { 45 75 }
+			}
+		}
+	}
+}
+
+# Road: a spring hung with ribbons, an old rite that survives.
+tog_quest.0153 = {
+	type = character_event
+	title = tog_quest.0153.t
+	desc = tog_quest.0153.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+
+	option = { # Understand the rite (learning)
+		name = tog_quest.0153.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				custom_tooltip = tog_quest.0153.a.good
+				add_learning_lifestyle_xp = medium_lifestyle_xp
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0153.a.bad
+				add_stress = minor_stress_gain
+			}
+		}
+	}
+
+	option = { # Tie a ribbon too
+		name = tog_quest.0153.b
+		add_piety = minor_piety_gain
+		add_stress = minor_stress_loss
+	}
+}
+
+# Road: Christian persecution of the old customs.
+tog_quest.0154 = {
+	type = character_event
+	title = tog_quest.0154.t
+	desc = tog_quest.0154.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+
+	option = { # Step in by force (martial)
+		name = tog_quest.0154.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_martial_value }
+				custom_tooltip = tog_quest.0154.a.good
+				add_prestige = minor_prestige_gain
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0154.a.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+			}
+		}
+	}
+
+	option = { # Step in with words (diplomacy)
+		name = tog_quest.0154.b
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0154.b.good
+				add_piety = minor_piety_gain
+			}
+			60 = {
+				custom_tooltip = tog_quest.0154.b.bad
+				add_prestige = minor_prestige_loss
+			}
+		}
+	}
+
+	option = { # Stay hidden and go on
+		name = tog_quest.0154.c
+		add_stress = medium_stress_gain
+	}
+}
+
+# Road: Peredur knows a shortcut.
+tog_quest.0155 = {
+	type = character_event
+	title = tog_quest.0155.t
+	desc = tog_quest.0155.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_peredur ?= { save_scope_as = tog_peredur }
+		}
+	}
+
+	option = { # Follow Peredur (pure chance)
+		name = tog_quest.0155.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 15
+		}
+		random_list = {
+			40 = {
+				custom_tooltip = tog_quest.0155.a.good
+				add_stewardship_lifestyle_xp = medium_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0155.a.bad
+			}
+		}
+	}
+
+	option = { # Ask the locals (diplomacy)
+		name = tog_quest.0155.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_diplomacy_value }
+				custom_tooltip = tog_quest.0155.b.good
+				add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+			}
+			60 = {
+				custom_tooltip = tog_quest.0155.b.bad
+			}
+		}
+	}
+}
+
+# ---- Step 2: failure scenes; their option goes back to the monastery ----
+
+# The monk would not be convinced.
+tog_quest.0161 = {
+	type = character_event
+	title = tog_quest.0161.t
+	desc = tog_quest.0161.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0161.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# The monk refused the money.
+tog_quest.0162 = {
+	type = character_event
+	title = tog_quest.0162.t
+	desc = tog_quest.0162.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0162.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# The monk kept the money and vanished.
+tog_quest.0163 = {
+	type = character_event
+	title = tog_quest.0163.t
+	desc = tog_quest.0163.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = anger
+	}
+
+	option = {
+		name = tog_quest.0163.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# Repelled at the doors.
+tog_quest.0165 = {
+	type = character_event
+	title = tog_quest.0165.t
+	desc = tog_quest.0165.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = pain
+	}
+
+	option = {
+		name = tog_quest.0165.a
+		tog_reopen_monastery_effect = yes
+	}
+}
+
+# ---- Step 2: success scenes, one per method ----
+
+tog_quest.0171 = {
+	type = character_event
+	title = tog_quest.0171.t
+	desc = tog_quest.0171.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = {
+		name = tog_quest.0171.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+	}
+}
+
+tog_quest.0172 = {
+	type = character_event
+	title = tog_quest.0172.t
+	desc = tog_quest.0172.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = tog_quest.0172.a
+	}
+}
+
+tog_quest.0173 = {
+	type = character_event
+	title = tog_quest.0173.t
+	desc = tog_quest.0173.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = {
+		name = tog_quest.0173.a
+	}
+}
+
+tog_quest.0174 = {
+	type = character_event
+	title = tog_quest.0174.t
+	desc = tog_quest.0174.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_bold
+	}
+
+	option = {
+		name = tog_quest.0174.a
+	}
+}
+
+# Road: Lailoken vanishes one night and comes back with an idea.
+tog_quest.0158 = {
+	type = character_event
+	title = tog_quest.0158.t
+	desc = tog_quest.0158.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+		}
+	}
+
+	option = { # Listen to him
+		name = tog_quest.0158.a
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 15
+			}
+		}
+	}
+
+	option = { # Scold him
+		name = tog_quest.0158.b
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = disappointed_opinion
+				opinion = -10
+			}
+		}
+	}
+}
+
+# Road: Lailoken can no longer keep up.
+tog_quest.0159 = {
+	type = character_event
+	title = tog_quest.0159.t
+	desc = tog_quest.0159.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = pain
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_lailoken ?= { save_scope_as = tog_lailoken }
+		}
+	}
+
+	option = { # Slow down for him
+		name = tog_quest.0159.a
+		custom_tooltip = tog_quest.0159.a.tt
+		scope:tog_lailoken = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 20
+			}
+		}
+	}
+
+	option = { # Push on
+		name = tog_quest.0159.b
+		scope:tog_lailoken = {
+			contract_disease_effect = {
+				DISEASE = ill
+				TREATMENT_EVENT = no
+			}
+		}
+	}
+}
+
+# Road: Peredur and the toll keeper (he counts everything).
+tog_quest.0181 = {
+	type = character_event
+	title = tog_quest.0181.t
+	desc = tog_quest.0181.desc
+	theme = stewardship
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let Peredur handle it
+		name = tog_quest.0181.a
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		add_gold = tiny_gold_value
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+	}
+
+	option = { # Pay and move on
+		name = tog_quest.0181.b
+		tog_companion_opinion_effect = {
+			WHO = tog_peredur
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+		remove_short_term_gold = tiny_gold_value
+	}
+}
+
+# Road: Peredur tries to read one of the books.
+tog_quest.0182 = {
+	type = character_event
+	title = tog_quest.0182.t
+	desc = tog_quest.0182.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = thinking
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Teach him a few letters
+		name = tog_quest.0182.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		scope:tog_peredur = {
+			add_opinion = {
+				target = root
+				modifier = grateful_opinion
+				opinion = 15
+			}
+		}
+	}
+
+	option = { # Burst out laughing
+		name = tog_quest.0182.b
+		scope:tog_peredur = {
+			add_opinion = {
+				target = root
+				modifier = disappointed_opinion
+				opinion = -5
+			}
+		}
+	}
+}
+
+# ---- Step 3: the sacred places ----
+
+# Step 3 - choosing the next sacred place (from the travel decision).
+tog_quest.0240 = {
+	type = character_event
+	title = tog_quest.0240.t
+	desc = tog_quest.0240.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	immediate = {
+		tog_distance_effect = { PROV = 32 NAME = bru }
+		tog_distance_effect = { PROV = 36 NAME = uisneach }
+		tog_distance_effect = { PROV = 1681 NAME = mabon }
+	}
+
+	option = {
+		name = tog_quest.0240.bru
+		trigger = { tog_place_todo_trigger = { P = bru } }
+		if = {
+			limit = { location = province:32 }
+			hidden_effect = { trigger_event = tog_quest.0201 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 32 } }
+	}
+	option = {
+		name = tog_quest.0240.uisneach
+		trigger = { tog_place_todo_trigger = { P = uisneach } }
+		if = {
+			limit = { location = province:36 }
+			hidden_effect = { trigger_event = tog_quest.0211 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 36 } }
+	}
+	option = {
+		name = tog_quest.0240.mabon
+		trigger = {
+			tog_place_todo_trigger = { P = mabon }
+			custom_description = {
+				text = tog_quest.0240.mabon_locked
+				tog_mabon_open_trigger = yes
+			}
+		}
+		if = {
+			limit = { location = province:1681 }
+			hidden_effect = { trigger_event = tog_quest.0221 }
+		}
+		else = { tog_travel_to_province_effect = { PROV = 1681 } }
+	}
+	option = {
+		name = tog_quest.0140.stay
+	}
+}
+
+# ---- Brú na Bóinne: the night in the mound ----
+
+# Arrival: Eógan the shepherd tells the stories of the place.
+tog_quest.0201 = {
+	type = character_event
+	title = tog_quest.0201.t
+	desc = tog_quest.0201.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = personality_rational
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			if = {
+				limit = { NOT = { exists = var:tog_eogan_met } }
+				set_variable = {
+					name = tog_eogan_met
+					value = yes
+				}
+				story_owner = {
+					tog_create_eogan_effect = yes
+				}
+				set_variable = {
+					name = tog_eogan_wait
+					value = scope:tog_eogan
+				}
+			}
+			var:tog_eogan_wait ?= { save_scope_as = tog_eogan }
+		}
+	}
+
+	option = { # Spend the night in the mound
+		name = tog_quest.0201.a
+		hidden_effect = { trigger_event = tog_quest.0202 }
+	}
+
+	option = { # Leave
+		name = tog_m.leave
+		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# The night: one roll on learning; brave helps, craven hinders. The vision comes anyway.
+tog_quest.0202 = {
+	type = character_event
+	title = tog_quest.0202.t
+	desc = tog_quest.0202.desc
+	theme = faith
+	override_background = { reference = dungeon }
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+
+	option = {
+		name = tog_quest.0202.a
+		random_list = {
+			0 = {
+				modifier = { add = tog_good_weight_learning_value }
+				modifier = {
+					has_trait = brave
+					add = 30
+				}
+				custom_tooltip = tog_quest.0202.good
+				add_learning_lifestyle_xp = minor_lifestyle_xp
+			}
+			60 = {
+				modifier = {
+					has_trait = craven
+					add = 30
+				}
+				custom_tooltip = tog_quest.0202.bad
+				add_stress = medium_stress_gain
+			}
+		}
+		hidden_effect = { trigger_event = tog_quest.0203 }
+	}
+}
+
+# The vision of the Dagda: the chosen symbol gives a permanent trait.
+tog_quest.0203 = {
+	type = character_event
+	title = tog_quest.0203.t
+	desc = tog_quest.0203.desc
+	theme = faith
+	override_background = { reference = fp3_cave }
+	override_sound = { reference = "event:/SFX/Events/Backgrounds/temple_generic" }
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_secret"
+	}
+
+	option = { # The cauldron
+		name = tog_quest.0203.a
+		add_trait = tog_dagda_cauldron
+		hidden_effect = { trigger_event = tog_quest.0204 }
+	}
+	option = { # The club
+		name = tog_quest.0203.b
+		add_trait = tog_dagda_club
+		hidden_effect = { trigger_event = tog_quest.0204 }
+	}
+	option = { # The harp
+		name = tog_quest.0203.c
+		add_trait = tog_dagda_harp
+		hidden_effect = { trigger_event = tog_quest.0204 }
+	}
+}
+
+# Morning: Eógan waited outside all night and joins the quest.
+tog_quest.0204 = {
+	type = character_event
+	title = tog_quest.0204.t
+	desc = tog_quest.0204.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = admiration
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_eogan_wait ?= { save_scope_as = tog_eogan }
+		}
+	}
+
+	option = {
+		name = tog_quest.0204.a
+		custom_tooltip = tog_quest.0204.a.tt
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		hidden_effect = {
+			if = {
+				limit = { exists = scope:tog_eogan }
+				tog_join_quest_effect = { WHO = tog_eogan }
+			}
+		}
+		tog_place_done_effect = {
+			P = bru
+			TITLE = b_drogheda
+		}
+	}
+}
+
+# ---- Uisneach: the riddle of the signs ----
+
+# Arrival on the hill.
+tog_quest.0211 = {
+	type = character_event
+	title = tog_quest.0211.t
+	desc = tog_quest.0211.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0211.a
+		hidden_effect = { trigger_event = tog_quest.0212 }
+	}
+
+	option = {
+		name = tog_m.leave
+		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Sign 1: the split stone. Right answer: a (the centre, Lug's grave; the book of places).
+tog_quest.0212 = {
+	type = character_event
+	title = tog_quest.0212.t
+	desc = tog_quest.0212.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0212.a
+		hidden_effect = { trigger_event = tog_quest.0213 }
+	}
+	option = {
+		name = tog_quest.0212.b
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+	option = {
+		name = tog_quest.0212.c
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+}
+
+# Sign 2: the traces of a great fire. Right answer: c (the Beltaine fires; the scraped book).
+tog_quest.0213 = {
+	type = character_event
+	title = tog_quest.0213.t
+	desc = tog_quest.0213.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0213.a
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+	option = {
+		name = tog_quest.0213.b
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+	option = {
+		name = tog_quest.0213.c
+		hidden_effect = { trigger_event = tog_quest.0214 }
+	}
+}
+
+# Sign 3: the well. Right answer: b (a door to the Otherworld; Pliny's souls that pass).
+tog_quest.0214 = {
+	type = character_event
+	title = tog_quest.0214.t
+	desc = tog_quest.0214.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0214.a
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+	option = {
+		name = tog_quest.0214.b
+		hidden_effect = { trigger_event = tog_quest.0216 }
+	}
+	option = {
+		name = tog_quest.0214.c
+		hidden_effect = { trigger_event = tog_quest.0215 }
+	}
+}
+
+# A wrong reading: back to the first sign.
+tog_quest.0215 = {
+	type = character_event
+	title = tog_quest.0215.t
+	desc = tog_quest.0215.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0215.a
+		custom_tooltip = tog_u.wrong_tt
+		add_piety = minor_piety_loss
+		hidden_effect = { trigger_event = tog_quest.0212 }
+	}
+}
+
+# The three signs read: Lug, god of all the arts.
+tog_quest.0216 = {
+	type = character_event
+	title = tog_quest.0216.t
+	desc = tog_quest.0216.desc
+	theme = faith
+	override_background = { reference = fp1_runestone_circle }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_low_key_positive"
+	}
+
+	option = {
+		name = tog_quest.0216.a
+		add_prestige = minor_prestige_gain
+		add_piety = medium_piety_gain
+		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+		add_martial_lifestyle_xp = minor_lifestyle_xp
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+		add_intrigue_lifestyle_xp = minor_lifestyle_xp
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		tog_place_done_effect = {
+			P = uisneach
+			TITLE = b_uisneach
+		}
+	}
+}
+
+# ---- The stone of Mabon: the hidden cult (always the last place) ----
+
+# Brú na Bóinne and Uisneach are done: the stone of Mabon is the last place left.
+tog_quest.0220 = {
+	type = character_event
+	title = tog_quest.0220.t
+	desc = tog_quest.0220.desc
+	theme = learning
+	override_background = { reference = ep3_campfire }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = {
+		name = tog_quest.0220.a
+		custom_tooltip = tog_quest.0220.a.tt
+	}
+}
+
+# Arrival: the villagers deny everything; the lord's steward measures the field.
+tog_quest.0221 = {
+	type = character_event
+	title = tog_quest.0221.t
+	desc = tog_quest.0221.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	option = {
+		name = tog_quest.0221.a
+		hidden_effect = { trigger_event = tog_quest.0222 }
+	}
+
+	option = {
+		name = tog_m.leave
+		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# The debt on the field of the stone.
+tog_quest.0222 = {
+	type = character_event
+	title = tog_quest.0222.t
+	desc = tog_quest.0222.desc
+	theme = stewardship
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Pay the debt
+		name = tog_quest.0222.a
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = medium_gold_value
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+		hidden_effect = { trigger_event = tog_quest.0223 }
+	}
+	# The other ways depend on a skill; a failed way closes, the others stay open.
+	option = { # Negotiate with the steward
+		name = tog_quest.0222.b
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_dipl } }
+		show_as_unavailable = { always = yes }
+		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = debt_dipl NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.b.good BAD = tog_quest.0222.b.bad }
+	}
+	option = { # Frighten the steward
+		name = tog_quest.0222.d
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_prow } }
+		show_as_unavailable = { always = yes }
+		add_martial_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = debt_prow NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.d.good BAD = tog_quest.0222.d.bad }
+	}
+	option = { # Forge the acknowledgement of debt
+		name = tog_quest.0222.c
+		trigger = { tog_mabon_way_open_trigger = { FLAG = debt_intr } }
+		show_as_unavailable = { always = yes }
+		add_intrigue_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_intrigue_value FLAG = debt_intr NEXT = tog_quest.0223 SELF = tog_quest.0222 GOOD = tog_quest.0222.c.good BAD = tog_quest.0222.c.bad }
+	}
+	option = {
+		name = tog_m.leave
+		custom_tooltip = tog_p.leave_tt
+		hidden_effect = { tog_left_here_effect = yes }
+	}
+}
+
+# Invited to the rite; but a villager wants to tell the priest. No roll: the skill
+# or the gold is enough.
+tog_quest.0223 = {
+	type = character_event
+	title = tog_quest.0223.t
+	desc = tog_quest.0223.desc
+	theme = intrigue
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Convince him
+		name = tog_quest.0223.a
+		trigger = { tog_mabon_way_open_trigger = { FLAG = aedan_dipl } }
+		show_as_unavailable = { always = yes }
+		add_diplomacy_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_diplomacy_value FLAG = aedan_dipl NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.a.good BAD = tog_quest.0223.a.bad }
+	}
+	option = { # Buy his silence
+		name = tog_quest.0223.b
+		trigger = { gold >= minor_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+		hidden_effect = { trigger_event = tog_quest.0224 }
+	}
+	option = { # Frighten him
+		name = tog_quest.0223.c
+		trigger = { tog_mabon_way_open_trigger = { FLAG = aedan_prow } }
+		show_as_unavailable = { always = yes }
+		add_martial_lifestyle_xp = medium_lifestyle_xp
+		tog_mabon_try_effect = { WEIGHT = tog_good_weight_prowess_value FLAG = aedan_prow NEXT = tog_quest.0224 SELF = tog_quest.0223 GOOD = tog_quest.0223.c.good BAD = tog_quest.0223.c.bad }
+	}
+	option = { # Make him disappear
+		name = tog_quest.0223.d
+		custom_tooltip = tog_quest.0223.d.tt
+		add_intrigue_lifestyle_xp = minor_lifestyle_xp
+		add_piety = medium_piety_loss
+		add_stress = medium_stress_gain
+		hidden_effect = { trigger_event = tog_quest.0224 }
+	}
+}
+
+# The rite at the stone: Gwion, the keeper, and Maponos. He will not talk to a
+# stranger while his daughter is shut in the convent.
+tog_quest.0224 = {
+	type = character_event
+	title = tog_quest.0224.t
+	desc = tog_quest.0224.desc
+	theme = faith
+	override_background = { reference = ce1_legendary_spring }
+	left_portrait = {
+		character = root
+		animation = admiration
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = dismissal
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_succession_instrumental"
+		create_character = {
+			name = "Gwion"
+			age = 44
+			gender = male
+			culture = root.culture
+			faith = root.faith
+			dynasty_house = house:house_tog_taliesin
+			location = root.location
+			trait = lifestyle_mystic
+			trait = education_learning_3
+			trait = zealous
+			trait = tog_awen_protected
+			learning = 14
+			save_scope_as = tog_gwion
+		}
+		create_character = {
+			name = "Ceridwen"
+			age = 40
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			save_scope_as = tog_gwion_wife
+		}
+		scope:tog_gwion = { marry = scope:tog_gwion_wife }
+		create_character = {
+			name = "Eluned"
+			age = 17
+			gender = female
+			culture = root.culture
+			faith = root.faith
+			dynasty_house = house:house_tog_taliesin
+			location = root.location
+			trait = zealous
+			trait = tog_novice
+			father = scope:tog_gwion
+			mother = scope:tog_gwion_wife
+			save_scope_as = tog_eluned
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_gwion_wait
+				value = scope:tog_gwion
+			}
+			set_variable = {
+				name = tog_eluned
+				value = scope:tog_eluned
+			}
+			set_variable = {
+				name = tog_freeing
+				value = yes
+			}
+		}
+	}
+
+	option = { # Free his daughter: a scheme
+		name = tog_quest.0224.a
+		add_prestige = medium_prestige_gain
+		tog_feed_adventurer_effect = { AMOUNT = medium_provisions_gain }
+		custom_tooltip = tog_quest.0224.a.tt
+		start_scheme = {
+			type = tog_free_daughter
+			target_character = scope:tog_eluned
+		}
+		hidden_effect = {
+			tog_place_done_effect = {
+				P = mabon
+				TITLE = b_dumfries
+			}
+		}
+	}
+}
+
+# The end of a phase of the scheme: try now, spend advantages, or wait.
+tog_quest.0231 = {
+	type = character_event
+	title = tog_quest.0231.t
+	desc = tog_quest.0231.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = { # Try now
+		name = tog_quest.0231.a
+		tog_free_attempt_effect = { BONUS = 0 }
+	}
+	option = { # Spend one advantage
+		name = tog_quest.0231.b
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.b.tt
+		scope:scheme = { change_opportunities = -1 }
+		tog_free_attempt_effect = { BONUS = 20 }
+	}
+	option = { # Spend two advantages
+		name = tog_quest.0231.c
+		trigger = { scope:scheme = { scheme_agent_charges >= 2 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.c.tt
+		scope:scheme = { change_opportunities = -2 }
+		tog_free_attempt_effect = { BONUS = 40 }
+	}
+	option = { # Wait for a better night
+		name = tog_quest.0231.d
+		custom_tooltip = tog_quest.0231.d.tt
+	}
+}
+
+# During the scheme: the portress can be bought.
+tog_quest.0251 = {
+	type = character_event
+	title = tog_quest.0251.t
+	desc = tog_quest.0251.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = { # Pay her
+		name = tog_quest.0251.a
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		scope:scheme = { add_scheme_modifier = { type = tog_portress_bought_modifier } }
+	}
+	option = { # Win her over with words
+		name = tog_quest.0251.b
+		trigger = { diplomacy >= 10 }
+		show_as_unavailable = { always = yes }
+		scope:scheme = { add_scheme_modifier = { type = tog_portress_bought_modifier } }
+	}
+	option = { # Do not risk it
+		name = tog_quest.0251.c
+	}
+}
+
+# During the scheme: the abbess grows wary.
+tog_quest.0252 = {
+	type = character_event
+	title = tog_quest.0252.t
+	desc = tog_quest.0252.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Spend an advantage to put her off the scent
+		name = tog_quest.0252.a
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0252.a.tt
+		scope:scheme = { change_opportunities = -1 }
+	}
+	option = { # Nothing to be done
+		name = tog_quest.0252.b
+		scope:scheme = { add_scheme_modifier = { type = tog_abbess_wary_modifier } }
+	}
+}
+
+# During the scheme: a message from Eluned.
+tog_quest.0253 = {
+	type = character_event
+	title = tog_quest.0253.t
+	desc = tog_quest.0253.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+
+	option = {
+		name = tog_quest.0253.a
+		scope:scheme = {
+			add_scheme_modifier = { type = tog_eluned_message_modifier }
+			change_opportunities = 1
+		}
+	}
+}
+
+# During the scheme: Peredur counts the convent's windows aloud.
+tog_quest.0254 = {
+	type = character_event
+	title = tog_quest.0254.t
+	desc = tog_quest.0254.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Lailoken saves the day
+		name = tog_quest.0254.a
+		tog_companion_opinion_effect = {
+			WHO = tog_lailoken
+			MOD = respect_opinion
+			VALUE = 10
+		}
+		trigger = { tog_lailoken_alive_trigger = yes }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0254.a.tt
+		add_stress = minor_stress_loss
+	}
+	option = { # Too late
+		name = tog_quest.0254.b
+		scope:scheme = { add_scheme_modifier = { type = tog_peredur_blunder_modifier } }
+	}
+}
+
+# A failed attempt: the scheme goes on.
+tog_quest.0230 = {
+	type = character_event
+	title = tog_quest.0230.t
+	desc = tog_quest.0230.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = {
+		name = tog_quest.0230.a
+		custom_tooltip = tog_quest.0230.a.tt
+		add_prestige = minor_prestige_loss
+	}
+}
+
+# Eluned is free: Gwion talks at last, and joins the quest with her.
+tog_quest.0232 = {
+	type = character_event
+	title = tog_quest.0232.t
+	desc = tog_quest.0232.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = admiration
+	}
+	lower_right_portrait = {
+		character = scope:tog_eluned
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_peace_ensues"
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_gwion_wait ?= { save_scope_as = tog_gwion }
+			var:tog_eluned ?= { save_scope_as = tog_eluned }
+			remove_variable = tog_freeing
+			set_variable = {
+				name = tog_lessons
+				value = 0
+			}
+			set_variable = {
+				name = tog_learning
+				value = yes
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0232.a
+		custom_tooltip = tog_quest.0232.a.tt
+		add_piety = medium_piety_gain
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		hidden_effect = {
+			if = {
+				limit = { exists = scope:tog_gwion }
+				tog_join_quest_effect = { WHO = tog_gwion }
+			}
+			if = {
+				limit = { exists = scope:tog_eluned }
+				add_courtier = scope:tog_eluned
+				scope:tog_eluned = { remove_trait = tog_novice }
+			}
+			trigger_event = {
+				id = tog_quest.0233
+				days = { 30 45 }
+			}
+		}
+	}
+}
+
+# Learning with Gwion, lesson: Maponos. Lailoken joins in when alive.
+tog_quest.0233 = {
+	type = character_event
+	title = tog_quest.0233.t
+	desc = {
+		desc = tog_quest.0233.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0233.lailoken
+		}
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_rational
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0233.a
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			change_variable = {
+				name = tog_lessons
+				add = 1
+			}
+		}
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		add_piety = minor_piety_gain
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0234
+				days = { 30 60 }
+			}
+		}
+	}
+}
+
+# Learning with Gwion, lesson: year. Lailoken joins in when alive.
+tog_quest.0234 = {
+	type = character_event
+	title = tog_quest.0234.t
+	desc = {
+		desc = tog_quest.0234.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0234.lailoken
+		}
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_rational
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0234.a
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			change_variable = {
+				name = tog_lessons
+				add = 1
+			}
+		}
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		add_piety = minor_piety_gain
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0235
+				days = { 30 60 }
+			}
+		}
+	}
+}
+
+# Learning with Gwion, lesson: oaths. Lailoken joins in when alive.
+tog_quest.0235 = {
+	type = character_event
+	title = tog_quest.0235.t
+	desc = {
+		desc = tog_quest.0235.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0235.lailoken
+		}
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_rational
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0235.a
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			change_variable = {
+				name = tog_lessons
+				add = 1
+			}
+		}
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		add_piety = minor_piety_gain
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0236
+				days = { 30 60 }
+			}
+		}
+	}
+}
+
+# Learning with Gwion, last lesson: the prayers, then Alesia and the village. End of step 3. Lailoken joins in when alive.
+tog_quest.0236 = {
+	type = character_event
+	title = tog_quest.0236.t
+	desc = {
+		desc = tog_quest.0236.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0236.lailoken
+		}
+	}
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_rational
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0236.a
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			change_variable = {
+				name = tog_lessons
+				add = 1
+			}
+		}
+		custom_tooltip = tog_quest.0236.a.tt
+		scope:tog_gwion ?= {
+			remove_trait = tog_awen_protected
+			add_trait = tog_awen
+		}
+		add_learning_lifestyle_xp = major_lifestyle_xp
+		add_piety = medium_piety_gain
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				remove_variable = tog_learning
+				remove_variable = tog_lessons
+			}
+			# Step 5: the continent. First, find a guide (decision).
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 29
+				}
+			}
+		}
+	}
+}
+
+# The scheme to free Eluned stopped without freeing her: start it again.
+tog_quest.0229 = {
+	type = character_event
+	title = tog_quest.0229.t
+	desc = tog_quest.0229.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_eluned ?= { save_scope_as = tog_eluned }
+		}
+	}
+
+	option = {
+		name = tog_quest.0229.a
+		start_scheme = {
+			type = tog_free_daughter
+			target_character = scope:tog_eluned
+		}
+	}
+}
+
+# ---- Step 5: the continent ----
+
+# Looking for a guide (from the decision): pay in gold or in prestige.
+tog_quest.0300 = {
+	type = character_event
+	title = tog_quest.0300.t
+	desc = tog_quest.0300.desc
+	theme = travel
+	override_background = { reference = tavern }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Pay for the word to go round
+		name = tog_quest.0300.a
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = medium_gold_value
+		custom_tooltip = tog_quest.0300.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0301
+				days = { 7 14 }
+			}
+		}
+	}
+	option = { # Let your name do the work
+		name = tog_quest.0300.b
+		trigger = { prestige >= medium_prestige_value }
+		show_as_unavailable = { always = yes }
+		add_prestige = medium_prestige_loss
+		custom_tooltip = tog_quest.0300.tt
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0301
+				days = { 7 14 }
+			}
+		}
+	}
+	option = { # Not now
+		name = tog_quest.0140.stay
+	}
+}
+
+# Gofraid, who knows Gaul well, comes forward and joins the quest.
+tog_quest.0301 = {
+	type = character_event
+	title = tog_quest.0301.t
+	desc = tog_quest.0301.desc
+	theme = travel
+	override_background = { reference = tavern }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_gofraid
+		animation = personality_bold
+	}
+
+	immediate = {
+		tog_create_gofraid_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0301.a
+		custom_tooltip = tog_quest.0301.join_tt
+		hidden_effect = {
+			tog_join_quest_effect = { WHO = tog_gofraid }
+			tog_next_stage_effect = {
+				STAGE = 30
+				DESTINATION = b_saint_brieuc
+			}
+			tog_travel_to_destination_effect = yes
+		}
+	}
+}
+
+# The village of the cape: where to dig? Right place: the largest house.
+tog_quest.0311 = {
+	type = character_event
+	title = tog_quest.0311.t
+	desc = tog_quest.0311.desc
+	theme = learning
+	override_background = { reference = wilderness_scope }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # The rampart
+		name = tog_quest.0311.a
+		trigger = { NOT = { exists = var:tog_dig_a } }
+		show_as_unavailable = { always = yes }
+		set_variable = tog_dig_a
+		hidden_effect = { trigger_event = tog_quest.0312 }
+	}
+	option = { # The ash heaps
+		name = tog_quest.0311.b
+		trigger = { NOT = { exists = var:tog_dig_b } }
+		show_as_unavailable = { always = yes }
+		set_variable = tog_dig_b
+		hidden_effect = { trigger_event = tog_quest.0312 }
+	}
+	option = { # The stone circles of the houses
+		name = tog_quest.0311.c
+		trigger = { NOT = { exists = var:tog_dig_c } }
+		show_as_unavailable = { always = yes }
+		set_variable = tog_dig_c
+		hidden_effect = { trigger_event = tog_quest.0312 }
+	}
+	option = { # The largest house
+		name = tog_quest.0311.d
+		hidden_effect = { trigger_event = tog_quest.0313 }
+	}
+}
+
+# Nothing here: dig somewhere else.
+tog_quest.0312 = {
+	type = character_event
+	title = tog_quest.0312.t
+	desc = tog_quest.0312.desc
+	theme = learning
+	override_background = { reference = wilderness_scope }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0312.a
+		hidden_effect = { trigger_event = tog_quest.0311 }
+	}
+}
+
+# The golden sickle, under the hearth of the largest house.
+tog_quest.0313 = {
+	type = character_event
+	title = tog_quest.0313.t
+	desc = tog_quest.0313.desc
+	theme = faith
+	override_background = { reference = wilderness_scope }
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_ck3_vocal_maintheme"
+	}
+
+	option = {
+		name = tog_quest.0313.a
+		add_prestige = medium_prestige_gain
+		custom_tooltip = tog_quest.0313.a.tt
+		add_learning_lifestyle_xp = medium_lifestyle_xp
+		add_piety = medium_piety_gain
+		hidden_effect = {
+			tog_create_golden_sickle_effect = yes
+			remove_variable = tog_dig_a
+			remove_variable = tog_dig_b
+			remove_variable = tog_dig_c
+			tog_next_stage_effect = {
+				STAGE = 31
+				DESTINATION = b_auxerre
+			}
+			tog_travel_to_destination_effect = yes
+		}
+	}
+}
+
+# Auxerre: waiting at the gate of Saint-Germain until Heiric comes out.
+tog_quest.0321 = {
+	type = character_event
+	title = tog_quest.0321.t
+	desc = tog_quest.0321.desc
+	theme = learning
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_heric
+		animation = thinking
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_heric ?= { save_scope_as = tog_heric }
+		}
+		scope:tog_heric ?= { remove_trait = tog_cloistered }
+	}
+
+	option = {
+		name = tog_quest.0321.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		custom_tooltip = tog_quest.0321.a.tt
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		# Alise is two days away: no second journey, the field comes right after.
+		hidden_effect = { trigger_event = tog_quest.0331 }
+	}
+}
+
+# Alise: the battlefield, Ursin and the war horn. End of step 5.
+tog_quest.0331 = {
+	type = character_event
+	title = tog_quest.0331.t
+	desc = tog_quest.0331.desc
+	theme = martial
+	override_background = { reference = farmland }
+	left_portrait = {
+		character = root
+		animation = admiration
+	}
+	right_portrait = {
+		character = scope:tog_ursin
+		animation = happiness
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_combat_stinger"
+		tog_create_ursin_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0331.a
+		custom_tooltip = tog_quest.0331.a.tt
+		add_martial_lifestyle_xp = medium_lifestyle_xp
+		hidden_effect = {
+			tog_create_carnyx_effect = yes
+			tog_join_quest_effect = { WHO = tog_ursin }
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 40
+				}
+				remove_variable = tog_destination
+			}
+		}
+	}
+}
+
+# ---- Step 6: the stone read, then the first rite on Ynys Môn ----
+
+# Reading the stone from the copy made in step 1 (from the decision, at home).
+# Lailoken sits in when alive.
+tog_quest.0401 = {
+	type = character_event
+	title = tog_quest.0401.t
+	desc = {
+		desc = tog_quest.0401.desc
+		triggered_desc = {
+			trigger = { exists = scope:tog_lailoken }
+			desc = tog_quest.0401.lailoken
+		}
+		desc = tog_quest.0401.end
+	}
+	theme = learning
+	override_background = { reference = fp1_tribal_temple }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	lower_right_portrait = {
+		trigger = { exists = scope:tog_lailoken }
+		character = scope:tog_lailoken
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_touching_moment"
+		tog_save_companions_effect = yes
+		if = {
+			limit = {
+				exists = scope:tog_lailoken
+				scope:tog_lailoken = { OR = { is_alive = no has_character_flag = tog_heir_companion } }
+			}
+			clear_saved_scope = tog_lailoken
+		}
+	}
+
+	option = {
+		name = tog_quest.0401.a
+		custom_tooltip = tog_quest.0401.a.tt
+		add_learning_lifestyle_xp = major_lifestyle_xp
+		add_piety = medium_piety_gain
+		hidden_effect = {
+			tog_next_stage_effect = {
+				STAGE = 41
+				DESTINATION = b_yns_mon
+			}
+		}
+	}
+}
+
+# Ynys Môn: no woods left, a church on the hill of the old grove. Nest knows a valley.
+tog_quest.0411 = {
+	type = character_event
+	title = tog_quest.0411.t
+	desc = tog_quest.0411.desc
+	theme = faith
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = personality_rational
+	}
+
+	immediate = {
+		create_character = {
+			name = "Nest"
+			age = 25
+			gender = female
+			culture = culture:welsh
+			faith = root.faith
+			dynasty_house = house:house_tog_mon
+			location = root.location
+			trait = education_diplomacy_2
+			trait = calm
+			trait = honest
+			trait = compassionate
+			trait = lifestyle_gardener
+			trait = beauty_good_1
+			trait = physique_bad_1
+			learning = 9
+			save_scope_as = tog_nest
+		}
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = {
+				name = tog_nest_wait
+				value = scope:tog_nest
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0411.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		hidden_effect = { trigger_event = tog_quest.0413 }
+	}
+}
+
+# The first rite: the mistletoe cut from the oak; Nest holds the white cloak.
+tog_quest.0412 = {
+	type = character_event
+	title = tog_quest.0412.t
+	desc = tog_quest.0412.desc
+	theme = faith
+	override_background = { reference = fp1_runestone_circle }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_dynasty" }
+	left_portrait = {
+		character = root
+		animation = ecstasy
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = admiration
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_sacredrite"
+		tog_save_companions_effect = yes
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_nest_wait ?= { save_scope_as = tog_nest }
+		}
+	}
+
+	option = { # Nest holds the white cloak
+		name = tog_quest.0412.a
+		add_prestige = major_prestige_gain
+		tog_first_rite_effect = yes
+	}
+}
+
+# Road: Eógan tells a story by the fire.
+tog_quest.0184 = {
+	type = character_event
+	title = tog_quest.0184.t
+	desc = tog_quest.0184.desc
+	theme = learning
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Listen all night
+		name = tog_quest.0184.a
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		add_diplomacy_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # We leave at dawn
+		name = tog_quest.0184.b
+		tog_companion_opinion_effect = {
+			WHO = tog_eogan
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+	}
+}
+
+# Road: Gwion dreamt of the road ahead.
+tog_quest.0185 = {
+	type = character_event
+	title = tog_quest.0185.t
+	desc = tog_quest.0185.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_zealous
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Take another road
+		name = tog_quest.0185.a
+		custom_tooltip = tog_quest.0185.a.tt
+		add_piety = minor_piety_gain
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # Dreams are dreams
+		name = tog_quest.0185.b
+		tog_companion_opinion_effect = {
+			WHO = tog_gwion
+			MOD = disappointed_opinion
+			VALUE = -10
+		}
+		random_list = {
+			50 = {
+				custom_tooltip = tog_quest.0185.b.good
+			}
+			50 = {
+				custom_tooltip = tog_quest.0185.b.bad
+				increase_wounds_no_death_effect = { REASON = fight }
+				remove_short_term_gold = minor_gold_value
+			}
+		}
+	}
+}
+
+# Road: Gofraid knows the innkeeper's tricks.
+tog_quest.0186 = {
+	type = character_event
+	title = tog_quest.0186.t
+	desc = tog_quest.0186.desc
+	theme = stewardship
+	override_background = { reference = tavern }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_gofraid
+		animation = scheme
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Let him haggle
+		name = tog_quest.0186.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		add_gold = tiny_gold_value
+		add_stewardship_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = respect_opinion
+			VALUE = 10
+		}
+	}
+	option = { # Pay the honest price
+		name = tog_quest.0186.b
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		remove_short_term_gold = tiny_gold_value
+		add_piety = minor_piety_gain
+		tog_companion_opinion_effect = {
+			WHO = tog_gofraid
+			MOD = disappointed_opinion
+			VALUE = -5
+		}
+	}
+}
+
+# Road: Ursin practises the war horn at night.
+tog_quest.0187 = {
+	type = character_event
+	title = tog_quest.0187.t
+	desc = tog_quest.0187.desc
+	theme = martial
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+	right_portrait = {
+		character = scope:tog_ursin
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Encourage him
+		name = tog_quest.0187.a
+		add_martial_lifestyle_xp = minor_lifestyle_xp
+		tog_companion_opinion_effect = {
+			WHO = tog_ursin
+			MOD = respect_opinion
+			VALUE = 15
+		}
+	}
+	option = { # Not at night
+		name = tog_quest.0187.b
+		tog_companion_opinion_effect = {
+			WHO = tog_ursin
+			MOD = disappointed_opinion
+			VALUE = -10
+		}
+	}
+}
+
+# Ynys Môn: men from the hill come to fell the oak during the rite; the companions
+# take up arms, and Ursin's carnyx sends them running.
+tog_quest.0413 = {
+	type = character_event
+	title = tog_quest.0413.t
+	desc = {
+		desc = tog_quest.0413.intro
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_peredur } }
+			desc = tog_quest.0413.peredur
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_gofraid } }
+			desc = tog_quest.0413.gofraid
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_eogan } }
+			desc = tog_quest.0413.eogan
+		}
+		triggered_desc = {
+			trigger = { tog_lailoken_alive_trigger = yes }
+			desc = tog_quest.0413.lailoken
+		}
+		triggered_desc = {
+			trigger = { tog_companion_alive_trigger = { WHO = tog_gwion } }
+			desc = tog_quest.0413.gwion
+		}
+		desc = tog_quest.0413.together
+		first_valid = {
+			triggered_desc = {
+				trigger = { tog_companion_alive_trigger = { WHO = tog_ursin } }
+				desc = tog_quest.0413.carnyx
+			}
+			desc = tog_quest.0413.nocarnyx
+		}
+		desc = tog_quest.0413.end
+	}
+	theme = martial
+	override_background = { reference = ep2_hunt_foggy_forest }
+	left_portrait = {
+		character = root
+		animation = shock
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_ursin }
+		character = scope:tog_ursin
+		animation = personality_bold
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_combat_2"
+		tog_save_companions_effect = yes
+	}
+
+	option = { # Let them go
+		name = tog_quest.0413.a
+		add_piety = minor_piety_gain
+		tog_companions_rally_effect = yes
+		hidden_effect = { trigger_event = tog_quest.0412 }
+	}
+	option = { # Catch the monk
+		name = tog_quest.0413.b
+		add_prestige = minor_prestige_gain
+		add_piety = minor_piety_loss
+		tog_companions_rally_effect = yes
+		hidden_effect = { trigger_event = tog_quest.0412 }
+	}
+}
+
+# ---- Step 7: writing the Sacred Verses ----
+
+# Hidden: picks a writing event; each companion event once, then a plain night.
+tog_quest.0510 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			save_scope_as = tog_story
+		}
+		random_list = {
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_1 }
+					tog_companion_alive_trigger = { WHO = tog_gwion }
+					tog_companion_alive_trigger = { WHO = tog_eogan }
+				}
+				scope:tog_story = { set_variable = tog_vev_1 }
+				trigger_event = tog_quest.0511
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_2 }
+					tog_lailoken_alive_trigger = yes
+				}
+				scope:tog_story = { set_variable = tog_vev_2 }
+				trigger_event = tog_quest.0512
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_3 }
+					tog_companion_alive_trigger = { WHO = tog_nest }
+				}
+				scope:tog_story = { set_variable = tog_vev_3 }
+				trigger_event = tog_quest.0513
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_4 }
+					tog_companion_alive_trigger = { WHO = tog_peredur }
+				}
+				scope:tog_story = { set_variable = tog_vev_4 }
+				trigger_event = tog_quest.0514
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_5 }
+					tog_companion_alive_trigger = { WHO = tog_gwion }
+				}
+				scope:tog_story = { set_variable = tog_vev_5 }
+				trigger_event = tog_quest.0515
+			}
+			10 = {
+				trigger = {
+					NOT = { exists = scope:tog_story.var:tog_vev_6 }
+					tog_companion_alive_trigger = { WHO = tog_gofraid }
+				}
+				scope:tog_story = { set_variable = tog_vev_6 }
+				trigger_event = tog_quest.0516
+			}
+			3 = {
+				trigger_event = tog_quest.0519
+			}
+			3 = {
+				trigger_event = tog_quest.0520
+			}
+			3 = {
+				trigger_event = tog_quest.0521
+			}
+			3 = {
+				trigger_event = tog_quest.0522
+			}
+		}
+	}
+}
+
+# Writing events with the companions: one choice follows the companion (they like
+# it, but it is riskier), the other goes against them (they resent it, but the
+# writing is more likely to move on).
+
+# Gwion and Eógan disagree on how a tale should be told.
+tog_quest.0511 = {
+	type = character_event
+	title = tog_quest.0511.t
+	desc = tog_quest.0511.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = scope:tog_gwion
+		animation = anger
+	}
+	right_portrait = {
+		character = scope:tog_eogan
+		animation = personality_bold
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Gwion's way: the words said to the gods
+		name = tog_quest.0511.a
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 10 }
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = disappointed_opinion VALUE = -10 }
+		add_piety = minor_piety_gain
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0511.a.great }
+	}
+	option = { # Eógan's way: the tale as the people tell it
+		name = tog_quest.0511.b
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 10 }
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0511.b.great }
+	}
+	option = { # Both, side by side: slower, but nobody is hurt
+		name = tog_quest.0511.c
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 5 }
+		tog_companion_opinion_effect = { WHO = tog_eogan MOD = respect_opinion VALUE = 5 }
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0511.c.tt }
+	}
+}
+
+# Lailoken remembers something from his childhood.
+tog_quest.0512 = {
+	type = character_event
+	title = tog_quest.0512.t
+	desc = tog_quest.0512.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_lailoken
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Write it as he remembers it
+		name = tog_quest.0512.a
+		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = respect_opinion VALUE = 15 }
+		random_list = {
+			70 = {
+				add_piety = minor_piety_gain
+				tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_quest.0512.a.great }
+			}
+			30 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0512.a.bad } }
+		}
+	}
+	option = { # Your memory fails you, old man
+		name = tog_quest.0512.b
+		tog_companion_opinion_effect = { WHO = tog_lailoken MOD = disappointed_opinion VALUE = -15 }
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0512.b.bad }
+	}
+}
+
+# Nest and what the women did.
+tog_quest.0513 = {
+	type = character_event
+	title = tog_quest.0513.t
+	desc = tog_quest.0513.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_nest
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # They will have their chapter
+		name = tog_quest.0513.a
+		tog_companion_opinion_effect = { WHO = tog_nest MOD = respect_opinion VALUE = 15 }
+		add_piety = minor_piety_gain
+		tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_quest.0513.a.great }
+	}
+	option = { # The book is about the gods, not the hearth
+		name = tog_quest.0513.b
+		tog_companion_opinion_effect = { WHO = tog_nest MOD = disappointed_opinion VALUE = -15 }
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0513.b.bad }
+	}
+}
+
+# Peredur counts the pages.
+tog_quest.0514 = {
+	type = character_event
+	title = tog_quest.0514.t
+	desc = tog_quest.0514.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Number them, Peredur (he never miscounts)
+		name = tog_quest.0514.a
+		tog_companion_opinion_effect = { WHO = tog_peredur MOD = respect_opinion VALUE = 10 }
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0514.a.good }
+	}
+	option = { # Leave the pages alone
+		name = tog_quest.0514.b
+		tog_companion_opinion_effect = { WHO = tog_peredur MOD = disappointed_opinion VALUE = -10 }
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0514.b.bad }
+	}
+}
+
+# Gwion dreams a missing passage.
+tog_quest.0515 = {
+	type = character_event
+	title = tog_quest.0515.t
+	desc = tog_quest.0515.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+	right_portrait = {
+		character = scope:tog_gwion
+		animation = personality_zealous
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Write the dream
+		name = tog_quest.0515.a
+		add_stress = minor_stress_gain
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = respect_opinion VALUE = 15 }
+		random_list = {
+			50 = {
+				add_piety = medium_piety_gain
+				tog_verses_outcome_effect = { VALUE = 20 D = p20 TT = tog_quest.0515.a.great }
+			}
+			50 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0515.a.bad } }
+		}
+	}
+	option = { # A dream is not a book
+		name = tog_quest.0515.b
+		tog_companion_opinion_effect = { WHO = tog_gwion MOD = disappointed_opinion VALUE = -10 }
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_verses.up_small }
+	}
+}
+
+# Gofraid brings vellum from a market.
+tog_quest.0516 = {
+	type = character_event
+	title = tog_quest.0516.t
+	desc = tog_quest.0516.desc
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_gofraid
+		animation = happiness
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Take it at his price
+		name = tog_quest.0516.a
+		trigger = { gold >= minor_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
+	}
+	option = { # Haggle hard with him
+		name = tog_quest.0516.b
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = disappointed_opinion VALUE = -15 }
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_quest.0516.b.good }
+	}
+	option = { # Buy it all, and pay a copyist from Tours too
+		name = tog_quest.0516.c
+		trigger = { gold >= medium_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = medium_gold_value
+		tog_companion_opinion_effect = { WHO = tog_gofraid MOD = respect_opinion VALUE = 10 }
+		tog_verses_outcome_effect = { VALUE = 20 D = p20 TT = tog_verses.up_big }
+	}
+}
+
+# A night of writing (repeatable, when the companions have had their say).
+tog_quest.0519 = {
+	type = character_event
+	title = tog_quest.0519.t
+	desc = tog_quest.0519.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Write all night
+		name = tog_quest.0519.a
+		add_stress = minor_stress_gain
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
+	}
+	option = { # Read it all again from the start
+		name = tog_quest.0519.b
+		add_learning_lifestyle_xp = minor_lifestyle_xp
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0519.b.good }
+	}
+	option = { # Pay copyists to speed things up
+		name = tog_quest.0519.c
+		trigger = { gold >= minor_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = minor_gold_value
+		tog_verses_outcome_effect = { VALUE = 15 D = p15 TT = tog_verses.up_big }
+	}
+}
+
+# The oath of Beltaine: the Sacred Verses read aloud, the cult is founded.
+tog_quest.0501 = {
+	type = character_event
+	title = tog_quest.0501.t
+	desc = tog_quest.0501.desc
+	theme = faith
+	override_background = { reference = bp1_bonfire }
+	override_sound = { reference = "event:/MUSIC/Cues/Events/Sacral Happening/mx_cue_epic_sacral_moment" }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_gwion }
+		character = scope:tog_gwion
+		animation = admiration
+	}
+
+	immediate = {
+		tog_save_companions_effect = yes
+	}
+
+	option = {
+		name = tog_quest.0501.a
+		add_prestige = major_prestige_gain
+		custom_tooltip = tog_quest.0501.a.tt
+		add_piety = 300
+		add_learning_lifestyle_xp = major_lifestyle_xp
+		tog_found_cult_effect = yes
+	}
+}
+
+# A companion died: their child takes their place in the quest.
+tog_quest.0603 = {
+	type = character_event
+	title = tog_quest.0603.t
+	desc = tog_quest.0603.desc
+	theme = faith
+	override_background = { reference = ce1_funeral_pyre }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_health_bad" }
+	left_portrait = {
+		character = scope:tog_heir_companion
+		animation = sadness
+	}
+	right_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_death"
+	}
+
+	option = {
+		name = tog_quest.0603.a
+		custom_tooltip = tog_quest.0603.a.tt
+	}
+}
+
+# ---- The quest passes to the heir ----
+
+# A minor heir: the quest waits until 16.
+tog_quest.0601 = {
+	type = character_event
+	title = tog_quest.0601.t
+	desc = tog_quest.0601.desc
+	theme = faith
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = sadness
+	}
+
+	option = {
+		name = tog_quest.0601.a
+		custom_tooltip = tog_quest.0601.a.tt
+	}
+}
+
+# The heir takes up the quest.
+tog_quest.0602 = {
+	type = character_event
+	title = tog_quest.0602.t
+	desc = tog_quest.0602.desc
+	theme = faith
+	override_background = { reference = study }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_duty" }
+	left_portrait = {
+		character = root
+		animation = personality_rational
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_succession"
+	}
+
+	option = {
+		name = tog_quest.0602.a
+		custom_tooltip = tog_quest.0602.a.tt
+	}
+}
+
+# A page that does not hold: rewrite it, or move on and come back later.
+tog_quest.0520 = {
+	type = character_event
+	title = tog_quest.0520.t
+	desc = tog_quest.0520.desc
+	theme = learning
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = stress
+	}
+
+	option = { # Tear it up and start again
+		name = tog_quest.0520.a
+		add_stress = minor_stress_gain
+		random_list = {
+			60 = { tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up } }
+			40 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_verses.down } }
+		}
+	}
+	option = { # Leave it and write on
+		name = tog_quest.0520.b
+		tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_verses.up_small }
+	}
+}
+
+# A curious visitor asks what is being written.
+tog_quest.0521 = {
+	type = character_event
+	title = tog_quest.0521.t
+	desc = tog_quest.0521.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	option = { # Show him a harmless page
+		name = tog_quest.0521.a
+		random_list = {
+			70 = { tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0521.a.good } }
+			30 = {
+				add_piety = minor_piety_loss
+				tog_verses_outcome_effect = { VALUE = -10 D = m10 TT = tog_quest.0521.a.bad }
+			}
+		}
+	}
+	option = { # Pay for his silence
+		name = tog_quest.0521.b
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		tog_verses_outcome_effect = { VALUE = 0 D = 0 TT = tog_quest.0521.b.tt }
+	}
+}
+
+# The ink runs out.
+tog_quest.0522 = {
+	type = character_event
+	title = tog_quest.0522.t
+	desc = tog_quest.0522.desc
+	theme = stewardship
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = { # Buy good ink in town
+		name = tog_quest.0522.a
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		tog_verses_outcome_effect = { VALUE = 10 D = p10 TT = tog_verses.up }
+	}
+	option = { # Make it yourself, with oak galls
+		name = tog_quest.0522.b
+		random_list = {
+			50 = {
+				add_learning_lifestyle_xp = minor_lifestyle_xp
+				tog_verses_outcome_effect = { VALUE = 5 D = p5 TT = tog_quest.0522.b.good }
+			}
+			50 = { tog_verses_outcome_effect = { VALUE = -5 D = m5 TT = tog_quest.0522.b.bad } }
+		}
+	}
+}
+
+# ---- Step 8: the faithful ----
+
+# Hidden, on the missionary's arrival: does the count listen?
+tog_quest.0711 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		save_scope_as = tog_missionary
+		var:tog_mission_target ?= { save_scope_as = tog_mission_target }
+		var:tog_mission_owner ?= { save_scope_as = tog_mission_owner }
+		scope:tog_mission_owner ?= {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				save_scope_as = tog_story
+			}
+		}
+		# A result is told only once per companion: their mission must still be under way.
+		if = {
+			limit = {
+				exists = scope:tog_story
+				scope:tog_story = {
+					OR = {
+						AND = {
+							var:tog_eogan ?= scope:tog_missionary
+							var:tog_res_tog_eogan ?= flag:pending
+						}
+						AND = {
+							var:tog_nest ?= scope:tog_missionary
+							var:tog_res_tog_nest ?= flag:pending
+						}
+						AND = {
+							var:tog_gofraid ?= scope:tog_missionary
+							var:tog_res_tog_gofraid ?= flag:pending
+						}
+						AND = {
+							var:tog_ursin ?= scope:tog_missionary
+							var:tog_res_tog_ursin ?= flag:pending
+						}
+						AND = {
+							var:tog_gwion ?= scope:tog_missionary
+							var:tog_res_tog_gwion ?= flag:pending
+						}
+						AND = {
+							var:tog_peredur ?= scope:tog_missionary
+							var:tog_res_tog_peredur ?= flag:pending
+						}
+						AND = {
+							var:tog_lailoken ?= scope:tog_missionary
+							var:tog_res_tog_lailoken ?= flag:pending
+						}
+					}
+				}
+			}
+			save_scope_value_as = {
+				name = tog_mission_pending_here
+				value = yes
+			}
+		}
+		if = {
+			limit = {
+				exists = scope:tog_mission_pending_here
+				exists = scope:tog_mission_target
+				exists = scope:tog_story
+				scope:tog_mission_target = { is_alive = yes }
+			}
+			# Five outcomes; the better the missionary thinks of the owner, the
+			# better the odds.
+			random_list = {
+				# A triumph: the count converts and sings the owner's praises.
+				10 = {
+					opinion_modifier = {
+						who = scope:tog_missionary
+						opinion_target = scope:tog_mission_owner
+						multiplier = 0.3
+					}
+					save_scope_value_as = { name = tog_mission_result value = flag:triumph }
+					tog_mission_convert_effect = yes
+					scope:tog_mission_owner = {
+						add_prestige = minor_prestige_gain
+					}
+				}
+				# A success: the count converts.
+				40 = {
+					opinion_modifier = {
+						who = scope:tog_missionary
+						opinion_target = scope:tog_mission_owner
+						multiplier = 0.6
+					}
+					save_scope_value_as = { name = tog_mission_result value = flag:won }
+					tog_mission_convert_effect = yes
+				}
+				# A failure: the count does not listen.
+				25 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:lost }
+				}
+				# Driven out: the count's men chase the missionary away.
+				10 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:chased }
+					scope:tog_mission_owner = { add_prestige = minor_prestige_loss }
+					scope:tog_mission_target = {
+						add_opinion = {
+							target = scope:tog_mission_owner
+							modifier = angry_opinion
+							opinion = -20
+						}
+					}
+				}
+				# Wounded: the priest's men beat the missionary.
+				5 = {
+					save_scope_value_as = { name = tog_mission_result value = flag:wounded }
+					scope:tog_missionary = {
+						increase_wounds_no_death_effect = { REASON = fight }
+					}
+				}
+			}
+			# For the recap in the quest window.
+			if = {
+				limit = { scope:tog_story.var:tog_eogan ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_eogan
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_nest ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_nest
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_gofraid ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_gofraid
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_ursin ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_ursin
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_gwion ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_gwion
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_peredur ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_peredur
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			if = {
+				limit = { scope:tog_story.var:tog_lailoken ?= scope:tog_missionary }
+				scope:tog_story = {
+					set_variable = {
+						name = tog_res_tog_lailoken
+						value = scope:tog_mission_result
+					}
+				}
+			}
+			scope:tog_mission_owner = { trigger_event = tog_quest.0712 }
+		}
+		remove_variable = tog_mission_target
+		remove_variable = tog_mission_owner
+		if = {
+			limit = { exists = scope:tog_mission_pending_here }
+			scope:tog_mission_owner ?= { tog_mission_result_in_effect = yes }
+		}
+	}
+}
+
+# News from a missionary: who it is, then how it went.
+tog_quest.0712 = {
+	type = character_event
+	title = tog_quest.0712.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_eogan } }
+				desc = tog_quest.0712.eogan
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_nest } }
+				desc = tog_quest.0712.nest
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_gofraid } }
+				desc = tog_quest.0712.gofraid
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_ursin } }
+				desc = tog_quest.0712.ursin
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_gwion } }
+				desc = tog_quest.0712.gwion
+			}
+			triggered_desc = {
+				trigger = { tog_is_companion_trigger = { WHO = tog_peredur } }
+				desc = tog_quest.0712.peredur
+			}
+			triggered_desc = {
+				trigger = {
+					tog_is_companion_trigger = { WHO = tog_lailoken }
+					scope:tog_missionary = { NOT = { has_character_flag = tog_heir_companion } }
+				}
+				desc = tog_quest.0712.lailoken
+			}
+			desc = tog_quest.0712.other
+		}
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:triumph }
+				desc = tog_quest.0712.triumph
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:won }
+				desc = tog_quest.0712.won
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:chased }
+				desc = tog_quest.0712.chased
+			}
+			triggered_desc = {
+				trigger = { scope:tog_mission_result = flag:wounded }
+				desc = tog_quest.0712.wounded
+			}
+			desc = tog_quest.0712.lost
+		}
+	}
+	theme = faith
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = scope:tog_missionary
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_mission_target
+		animation = thinking
+	}
+
+	option = { # Converted
+		name = tog_quest.0712.yes
+		trigger = {
+			OR = {
+				scope:tog_mission_result = flag:triumph
+				scope:tog_mission_result = flag:won
+			}
+		}
+	}
+	option = { # Not converted
+		name = tog_quest.0712.no
+		trigger = {
+			NOR = {
+				scope:tog_mission_result = flag:triumph
+				scope:tog_mission_result = flag:won
+			}
+		}
+	}
+}
+
+# Safety net: if a missionary never arrives, the mission still ends.
+tog_quest.0718 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = {
+				story_type = tog_story_old_groves
+				NOT = { exists = var:tog_mission_done }
+			}
+			story_owner = { trigger_event = tog_quest.0719 }
+		}
+	}
+}
+
+# The companions are back (hidden): the mission is over.
+tog_quest.0719 = {
+	type = character_event
+	hidden = yes
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			set_variable = tog_mission_done
+		}
+		tog_step8_check_effect = yes
+	}
+}
+
+# Looking for a bard: three come forward.
+tog_quest.0721 = {
+	type = character_event
+	title = tog_quest.0721.t
+	desc = tog_quest.0721.desc
+	theme = diplomacy
+	override_background = { reference = feast }
+	left_portrait = {
+		character = scope:tog_bard_1
+		animation = personality_rational
+	}
+	right_portrait = {
+		character = scope:tog_bard_2
+		animation = happiness
+	}
+	lower_right_portrait = {
+		character = scope:tog_bard_3
+	}
+
+	immediate = {
+		create_character = {
+			age = { 25 45 }
+			gender = male
+			culture = culture:irish
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = education_intrigue_4
+			learning = 14
+			save_scope_as = tog_bard_1
+		}
+		create_character = {
+			age = { 20 40 }
+			gender_female_chance = 50
+			culture = culture:welsh
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = education_intrigue_4
+			diplomacy = 14
+			save_scope_as = tog_bard_2
+		}
+		create_character = {
+			age = { 30 55 }
+			gender = male
+			culture = culture:breton
+			faith = root.faith
+			dynasty = none
+			location = root.location
+			trait = lifestyle_poet
+			trait = education_intrigue_4
+			intrigue = 12
+			save_scope_as = tog_bard_3
+		}
+	}
+
+	option = {
+		name = tog_quest.0721.a
+		scope:tog_bard_1 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_fili_modifier }
+	}
+	option = {
+		name = tog_quest.0721.b
+		scope:tog_bard_2 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_welsh_modifier }
+	}
+	option = {
+		name = tog_quest.0721.c
+		scope:tog_bard_3 = { save_scope_as = tog_bard }
+		tog_take_bard_effect = { MOD = tog_bard_breton_modifier }
+	}
+}
+
+# Step 8 is done.
+tog_quest.0730 = {
+	type = character_event
+	title = tog_quest.0730.t
+	desc = {
+		desc = tog_quest.0730.desc
+		first_valid = {
+			triggered_desc = {
+				trigger = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						exists = var:tog_mission_wins
+					}
+				}
+				desc = tog_quest.0730.lords
+			}
+			desc = tog_quest.0730.nolords
+		}
+	}
+	theme = faith
+	override_background = { reference = feast }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+	right_portrait = {
+		trigger = { exists = scope:tog_bard }
+		character = scope:tog_bard
+		animation = happiness
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_bard ?= { save_scope_as = tog_bard }
+		}
+	}
+
+	option = {
+		name = tog_quest.0730.a
+		add_prestige = major_prestige_gain
+		custom_tooltip = tog_quest.0730.a.tt
+	}
+}
+
+# A few months later: the bard's songs have won over the county where the court stands.
+tog_quest.0722 = {
+	type = character_event
+	title = tog_quest.0722.t
+	desc = tog_quest.0722.desc
+	theme = faith
+	override_background = { reference = feast }
+	left_portrait = {
+		character = scope:tog_bard
+		animation = happiness
+	}
+	right_portrait = {
+		character = root
+		animation = admiration
+	}
+
+	trigger = {
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_bard ?= { is_alive = yes }
+		}
+		exists = location.county
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_faith_conversion"
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_bard ?= { save_scope_as = tog_bard }
+		}
+		location.county = { save_scope_as = tog_bard_county }
+	}
+
+	option = {
+		name = tog_quest.0722.a
+		# The listeners throw coins.
+		random = {
+			chance = 50
+			add_gold = 40
+		}
+		scope:tog_bard_county = { set_county_faith = faith:tog_druidism }
+	}
+}
+
+# ---- Step 10: the miracle of the fires of Beltaine ----
+
+# Step 10 - news of the cattle plague.
+tog_quest.0900 = {
+	type = character_event
+	title = tog_quest.0900.t
+	desc = tog_quest.0900.desc
+	theme = faith
+	override_background = { reference = farmland }
+	left_portrait = {
+		character = root
+		animation = worry
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		}
+	}
+
+	option = {
+		name = tog_quest.0900.a
+		custom_tooltip = tog_quest.0900.a.tt
+	}
+}
+
+# Step 10 - arrival: the desperate crowd.
+tog_quest.0901 = {
+	type = character_event
+	title = tog_quest.0901.t
+	desc = tog_quest.0901.desc
+	theme = faith
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		}
+	}
+
+	option = {
+		name = tog_quest.0901.a
+		hidden_effect = {
+			trigger_event = {
+				id = tog_quest.0902
+				days = 1
+			}
+		}
+	}
+}
+
+# Step 10 - the miracle of the fires, the word of Lug, and the end of the quest.
+tog_quest.0902 = {
+	type = character_event
+	title = tog_quest.0902.t
+	desc = tog_quest.0902.desc
+	theme = faith
+	override_background = { reference = bp1_bonfire }
+	override_sound = { reference = "event:/SFX/Events/Themes/sfx_event_theme_type_health_good" }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	immediate = {
+		play_music_cue = "mx_cue_majesty"
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_plague_duchy = { save_scope_as = tog_plague_duchy }
+		}
+	}
+
+	option = {
+		name = tog_quest.0902.a
+		tog_feed_adventurer_effect = { AMOUNT = major_provisions_gain }
+		# The crowd gives to the cause.
+		add_gold = 100
+		custom_tooltip = tog_quest.0902.a.tt
+		add_prestige = major_prestige_gain
+		add_piety = major_piety_gain
+		hidden_effect = {
+			tog_miracle_effect = yes
+			tog_travel_home_effect = yes
+			# End of the quest: the dynasty may now drive out the Saxons.
+			dynasty ?= {
+				set_variable = {
+					name = tog_saxons_cb
+					value = yes
+				}
+			}
+			# The story stays open in the Situations window, with the next goal.
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 100
+				}
+			}
+			# The tent of offerings grows to level 2.
+			tog_give_offerings_tent_effect = yes
+		}
+	}
+}
+
+# After the miracle: the faithful offer the Voice of Lug an army (yearly roll).
+tog_quest.0910 = {
+	type = character_event
+	title = tog_quest.0910.t
+	desc = tog_quest.0910.desc
+	theme = war
+	override_background = { reference = army_camp }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	trigger = { has_trait = tog_voice_of_lug }
+
+	option = {
+		name = tog_quest.0910.a
+		tog_lug_host_effect = { MEN = 250 }
+	}
+}
+
+# After the quest: the spear of Lug is forged.
+tog_quest.0920 = {
+	type = character_event
+	title = tog_quest.0920.t
+	desc = tog_quest.0920.desc
+	theme = martial
+	override_background = { reference = armory }
+	override_sound = { reference = "event:/MUSIC/Cues/Events/Positive/mx_cue_postive_effect" }
+	left_portrait = {
+		character = root
+		animation = personality_zealous
+	}
+
+	option = {
+		name = tog_quest.0920.a
+		play_music_cue = "mx_cue_legend"
+		tog_create_spear_of_lug_effect = yes
+	}
+}
+
+# Road (adventurers): Peredur comes back with food, and counts it.
+tog_quest.0188 = {
+	type = character_event
+	title = tog_quest.0188.t
+	desc = tog_quest.0188.desc
+	theme = stewardship
+	override_background = { reference = wilderness }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0188.a
+		tog_feed_adventurer_effect = { AMOUNT = medium_provisions_gain }
+	}
+}
+
+# Road (adventurers): a companion hunts or fishes for the camp.
+tog_quest.0189 = {
+	type = character_event
+	title = tog_quest.0189.t
+	desc = tog_quest.0189.desc
+	theme = hunting
+	override_background = { reference = wilderness_forest }
+	left_portrait = {
+		character = root
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:tog_hunter
+		animation = personality_bold
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			random_in_list = {
+				variable = tog_companions
+				limit = {
+					is_alive = yes
+					NOT = { has_trait = tog_blood_of_myrddin }
+				}
+				save_scope_as = tog_hunter
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0189.a
+		tog_feed_adventurer_effect = { AMOUNT = minor_provisions_gain }
+		scope:tog_hunter ?= {
+			add_opinion = {
+				target = root
+				modifier = respect_opinion
+				opinion = 5
+			}
+		}
+	}
+}
+
+# ---- Step 2: the scheme to steal a book ----
+
+# "Execute": try now, spend advantages, or wait.
+tog_quest.0260 = {
+	type = character_event
+	title = tog_quest.0260.t
+	desc = tog_quest.0260.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+
+	option = { # Try now
+		name = tog_quest.0231.a
+		tog_steal_attempt_effect = { BONUS = 0 }
+	}
+	option = { # Spend one advantage
+		name = tog_quest.0231.b
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.b.tt
+		scope:scheme = { change_opportunities = -1 }
+		tog_steal_attempt_effect = { BONUS = 20 }
+	}
+	option = { # Spend two advantages
+		name = tog_quest.0231.c
+		trigger = { scope:scheme = { scheme_agent_charges >= 2 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.c.tt
+		scope:scheme = { change_opportunities = -2 }
+		tog_steal_attempt_effect = { BONUS = 40 }
+	}
+	option = { # Wait
+		name = tog_quest.0260.d
+		custom_tooltip = tog_quest.0231.d.tt
+	}
+}
+
+# During the scheme: the brother librarian talks too much.
+tog_quest.0261 = {
+	type = character_event
+	title = tog_quest.0261.t
+	desc = tog_quest.0261.desc
+	theme = intrigue
+	override_background = { reference = study }
+	left_portrait = {
+		character = root
+		animation = scheme
+	}
+	right_portrait = {
+		character = scope:target
+		animation = happiness
+	}
+
+	option = { # Buy him a jug of wine
+		name = tog_quest.0261.a
+		trigger = { gold >= tiny_gold_value }
+		show_as_unavailable = { always = yes }
+		remove_short_term_gold = tiny_gold_value
+		scope:scheme = { add_scheme_modifier = { type = tog_librarian_talks_modifier } }
+	}
+	option = { # Just listen
+		name = tog_quest.0261.b
+	}
+}
+
+# During the scheme: Peredur has counted everything.
+tog_quest.0262 = {
+	type = character_event
+	title = tog_quest.0262.t
+	desc = tog_quest.0262.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = laugh
+	}
+	right_portrait = {
+		character = scope:tog_peredur
+		animation = personality_rational
+	}
+
+	immediate = { tog_save_companions_effect = yes }
+
+	option = {
+		name = tog_quest.0262.a
+		scope:scheme = { add_scheme_modifier = { type = tog_peredur_map_modifier } }
+	}
+}
+
+# A failed attempt: the monks are warier, the scheme goes on.
+tog_quest.0263 = {
+	type = character_event
+	title = tog_quest.0263.t
+	desc = tog_quest.0263.desc
+	theme = intrigue
+	override_background = { reference = corridor_night }
+	left_portrait = {
+		character = root
+		animation = fear
+	}
+
+	option = {
+		name = tog_quest.0263.a
+		custom_tooltip = tog_quest.0263.a.tt
+	}
+}
+
+# ---- Step 5: the scheme to reach Héric ----
+
+# At the gate of Saint-Germain: the monk who knows is inside; the porter must be
+# won over.
+tog_quest.0320 = {
+	type = character_event
+	title = tog_quest.0320.t
+	desc = tog_quest.0320.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	immediate = {
+		random_owned_story = {
+			limit = { story_type = tog_story_old_groves }
+			var:tog_heric ?= { save_scope_as = tog_heric }
+		}
+		if = {
+			limit = { NOT = { exists = scope:tog_heric } }
+			create_character = {
+				name = "Héric"
+				age = 34
+				gender = male
+				culture = culture:frankish
+				faith = faith:catholic
+				dynasty = none
+				location = root.location
+				trait = education_learning_4
+				trait = curious
+				trait = tog_cloistered
+				learning = 18
+				save_scope_as = tog_heric
+			}
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_heric
+					value = scope:tog_heric
+				}
+			}
+		}
+	}
+
+	option = {
+		name = tog_quest.0320.a
+		custom_tooltip = tog_quest.0320.a.tt
+		start_scheme = {
+			type = tog_reach_heric
+			target_character = scope:tog_heric
+		}
+	}
+}
+
+# "Execute": try now, spend advantages, or wait.
+tog_quest.0325 = {
+	type = character_event
+	title = tog_quest.0325.t
+	desc = tog_quest.0325.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = thinking
+	}
+
+	option = { # Try now
+		name = tog_quest.0325.a
+		tog_heric_attempt_effect = { BONUS = 0 }
+	}
+	option = { # Spend one advantage
+		name = tog_quest.0231.b
+		trigger = { scope:scheme = { scheme_agent_charges >= 1 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.b.tt
+		scope:scheme = { change_opportunities = -1 }
+		tog_heric_attempt_effect = { BONUS = 20 }
+	}
+	option = { # Spend two advantages
+		name = tog_quest.0231.c
+		trigger = { scope:scheme = { scheme_agent_charges >= 2 } }
+		show_as_unavailable = { always = yes }
+		custom_tooltip = tog_quest.0231.c.tt
+		scope:scheme = { change_opportunities = -2 }
+		tog_heric_attempt_effect = { BONUS = 40 }
+	}
+	option = { # Wait
+		name = tog_quest.0325.d
+		custom_tooltip = tog_quest.0231.d.tt
+	}
+}
+
+# A failed attempt: the porter is warier, the scheme goes on.
+tog_quest.0326 = {
+	type = character_event
+	title = tog_quest.0326.t
+	desc = tog_quest.0326.desc
+	theme = diplomacy
+	override_background = { reference = courtyard }
+	left_portrait = {
+		character = root
+		animation = disappointed
+	}
+
+	option = {
+		name = tog_quest.0326.a
+		custom_tooltip = tog_quest.0263.a.tt
+	}
+}

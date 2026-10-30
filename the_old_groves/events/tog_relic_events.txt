@@ -1,0 +1,207 @@
+﻿namespace = tog_relic
+
+# The Old Groves - relics of Druidism found in pilgrimage.
+# 0001 a keeper offers the relic of the holy site (modelled on pilgrimage.6770)
+
+# On a holy site of Druidism whose relic does not exist yet, a keeper offers it.
+# Not bought: the relic goes back into hiding and may turn up on another pilgrimage.
+tog_relic.0001 = {
+	type = activity_event
+	title = tog_relic.0001.t
+	desc = {
+		first_valid = {
+			triggered_desc = {
+				trigger = { scope:tog_relic_site = flag:mistletoe }
+				desc = tog_relic.0001.desc.mistletoe
+			}
+			triggered_desc = {
+				trigger = { scope:tog_relic_site = flag:sickle }
+				desc = tog_relic.0001.desc.sickle
+			}
+			triggered_desc = {
+				trigger = { scope:tog_relic_site = flag:carnyx }
+				desc = tog_relic.0001.desc.carnyx
+			}
+			triggered_desc = {
+				trigger = { scope:tog_relic_site = flag:cauldron }
+				desc = tog_relic.0001.desc.cauldron
+			}
+			triggered_desc = {
+				trigger = { scope:tog_relic_site = flag:branch }
+				desc = tog_relic.0001.desc.branch
+			}
+			desc = tog_relic.0001.desc.torc
+		}
+		desc = tog_relic.0001.desc.outro
+	}
+	theme = pilgrimage_destination
+	center_portrait = {
+		character = root
+		animation = interested
+	}
+	right_portrait = {
+		character = scope:tog_keeper
+		animation = debating
+	}
+	artifact = {
+		target = scope:tog_relic
+		position = lower_center_portrait
+	}
+	cooldown = { years = 1 }
+
+	trigger = {
+		religion = religion:tog_celtic_religion
+		tog_relic_available_here_trigger = yes
+	}
+
+	immediate = {
+		location = { save_scope_as = tog_relic_location }
+		create_character = {
+			age = { 50 70 }
+			gender_female_chance = 40
+			dynasty = none
+			location = root.location
+			culture = root.location.culture
+			faith = root.faith
+			learning = 12
+			save_scope_as = tog_keeper
+		}
+		hidden_effect_new_object = {
+			scope:tog_keeper = {
+				if = {
+					limit = { root.location = title:c_anglesey.title_province }
+					save_scope_value_as = { name = tog_relic_site value = flag:mistletoe }
+					tog_create_mistletoe_effect = yes
+					scope:tog_mistletoe = { save_scope_as = tog_relic }
+				}
+				else_if = {
+					limit = { root.location = title:c_chartres.title_province }
+					save_scope_value_as = { name = tog_relic_site value = flag:sickle }
+					tog_create_golden_sickle_effect = yes
+					scope:tog_sickle = { save_scope_as = tog_relic }
+				}
+				else_if = {
+					limit = { root.location = title:b_montbard.title_province }
+					save_scope_value_as = { name = tog_relic_site value = flag:carnyx }
+					tog_create_carnyx_effect = yes
+					scope:tog_carnyx = { save_scope_as = tog_relic }
+				}
+				else_if = {
+					limit = { root.location = title:b_trim.title_province }
+					save_scope_value_as = { name = tog_relic_site value = flag:cauldron }
+					tog_create_cauldron_effect = yes
+				}
+				else_if = {
+					limit = { root.location = title:c_inner_hebrides.title_province }
+					save_scope_value_as = { name = tog_relic_site value = flag:branch }
+					tog_create_silver_branch_effect = yes
+				}
+				else = {
+					save_scope_value_as = { name = tog_relic_site value = flag:torc }
+					tog_create_torc_effect = yes
+				}
+			}
+		}
+	}
+
+	# Buy
+	option = {
+		name = tog_relic.0001.a
+		pay_short_term_gold = {
+			target = scope:tog_keeper
+			gold = medium_gold_value
+		}
+		tog_relic_bought_effect = yes
+		ai_chance = {
+			base = 100
+			modifier = {
+				factor = 0
+				short_term_gold < medium_gold_value
+			}
+		}
+	}
+
+	# Barter
+	option = {
+		name = tog_relic.0001.b
+		duel = {
+			skills = { diplomacy learning }
+			target = scope:tog_keeper
+			50 = {
+				desc = tog_relic.0001.b.success
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = 3.5
+				}
+				send_interface_toast = {
+					title = tog_relic.0001.b.success
+					left_icon = root
+					pay_short_term_gold = {
+						target = scope:tog_keeper
+						gold = minor_gold_value
+					}
+					tog_relic_bought_effect = yes
+				}
+			}
+			50 = {
+				desc = tog_relic.0001.b.failure
+				compare_modifier = {
+					value = scope:duel_value
+					multiplier = -3.5
+				}
+				send_interface_toast = {
+					title = tog_relic.0001.b.failure
+					left_icon = root
+					custom_tooltip = tog_relic.0001.lost.tt
+				}
+			}
+		}
+		ai_chance = {
+			base = 50
+		}
+	}
+
+	# Leave it
+	option = {
+		name = tog_relic.0001.c
+		custom_tooltip = tog_relic.0001.lost.tt
+		ai_chance = {
+			base = 10
+		}
+	}
+
+	# Not bought: the relic goes back into hiding, nothing runs after destroy_artifact.
+	after = {
+		if = {
+			limit = {
+				NOT = {
+					scope:tog_relic = { artifact_owner = root }
+				}
+			}
+			if = {
+				limit = { scope:tog_relic_site = flag:mistletoe }
+				remove_global_variable = tog_relic_mistletoe
+			}
+			else_if = {
+				limit = { scope:tog_relic_site = flag:sickle }
+				remove_global_variable = tog_relic_sickle
+			}
+			else_if = {
+				limit = { scope:tog_relic_site = flag:carnyx }
+				remove_global_variable = tog_relic_carnyx
+			}
+			else_if = {
+				limit = { scope:tog_relic_site = flag:cauldron }
+				remove_global_variable = tog_relic_cauldron
+			}
+			else_if = {
+				limit = { scope:tog_relic_site = flag:branch }
+				remove_global_variable = tog_relic_branch
+			}
+			else = {
+				remove_global_variable = tog_relic_torc
+			}
+			destroy_artifact = scope:tog_relic
+		}
+	}
+}

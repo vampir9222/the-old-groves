@@ -1,0 +1,39 @@
+﻿# The Old Groves - dynasties
+# Manach ("the monk"): Dubgall's line. Renamed to a legendary name at the founding (set_house_name).
+tog_manach = {
+	name = "dynn_tog_manach"
+	culture = "gaelic"
+}
+
+# The companions' lines (each with its house in common/dynasty_houses and its
+# arms in common/coat_of_arms). Wives stay lowborn; children take the father's house.
+tog_efrog = { # Peredur, his father Efrog and his brother Cei
+	name = "dynn_tog_efrog"
+	culture = "welsh"
+}
+tog_myrddin = { # Lailoken, the Merlin of the Caledonian wood
+	name = "dynn_tog_myrddin"
+	culture = "welsh"
+}
+tog_taliesin = { # Gwion and his daughter Eluned
+	name = "dynn_tog_taliesin"
+	culture = "welsh"
+}
+tog_lir = { # Eógan the storyteller and his children
+	prefix = "dynnp_mac"
+	name = "dynn_tog_lir"
+	culture = "gaelic"
+}
+tog_innse_gall = { # Gofraid the guide and his sons
+	name = "dynn_tog_innse_gall"
+	culture = "gaelic"
+}
+tog_alise = { # Ursin the ploughman of Alise
+	prefix = "dynnp_d_"
+	name = "dynn_tog_alise"
+	culture = "frankish"
+}
+tog_mon = { # Nest of Môn
+	name = "dynn_tog_mon"
+	culture = "welsh"
+}

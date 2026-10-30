@@ -1,0 +1,87 @@
+﻿# The Old Groves - restoration quest values
+
+# Weight of the good outcome in quest events, against a fixed 60 for the bad one.
+# Skill 10 gives an even chance; skill 20, about 62 %; skill 5, about 40 %.
+tog_good_weight_learning_value = {
+	value = learning
+	multiply = 4
+	add = 20
+}
+tog_good_weight_diplomacy_value = {
+	value = diplomacy
+	multiply = 4
+	add = 20
+}
+tog_good_weight_martial_value = {
+	value = martial
+	multiply = 4
+	add = 20
+}
+tog_good_weight_intrigue_value = {
+	value = intrigue
+	multiply = 4
+	add = 20
+}
+
+# Chance (%) of being wounded in a fight the quest offers (bandits' camp, monastery
+# doors), whatever the outcome: 60 % at martial 0, 28 % at 8, 12 % at 12, 5 % from 14.
+tog_wound_chance_value = {
+	value = 60
+	subtract = {
+		value = martial
+		multiply = 4
+	}
+	min = 5
+}
+
+# Forcing a monastery's doors: martial, minus 15 for every monastery already
+# attacked (the others are on their guard).
+# Failure weight when forcing the doors, against 100 for success. Every attack puts
+# the other monasteries on their guard: 0% failure, then about 30%, 60%, 85%.
+tog_force_fail_value = {
+	value = 0
+	if = {
+		limit = { var:tog_raids ?= 1 }
+		add = 40
+	}
+	else_if = {
+		limit = { var:tog_raids ?= 2 }
+		add = 150
+	}
+	else_if = {
+		limit = {
+			exists = var:tog_raids
+			var:tog_raids >= 3
+		}
+		add = 600
+	}
+}
+
+# Story scope: the number of the next book to read, in the order the books were obtained.
+tog_next_book_value = {
+	value = 0
+	if = {
+		limit = { exists = var:tog_books_read }
+		add = var:tog_books_read
+	}
+	add = 1
+}
+
+# Story scope: monthly progress of the Sacred Verses, from the owner's learning
+# (3 to 6 points a month: about two years with the events).
+tog_verses_monthly_value = {
+	value = story_owner.learning
+	divide = 4
+	floor = yes
+	min = 3
+	max = 6
+}
+
+
+
+# The stone of Mabon: frightening someone rests on personal prowess.
+tog_good_weight_prowess_value = {
+	value = prowess
+	multiply = 4
+	add = 20
+}

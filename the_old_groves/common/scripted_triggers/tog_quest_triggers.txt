@@ -1,0 +1,149 @@
+﻿# The Old Groves - restoration quest triggers
+
+# Step 2: is a method still open at monastery M? FLAG = talk, pay or steal.
+tog_monastery_open_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		NOT = { exists = var:tog_m_$M$_no_$FLAG$ }
+	}
+}
+
+# Step 2: has the book of monastery M not been obtained yet?
+tog_monastery_todo_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_stage = 10
+		NOT = { exists = var:tog_m_$M$_done }
+	}
+}
+
+# Lailoken (the old man himself, not an heir) has joined the quest and is still alive.
+tog_lailoken_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_lailoken ?= { is_alive = yes NOT = { has_character_flag = tog_heir_companion } }
+	}
+}
+
+# Peredur has joined the quest and is still alive.
+tog_peredur_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_peredur ?= { is_alive = yes }
+	}
+}
+
+# Step 3: has sacred place P (bru, uisneach or mabon) not been done yet?
+tog_place_todo_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:tog_stage = 20
+		NOT = { exists = var:tog_p_$P$_done }
+	}
+}
+
+# Step 3: the stone of Mabon comes last, after Brú na Bóinne and Uisneach.
+tog_mabon_open_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		exists = var:tog_p_bru_done
+		exists = var:tog_p_uisneach_done
+	}
+}
+
+# Companion WHO (story variable: tog_eogan, tog_gwion, tog_gofraid...) has joined
+# the quest and is still alive.
+tog_companion_alive_trigger = {
+	any_owned_story = {
+		story_type = tog_story_old_groves
+		var:$WHO$ ?= { is_alive = yes }
+	}
+}
+
+# The quest is not waiting for a minor heir to come of age.
+tog_quest_not_paused_trigger = {
+	NOT = {
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			exists = var:tog_paused
+		}
+	}
+}
+
+# Step 8: a count a missionary may try to win over.
+tog_mission_target_trigger = {
+	is_alive = yes
+	is_ai = yes
+	NOT = { this = root }
+	NOT = { root.liege ?= this }
+	NOT = { religion = religion:tog_celtic_religion }
+}
+
+# Event with scope:tog_missionary and scope:tog_story: the missionary is companion WHO.
+tog_is_companion_trigger = {
+	scope:tog_story.var:$WHO$ ?= scope:tog_missionary
+}
+
+# Story scope: Lailoken, with the Blood of Myrddin, is alive at the owner's court.
+tog_second_sight_valid_trigger = {
+	exists = var:tog_lailoken
+	var:tog_lailoken = {
+		is_alive = yes
+		has_trait = tog_blood_of_myrddin
+		is_courtier_of = root.story_owner
+	}
+}
+
+# After the quest: a Christian ruler (of any culture: Saxon, Gael or Norse alike)
+# holding land in Britain or Ireland, a target for "Drive out the Saxons". Pagan
+# Norsemen are allies against them, not targets.
+tog_saxon_ruler_trigger = {
+	religion = religion:christianity_religion
+	any_realm_county = {
+		title_province = { geographical_region = world_europe_west_britannia }
+	}
+}
+
+# The stone of Mabon: this way (FLAG) has not failed yet.
+tog_mabon_way_open_trigger = {
+	custom_description = {
+		text = tog_mabon.tried
+		NOT = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				exists = var:tog_mabon_no_$FLAG$
+			}
+		}
+	}
+}
+
+# A pilgrim stands on a holy site of Druidism whose relic does not exist yet in
+# the world (tog_relic.0001). Each site has its relic.
+tog_relic_available_here_trigger = {
+	OR = {
+		AND = {
+			location = title:c_anglesey.title_province
+			NOT = { exists = global_var:tog_relic_mistletoe }
+		}
+		AND = {
+			location = title:c_chartres.title_province
+			NOT = { exists = global_var:tog_relic_sickle }
+		}
+		AND = {
+			location = title:b_montbard.title_province
+			NOT = { exists = global_var:tog_relic_carnyx }
+		}
+		AND = {
+			location = title:b_trim.title_province
+			NOT = { exists = global_var:tog_relic_cauldron }
+		}
+		AND = {
+			location = title:c_inner_hebrides.title_province
+			NOT = { exists = global_var:tog_relic_branch }
+		}
+		AND = {
+			location = title:c_teruel.title_province
+			NOT = { exists = global_var:tog_relic_torc }
+		}
+	}
+}

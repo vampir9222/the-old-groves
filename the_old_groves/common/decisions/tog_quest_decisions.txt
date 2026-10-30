@@ -1,0 +1,568 @@
+﻿# The Old Groves - restoration quest decisions
+
+# The quest belongs to Dubgall's line: he gets an opening event, and he or his heirs
+# can use this if he turned it down.
+tog_quest_start_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_quest_start_decision_desc
+	selection_tooltip = tog_quest_start_decision_tooltip
+	confirm_text = tog_quest_start_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		dynasty ?= dynasty:tog_manach
+		tog_quest_not_paused_trigger = yes
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+		NOT = { religion = religion:tog_celtic_religion }
+		NOT = {
+			any_owned_story = { story_type = tog_story_old_groves }
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_quest_start_decision_effect_tt
+		hidden_effect = {
+			tog_start_quest_effect = yes
+			trigger_event = tog_quest.0002
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Any Goidelic or Brythonic character (Rhodri and Dumnarth in the bookmark) turns to
+# the old gods without the quest, which stays Dubgall's. Same logic as the vanilla
+# conversion window (capital, close family, vassals told); rite from the heritage, as
+# at the founding; cost: twice the vanilla minimum piety for a conversion.
+tog_convert_old_faith_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_convert_old_faith_decision_desc
+	selection_tooltip = tog_convert_old_faith_decision_tooltip
+	confirm_text = tog_convert_old_faith_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		NOT = { religion = religion:tog_celtic_religion }
+		NOT = { dynasty ?= dynasty:tog_manach }
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+		# Only to revive a dead religion: once a landed ruler follows it, conversion
+		# goes through the vanilla ways (chaplain, conversion interaction...).
+		religion:tog_celtic_religion = {
+			NOT = {
+				any_faith = {
+					any_faith_character = { is_landed = yes }
+				}
+			}
+		}
+	}
+
+	cost = {
+		piety = 500
+	}
+
+	effect = {
+		# Bretons, Salomon first: the Gaulish rite (Armorica was Gaulish).
+		if = {
+			limit = { culture = culture:breton }
+			rite:tog_gaulish_rite = { save_scope_as = tog_rite }
+		}
+		else_if = {
+			limit = {
+				culture = { has_cultural_pillar = heritage_brythonic }
+			}
+			rite:tog_brythonic_rite = { save_scope_as = tog_rite }
+		}
+		else = {
+			rite:tog_gaelic_rite = { save_scope_as = tog_rite }
+		}
+		show_as_tooltip = {
+			set_character_faith = faith:tog_druidism
+			set_character_rite = scope:tog_rite
+		}
+		custom_tooltip = tog_convert_old_faith_decision_effect_tt
+		hidden_effect = {
+			set_character_faith_with_conversion = faith:tog_druidism
+			set_character_rite = scope:tog_rite
+			# The religion is dead: whoever revives it sets the main rite, as at the founding.
+			scope:tog_rite = { set_main_rite = yes }
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Opens the travel planner towards the current quest destination (safety net:
+# the quest events already start each journey).
+tog_quest_travel_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_quest_travel_decision_desc
+	selection_tooltip = tog_quest_travel_decision_tooltip
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			OR = {
+				exists = var:tog_destination
+				# Step 2: hidden once the five books are recovered.
+				AND = {
+					var:tog_stage = 10
+					NOT = { var:tog_books_got ?= 5 }
+				}
+				AND = {
+					var:tog_stage = 20
+					NOT = { exists = var:tog_p_mabon_done }
+				}
+			}
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_travelling = no
+		custom_description = {
+			text = tog_quest_travel_decision_not_there
+			NOT = {
+				any_owned_story = {
+					story_type = tog_story_old_groves
+					exists = var:tog_destination
+					var:tog_destination.title_province = root.location
+					NOT = { exists = var:tog_left_camp }
+				}
+			}
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_quest_travel_decision_effect_tt
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				remove_variable = tog_left_here
+			}
+			# Step 2: choose which monastery to go to.
+			if = {
+				limit = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage = 10
+					}
+				}
+				trigger_event = tog_quest.0140
+			}
+			# Step 3: choose which sacred place to go to.
+			else_if = {
+				limit = {
+					any_owned_story = {
+						story_type = tog_story_old_groves
+						var:tog_stage = 20
+					}
+				}
+				trigger_event = tog_quest.0240
+			}
+			else = {
+				# Coming back to the bandits' camp after leaving it.
+				random_owned_story = {
+					limit = {
+						story_type = tog_story_old_groves
+						exists = var:tog_left_camp
+					}
+					set_variable = {
+						name = tog_returning
+						value = yes
+					}
+				}
+				if = {
+					limit = { location = province:1701 }
+					trigger_event = tog_quest.0060
+				}
+				else = {
+					tog_travel_to_destination_effect = yes
+				}
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 5: before leaving for the continent, find someone who knows Gaul well.
+tog_find_guide_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_find_guide_decision_desc
+	selection_tooltip = tog_find_guide_decision_tooltip
+	confirm_text = tog_find_guide_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 29
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_find_guide_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0300 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 6: reading the stone from the copy made at the start of the quest (at home).
+tog_read_stone_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_read_stone_decision_desc
+	selection_tooltip = tog_read_stone_decision_tooltip
+	confirm_text = tog_read_stone_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 40
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_read_stone_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0401 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 7: writing the Sacred Verses (vellum and copyists cost gold).
+tog_write_verses_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_write_verses_decision_desc
+	selection_tooltip = tog_write_verses_decision_tooltip
+	confirm_text = tog_write_verses_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 50
+		}
+	}
+
+	cost = {
+		gold = {
+			value = medium_gold_value
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_write_verses_decision_effect_tt
+		hidden_effect = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				set_variable = {
+					name = tog_stage
+					value = 60
+				}
+				set_variable = {
+					name = tog_verses
+					value = 0
+				}
+				set_variable = {
+					name = tog_verses_rate
+					value = tog_verses_monthly_value
+				}
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 8: send all the companions out to win over counts.
+tog_send_companions_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_send_companions_decision_desc
+	selection_tooltip = tog_send_companions_decision_tooltip
+	confirm_text = tog_send_companions_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 70
+			NOT = { exists = var:tog_mission_sent }
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_send_companions_decision_effect_tt
+		tog_start_mission_effect = yes
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 8: look for a bard, as one looks for a spouse.
+tog_find_bard_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_find_bard_decision_desc
+	selection_tooltip = tog_find_bard_decision_tooltip
+	confirm_text = tog_find_bard_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 70
+			NOT = { exists = var:tog_bard }
+		}
+	}
+
+	cost = {
+		gold = {
+			value = medium_gold_value
+		}
+	}
+
+	effect = {
+		custom_tooltip = tog_find_bard_decision_effect_tt
+		hidden_effect = { trigger_event = tog_quest.0721 }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# Step 10: go and light the fires of Beltaine in the stricken duchy.
+tog_beltaine_fires_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_beltaine_fires_decision_desc
+	selection_tooltip = tog_beltaine_fires_decision_tooltip
+	confirm_text = tog_beltaine_fires_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		tog_quest_not_paused_trigger = yes
+		any_owned_story = {
+			story_type = tog_story_old_groves
+			var:tog_stage = 91
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_travelling = no
+	}
+
+	effect = {
+		custom_tooltip = tog_beltaine_fires_decision_effect_tt
+		hidden_effect = { tog_go_light_fires_effect = yes }
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# After the quest: have a faithful smith forge the spear of Lug. Expensive, once
+# in the world.
+tog_spear_of_lug_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
+	}
+	desc = tog_spear_of_lug_decision_desc
+	selection_tooltip = tog_spear_of_lug_decision_tooltip
+	confirm_text = tog_spear_of_lug_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		dynasty ?= { has_variable = tog_saxons_cb }
+		NOT = { exists = global_var:tog_spear_of_lug_forged }
+	}
+
+	is_valid = {
+		religion = religion:tog_celtic_religion
+	}
+
+	cost = {
+		gold = 500
+	}
+
+	effect = {
+		custom_tooltip = tog_spear_of_lug_decision_effect_tt
+		hidden_effect = {
+			set_global_variable = {
+				name = tog_spear_of_lug_forged
+				value = yes
+			}
+			trigger_event = tog_quest.0920
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}
+
+# For a character already of the faith who never did the quest (ruler designer):
+# the dynasty takes up the heritage of the groves, which unlocks "Drive out the
+# Saxons" and the spear of Lug, as at the end of the quest.
+tog_druid_heritage_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
+	}
+	desc = tog_druid_heritage_decision_desc
+	selection_tooltip = tog_druid_heritage_decision_tooltip
+	confirm_text = tog_druid_heritage_decision_confirm
+
+	ai_check_interval = 0
+
+	is_shown = {
+		is_ai = no
+		religion = religion:tog_celtic_religion
+		exists = dynasty
+		NOT = {
+			dynasty = { has_variable = tog_saxons_cb }
+		}
+		NOT = {
+			any_owned_story = { story_type = tog_story_old_groves }
+		}
+	}
+
+	is_valid = {
+		culture = {
+			OR = {
+				has_cultural_pillar = heritage_goidelic
+				has_cultural_pillar = heritage_brythonic
+			}
+		}
+	}
+
+	cost = {
+		piety = 2000
+	}
+
+	effect = {
+		custom_tooltip = tog_druid_heritage_decision_effect_tt
+		dynasty = {
+			set_variable = {
+				name = tog_saxons_cb
+				value = yes
+			}
+		}
+	}
+
+	ai_potential = {
+		always = no
+	}
+
+	ai_will_do = {
+		base = 0
+	}
+}

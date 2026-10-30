@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Celtique"
  tog_celtic_religion_adj: "celtique"
- tog_celtic_religion_adherent: "Celte"
- tog_celtic_religion_adherent_plural: "Celtes"
+ tog_celtic_religion_adherent: "païen celte"
+ tog_celtic_religion_adherent_plural: "païens celtes"
  tog_celtic_religion_desc: "Les anciennes croyances des peuples celtes, d'Irlande en Gaule et jusqu'en Hispanie. Elles ne survivent plus que dans les récits des moines et les pierres dressées, en attendant que quelqu'un les réveille."
 
  # Faith
@@ -11,7 +11,12 @@
  tog_druidism_adj: "druidique"
  tog_druidism_adherent: "druidiste"
  tog_druidism_adherent_plural: "druidistes"
+ tog_druidism_old: "Druidisme ancien"
+ tog_druidism_old_adj: "druidique ancienne"
+ tog_druidism_old_adherent: "druidiste ancien"
+ tog_druidism_old_adherent_plural: "druidistes anciens"
  tog_druidism_desc: "Une foi neuve qui se réclame des druides. Rebâtie à partir de sagas conservées par des moines, de vestiges mal compris et de ce que ses fidèles savent du paganisme norrois, elle revendique un passé qu'elle ne restaure pas vraiment."
+ tog_druidism_old_desc: "La foi druidique telle qu'elle a d'abord été rebâtie, gardée par ceux qui n'ont pas suivi la réforme : ni chef ni règle fixe, seulement les sagas, les pierres et les vieux rites."
 
  # Rites
  tog_gaelic_rite: "Druídecht"
@@ -32,7 +37,7 @@
  tog_gaelic_high_god_name_alternate: "Lámfhota"
  tog_gaelic_high_god_name_alternate_possessive: "de Lámfhota"
  tog_gaelic_creator_god_name: "Dagda"
- tog_gaelic_creator_god_name_possessive: "de Dagda"
+ tog_gaelic_creator_god_name_possessive: "du Dagda"
  tog_gaelic_health_god_name: "Dian Cécht"
  tog_gaelic_health_god_name_possessive: "de Dian Cécht"
  tog_gaelic_fertility_god_name: "Brigit"
@@ -82,9 +87,9 @@
  tog_religious_symbol: "le triskèle"
  tog_religious_symbol_2: "au triskèle" #Optional translation alt
  tog_religious_symbol_3: "du triskèle" #Optional translation alt
- tog_religious_text: "les Vers sacrés"
- tog_religious_text_2: "aux Vers sacrés" #Optional translation alt
- tog_religious_text_3: "des Vers sacrés" #Optional translation alt
+ tog_religious_text: "le Livre des Druides"
+ tog_religious_text_2: "au Livre des Druides" #Optional translation alt
+ tog_religious_text_3: "du Livre des Druides" #Optional translation alt
  tog_religious_head_title: "Archidruide"
  tog_religious_head_title_female: "Archidruidesse"
  tog_religious_head_title_name: "Archidruidat"
@@ -201,6 +206,6 @@
  tog_chaplain_county: "Druide de la cour"
  tog_chaplain_duchy: "Druide"
  tog_chaplain_kingdom: "Grand druide"
- tog_vanilla_chaplain_pagan_county: "Chamane de la Cour"
+ tog_vanilla_chaplain_pagan_county: "Chamane de la cour"
  tog_vanilla_chaplain_pagan_duchy: "Chamane"
  tog_vanilla_chaplain_pagan_kingdom: "Grand chamane"

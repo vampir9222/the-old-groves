@@ -1,0 +1,593 @@
+﻿# The Old Groves - restoration quest, shown in the Situations window.
+# Step 1 (stages):
+# 1 go to the stone on Skye, copy it, meet Peredur
+# 2 Peredur leads you to the wrong old man (Gairloch)
+# 3 the right old man's house is empty (Ardnamurchan)
+# 4 rescue him from the bandits' camp (Glencoe)
+# 5 step 1 done (step 2 to come)
+
+tog_story_old_groves = {
+	visible = yes
+
+	icon = {
+		reference = "gfx/interface/icons/artifact/artifact_chronicle.dds"
+	}
+
+	background = {
+		reference = "gfx/interface/illustrations/event_scenes/fp1_runestone_circle.dds"
+	}
+
+	visualization = {
+		custom_string_key = "tog_story_old_groves_info"
+		title = {
+			variable_name = "tog_destination"
+			label = "tog_story_old_groves_destination"
+		}
+		title = {
+			variable_name = "tog_plague_duchy"
+			label = "tog_story_old_groves_plague"
+		}
+		title_list = {
+			variable_name = "tog_monasteries"
+			label = "tog_story_old_groves_monasteries"
+		}
+		title_list = {
+			variable_name = "tog_places"
+			label = "tog_story_old_groves_places"
+		}
+		basic_counter = {
+			variable_name = "tog_books_read"
+			min = 0
+			max = 5
+			label = "tog_story_old_groves_books"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_books_max"
+		}
+		basic_counter = {
+			variable_name = "tog_lessons"
+			min = 0
+			max = 4
+			label = "tog_story_old_groves_lessons"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_lessons_max"
+		}
+		basic_counter = {
+			variable_name = "tog_verses"
+			min = 0
+			max = 100
+			label = "tog_story_old_groves_verses"
+			min_label = "tog_story_old_groves_books_min"
+			max_label = "tog_story_old_groves_verses_max"
+		}
+		decisions = { tog_quest_travel_decision tog_find_guide_decision tog_read_stone_decision tog_write_verses_decision tog_send_companions_decision tog_find_bard_decision tog_beltaine_fires_decision tog_spear_of_lug_decision }
+		character_list = {
+			variable_name = "tog_companions"
+			label = "tog_story_old_groves_companions"
+		}
+	}
+
+	on_setup = {
+		set_variable = {
+			name = tog_stage
+			value = 1
+		}
+		set_variable = {
+			name = tog_destination
+			value = title:b_skye
+		}
+		set_global_variable = {
+			name = tog_poi_stone_active
+			value = yes
+		}
+		province:1692 = { add_travel_point_of_interest = tog_poi_stone }
+	}
+
+	on_end = {
+		if = {
+			limit = { exists = global_var:tog_poi_stone_active }
+			remove_global_variable = tog_poi_stone_active
+			province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
+		}
+	}
+
+	on_owner_death = {
+		# The quest passes to the heir; a minor heir takes it up at 16.
+		if = {
+			limit = { exists = story_owner.player_heir }
+			story_owner.player_heir = { save_scope_as = tog_new_owner }
+			make_story_owner = scope:tog_new_owner
+			if = {
+				limit = { scope:tog_new_owner = { age < 16 } }
+				set_variable = {
+					name = tog_paused
+					value = yes
+				}
+				scope:tog_new_owner = { trigger_event = tog_quest.0601 }
+			}
+			else = {
+				scope:tog_new_owner = { trigger_event = tog_quest.0602 }
+			}
+		}
+		else = {
+			end_story = yes
+		}
+	}
+
+	# Fallback: if the owner stands at the current destination (camp moved, travel
+	# arrival missed...), run the arrival event. It never fires a scene twice.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			exists = var:tog_destination
+			story_owner.location = var:tog_destination.title_province
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = { trigger_event = tog_quest.0060 }
+			}
+		}
+	}
+
+	# Step 2 fallback: the first time the owner stands at a monastery (camp moved,
+	# travel arrival missed...), run its arrival scene.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 10
+		}
+
+		first_valid = {
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1606
+					NOT = { exists = var:tog_m_jarrow_done }
+					NOT = { exists = var:tog_m_jarrow_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_m_jarrow_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0101 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1684
+					NOT = { exists = var:tog_m_whithorn_done }
+					NOT = { exists = var:tog_m_whithorn_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_m_whithorn_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0102 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1655
+					NOT = { exists = var:tog_m_mynyw_done }
+					NOT = { exists = var:tog_m_mynyw_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_m_mynyw_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0103 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1743
+					NOT = { exists = var:tog_m_dunkeld_done }
+					NOT = { exists = var:tog_m_dunkeld_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_m_dunkeld_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0104 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:8778
+					NOT = { exists = var:tog_m_applecross_done }
+					NOT = { exists = var:tog_m_applecross_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_m_applecross_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0105 }
+				}
+			}
+		}
+	}
+
+	# Step 3 fallback: the first time the owner stands at a sacred place, run its
+	# arrival scene (the stone of Mabon only once the two others are done).
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 20
+		}
+
+		first_valid = {
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:32
+					NOT = { exists = var:tog_p_bru_done }
+					NOT = { exists = var:tog_p_bru_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_p_bru_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0201 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:36
+					NOT = { exists = var:tog_p_uisneach_done }
+					NOT = { exists = var:tog_p_uisneach_seen }
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_p_uisneach_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0211 }
+				}
+			}
+			triggered_effect = {
+				trigger = {
+					story_owner.location = province:1681
+					NOT = { exists = var:tog_p_mabon_done }
+					NOT = { exists = var:tog_p_mabon_seen }
+					exists = var:tog_p_bru_done
+					exists = var:tog_p_uisneach_done
+					NOT = { exists = var:tog_arrival_lock }
+				}
+				effect = {
+					set_variable = {
+						name = tog_arrival_lock
+						value = yes
+						days = 7
+					}
+					set_variable = {
+						name = tog_p_mabon_seen
+						value = yes
+					}
+					story_owner = { trigger_event = tog_quest.0221 }
+				}
+			}
+		}
+	}
+
+	# Safety net: the scheme to free Eluned vanished without freeing her (ended,
+	# invalidated...). The player is told and can start it again.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			exists = var:tog_freeing
+			exists = var:tog_eluned
+			var:tog_eluned = { is_alive = yes }
+			story_owner = {
+				NOT = {
+					any_scheme = { type = tog_free_daughter }
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = { trigger_event = tog_quest.0229 }
+			}
+		}
+	}
+
+	# Step 7: the Sacred Verses are written month after month; events make the
+	# writing move forward or back. At 100, the oath of Beltaine.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 60
+			exists = var:tog_verses
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				# Shown under the bar.
+				set_variable = {
+					name = tog_verses_rate
+					value = tog_verses_monthly_value
+				}
+				change_variable = {
+					name = tog_verses
+					add = tog_verses_monthly_value
+				}
+				if = {
+					limit = { var:tog_verses >= 100 }
+					set_variable = {
+						name = tog_verses
+						value = 100
+					}
+					set_variable = {
+						name = tog_stage
+						value = 61
+					}
+					story_owner = {
+						trigger_event = {
+							id = tog_quest.0501
+							days = 7
+						}
+					}
+				}
+				# One writing event every other month.
+				else_if = {
+					limit = { exists = var:tog_verses_quiet }
+					remove_variable = tog_verses_quiet
+				}
+				else = {
+					set_variable = tog_verses_quiet
+					story_owner = { trigger_event = tog_quest.0510 }
+				}
+			}
+		}
+	}
+
+	# A minor heir takes the quest up at 16.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_paused
+			story_owner = { age >= 16 }
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				remove_variable = tog_paused
+				story_owner = { trigger_event = tog_quest.0602 }
+			}
+		}
+	}
+
+	# Step 8: the bard's bonus lasts as long as the bard is at court.
+	effect_group = {
+		months = 1
+		trigger = {
+			exists = var:tog_bard
+			story_owner = {
+				OR = {
+					has_character_modifier = tog_bard_fili_modifier
+					has_character_modifier = tog_bard_welsh_modifier
+					has_character_modifier = tog_bard_breton_modifier
+				}
+			}
+			NOT = {
+				var:tog_bard = {
+					is_alive = yes
+					is_courtier_of = root.story_owner
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					remove_character_modifier = tog_bard_fili_modifier
+					remove_character_modifier = tog_bard_welsh_modifier
+					remove_character_modifier = tog_bard_breton_modifier
+				}
+			}
+		}
+	}
+
+	# Lailoken's second sight: his liege sees the plots coming while he is at court.
+	effect_group = {
+		months = 1
+		trigger = {
+			OR = {
+				AND = {
+					tog_second_sight_valid_trigger = yes
+					NOT = { story_owner = { has_character_modifier = tog_second_sight_modifier } }
+				}
+				AND = {
+					NOT = { tog_second_sight_valid_trigger = yes }
+					story_owner = { has_character_modifier = tog_second_sight_modifier }
+				}
+			}
+		}
+
+		first_valid = {
+			triggered_effect = {
+				trigger = { tog_second_sight_valid_trigger = yes }
+				effect = {
+					story_owner = { add_character_modifier = { modifier = tog_second_sight_modifier } }
+				}
+			}
+			triggered_effect = {
+				trigger = { always = yes }
+				effect = {
+					story_owner = { remove_character_modifier = tog_second_sight_modifier }
+				}
+			}
+		}
+	}
+
+	# Step 10: four months after the end of step 8, a cattle plague strikes a
+	# nearby duchy of another faith.
+	effect_group = {
+		months = 1
+		trigger = {
+			NOT = { exists = var:tog_paused }
+			var:tog_stage = 90
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				change_variable = {
+					name = tog_plague_wait
+					add = 1
+				}
+				if = {
+					limit = { var:tog_plague_wait >= 4 }
+					story_owner = { tog_start_plague_effect = yes }
+				}
+			}
+		}
+	}
+
+	# The tent of offerings (given at the founding): the faithful bring food to
+	# the adventurer's camp every month.
+	effect_group = {
+		months = 1
+		trigger = {
+			story_owner = {
+				is_landless_adventurer = yes
+				domicile ?= { has_domicile_building_or_higher = tog_offerings_tent }
+			}
+		}
+
+		triggered_effect = {
+			trigger = {
+				story_owner.domicile = { has_domicile_building = tog_offerings_tent_02 }
+			}
+			effect = {
+				story_owner.domicile = { change_provisions = 150 }
+			}
+		}
+		triggered_effect = {
+			trigger = {
+				story_owner.domicile = { has_domicile_building = tog_offerings_tent }
+			}
+			effect = {
+				story_owner.domicile = { change_provisions = 100 }
+			}
+		}
+	}
+
+	# The tent of offerings is given at the founding; if the camp had no free slot
+	# then, it arrives here as soon as one is free. After the miracle, it grows to
+	# level 2.
+	effect_group = {
+		months = 1
+		trigger = {
+			var:tog_stage >= 70
+			story_owner = {
+				is_landless_adventurer = yes
+				religion = religion:tog_celtic_religion
+				domicile ?= {
+					OR = {
+						AND = {
+							NOT = { has_domicile_building_or_higher = tog_offerings_tent }
+							free_external_domicile_building_slots >= 1
+						}
+						AND = {
+							has_domicile_building = tog_offerings_tent
+							domicile_owner = {
+								any_owned_story = {
+									story_type = tog_story_old_groves
+									var:tog_stage >= 100
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = { tog_add_offerings_tent_effect = yes }
+			}
+		}
+	}
+
+	# The offerings of the faithful are for the adventurer's camp only. Older saves
+	# may still carry the landed version of them (removed 2026-10-29): take it off.
+	effect_group = {
+		months = 1
+		trigger = {
+			story_owner = {
+				OR = {
+					has_character_modifier = tog_offerings_modifier
+					has_character_modifier = tog_offerings_02_modifier
+				}
+			}
+		}
+
+		triggered_effect = {
+			trigger = { always = yes }
+			effect = {
+				story_owner = {
+					remove_character_modifier = tog_offerings_modifier
+					remove_character_modifier = tog_offerings_02_modifier
+				}
+			}
+		}
+	}
+}

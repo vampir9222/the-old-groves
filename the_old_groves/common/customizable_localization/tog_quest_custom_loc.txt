@@ -1,0 +1,554 @@
+﻿# The Old Groves - current objective shown in the quest window (story scope)
+
+TogQuestObjective = {
+	type = all
+
+	text = {
+		trigger = { var:tog_stage = 1 }
+		localization_key = tog_obj_stone
+	}
+	text = {
+		trigger = { var:tog_stage = 2 }
+		localization_key = tog_obj_wrong
+	}
+	text = {
+		trigger = { var:tog_stage = 3 }
+		localization_key = tog_obj_house
+	}
+	text = {
+		trigger = { var:tog_stage = 4 }
+		localization_key = tog_obj_camp
+	}
+	text = {
+		trigger = { var:tog_stage = 10 }
+		localization_key = tog_obj_books
+	}
+	text = {
+		trigger = { var:tog_stage = 11 }
+		localization_key = tog_obj_step3
+	}
+	text = {
+		trigger = {
+			var:tog_stage = 20
+			exists = var:tog_freeing
+		}
+		localization_key = tog_obj_daughter
+	}
+	text = {
+		trigger = {
+			var:tog_stage = 20
+			exists = var:tog_learning
+		}
+		localization_key = tog_obj_learning
+	}
+	text = {
+		trigger = { var:tog_stage = 20 }
+		localization_key = tog_obj_places
+	}
+	text = {
+		trigger = { var:tog_stage = 30 }
+		localization_key = tog_obj_village
+	}
+	text = {
+		trigger = { var:tog_stage = 29 }
+		localization_key = tog_obj_guide
+	}
+	text = {
+		trigger = { var:tog_stage = 31 }
+		localization_key = tog_obj_heric
+	}
+	text = {
+		trigger = { var:tog_stage = 40 }
+		localization_key = tog_obj_read_stone
+	}
+	text = {
+		trigger = { var:tog_stage = 41 }
+		localization_key = tog_obj_mon
+	}
+	text = {
+		trigger = { var:tog_stage = 50 }
+		localization_key = tog_obj_step7
+	}
+	text = {
+		trigger = {
+			OR = {
+				var:tog_stage = 60
+				var:tog_stage = 61
+			}
+		}
+		localization_key = tog_obj_verses
+	}
+	text = {
+		trigger = { var:tog_stage = 70 }
+		localization_key = tog_obj_faithful
+	}
+	text = {
+		trigger = { var:tog_stage = 90 }
+		localization_key = tog_obj_step10
+	}
+	text = {
+		trigger = { var:tog_stage = 91 }
+		localization_key = tog_obj_plague
+	}
+	text = {
+		trigger = { var:tog_stage = 92 }
+		localization_key = tog_obj_fires
+	}
+	text = {
+		trigger = { var:tog_stage = 100 }
+		localization_key = tog_obj_after
+	}
+}
+
+# Destination named in the travel decision (character scope).
+TogTravelTarget = {
+	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 41
+			}
+		}
+		localization_key = tog_dest_mon
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 30
+			}
+		}
+		localization_key = tog_dest_village
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 31
+			}
+		}
+		localization_key = tog_dest_heric
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 20
+			}
+		}
+		localization_key = tog_dest_place
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 10
+			}
+		}
+		localization_key = tog_dest_monastery
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 2
+			}
+		}
+		localization_key = tog_dest_wrong
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 3
+			}
+		}
+		localization_key = tog_dest_house
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 4
+			}
+		}
+		localization_key = tog_dest_camp
+	}
+	text = {
+		trigger = { always = yes }
+		localization_key = tog_dest_stone
+	}
+}
+
+# Description of the travel decision, by stage (character scope).
+TogTravelDesc = {
+	type = character
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 41
+			}
+		}
+		localization_key = tog_travel_desc_mon
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 30
+			}
+		}
+		localization_key = tog_travel_desc_village
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 31
+			}
+		}
+		localization_key = tog_travel_desc_heric
+	}
+
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 20
+			}
+		}
+		localization_key = tog_travel_desc_places
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 10
+			}
+		}
+		localization_key = tog_travel_desc_monastery
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 2
+			}
+		}
+		localization_key = tog_travel_desc_wrong
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 3
+			}
+		}
+		localization_key = tog_travel_desc_house
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 4
+				exists = var:tog_left_camp
+			}
+		}
+		localization_key = tog_travel_desc_camp_return
+	}
+	text = {
+		trigger = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				var:tog_stage = 4
+			}
+		}
+		localization_key = tog_travel_desc_camp
+	}
+	text = {
+		trigger = { always = yes }
+		localization_key = tog_travel_desc_stone
+	}
+}
+
+# Step 8: one line per missionary in the quest window (empty if not sent).
+
+TogMissionLine_tog_eogan = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_eogan }
+		localization_key = tog_mission_line_tog_eogan
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_eogan = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_eogan ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_nest = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_nest }
+		localization_key = tog_mission_line_tog_nest
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_nest = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_nest ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_gofraid = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_gofraid }
+		localization_key = tog_mission_line_tog_gofraid
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_gofraid = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_gofraid ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_ursin = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_ursin }
+		localization_key = tog_mission_line_tog_ursin
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_ursin = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_ursin ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_gwion = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_gwion }
+		localization_key = tog_mission_line_tog_gwion
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_gwion = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_gwion ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_peredur = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_peredur }
+		localization_key = tog_mission_line_tog_peredur
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_peredur = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_peredur ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}
+
+TogMissionLine_tog_lailoken = {
+	type = all
+	text = {
+		trigger = { exists = var:tog_res_tog_lailoken }
+		localization_key = tog_mission_line_tog_lailoken
+	}
+	text = {
+		localization_key = tog_empty
+	}
+}
+
+TogMissionRes_tog_lailoken = {
+	type = all
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:pending }
+		localization_key = tog_mission_res_pending
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:triumph }
+		localization_key = tog_mission_res_triumph
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:won }
+		localization_key = tog_mission_res_won
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:lost }
+		localization_key = tog_mission_res_lost
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:chased }
+		localization_key = tog_mission_res_chased
+	}
+	text = {
+		trigger = { var:tog_res_tog_lailoken ?= flag:wounded }
+		localization_key = tog_mission_res_wounded
+	}
+}

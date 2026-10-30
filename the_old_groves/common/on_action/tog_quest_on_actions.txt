@@ -1,0 +1,211 @@
+﻿# The Old Groves - restoration quest on_actions
+
+on_game_start_after_lobby = {
+	on_actions = { tog_on_game_start_quest }
+}
+
+# Dubgall, played by a human, receives the opening event a few days in.
+tog_on_game_start_quest = {
+	effect = {
+		character:tog_dubgall ?= {
+			# His wife and son join his camp: their history "employer" falls on the
+			# day his adventurer title is created, too early to take.
+			if = {
+				limit = { is_alive = yes }
+				if = {
+					limit = {
+						character:tog_sadb ?= {
+							is_alive = yes
+							NOT = { is_courtier_of = character:tog_dubgall }
+						}
+					}
+					add_courtier = character:tog_sadb
+				}
+				if = {
+					limit = {
+						character:tog_aed ?= {
+							is_alive = yes
+							NOT = { is_courtier_of = character:tog_dubgall }
+						}
+					}
+					add_courtier = character:tog_aed
+				}
+			}
+			if = {
+				limit = {
+					is_alive = yes
+					is_ai = no
+				}
+				trigger_event = {
+					id = tog_quest.0001
+					days = 3
+				}
+			}
+		}
+	}
+}
+
+# A companion of the quest dies (Lailoken excepted): their eldest living child (or, with no
+# child, their eldest brother or sister), adult or minor, takes
+# their place. Nobody: too bad.
+on_death = {
+	on_actions = { tog_on_companion_death }
+}
+
+tog_on_companion_death = {
+	trigger = {
+		exists = host
+		host = {
+			any_owned_story = {
+				story_type = tog_story_old_groves
+				any_in_list = {
+					variable = tog_companions
+					this = root
+				}
+				# Lailoken cannot be replaced.
+				NOT = { var:tog_lailoken ?= root }
+			}
+		}
+		OR = {
+			any_child = { is_alive = yes }
+			any_sibling = { is_alive = yes }
+		}
+	}
+	effect = {
+		save_scope_as = tog_dead_companion
+		host = { save_scope_as = tog_quest_owner }
+		# The eldest living child; with no child, the eldest living brother or sister.
+		if = {
+			limit = { any_child = { is_alive = yes } }
+			ordered_child = {
+				limit = { is_alive = yes }
+				order_by = age
+				save_scope_as = tog_heir_companion
+			}
+		}
+		else = {
+			ordered_sibling = {
+				limit = { is_alive = yes }
+				order_by = age
+				save_scope_as = tog_heir_companion
+			}
+		}
+		# The scenes written for the original companion no longer apply.
+		scope:tog_heir_companion = { add_character_flag = tog_heir_companion }
+		scope:tog_quest_owner = {
+			random_owned_story = {
+				limit = { story_type = tog_story_old_groves }
+				remove_list_variable = {
+					name = tog_companions
+					target = scope:tog_dead_companion
+				}
+				add_to_variable_list = {
+					name = tog_companions
+					target = scope:tog_heir_companion
+				}
+				if = {
+					limit = { var:tog_peredur ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_peredur
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_lailoken ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_lailoken
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_eogan ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_eogan
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_gwion ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_gwion
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_gofraid ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_gofraid
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_ursin ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_ursin
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_nest ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_nest
+						value = scope:tog_heir_companion
+					}
+				}
+				if = {
+					limit = { var:tog_bard ?= scope:tog_dead_companion }
+					set_variable = {
+						name = tog_bard
+						value = scope:tog_heir_companion
+					}
+				}
+			}
+			if = {
+				limit = {
+					NOT = { scope:tog_heir_companion = { is_courtier_of = scope:tog_quest_owner } }
+				}
+				add_courtier = scope:tog_heir_companion
+			}
+			trigger_event = tog_quest.0603
+		}
+	}
+}
+
+# The Voice of Lug: now and then, the faithful take up arms and join him.
+yearly_playable_pulse = {
+	on_actions = { tog_on_yearly_voice_of_lug }
+}
+
+tog_on_yearly_voice_of_lug = {
+	trigger = {
+		has_trait = tog_voice_of_lug
+		is_imprisoned = no
+	}
+	effect = {
+		random = {
+			chance = 40
+			trigger_event = {
+				id = tog_quest.0910
+				days = { 1 300 }
+			}
+		}
+	}
+}
+
+# On pilgrimage to a holy site of Druidism, a keeper may offer its relic, as the
+# vanilla relic merchant (pilgrimage.6770) does: about the same odds.
+pilgrimage_destination_events = {
+	on_actions = { tog_pilgrimage_relic_events }
+}
+
+tog_pilgrimage_relic_events = {
+	trigger = {
+		religion = religion:tog_celtic_religion
+		location = scope:activity.activity_location
+		tog_relic_available_here_trigger = yes
+	}
+	random_events = {
+		1900 = 0
+		100 = tog_relic.0001
+	}
+}

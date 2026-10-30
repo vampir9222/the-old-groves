@@ -1,0 +1,83 @@
+﻿# The Old Groves - camp buildings
+
+# The tent of offerings: a tent of its own in the camp, where the faithful of the
+# old gods bring their gifts wherever the camp goes. Gold and prestige every
+# month; provisions every month to the quest owner (story cycle): 100, then 150
+# once the tent grows at the miracle of the Beltaine fires (level 2).
+tog_offerings_tent = {
+	construction_time = 120
+	allowed_domicile_types = { camp }
+
+	cost = { gold = 100 }
+	refund = {
+		gold = {
+			value = 100
+			multiply = camp_refund_mult_value
+			floor = yes
+		}
+	}
+
+	# Never built by hand: the quest gives it at the founding of the cult, through
+	# tog_add_offerings_tent_effect (add_domicile_building also checks this).
+	can_construct = {
+		custom_tooltip = {
+			text = tog_offerings_tent.tt.quest
+			has_variable = tog_offerings_tent_gift
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 0.5
+		domicile_monthly_prestige_add = 0.25
+	}
+
+	ai_value = {
+		value = 0
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_camp_shrine.dds"
+		texture = "gfx/interface/window_domiciles/laamp_building_baggage_train.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/laamp_building_baggage_train_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/camp_buildings/ep3_ui_domicile_buildings_baggage_train"
+	}
+}
+
+# Level 2, given at the miracle of the Beltaine fires.
+tog_offerings_tent_02 = {
+	previous_building = tog_offerings_tent
+	construction_time = 120
+	allowed_domicile_types = { camp }
+
+	cost = { gold = 100 }
+	refund = {
+		gold = {
+			value = 100
+			multiply = camp_refund_mult_value
+			floor = yes
+		}
+	}
+
+	can_construct = {
+		custom_tooltip = {
+			text = tog_offerings_tent_02.tt.quest
+			has_variable = tog_offerings_tent_gift
+		}
+	}
+
+	character_modifier = {
+		domicile_monthly_gold_add = 2
+		domicile_monthly_prestige_add = 0.5
+	}
+
+	ai_value = {
+		value = 0
+	}
+
+	asset = {
+		icon = "gfx/interface/icons/domicile_building/domicile_building_camp_shrine.dds"
+		texture = "gfx/interface/window_domiciles/laamp_building_baggage_train.dds"
+		intersectionmask_texture = "gfx/interface/window_domiciles/laamp_building_baggage_train_mask.png"
+		soundeffect = "event:/DLC/EP3/SFX/UI/camp_buildings/ep3_ui_domicile_buildings_baggage_train"
+	}
+}

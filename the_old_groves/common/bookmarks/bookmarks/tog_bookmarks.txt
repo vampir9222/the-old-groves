@@ -1,0 +1,103 @@
+﻿# The Old Groves - bookmark, 867
+# Rulers who can turn back to the old gods; no DLC needed (Dubgall has his own bookmark below).
+# Background: the vanilla bm_867_northmen map moved 300 px right and 100 px up to centre the British
+# Isles (sea added on the left, dark edge at the bottom), its coloured realms turned back to parchment. Each
+# character image highlights his 867 realm (from the province map, fitted to the drawing).
+
+bm_867_tog_old_groves = {
+	start_date = 867.1.1
+	is_playable = yes
+	group = bm_group_867
+
+	weight = {
+		value = 0
+	}
+
+	# Rhodri Mawr, prince of Gwynedd: holds Ynys Môn. Converts by decision
+	# (tog_convert_old_faith_decision). Data as in vanilla challenge_character_rhodri_gwynedd.
+	character = {
+		name = "bookmark_tog_rhodri"
+		dynasty_house = house_british_isles_aberffraw
+		dynasty_splendor_level = 3
+		type = male
+		birth = 820.1.1
+		title = d_gwynedd
+		government = feudal_government
+		culture = welsh
+		religion = roman_rite
+		difficulty = "BOOKMARK_CHARACTER_DIFFICULTY_MEDIUM"
+		history_id = 81831
+		position = { 560 440 }
+
+		animation = personality_rational
+	}
+
+	# Dumnarth, last king of Cornwall. Converts by decision, as Rhodri.
+	# Data as in vanilla challenge_character_dumnarth_cornwall.
+	character = {
+		name = "bookmark_tog_dumnarth"
+		dynasty_house = house_british_isles_cerneu
+		dynasty_splendor_level = 4
+		type = male
+		birth = 830.1.1
+		title = d_cornwall
+		government = feudal_government
+		culture = cornish
+		religion = roman_rite
+		difficulty = "BOOKMARK_CHARACTER_DIFFICULTY_MEDIUM"
+		history_id = 159458
+		position = { 480 640 }
+
+		animation = personality_zealous
+	}
+
+	# Salomon, king of Brittany (dies in 874 in vanilla history). Converts by decision,
+	# to the Gaulish rite. Portrait dumped in game (dump_bookmark_portraits).
+	character = {
+		name = "bookmark_tog_salomon"
+		dynasty_house = house_poher
+		dynasty_splendor_level = 2
+		type = male
+		birth = 810.1.1
+		title = k_brittany
+		government = feudal_government
+		culture = breton
+		religion = carolingian_christianity
+		difficulty = "BOOKMARK_CHARACTER_DIFFICULTY_MEDIUM"
+		history_id = 163105
+		position = { 1000 840 }
+
+		animation = personality_cynical
+	}
+}
+
+# Dubgall alone: a landless adventurer needs Roads to Power, and a bookmark can only
+# require a DLC as a whole. Same background as the rulers' bookmark.
+bm_867_tog_dubgall = {
+	start_date = 867.1.1
+	is_playable = yes
+	group = bm_group_867
+	requires_dlc_flag = landless_adventurer
+
+	weight = {
+		value = 0
+	}
+
+	# Dubgall the Apostate
+	character = {
+		name = "bookmark_tog_dubgall"
+		dynasty = tog_manach
+		dynasty_splendor_level = 1
+		type = male
+		birth = 837.3.17
+		title = d_tog_laamp_dubgall
+		government = landless_adventurer_government
+		culture = gaelic
+		religion = norse_pagan
+		difficulty = "BOOKMARK_CHARACTER_DIFFICULTY_HARD"
+		history_id = tog_dubgall
+		position = { 650 210 }
+
+		animation = personality_rational
+	}
+}

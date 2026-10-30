@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Celtic"
  tog_celtic_religion_adj: "Celtic"
- tog_celtic_religion_adherent: "Celt"
- tog_celtic_religion_adherent_plural: "Celts"
+ tog_celtic_religion_adherent: "Celtic Pagan"
+ tog_celtic_religion_adherent_plural: "Celtic Pagans"
  tog_celtic_religion_desc: "The old beliefs of the Celtic peoples, from Ireland to Gaul and as far as Hispania. They survive only in the tales kept by monks and in the standing stones, waiting for someone to awaken them."
 
  # Faith
@@ -11,7 +11,12 @@
  tog_druidism_adj: "Druidic"
  tog_druidism_adherent: "Druidist"
  tog_druidism_adherent_plural: "Druidists"
+ tog_druidism_old: "Old Druidism"
+ tog_druidism_old_adj: "Old Druidic"
+ tog_druidism_old_adherent: "Old Druidist"
+ tog_druidism_old_adherent_plural: "Old Druidists"
  tog_druidism_desc: "A new faith that claims the druids as its own. Rebuilt from sagas preserved by monks, from half-understood ruins and from what its followers know of Norse paganism, it lays claim to a past it does not truly restore."
+ tog_druidism_old_desc: "The druidic faith as it was first rebuilt, kept by those who would not follow the reform: no head, no fixed rule, only the sagas, the stones and the old rites."
 
  # Rites
  tog_gaelic_rite: "Druídecht"
@@ -82,19 +87,19 @@
  tog_religious_symbol: "triskele"
  tog_religious_symbol_2: "$tog_religious_symbol$" # Optional translation alt
  tog_religious_symbol_3: "$tog_religious_symbol$" # Optional translation alt
- tog_religious_text: "Sacred Verses"
+ tog_religious_text: "Book of the Druids"
  tog_religious_text_2: "$tog_religious_text$" # Optional translation alt
  tog_religious_text_3: "$tog_religious_text$" # Optional translation alt
  tog_religious_head_title: "Archdruid"
  tog_religious_head_title_female: "Archdruidess"
  tog_religious_head_title_name: "Archdruidate"
- tog_devotee: "vate"
- tog_devotee_plural: "vates"
+ tog_devotee: "ovate"
+ tog_devotee_plural: "ovates"
  tog_priest_male: "Druid"
  tog_priest_male_plural: "Druids"
  tog_priest_female: "Druidess"
  tog_priest_female_plural: "Druidesses"
- tog_priest_alternate_plural: "wise"
+ tog_priest_alternate_plural: "sages"
  tog_bishop_male: "High Druid"
  tog_bishop_male_plural: "High Druids"
  tog_bishop_female: "High Druidess"

@@ -2,8 +2,8 @@
  # Religion
  tog_celtic_religion: "Celta"
  tog_celtic_religion_adj: "celta"
- tog_celtic_religion_adherent: "Celta"
- tog_celtic_religion_adherent_plural: "Celtas"
+ tog_celtic_religion_adherent: "pagano celta"
+ tog_celtic_religion_adherent_plural: "paganos celtas"
  tog_celtic_religion_desc: "Las antiguas creencias de los pueblos celtas, de Irlanda a la Galia y hasta Hispania. Solo sobreviven en los relatos que guardaron los monjes y en las piedras erguidas, a la espera de que alguien las despierte."
 
  # Faith
@@ -11,7 +11,12 @@
  tog_druidism_adj: "druídico"
  tog_druidism_adherent: "druidista"
  tog_druidism_adherent_plural: "druidistas"
+ tog_druidism_old: "Antiguo druidismo"
+ tog_druidism_old_adj: "druídica antigua"
+ tog_druidism_old_adherent: "druidista antiguo"
+ tog_druidism_old_adherent_plural: "druidistas antiguos"
  tog_druidism_desc: "Una fe nueva que reclama a los druidas como propios. Reconstruida a partir de sagas conservadas por monjes, de ruinas mal comprendidas y de lo que sus fieles saben del paganismo nórdico, reivindica un pasado que en realidad no restaura."
+ tog_druidism_old_desc: "La fe druídica tal como se reconstruyó al principio, guardada por quienes no quisieron seguir la reforma: sin cabeza ni regla fija, solo las sagas, las piedras y los viejos ritos."
 
  # Rites
  tog_gaelic_rite: "Druídecht"
@@ -82,7 +87,7 @@
  tog_religious_symbol: "trisquel"
  tog_religious_symbol_2: "$tog_religious_symbol$" #Optional translation alt
  tog_religious_symbol_3: "$tog_religious_symbol$" #Optional translation alt
- tog_religious_text: "Versos Sagrados"
+ tog_religious_text: "Libro de los Druidas"
  tog_religious_text_2: "$tog_religious_text$" #Optional translation alt
  tog_religious_text_3: "$tog_religious_text$" #Optional translation alt
  tog_religious_head_title: "Archidruida"

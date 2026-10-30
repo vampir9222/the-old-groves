@@ -1,0 +1,17 @@
+﻿# The Old Groves - landless adventurer titles (same pattern as vanilla d_laamp_el_cid)
+
+d_tog_laamp_dubgall = { # Dubgall the Apostate, former monk of Iona
+	color = { 40 60 120 }
+	capital = c_outer_hebrides # Skye, where the Pictish stone lies
+
+	definite_form = yes
+	landless = yes
+	require_landless = yes
+	ruler_uses_title_name = no
+	no_automatic_claims = yes
+	destroy_if_invalid_heir = yes
+
+	dlc_feature = roads_to_power
+
+	ai_primary_priority = { add = -1000 }
+}

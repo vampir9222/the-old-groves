@@ -1,0 +1,15 @@
+﻿# The Old Groves - restoration quest points of interest
+
+# The Pictish stone on Skye (province 1692), active while a quest is under way.
+tog_poi_stone = {
+	build_province_list = {
+		if = {
+			limit = { exists = global_var:tog_poi_stone_active }
+			province:1692 = { add_to_list = provinces }
+		}
+	}
+
+	on_visit = {
+		trigger_event = tog_quest.0060
+	}
+}
