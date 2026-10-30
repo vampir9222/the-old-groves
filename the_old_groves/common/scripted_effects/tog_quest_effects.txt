@@ -481,7 +481,6 @@ tog_reopen_monastery_effect = {
 	}
 }
 
-
 # Saves the companions as companions as scopes (tog_peredur, tog_lailoken, tog_eogan, tog_gwion) for portraits.
 tog_save_companions_effect = {
 	random_owned_story = {
@@ -664,64 +663,6 @@ tog_join_quest_effect = {
 			target = scope:$WHO$
 		}
 	}
-}
-
-# TEST ONLY - remove before any release. Skips step 1: starts the quest if needed,
-# adds Peredur and Lailoken, opens step 2.
-tog_test_skip_step1_effect = {
-	if = {
-		limit = {
-			NOT = { any_owned_story = { story_type = tog_story_old_groves } }
-		}
-		tog_start_quest_effect = yes
-	}
-	tog_create_peredur_effect = yes
-	create_character = {
-		name = "Lailoken"
-		age = 60
-		gender = male
-		culture = root.culture
-		faith = root.faith
-		dynasty_house = house:house_tog_myrddin
-		location = root.location
-		trait = eccentric
-		trait = humble
-		trait = education_learning_3
-		trait = pilgrim
-		trait = lifestyle_herbalist
-		trait = witch
-		trait = tog_blood_of_myrddin
-		learning = 13
-		save_scope_as = tog_lailoken
-	}
-	add_courtier = scope:tog_peredur
-	add_courtier = scope:tog_cei
-	add_courtier = scope:tog_lailoken
-	random_owned_story = {
-		limit = { story_type = tog_story_old_groves }
-		set_variable = {
-			name = tog_peredur
-			value = scope:tog_peredur
-		}
-		set_variable = {
-			name = tog_lailoken
-			value = scope:tog_lailoken
-		}
-		add_to_variable_list = {
-			name = tog_companions
-			target = scope:tog_peredur
-		}
-		add_to_variable_list = {
-			name = tog_companions
-			target = scope:tog_lailoken
-		}
-	}
-	if = {
-		limit = { exists = global_var:tog_poi_stone_active }
-		remove_global_variable = tog_poi_stone_active
-		province:1692 = { remove_travel_point_of_interest = tog_poi_stone }
-	}
-	tog_start_step2_effect = yes
 }
 
 # Scheme "Free Eluned": an attempt, with the scheme's odds plus BONUS (advantages spent).
@@ -939,94 +880,6 @@ tog_companion_opinion_effect = {
 	}
 }
 
-# TEST ONLY - remove before any release.
-# As if steps 2 to 4 were done: lists and counters cleared, Eógan, Gwion and Eluned
-# with the quest.
-tog_test_step3_done_effect = {
-	random_owned_story = {
-		limit = { story_type = tog_story_old_groves }
-		clear_variable_list = tog_monasteries
-		clear_variable_list = tog_places
-		remove_variable = tog_books_read
-		remove_variable = tog_lessons
-		remove_variable = tog_destination
-	}
-	if = {
-		limit = {
-			NOT = {
-				any_owned_story = {
-					story_type = tog_story_old_groves
-					exists = var:tog_gwion
-				}
-			}
-		}
-		tog_create_eogan_effect = yes
-		create_character = {
-			name = "Gwion"
-			age = 44
-			gender = male
-			culture = root.culture
-			faith = root.faith
-			dynasty_house = house:house_tog_taliesin
-			location = root.location
-			trait = lifestyle_mystic
-			trait = education_learning_3
-			trait = zealous
-			trait = tog_awen
-			learning = 14
-			save_scope_as = tog_gwion
-		}
-		create_character = {
-			name = "Ceridwen"
-			age = 40
-			gender = female
-			culture = root.culture
-			faith = root.faith
-			dynasty = none
-			location = root.location
-			save_scope_as = tog_gwion_wife
-		}
-		scope:tog_gwion = { marry = scope:tog_gwion_wife }
-		create_character = {
-			name = "Eluned"
-			age = 17
-			gender = female
-			culture = root.culture
-			faith = root.faith
-			dynasty_house = house:house_tog_taliesin
-			location = root.location
-			trait = zealous
-			father = scope:tog_gwion
-			mother = scope:tog_gwion_wife
-			save_scope_as = tog_eluned
-		}
-		tog_join_quest_effect = { WHO = tog_eogan }
-		tog_join_quest_effect = { WHO = tog_gwion }
-		add_courtier = scope:tog_eluned
-	}
-}
-
-# TEST ONLY - remove before any release.
-# As if step 5 were done: Gofraid and Ursin with the quest, sickle and carnyx owned.
-tog_test_step5_done_effect = {
-	if = {
-		limit = {
-			NOT = {
-				any_owned_story = {
-					story_type = tog_story_old_groves
-					exists = var:tog_ursin
-				}
-			}
-		}
-		tog_create_gofraid_effect = yes
-		tog_create_ursin_effect = yes
-		tog_join_quest_effect = { WHO = tog_gofraid }
-		tog_join_quest_effect = { WHO = tog_ursin }
-		tog_create_golden_sickle_effect = yes
-		tog_create_carnyx_effect = yes
-	}
-}
-
 # The companions took up arms for the quest owner: each one alive thinks better of him.
 tog_companions_rally_effect = {
 	custom_tooltip = tog_quest.0413.tt
@@ -1165,41 +1018,6 @@ tog_found_cult_effect = {
 			save_scope_as = tog_verses_book
 			decaying = no
 		}
-	}
-}
-
-# TEST ONLY - remove before any release.
-# As if step 6 were done: Nest with the quest, and the crown of mistletoe of Môn.
-tog_test_step6_done_effect = {
-	if = {
-		limit = {
-			NOT = {
-				any_owned_story = {
-					story_type = tog_story_old_groves
-					exists = var:tog_nest
-				}
-			}
-		}
-		create_character = {
-			name = "Nest"
-			age = 25
-			gender = female
-			culture = culture:welsh
-			faith = root.faith
-			dynasty_house = house:house_tog_mon
-			location = root.location
-			trait = education_diplomacy_2
-			trait = calm
-			trait = honest
-			trait = compassionate
-			trait = lifestyle_gardener
-			trait = beauty_good_1
-			trait = physique_bad_1
-			learning = 9
-			save_scope_as = tog_nest
-		}
-		tog_join_quest_effect = { WHO = tog_nest }
-		tog_create_mistletoe_effect = yes
 	}
 }
 
