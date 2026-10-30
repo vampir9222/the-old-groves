@@ -56,11 +56,6 @@ tog_force_fail_value = {
 		add = 600
 	}
 }
-tog_good_weight_prowess_value = {
-	value = prowess
-	multiply = 4
-	add = 20
-}
 
 # Story scope: the number of the next book to read, in the order the books were obtained.
 tog_next_book_value = {
