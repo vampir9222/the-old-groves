@@ -382,8 +382,13 @@ tog_story_old_groves = {
 						}
 					}
 				}
-				# One writing event every month.
+				# One writing event every other month.
+				else_if = {
+					limit = { exists = var:tog_verses_quiet }
+					remove_variable = tog_verses_quiet
+				}
 				else = {
+					set_variable = tog_verses_quiet
 					story_owner = { trigger_event = tog_quest.0510 }
 				}
 			}

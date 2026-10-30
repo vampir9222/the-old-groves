@@ -163,10 +163,6 @@ tog_quest.0021 = {
 				DESTINATION = b_ardnamurchon
 			}
 			tog_travel_to_destination_effect = yes
-			trigger_event = {
-				id = tog_quest.0011
-				days = { 4 8 }
-			}
 		}
 	}
 }
@@ -419,40 +415,6 @@ tog_quest.0010 = {
 		name = tog_quest.0010.b
 		custom_tooltip = tog_quest.0010.b.tt
 		add_stress = minor_stress_loss
-	}
-}
-
-# On the road (to the old man's house): a trader has seen similar stones to the east.
-tog_quest.0011 = {
-	type = character_event
-	title = tog_quest.0011.t
-	desc = tog_quest.0011.desc
-	theme = learning
-	override_background = { reference = wilderness }
-	left_portrait = {
-		character = root
-		animation = interested
-	}
-
-	option = { # Question him at length (diplomacy)
-		name = tog_quest.0011.a
-		random_list = {
-			0 = {
-				modifier = { add = tog_good_weight_diplomacy_value }
-				custom_tooltip = tog_quest.0011.a.good
-				add_learning_lifestyle_xp = medium_lifestyle_xp
-			}
-			60 = {
-				custom_tooltip = tog_quest.0011.a.bad
-				add_stress = minor_stress_gain
-			}
-		}
-	}
-
-	option = { # Buy his drawing (gold, certain)
-		name = tog_quest.0011.b
-		remove_short_term_gold = minor_gold_value
-		add_learning_lifestyle_xp = minor_lifestyle_xp
 	}
 }
 
@@ -1188,7 +1150,7 @@ tog_quest.0140 = {
 	}
 }
 
-# ---- Step 2: road events, rolled every 30 to 45 days of a journey to a monastery ----
+# ---- Road events, rolled every 45 to 75 days of a journey (about one in three rolls) ----
 
 tog_quest.0150 = {
 	type = character_event
@@ -1214,7 +1176,7 @@ tog_quest.0150 = {
 			# Each road event happens only once, except the food found by the
 			# companions (adventurers only, once a year, likelier when food runs low).
 			random_list = {
-				105 = {}
+				240 = {}
 				10 = {
 					trigger = { NOT = { exists = var:tog_tev_3 } }
 					set_variable = { name = tog_tev_3 value = yes }
@@ -1337,7 +1299,7 @@ tog_quest.0150 = {
 			set_variable = { name = tog_tev_pending value = yes }
 			trigger_event = {
 				id = tog_quest.0150
-				days = { 30 45 }
+				days = { 45 75 }
 			}
 		}
 	}

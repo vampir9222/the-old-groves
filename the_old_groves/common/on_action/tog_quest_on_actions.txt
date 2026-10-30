@@ -8,6 +8,29 @@ on_game_start_after_lobby = {
 tog_on_game_start_quest = {
 	effect = {
 		character:tog_dubgall ?= {
+			# His wife and son join his camp: their history "employer" falls on the
+			# day his adventurer title is created, too early to take.
+			if = {
+				limit = { is_alive = yes }
+				if = {
+					limit = {
+						character:tog_sadb ?= {
+							is_alive = yes
+							NOT = { is_courtier_of = character:tog_dubgall }
+						}
+					}
+					add_courtier = character:tog_sadb
+				}
+				if = {
+					limit = {
+						character:tog_aed ?= {
+							is_alive = yes
+							NOT = { is_courtier_of = character:tog_dubgall }
+						}
+					}
+					add_courtier = character:tog_aed
+				}
+			}
 			if = {
 				limit = {
 					is_alive = yes
