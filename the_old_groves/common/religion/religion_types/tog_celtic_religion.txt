@@ -64,6 +64,18 @@ tog_celtic_religion = {
 		}
 	}
 
+	# Drawn at random when a military order is founded (vanilla decision)
+	holy_order_names = {
+		{ name = tog_holy_order_red_branch }
+		{ name = tog_holy_order_fianna }
+		{ name = tog_holy_order_bearers_of_the_spear }
+		{ name = tog_holy_order_guardians_of_the_nemeton }
+		{ name = tog_holy_order_company_of_the_oak }
+		{ name = tog_holy_order_hounds_of_the_ford }
+	}
+
+	holy_order_maa = { tog_fennidi }
+
 	custom_faith_icons = {
 		custom_faith_tree_01 custom_faith_tree_02 custom_faith_tree_03 custom_faith_tree_04 custom_faith_tree_05
 		custom_faith_fp1_yggdrasil christianity_celtic_knot_01 christianity_celtic_knot_02 christianity_celtic_knot_03 christianity_celtic_knot_04 christianity_celtic_knot_05

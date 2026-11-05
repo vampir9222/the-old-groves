@@ -18,6 +18,32 @@
  tog_druidism_desc: "A new faith that claims the druids as its own. Rebuilt from sagas preserved by monks, from half-understood ruins and from what its followers know of Norse paganism, it lays claim to a past it does not truly restore."
  tog_druidism_old_desc: "The druidic faith as it was first rebuilt, kept by those who would not follow the reform: no head, no fixed rule, only the sagas, the stones and the old rites."
 
+ # Military orders
+ tog_holy_order_red_branch: "Red Branch"
+ tog_holy_order_fianna: "Fianna of Fionn"
+ tog_holy_order_bearers_of_the_spear: "Bearers of the Spear"
+ tog_holy_order_guardians_of_the_nemeton: "Guardians of the Nemeton"
+ tog_holy_order_company_of_the_oak: "Company of the Oak"
+ tog_holy_order_hounds_of_the_ford: "Hounds of the Ford"
+
+ # Men-at-arms
+ tog_fennidi: "Fénnidi"
+ tog_fennidi_flavor: "#F Hunter-warriors sworn to a fianna, who live in the wilds beyond the farms and the fences. They strike from the woods and the hills, and few who flee them get far.#!"
+
+ # Gosgordd of Mynyddog
+ tog_holy_order_gosgordd: "Gosgordd of Mynyddog"
+ tog_b_din_eidyn: "Din Eidyn"
+ tog_b_din_eidyn_adj: "Din Eidyn"
+ tog_found_gosgordd_decision: "Raise the Gosgordd of Mynyddog"
+ tog_found_gosgordd_decision_desc: "In the great hall of Din Eidyn, King Mynyddog fed three hundred warriors on mead for a whole year, then led them to Catraeth against the Angles. None came back, but the poets still sing their names. A war-band sworn to the old gods could rise again in the Old North."
+ tog_found_gosgordd_decision_tooltip: "Found a unique military order, the Gosgordd of Mynyddog, on your lands in the Old North."
+ tog_found_gosgordd_decision_confirm: "Let the bards sing our names"
+ tog_found_gosgordd_decision_effect_tt: "The #V Gosgordd of Mynyddog#! is founded. A castle in one of your counties of the Old North becomes its seat, with walls, barracks and military camps. If you hold Edinburgh, it takes back its old name, #V Din Eidyn#!."
+ tog_found_gosgordd_heritage_tt: "Your dynasty has taken up the #V Heritage of the Groves#!"
+ tog_found_gosgordd_no_military_order_tt: "You are not already the patron of a military order"
+ tog_gosgordd_county_in_region_tt: "In the Old North ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] or [GetTitleByKey('d_lancaster').GetNameNoTier])"
+ tog_gosgordd_county_free_holding_tt: "Has an empty holding slot, or a castle or city that is not the county capital"
+
  # Rites
  tog_gaelic_rite: "Druídecht"
  tog_gaelic_rite_adj: "Gaelic Druidic"

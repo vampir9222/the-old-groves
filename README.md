@@ -4,7 +4,7 @@ A Crusader Kings III mod that brings back the old Celtic faith: **Druidism**, wi
 
 This is alternate history: no one revived the Celtic faith in the ninth century. But every piece of it is built with care for credibility: the gods, rites, doctrines and holy sites come from ancient authors, Irish and Welsh literature, inscriptions and archaeology.
 
-**Version:** 1.0 · **Game version:** 1.20 · **Languages:** English, French, German, Spanish
+**Version:** 1.1 · **Game version:** 1.20 · **Languages:** English, French, German, Spanish
 
 ## How to play it
 
@@ -23,6 +23,8 @@ Achievements are disabled while a mod is active.
 **After the quest:** the casus belli **Return the Land to the Old Gods** against the Christians of Britain and Ireland, the **Spear of Lug**, and armies of Lug's faithful.
 
 **Decisions for every Celtic ruler:** **Renew the Bond with the Old Gods** (Goidelic and Brythonic rulers, while the faith is dead) and **Take Up the Heritage of the Groves** (the casus belli and the Spear of Lug for druid dynasties that did not do the quest).
+
+**Military orders.** Druidic military orders bear names from the sagas (the Red Branch, the Fianna of Fionn, the Hounds of the Ford…) and field the **Fénnidi**, hunter-warriors of the wilds, who can also be recruited as men-at-arms once the faith is reformed. Before the reform, a dynasty that took up the heritage of the groves can raise the **Gosgordd of Mynyddog**, a unique order of the Old North, the land of the Gododdin.
 
 **Eight artefacts and relics**, with their own icons: the golden sickle, the Gaulish carnyx, the mistletoe crown of Môn, the Book of the Druids, the Spear of Lug, the cauldron of the Dagda, the silver branch and the torc of Lugus. The last ones are found on pilgrimage to the holy sites.
 
@@ -54,7 +56,8 @@ Achievements are disabled while a mod is active.
 **Planned later**
 - A Gaulish culture
 - Celtic titles and empires
-- Celtic buildings and holy orders
+- Celtic buildings and a druidic college (monastic order)
+- More Celtic men-at-arms
 
 **Ideas, no promise**
 - A Celtiberian culture
