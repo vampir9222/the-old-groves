@@ -18,6 +18,32 @@
  tog_druidism_desc: "Ein neuer Glaube, der sich auf die Druiden beruft. Neu errichtet aus von Mönchen bewahrten Sagas, aus halb verstandenen Ruinen und aus dem, was seine Anhänger vom nordischen Heidentum wissen, beansprucht er eine Vergangenheit, die er nicht wirklich wiederherstellt."
  tog_druidism_old_desc: "Der druidische Glaube, wie er zuerst neu errichtet wurde, bewahrt von jenen, die der Reform nicht folgen wollten: kein Oberhaupt, keine feste Ordnung, nur die Sagas, die Steine und die alten Riten."
 
+ # Kriegerorden
+ tog_holy_order_red_branch: "Roter Zweig"
+ tog_holy_order_fianna: "Fianna des Fionn"
+ tog_holy_order_bearers_of_the_spear: "Träger des Speers"
+ tog_holy_order_guardians_of_the_nemeton: "Hüter des Nemetons"
+ tog_holy_order_company_of_the_oak: "Gefährten der Eiche"
+ tog_holy_order_hounds_of_the_ford: "Hunde der Furt"
+
+ # Waffenknechte
+ tog_fennidi: "Fénnidi"
+ tog_fennidi_flavor: "#F Jäger und Krieger, durch Eid an eine Fianna gebunden, die in der Wildnis jenseits von Höfen und Zäunen leben. Sie schlagen aus Wäldern und Hügeln zu, und wer vor ihnen flieht, kommt selten weit.#!"
+
+ # Gosgordd des Mynyddog
+ tog_holy_order_gosgordd: "Gosgordd des Mynyddog"
+ tog_b_din_eidyn: "Din Eidyn"
+ tog_b_din_eidyn_adj: "Din Eidyner"
+ tog_found_gosgordd_decision: "Die Gosgordd des Mynyddog aufstellen"
+ tog_found_gosgordd_decision_desc: "In der großen Halle von Din Eidyn speiste König Mynyddog dreihundert Krieger ein ganzes Jahr lang mit Met und führte sie dann nach Catraeth gegen die Angeln. Keiner kehrte zurück, doch die Dichter besingen noch heute ihre Namen. Eine den alten Göttern geschworene Kriegerschar könnte im Alten Norden wiedererstehen."
+ tog_found_gosgordd_decision_tooltip: "Gründe einen einzigartigen Kriegerorden, die Gosgordd des Mynyddog, auf deinen Ländereien im Alten Norden."
+ tog_found_gosgordd_decision_confirm: "Mögen die Barden unsere Namen besingen"
+ tog_found_gosgordd_decision_effect_tt: "Die #V Gosgordd des Mynyddog#! wird gegründet. Eine Burg in einer deiner Grafschaften im Alten Norden wird ihr Sitz, mit Mauern, Kasernen und Heerlagern. Hältst du Edinburgh, erhält die Stadt ihren alten Namen zurück: #V Din Eidyn#!."
+ tog_found_gosgordd_heritage_tt: "Deine Dynastie hat das #V Erbe der Haine#! angetreten"
+ tog_found_gosgordd_no_military_order_tt: "Du bist nicht bereits Schirmherr eines Kriegerordens"
+ tog_gosgordd_county_in_region_tt: "Im Alten Norden ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] oder [GetTitleByKey('d_lancaster').GetNameNoTier])"
+ tog_gosgordd_county_free_holding_tt: "Hat einen freien Besitzplatz oder eine Burg oder Stadt, die nicht der Hauptort der Grafschaft ist"
+
  # Rites
  tog_gaelic_rite: "Druídecht"
  tog_gaelic_rite_adj: "gälisch-druidisch"

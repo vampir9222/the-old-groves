@@ -1,0 +1,9 @@
+﻿# The Old Groves - geographical regions
+
+# Hen Ogledd, "the Old North": the Brittonic kingdoms taken by the Angles, land of the
+# Gododdin (Din Eidyn) and of Catraeth (Catterick, duchy of York).
+tog_region_hen_ogledd = {
+	duchies = {
+		d_lothian d_galloway d_northumberland d_york d_lancaster
+	}
+}

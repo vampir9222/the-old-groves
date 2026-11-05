@@ -1,0 +1,27 @@
+﻿# The Old Groves - Gosgordd of Mynyddog
+
+# Title scope: a county of the Old North that can host the order, on the model of
+# fp1_valid_county_for_jomsvikings_trigger. Unlike vanilla, the county's main holding
+# is never taken: an empty slot (a castle is built there) or a secondary castle or city.
+tog_valid_county_for_gosgordd_trigger = {
+	tier = tier_county
+	custom_description = {
+		text = tog_gosgordd_county_in_region_tt
+		title_province = { geographical_region = tog_region_hen_ogledd }
+	}
+	custom_description = {
+		text = tog_gosgordd_county_free_holding_tt
+		any_county_province = {
+			OR = {
+				has_holding = no
+				AND = {
+					is_county_capital = no
+					OR = {
+						has_holding_type = castle_holding
+						has_holding_type = city_holding
+					}
+				}
+			}
+		}
+	}
+}

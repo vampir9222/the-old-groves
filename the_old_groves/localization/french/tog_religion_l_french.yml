@@ -18,6 +18,32 @@
  tog_druidism_desc: "Une foi neuve qui se réclame des druides. Rebâtie à partir de sagas conservées par des moines, de vestiges mal compris et de ce que ses fidèles savent du paganisme norrois, elle revendique un passé qu'elle ne restaure pas vraiment."
  tog_druidism_old_desc: "La foi druidique telle qu'elle a d'abord été rebâtie, gardée par ceux qui n'ont pas suivi la réforme : ni chef ni règle fixe, seulement les sagas, les pierres et les vieux rites."
 
+ # Ordres militaires
+ tog_holy_order_red_branch: "Branche Rouge"
+ tog_holy_order_fianna: "Fianna de Fionn"
+ tog_holy_order_bearers_of_the_spear: "Porteurs de la Lance"
+ tog_holy_order_guardians_of_the_nemeton: "Gardiens du Nemeton"
+ tog_holy_order_company_of_the_oak: "Compagnie du Chêne"
+ tog_holy_order_hounds_of_the_ford: "Chiens du Gué"
+
+ # Hommes d'armes
+ tog_fennidi: "Fénnidi"
+ tog_fennidi_flavor: "#F Chasseurs et guerriers liés par serment à une fianna, qui vivent dans les terres sauvages, loin des fermes et des clôtures. Ils frappent depuis les bois et les collines, et peu de fuyards leur échappent.#!"
+
+ # Gosgordd de Mynyddog
+ tog_holy_order_gosgordd: "Gosgordd de Mynyddog"
+ tog_b_din_eidyn: "Din Eidyn"
+ tog_b_din_eidyn_adj: "de Din Eidyn"
+ tog_found_gosgordd_decision: "Lever la Gosgordd de Mynyddog"
+ tog_found_gosgordd_decision_desc: "Dans la grande salle de Din Eidyn, le roi Mynyddog nourrit d'hydromel trois cents guerriers pendant une année entière, puis les mena à Catraeth contre les Angles. Aucun n'en revint, mais les poètes chantent encore leurs noms. Une troupe liée par serment aux vieux dieux pourrait renaître dans le Vieux Nord."
+ tog_found_gosgordd_decision_tooltip: "Fonde un ordre militaire unique, la Gosgordd de Mynyddog, sur tes terres du Vieux Nord."
+ tog_found_gosgordd_decision_confirm: "Que les bardes chantent nos noms"
+ tog_found_gosgordd_decision_effect_tt: "La #V Gosgordd de Mynyddog#! est fondée. Un château dans un de tes comtés du Vieux Nord devient son siège, avec murailles, casernes et camps militaires. Si tu tiens Édimbourg, la ville reprend son ancien nom, #V Din Eidyn#!."
+ tog_found_gosgordd_heritage_tt: "Ta dynastie a repris l'#V héritage des bosquets#!"
+ tog_found_gosgordd_no_military_order_tt: "Tu n'es pas déjà patron d'un ordre militaire"
+ tog_gosgordd_county_in_region_tt: "Dans le Vieux Nord ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] ou [GetTitleByKey('d_lancaster').GetNameNoTier])"
+ tog_gosgordd_county_free_holding_tt: "A un emplacement de fief vide, ou un château ou une ville qui n'est pas le chef-lieu du comté"
+
  # Rites
  tog_gaelic_rite: "Druídecht"
  tog_gaelic_rite_adj: "druidique gaélique"
