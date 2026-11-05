@@ -1,0 +1,13 @@
+﻿# The Old Groves - men-at-arms costs
+
+# Men-at-arms costs must be fixed values, not script blocks (else the game reads 0).
+# Copied from vanilla 00_men_at_arms_values.txt, whose @ variables are local to that file.
+@skirmisher_recruitment_cost = 45
+@skirmisher_low_maint_cost = 0.15
+@high_maint_mult = 3
+
+# Fénnidi: vanilla skirmisher costs ×1.1 (cultural units ×1.0, Jomsvikings ×1.4).
+# Tribal rulers pay them in prestige like any other unit (regiments_prestige_as_gold).
+tog_fennidi_recruitment_cost = @[skirmisher_recruitment_cost * 1.1]
+tog_fennidi_low_maint_cost = @[skirmisher_low_maint_cost * 1.1]
+tog_fennidi_high_maint_cost = @[skirmisher_low_maint_cost * high_maint_mult * 1.1]

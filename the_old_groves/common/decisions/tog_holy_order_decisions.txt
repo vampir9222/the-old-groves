@@ -1,0 +1,85 @@
+﻿# The Old Groves - Gosgordd of Mynyddog
+
+# A military order before the reform, on the model of vanilla forge_the_jomsvikings_decision:
+# an unreformed faith cannot go feudal, so a tribal ruler has no castle to lease to an order.
+# Once per game, in a county of the Old North. See DECISIONS.md, "Ordres sacrés".
+tog_found_gosgordd_decision = {
+	picture = {
+		reference = "gfx/interface/illustrations/decisions/decision_major_religion.dds"
+	}
+	decision_group_type = major
+
+	ai_check_interval_by_tier = {
+		barony = 0
+		county = 0
+		duchy = 120
+		kingdom = 120
+		empire = 120
+		hegemony = 120
+	}
+
+	desc = tog_found_gosgordd_decision_desc
+	selection_tooltip = tog_found_gosgordd_decision_tooltip
+	confirm_text = tog_found_gosgordd_decision_confirm
+
+	is_shown = {
+		religion = religion:tog_celtic_religion
+		NOT = { exists = global_var:tog_gosgordd_founded }
+		OR = {
+			government_has_flag = government_is_feudal
+			government_has_flag = government_is_tribal
+			government_has_flag = government_is_clan
+		}
+		exists = dynasty
+		is_playable_character = yes
+	}
+
+	is_valid = {
+		# Set by the decision "Take Up the Heritage of the Groves" or at the end of the quest.
+		custom_tooltip = {
+			text = tog_found_gosgordd_heritage_tt
+			dynasty ?= { has_variable = tog_saxons_cb }
+		}
+		top_liege = this
+		prestige_level >= high_prestige_level
+		piety_level >= medium_piety_level
+		custom_tooltip = {
+			text = tog_found_gosgordd_no_military_order_tt
+			NOT = {
+				any_patroned_holy_order = {
+					leader ?= { government_has_flag = government_is_military_holy_order }
+				}
+			}
+		}
+		# Same structure as the Jomsvikings, so the decision window does not list duchies.
+		any_held_title = {
+			trigger_if = {
+				limit = { tier = tier_county }
+				tog_valid_county_for_gosgordd_trigger = yes
+			}
+			trigger_else = { always = no }
+		}
+	}
+
+	is_valid_showing_failures_only = {
+		is_available_adult = yes
+	}
+
+	cost = {
+		piety = 500
+		prestige = 1000
+	}
+
+	effect = {
+		custom_tooltip = tog_found_gosgordd_decision_effect_tt
+		hidden_effect = { tog_found_gosgordd_effect = yes }
+	}
+
+	ai_potential = {
+		always = yes
+	}
+
+	ai_will_do = {
+		base = 100
+	}
+}

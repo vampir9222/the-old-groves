@@ -470,6 +470,7 @@ tog_spear_of_lug_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_misc.dds"
 	}
+	decision_group_type = major
 	desc = tog_spear_of_lug_decision_desc
 	selection_tooltip = tog_spear_of_lug_decision_tooltip
 	confirm_text = tog_spear_of_lug_decision_confirm
@@ -517,6 +518,7 @@ tog_druid_heritage_decision = {
 	picture = {
 		reference = "gfx/interface/illustrations/decisions/decision_personal_religious.dds"
 	}
+	decision_group_type = major
 	desc = tog_druid_heritage_decision_desc
 	selection_tooltip = tog_druid_heritage_decision_tooltip
 	confirm_text = tog_druid_heritage_decision_confirm
