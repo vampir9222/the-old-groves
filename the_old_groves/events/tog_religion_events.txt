@@ -22,3 +22,50 @@ tog_religion.0001 = {
 		}
 	}
 }
+
+# Lia Fáil: the stone of Tara cries out under the rightful king, or stays silent
+# (see tog_on_title_gain_lia_fail). Odds in tog_lia_fail_cry_chance.
+tog_religion.0010 = {
+	type = character_event
+	title = tog_religion.0010.t
+	desc = {
+		desc = tog_religion.0010.desc.intro
+		first_valid = {
+			triggered_desc = {
+				trigger = { exists = scope:tog_lia_fail_cries }
+				desc = tog_religion.0010.desc.cries
+			}
+			desc = tog_religion.0010.desc.silent
+		}
+	}
+	theme = faith
+	override_background = { reference = fp1_runestone }
+	center_portrait = {
+		character = root
+		triggered_animation = {
+			trigger = { exists = scope:tog_lia_fail_cries }
+			animation = happiness
+		}
+		animation = worry
+	}
+
+	immediate = {
+		random = {
+			chance = tog_lia_fail_cry_chance
+			save_scope_value_as = { name = tog_lia_fail_cries value = yes }
+		}
+	}
+
+	option = {
+		name = tog_religion.0010.a
+		trigger = { exists = scope:tog_lia_fail_cries }
+		add_legitimacy = minor_legitimacy_gain
+		add_prestige = 100
+	}
+
+	option = {
+		name = tog_religion.0010.b
+		trigger = { NOT = { exists = scope:tog_lia_fail_cries } }
+		add_legitimacy = miniscule_legitimacy_loss
+	}
+}

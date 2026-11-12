@@ -1,7 +1,41 @@
 ﻿# The Old Groves - religion on_actions
 
 on_title_gain = {
-	on_actions = { tog_on_title_gain_archdruid }
+	on_actions = {
+		tog_on_title_gain_archdruid
+		tog_on_title_gain_lia_fail
+	}
+}
+
+# Lia Fáil: a druidist who gains a kingdom or an empire with Tara in their realm
+# is tested by the stone, once in their life (tog_religion.0010).
+tog_on_title_gain_lia_fail = {
+	trigger = {
+		religion = religion:tog_celtic_religion
+		scope:title.tier >= tier_kingdom
+		NOT = { has_character_flag = tog_lia_fail_done }
+		title:c_dublin.holder ?= {
+			OR = {
+				this = root
+				any_liege_or_above = { this = root }
+			}
+		}
+	}
+	effect = {
+		add_character_flag = tog_lia_fail_done
+		scope:title = { save_scope_as = tog_lia_fail_title }
+		if = {
+			limit = {
+				OR = {
+					scope:transfer_type = flag:inheritance
+					scope:transfer_type = flag:election
+					scope:transfer_type = flag:abdication
+				}
+			}
+			save_scope_value_as = { name = tog_lia_fail_rightful value = yes }
+		}
+		trigger_event = tog_religion.0010
+	}
 }
 
 # The vanilla reform creates the Archdruidate as a dynamic duchy, gives it to the

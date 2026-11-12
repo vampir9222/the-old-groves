@@ -229,6 +229,14 @@
  holy_site_tog_carnutes_name: "Bosque de los carnutos"
  holy_site_tog_alesia_name: "Alesia"
  holy_site_tog_penalba_name: "Peñalba de Villastar"
+
+ # Lia Fáil (tog_religion.0010)
+ tog_religion.0010.t: "La Lia Fáil"
+ tog_religion.0010.desc.intro: "En la colina de Tara, entre los túmulos de los antiguos reyes, se alza la Lia Fáil, la piedra del destino. Los druidas dicen que grita bajo el pie del rey legítimo, y que su grito se oye en toda Irlanda.\n\nAhora que llevas la corona de [scope:tog_lia_fail_title.GetName], pones el pie sobre la piedra ante la multitud reunida."
+ tog_religion.0010.desc.cries: "\n\nUn largo grito surge de la piedra, ronco como un cuerno de guerra. La multitud cae de rodillas y los druidas alzan los brazos al cielo. Nadie podrá volver a decir que tu corona es usurpada."
+ tog_religion.0010.desc.silent: "\n\nEl viento sopla sobre la colina. La piedra calla. Los druidas bajan la mirada, y entre la multitud ya empiezan los murmullos."
+ tog_religion.0010.a: "Los dioses han hablado."
+ tog_religion.0010.b: "Una piedra no hace a un rey."
  tog_chaplain_county: "Druida de la corte"
  tog_chaplain_duchy: "Druida"
  tog_chaplain_kingdom: "Gran druida"

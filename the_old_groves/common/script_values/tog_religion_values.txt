@@ -1,0 +1,17 @@
+﻿# The Old Groves - religion script values
+
+# Lia Fáil (tog_religion.0010): chance that the stone cries out under the new king.
+# 60 for a rightful king (inheritance, election, abdication), 30 otherwise,
+# +2 per point of relic rarity enshrined at Tara, at most +10.
+tog_lia_fail_cry_chance = {
+	value = 30
+	if = {
+		limit = { exists = scope:tog_lia_fail_rightful }
+		value = 60
+	}
+	add = {
+		value = holy_site:tog_tara.total_active_artifact_rarity_sum
+		multiply = 2
+		max = 10
+	}
+}

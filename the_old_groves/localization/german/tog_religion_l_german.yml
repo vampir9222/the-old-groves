@@ -229,6 +229,14 @@
  holy_site_tog_carnutes_name: "Wald der Carnuten"
  holy_site_tog_alesia_name: "Alesia"
  holy_site_tog_penalba_name: "Peñalba de Villastar"
+
+ # Lia Fáil (tog_religion.0010)
+ tog_religion.0010.t: "Der Lia Fáil"
+ tog_religion.0010.desc.intro: "Auf dem Hügel von Tara, zwischen den Grabhügeln der alten Könige, steht der Lia Fáil, der Stein des Schicksals. Die Druiden sagen, er schreie unter dem Fuß des rechtmäßigen Königs auf, und sein Schrei sei in ganz Irland zu hören.\n\nNun, da du die Krone von [scope:tog_lia_fail_title.GetName] trägst, setzt du vor der versammelten Menge deinen Fuß auf den Stein."
+ tog_religion.0010.desc.cries: "\n\nEin langer Schrei steigt aus dem Stein auf, rau wie ein Kriegshorn. Die Menge fällt auf die Knie, die Druiden heben die Arme zum Himmel. Niemand wird je wieder sagen, deine Krone sei angemaßt."
+ tog_religion.0010.desc.silent: "\n\nDer Wind weht über den Hügel. Der Stein schweigt. Die Druiden senken den Blick, und in der Menge beginnt schon das Getuschel."
+ tog_religion.0010.a: "Die Götter haben gesprochen."
+ tog_religion.0010.b: "Ein Stein macht keinen König."
  tog_chaplain_county: "Hofdruide"
  tog_chaplain_duchy: "Druide"
  tog_chaplain_kingdom: "Oberdruide"

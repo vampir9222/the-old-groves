@@ -229,6 +229,14 @@
  holy_site_tog_carnutes_name: "Forest of the Carnutes"
  holy_site_tog_alesia_name: "Alesia"
  holy_site_tog_penalba_name: "Peñalba de Villastar"
+
+ # Lia Fáil (tog_religion.0010)
+ tog_religion.0010.t: "The Lia Fáil"
+ tog_religion.0010.desc.intro: "On the hill of Tara, among the mounds of the ancient kings, stands the Lia Fáil, the Stone of Destiny. The druids say it cries out beneath the foot of the rightful king, and that its cry is heard across all of Ireland.\n\nNow that you wear the crown of [scope:tog_lia_fail_title.GetName], you set your foot upon the stone before the gathered crowd."
+ tog_religion.0010.desc.cries: "\n\nA long cry rises from the stone, hoarse as a war horn. The crowd falls to its knees, and the druids raise their arms to the sky. No one will ever again say that your crown was usurped."
+ tog_religion.0010.desc.silent: "\n\nThe wind blows across the hill. The stone is silent. The druids lower their eyes, and in the crowd the whispering has already begun."
+ tog_religion.0010.a: "The gods have spoken."
+ tog_religion.0010.b: "A stone does not make a king."
  tog_chaplain_county: "Court Druid"
  tog_chaplain_duchy: "Druid"
  tog_chaplain_kingdom: "High Druid"
