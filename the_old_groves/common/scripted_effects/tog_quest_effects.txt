@@ -967,6 +967,7 @@ tog_found_cult_effect = {
 		set_character_faith = faith:tog_druidism
 		set_character_rite = scope:tog_rite
 		scope:tog_rite = { set_main_rite = yes }
+		tog_tara_coronation_tradition_effect = yes
 		every_courtier = {
 			set_character_faith = faith:tog_druidism
 			set_character_rite = scope:tog_rite

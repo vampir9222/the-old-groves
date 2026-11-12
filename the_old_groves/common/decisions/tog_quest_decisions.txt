@@ -109,6 +109,7 @@ tog_convert_old_faith_decision = {
 			set_character_rite = scope:tog_rite
 			# The religion is dead: whoever revives it sets the main rite, as at the founding.
 			scope:tog_rite = { set_main_rite = yes }
+			tog_tara_coronation_tradition_effect = yes
 		}
 	}
 
