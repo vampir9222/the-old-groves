@@ -488,8 +488,10 @@ tog_spear_of_lug_decision = {
 		religion = religion:tog_celtic_religion
 	}
 
+	# About a year of income (vanilla scaled value): 500 was years of income for
+	# a Celtic king of the 9th century.
 	cost = {
-		gold = 500
+		gold = major_gold_value
 	}
 
 	effect = {
