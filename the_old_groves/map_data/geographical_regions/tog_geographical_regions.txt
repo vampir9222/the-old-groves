@@ -7,3 +7,12 @@ tog_region_hen_ogledd = {
 		d_lothian d_galloway d_northumberland d_york d_lancaster
 	}
 }
+
+# Gaul, for the names of rites founded there (common/religion/rite_names): vanilla
+# Francia, plus the Low Countries, Lorraine and Alsace (Belgica).
+tog_region_gaul = {
+	duchies = {
+		d_berry d_anjou d_normandy d_orleans d_champagne d_valois d_burgundy d_bar d_aquitaine d_toulouse d_languedoc d_armagnac d_gascogne d_poitou d_auvergne d_bourbon d_brittany d_provence d_savoie d_dauphine d_upper_burgundy d_transjurania
+		d_flanders d_brabant d_luxembourg d_upper_lorraine d_lower_lorraine d_alsace
+	}
+}

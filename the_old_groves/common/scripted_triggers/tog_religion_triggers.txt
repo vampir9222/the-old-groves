@@ -1,0 +1,13 @@
+﻿# The Old Groves - religion triggers
+
+# Character scope: the founder of a new rite has their capital in Gaul, or, when
+# landless, stands in Gaul (common/religion/rite_names/00_a_tog_rite_names.txt).
+tog_rite_founder_in_gaul_trigger = {
+	trigger_if = {
+		limit = { exists = capital_province }
+		capital_province = { geographical_region = tog_region_gaul }
+	}
+	trigger_else = {
+		location ?= { geographical_region = tog_region_gaul }
+	}
+}
