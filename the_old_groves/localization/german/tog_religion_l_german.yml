@@ -232,11 +232,13 @@
 
  # Lia Fáil (tog_religion.0010)
  tog_religion.0010.t: "Der Lia Fáil"
- tog_religion.0010.desc.intro: "Auf dem Hügel von Tara, zwischen den Grabhügeln der alten Könige, steht der Lia Fáil, der Stein des Schicksals. Die Druiden sagen, er schreie unter dem Fuß des rechtmäßigen Königs auf, und sein Schrei sei in ganz Irland zu hören.\n\nNun, da du die Krone von [scope:tog_lia_fail_title.GetName] trägst, setzt du vor der versammelten Menge deinen Fuß auf den Stein."
- tog_religion.0010.desc.cries: "\n\nEin langer Schrei steigt aus dem Stein auf, rau wie ein Kriegshorn. Die Menge fällt auf die Knie, die Druiden heben die Arme zum Himmel. Niemand wird je wieder sagen, deine Krone sei angemaßt."
- tog_religion.0010.desc.silent: "\n\nDer Wind weht über den Hügel. Der Stein schweigt. Die Druiden senken den Blick, und in der Menge beginnt schon das Getuschel."
- tog_religion.0010.a: "Die Götter haben gesprochen."
- tog_religion.0010.b: "Ein Stein macht keinen König."
+ tog_religion.0010.desc.intro: "Auf dem Hügel von Tara, zwischen den Hügelgräbern der alten Könige, steht ein aufrechter Stein, nicht größer als ein Mann. Das ist der Lia Fáil. Man sagt, er schreie auf, wenn der wahre König ihn betritt, und dass man den Schrei dann in ganz Irland hört."
+ tog_religion.0010.desc.rightful: "\n\nDie Krone ist dir nach altem Brauch zugefallen. Doch die Leute wollen es vom Stein selbst hören. Die Druiden führen dich vor der Menge auf den Hügel, und du setzt deinen Fuß auf den Lia Fáil."
+ tog_religion.0010.desc.usurper: "\n\nDeine Krone ist neu oder mit dem Schwert genommen, und viele zweifeln an dir. Sie sind zahlreich auf den Hügel gestiegen, um zu sehen, was der Stein sagt. Die Druiden führen dich hin, und du setzt deinen Fuß auf den Lia Fáil."
+ tog_religion.0010.desc.cries: "\n\nZuerst nichts. Dann steigt ein Ton aus dem Stein, tief und lang, wie ein Horn, das unter der Erde geblasen wird. Die Menge verstummt und ruft dann selbst. Die Druiden verneigen sich vor dir."
+ tog_religion.0010.desc.silent: "\n\nDu wartest. Der Wind streicht über das Gras. Der Stein schweigt. Die Druiden sehen weg, und irgendwo in der Menge lacht jemand."
+ tog_religion.0010.a: "Der Stein hat gesprochen."
+ tog_religion.0010.b: "Es ist nur ein Stein."
 
  # Names of the rites the game creates (common/religion/rite_names)
  tog_rite_filidecht: "Filidecht"

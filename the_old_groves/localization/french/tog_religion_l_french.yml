@@ -232,11 +232,13 @@
 
  # Lia Fáil (tog_religion.0010)
  tog_religion.0010.t: "La Lia Fáil"
- tog_religion.0010.desc.intro: "Sur la colline de Tara, parmi les tertres des anciens rois, se dresse la Lia Fáil, la pierre du destin. Les druides disent qu'elle crie sous le pied du roi légitime, et que son cri s'entend dans toute l'Irlande.\n\nMaintenant que tu portes la couronne de [scope:tog_lia_fail_title.GetName], tu poses le pied sur la pierre, devant la foule assemblée."
- tog_religion.0010.desc.cries: "\n\nUn long cri monte de la pierre, rauque comme une corne de guerre. La foule tombe à genoux, les druides lèvent les bras vers le ciel. Personne ne pourra plus dire que ta couronne est usurpée."
- tog_religion.0010.desc.silent: "\n\nLe vent souffle sur la colline. La pierre se tait. Les druides baissent les yeux, et dans la foule on commence déjà à murmurer."
- tog_religion.0010.a: "Les dieux ont parlé."
- tog_religion.0010.b: "Une pierre ne fait pas un roi."
+ tog_religion.0010.desc.intro: "Sur la colline de Tara, entre les tertres où reposent les anciens rois, se dresse une pierre levée, pas plus haute qu'un homme. C'est la Lia Fáil. On dit qu'elle crie quand le vrai roi monte sur elle, et qu'on l'entend alors dans toute l'Irlande."
+ tog_religion.0010.desc.rightful: "\n\nLa couronne t'est revenue selon la coutume. Mais les gens veulent l'entendre de la pierre elle-même. Les druides te mènent sur la colline, devant la foule, et tu poses le pied sur la Lia Fáil."
+ tog_religion.0010.desc.usurper: "\n\nTa couronne est neuve, ou prise par l'épée, et beaucoup doutent de toi. Ils sont montés nombreux sur la colline pour voir ce que dira la pierre. Les druides t'y mènent, et tu poses le pied sur la Lia Fáil."
+ tog_religion.0010.desc.cries: "\n\nD'abord, rien. Puis un son monte de la pierre, grave et long, comme une corne qu'on soufflerait sous la terre. La foule se tait, puis crie à son tour. Les druides s'inclinent devant toi."
+ tog_religion.0010.desc.silent: "\n\nTu attends. Le vent passe sur l'herbe. La pierre ne dit rien. Les druides regardent ailleurs, et dans la foule, quelqu'un rit."
+ tog_religion.0010.a: "La pierre a parlé."
+ tog_religion.0010.b: "Ce n'est qu'une pierre."
 
  # Names of the rites the game creates (common/religion/rite_names)
  tog_rite_filidecht: "Filidecht"

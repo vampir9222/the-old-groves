@@ -32,6 +32,13 @@ tog_religion.0010 = {
 		desc = tog_religion.0010.desc.intro
 		first_valid = {
 			triggered_desc = {
+				trigger = { exists = scope:tog_lia_fail_rightful }
+				desc = tog_religion.0010.desc.rightful
+			}
+			desc = tog_religion.0010.desc.usurper
+		}
+		first_valid = {
+			triggered_desc = {
 				trigger = { exists = scope:tog_lia_fail_cries }
 				desc = tog_religion.0010.desc.cries
 			}
