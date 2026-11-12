@@ -1,0 +1,35 @@
+﻿# The Old Groves - religion effects
+
+# Kildare becomes a traditional coronation site, like Reims or Westminster in vanilla
+# (game_start.txt, CORONATION LOCATION SETUP; starts after 1066 only). Set when the
+# faith comes back (tog_found_cult_effect, tog_convert_old_faith_decision) rather
+# than at game start, so the Norse Christians of Dublin don't get it in 867.
+# Same modifier and variable as vanilla: the tradition then grows with each
+# coronation held there (coronation.txt, on_complete).
+# Not Trim (the barony of Tara): it is an empty slot in 867 and a coronation needs
+# a holding (coronation.txt, is_location_valid). Kildare, Brigid's sanctuary, has a temple.
+tog_tara_coronation_tradition_effect = {
+	if = {
+		limit = {
+			has_dlc_feature = coronations
+			NOT = { exists = global_var:tog_tara_coronation_tradition }
+		}
+		set_global_variable = { name = tog_tara_coronation_tradition value = yes }
+		title:b_kildare.title_province = {
+			if = {
+				limit = {
+					NOR = {
+						has_province_modifier = coronation_tradition_modifier
+						has_province_modifier = coronation_long_tradition_modifier
+						has_province_modifier = coronation_ancient_tradition_modifier
+					}
+				}
+				add_province_modifier = coronation_tradition_modifier
+				set_variable = {
+					name = coronation_tradition_location
+					value = 5
+				}
+			}
+		}
+	}
+}

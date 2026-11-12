@@ -41,7 +41,13 @@ Achievements are disabled while a mod is active.
 
 **A real pantheon.** Every god slot is filled with a god from the sources, rite by rite: Lug, Dagda, Brigit and the Morrígan for the Gaels; Lleu, Gwydion, Arianrhod and Ceridwen for the Britons; Lugus, Sucellos, Toutatis and Cernunnos for the Gauls. Lug, under his three names (Lug, Lleu, Lugus), is the high god of every rite: he is the only god attested in all four branches.
 
-**Six holy sites**, each with its own effect: **Tara**, **Ynys Môn** and the **Forest of the Carnutes** (the three eminent sites), **Iona** (shared with the Christians), **Peñalba de Villastar** and **Alesia**.
+**Six holy sites**, each with its own effect: **Tara**, **Ynys Môn** and the **Forest of the Carnutes** (the three eminent sites), **Iona** (shared with the Christians), **Peñalba de Villastar** and **Alesia**. As in the base game since *By God Alone*, the relics enshrined at a site make its effects stronger.
+
+**The Lia Fáil.** When a druid ruler who holds Tara gains a kingdom, they set foot on the stone of destiny: if it cries out, they gain legitimacy and prestige; if it stays silent, people talk. A rightful heir has better odds, and so do the relics enshrined at Tara.
+
+**A coronation site** (requires *Coronations*): when the faith is founded again, **Kildare**, Brigid's sanctuary, becomes a traditional coronation site, like Reims or Westminster.
+
+**Celtic names for new rites**: rites that appear in a reformed faith take Gaelic, Brythonic or Gaulish names (Filidecht, Awen, Teutatism…) according to their founder.
 
 **The Archdruidate**: once the faith is reformed, its head takes the title of Archdruid, with its own coat of arms.
 
