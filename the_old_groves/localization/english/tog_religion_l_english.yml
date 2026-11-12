@@ -232,7 +232,7 @@
 
  # Lia Fáil (tog_religion.0010)
  tog_religion.0010.t: "The Lia Fáil"
- tog_religion.0010.desc.intro: "On the hill of Tara, among the mounds where the old kings lie, stands a standing stone no taller than a man. This is the Lia Fáil. It is said to cry out when the true king steps onto it, and that the cry is then heard across all of Ireland."
+ tog_religion.0010.desc.intro: "On the hill of Tara, among the mounds where the old kings lie, rises a stone no taller than a man. This is the Lia Fáil. It is said to cry out when the true king steps onto it, and that the cry is then heard across all of Ireland."
  tog_religion.0010.desc.rightful: "\n\nThe crown came to you as custom demands. But the people want to hear it from the stone itself. The druids lead you up the hill, before the crowd, and you set your foot on the Lia Fáil."
  tog_religion.0010.desc.usurper: "\n\nYour crown is new, or taken by the sword, and many doubt you. They have climbed the hill in numbers to see what the stone will say. The druids lead you to it, and you set your foot on the Lia Fáil."
  tog_religion.0010.desc.cries: "\n\nAt first, nothing. Then a sound rises from the stone, deep and long, like a horn blown beneath the earth. The crowd falls silent, then shouts in turn. The druids bow before you."
