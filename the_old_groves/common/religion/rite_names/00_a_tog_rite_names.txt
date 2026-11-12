@@ -1,0 +1,111 @@
+﻿# The Old Groves - names of the rites the game creates for Druidism (after the reform:
+# unreformed faiths never spawn rites). The game takes the first unused name whose
+# trigger is met, so this file must load before vanilla 00_rite_names.txt, whose
+# generic names accept any founder. Order: Gaelic, Brythonic (Bretons too, even in
+# Armorica), Gaulish (capital in Gaul), then the common list for anyone else.
+# Loc: <name>, _adj, _adherent, _adherent_plural, _desc (one desc per branch).
+
+tog_rite_name_filidecht = {
+	name = tog_rite_filidecht
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_goidelic } }
+	}
+}
+
+tog_rite_name_fir_flathemon = {
+	name = tog_rite_fir_flathemon
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_goidelic } }
+	}
+}
+
+tog_rite_name_aes_side = {
+	name = tog_rite_aes_side
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_goidelic } }
+	}
+}
+
+tog_rite_name_imbas = {
+	name = tog_rite_imbas
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_goidelic } }
+	}
+}
+
+tog_rite_name_awen = {
+	name = tog_rite_awen
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_brythonic } }
+	}
+}
+
+tog_rite_name_plant_llyr = {
+	name = tog_rite_plant_llyr
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_brythonic } }
+	}
+}
+
+tog_rite_name_annwfn = {
+	name = tog_rite_annwfn
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { culture = { has_cultural_pillar = heritage_brythonic } }
+	}
+}
+
+tog_rite_name_teutates = {
+	name = tog_rite_teutates
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { tog_rite_founder_in_gaul_trigger = yes }
+	}
+}
+
+tog_rite_name_belenus = {
+	name = tog_rite_belenus
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { tog_rite_founder_in_gaul_trigger = yes }
+	}
+}
+
+tog_rite_name_cernunnos = {
+	name = tog_rite_cernunnos
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { tog_rite_founder_in_gaul_trigger = yes }
+	}
+}
+
+tog_rite_name_esus = {
+	name = tog_rite_esus
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		scope:founder ?= { tog_rite_founder_in_gaul_trigger = yes }
+	}
+}
+
+tog_rite_name_nemeton = {
+	name = tog_rite_nemeton
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		exists = scope:founder
+	}
+}
+
+tog_rite_name_samonios = {
+	name = tog_rite_samonios
+	trigger = {
+		scope:faith.religion = religion:tog_celtic_religion
+		exists = scope:founder
+	}
+}
+
