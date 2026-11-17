@@ -82,9 +82,9 @@ tog_second_sight_modifier = {
 
 # Step 10: the cattle plague, until the miracle of the fires.
 tog_cattle_plague_modifier = {
-	icon = county_modifier_development_negative
-	development_growth_factor = -0.5
-	tax_mult = -0.3
+	icon = county_modifier_prosperity_negative
+	prosperity_growth_factor = -0.5
+	all_tax_mult = -0.3
 	levy_size = -0.2
 	supply_limit_mult = -0.2
 }

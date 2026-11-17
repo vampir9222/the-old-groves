@@ -82,38 +82,15 @@ tog_found_gosgordd_effect = {
 		limit = { scope:leased_barony = title:b_edinburgh }
 		scope:leased_barony = { set_title_name = tog_b_din_eidyn }
 	}
-	# Walls, barracks and military camps, with an extra slot when none is free.
+	# A fortification and a military building, as vanilla does for the Jomsvikings since 1.21
+	# (districts: when the barony lacks the district, the vanilla effects give gold instead).
 	scope:leased_barony.title_province = {
 		if = {
-			limit = {
-				NOT = { has_building_or_higher = curtain_walls_01 }
-			}
-			if = {
-				limit = { free_building_slots = 0 }
-				add_province_modifier = extra_building_slot
-			}
-			add_building = curtain_walls_01
+			limit = { free_building_slots = 0 }
+			add_province_modifier = extra_building_slot
 		}
-		if = {
-			limit = {
-				NOT = { has_building_or_higher = barracks_01 }
-			}
-			if = {
-				limit = { free_building_slots = 0 }
-				add_province_modifier = extra_building_slot
-			}
-			add_building = barracks_01
-		}
-		if = {
-			limit = {
-				NOT = { has_building_or_higher = military_camps_01 }
-			}
-			if = {
-				limit = { free_building_slots = 0 }
-				add_province_modifier = extra_building_slot
-			}
-			add_building = military_camps_01
-		}
+		add_random_fortification_building_effect = yes
+		add_random_military_building_effect = yes
 	}
 	# Once per game.
 	set_global_variable = {
