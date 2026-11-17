@@ -4,7 +4,7 @@ A Crusader Kings III mod that brings back the old Celtic faith: **Druidism**, wi
 
 This is alternate history: no one revived the Celtic faith in the ninth century. But every piece of it is built with care for credibility: the gods, rites, doctrines and holy sites come from ancient authors, Irish and Welsh literature, inscriptions and archaeology.
 
-**Version:** 1.1 · **Game version:** 1.20 · **Languages:** English, French, German, Spanish
+**Version:** 1.1.2 · **Game version:** 1.21 · **Languages:** English, French, German, Spanish
 
 ## How to play it
 
