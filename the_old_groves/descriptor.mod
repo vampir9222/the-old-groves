@@ -5,5 +5,5 @@ tags={
 	"Alternative History"
 }
 name="The Old Groves - Celtic Paganism"
-supported_version="1.20.*"
+supported_version="1.21.*"
 remote_file_id="3819300912"

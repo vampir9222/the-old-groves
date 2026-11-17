@@ -15,8 +15,8 @@ tog_tara = {
 
 	county_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		development_growth_factor = 0.01
-		county_opinion_add = 1
+		prosperity_growth_factor = 0.01
+		popular_opinion_add = 1
 	}
 
 	faith_character_modifier = {
@@ -40,8 +40,8 @@ tog_ynys_mon = {
 
 	county_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		development_growth_factor = 0.01
-		monthly_county_control_growth_factor = 0.01
+		prosperity_growth_factor = 0.01
+		monthly_control_change_when_below_baseline_mult = 0.01
 	}
 
 	faith_character_modifier = {
@@ -65,17 +65,17 @@ tog_carnutes = {
 
 	county_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		tax_mult = 0.01
-		county_opinion_add = 1
+		all_tax_mult = 0.01
+		popular_opinion_add = 1
 	}
 
 	faith_character_modifier = {
-		monthly_county_control_growth_factor = 0.1
+		monthly_control_change_when_below_baseline_mult = 0.1
 	}
 
 	faith_character_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		monthly_county_control_growth_factor = 0.01
+		monthly_control_change_when_below_baseline_mult = 0.01
 	}
 }
 
@@ -91,7 +91,7 @@ tog_alesia = {
 
 	county_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		development_growth_factor = 0.01
+		prosperity_growth_factor = 0.01
 		defender_holding_advantage = 1
 	}
 
@@ -116,7 +116,7 @@ tog_penalba = {
 
 	county_modifier_scaled = {
 		scale = holy_site_total_artifact_rarity
-		development_growth_factor = 0.01
+		prosperity_growth_factor = 0.01
 		travel_danger = -1
 	}
 
