@@ -38,7 +38,7 @@
  tog_found_gosgordd_decision_desc: "En la gran sala de Din Eidyn, el rey Mynyddog alimentó con hidromiel a trescientos guerreros durante un año entero, y luego los llevó a Catraeth contra los anglos. Ninguno regresó, pero los poetas aún cantan sus nombres. Una hueste jurada a los viejos dioses podría renacer en el Viejo Norte."
  tog_found_gosgordd_decision_tooltip: "Funda una orden militar única, la Gosgordd de Mynyddog, en tus tierras del Viejo Norte."
  tog_found_gosgordd_decision_confirm: "Que los bardos canten nuestros nombres"
- tog_found_gosgordd_decision_effect_tt: "Se funda la #V Gosgordd de Mynyddog#!. Un castillo en uno de tus condados del Viejo Norte se convierte en su sede, con murallas, cuarteles y campamentos militares. Si posees Edimburgo, la ciudad recupera su antiguo nombre, #V Din Eidyn#!."
+ tog_found_gosgordd_decision_effect_tt: "Se funda la #V Gosgordd de Mynyddog#!. Un castillo en uno de tus condados del Viejo Norte se convierte en su sede, y allí comienza la construcción de defensas y edificios militares. Si posees Edimburgo, la ciudad recupera su antiguo nombre, #V Din Eidyn#!."
  tog_found_gosgordd_heritage_tt: "Tu dinastía ha recogido la #V herencia de las arboledas#!"
  tog_found_gosgordd_no_military_order_tt: "No eres ya patrón de una orden militar"
  tog_gosgordd_county_in_region_tt: "En el Viejo Norte ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] o [GetTitleByKey('d_lancaster').GetNameNoTier])"

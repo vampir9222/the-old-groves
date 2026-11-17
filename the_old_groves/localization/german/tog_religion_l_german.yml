@@ -38,7 +38,7 @@
  tog_found_gosgordd_decision_desc: "In der großen Halle von Din Eidyn speiste König Mynyddog dreihundert Krieger ein ganzes Jahr lang mit Met und führte sie dann nach Catraeth gegen die Angeln. Keiner kehrte zurück, doch die Dichter besingen noch heute ihre Namen. Eine den alten Göttern geschworene Kriegerschar könnte im Alten Norden wiedererstehen."
  tog_found_gosgordd_decision_tooltip: "Gründe einen einzigartigen Kriegerorden, die Gosgordd des Mynyddog, auf deinen Ländereien im Alten Norden."
  tog_found_gosgordd_decision_confirm: "Mögen die Barden unsere Namen besingen"
- tog_found_gosgordd_decision_effect_tt: "Die #V Gosgordd des Mynyddog#! wird gegründet. Eine Burg in einer deiner Grafschaften im Alten Norden wird ihr Sitz, mit Mauern, Kasernen und Heerlagern. Hältst du Edinburgh, erhält die Stadt ihren alten Namen zurück: #V Din Eidyn#!."
+ tog_found_gosgordd_decision_effect_tt: "Die #V Gosgordd des Mynyddog#! wird gegründet. Eine Burg in einer deiner Grafschaften im Alten Norden wird ihr Sitz, und dort beginnt der Bau von Befestigungen und Militärgebäuden. Hältst du Edinburgh, erhält die Stadt ihren alten Namen zurück: #V Din Eidyn#!."
  tog_found_gosgordd_heritage_tt: "Deine Dynastie hat das #V Erbe der Haine#! angetreten"
  tog_found_gosgordd_no_military_order_tt: "Du bist nicht bereits Schirmherr eines Kriegerordens"
  tog_gosgordd_county_in_region_tt: "Im Alten Norden ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] oder [GetTitleByKey('d_lancaster').GetNameNoTier])"

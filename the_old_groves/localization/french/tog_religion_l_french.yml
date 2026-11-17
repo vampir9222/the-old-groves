@@ -38,7 +38,7 @@
  tog_found_gosgordd_decision_desc: "Dans la grande salle de Din Eidyn, le roi Mynyddog nourrit d'hydromel trois cents guerriers pendant une année entière, puis les mena à Catraeth contre les Angles. Aucun n'en revint, mais les poètes chantent encore leurs noms. Une troupe liée par serment aux vieux dieux pourrait renaître dans le Vieux Nord."
  tog_found_gosgordd_decision_tooltip: "Fonde un ordre militaire unique, la Gosgordd de Mynyddog, sur tes terres du Vieux Nord."
  tog_found_gosgordd_decision_confirm: "Que les bardes chantent nos noms"
- tog_found_gosgordd_decision_effect_tt: "La #V Gosgordd de Mynyddog#! est fondée. Un château dans un de tes comtés du Vieux Nord devient son siège, avec murailles, casernes et camps militaires. Si tu tiens Édimbourg, la ville reprend son ancien nom, #V Din Eidyn#!."
+ tog_found_gosgordd_decision_effect_tt: "La #V Gosgordd de Mynyddog#! est fondée. Un château dans un de tes comtés du Vieux Nord devient son siège, et on y lance la construction de défenses et de bâtiments militaires. Si tu tiens Édimbourg, la ville reprend son ancien nom, #V Din Eidyn#!."
  tog_found_gosgordd_heritage_tt: "Ta dynastie a repris l'#V héritage des bosquets#!"
  tog_found_gosgordd_no_military_order_tt: "Tu n'es pas déjà patron d'un ordre militaire"
  tog_gosgordd_county_in_region_tt: "Dans le Vieux Nord ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] ou [GetTitleByKey('d_lancaster').GetNameNoTier])"
