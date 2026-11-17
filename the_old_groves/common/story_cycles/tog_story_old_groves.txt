@@ -547,7 +547,7 @@ tog_story_old_groves = {
 						}
 						AND = {
 							has_domicile_building = tog_offerings_tent
-							domicile_owner = {
+							owner = {
 								any_owned_story = {
 									story_type = tog_story_old_groves
 									var:tog_stage >= 100

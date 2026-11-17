@@ -38,7 +38,7 @@
  tog_found_gosgordd_decision_desc: "In the great hall of Din Eidyn, King Mynyddog fed three hundred warriors on mead for a whole year, then led them to Catraeth against the Angles. None came back, but the poets still sing their names. A war-band sworn to the old gods could rise again in the Old North."
  tog_found_gosgordd_decision_tooltip: "Found a unique military order, the Gosgordd of Mynyddog, on your lands in the Old North."
  tog_found_gosgordd_decision_confirm: "Let the bards sing our names"
- tog_found_gosgordd_decision_effect_tt: "The #V Gosgordd of Mynyddog#! is founded. A castle in one of your counties of the Old North becomes its seat, with walls, barracks and military camps. If you hold Edinburgh, it takes back its old name, #V Din Eidyn#!."
+ tog_found_gosgordd_decision_effect_tt: "The #V Gosgordd of Mynyddog#! is founded. A castle in one of your counties of the Old North becomes its seat, and work begins on its defenses and military buildings. If you hold Edinburgh, it takes back its old name, #V Din Eidyn#!."
  tog_found_gosgordd_heritage_tt: "Your dynasty has taken up the #V Heritage of the Groves#!"
  tog_found_gosgordd_no_military_order_tt: "You are not already the patron of a military order"
  tog_gosgordd_county_in_region_tt: "In the Old North ([GetTitleByKey('d_lothian').GetNameNoTier], [GetTitleByKey('d_galloway').GetNameNoTier], [GetTitleByKey('d_northumberland').GetNameNoTier], [GetTitleByKey('d_york').GetNameNoTier] or [GetTitleByKey('d_lancaster').GetNameNoTier])"

@@ -11,7 +11,7 @@ d_tog_laamp_dubgall = { # Dubgall the Apostate, former monk of Iona
 	no_automatic_claims = yes
 	destroy_if_invalid_heir = yes
 
-	dlc_feature = roads_to_power
+	dlc_feature = landless_adventurer
 
 	ai_primary_priority = { add = -1000 }
 }
